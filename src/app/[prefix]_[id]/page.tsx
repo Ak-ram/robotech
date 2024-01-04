@@ -8,7 +8,6 @@ import { getProduct } from "@/helpers/getProduct";
 import { ProductType } from "../../../type";
 import Container from "@/components/Container";
 import FormattedPrice from "@/components/FormattedPrice";
-
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
