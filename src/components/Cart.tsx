@@ -60,8 +60,8 @@ const Cart = () => {
   const handleCheckout = async () => {
     setIsCheckout(true)
     const stripe = await stripePromise;
-    // let url = 'https://robotech.vercel.app/api/checkout';
-    let url = 'http://localhost:3000/api/checkout';
+    let url = 'https://robotech.vercel.app/api/checkout';
+    // let url = 'http://localhost:3000/api/checkout';
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

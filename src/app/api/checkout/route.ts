@@ -8,14 +8,14 @@ export const POST = async (request: NextRequest) => {
     const reqBody = await request.json();
     const { items, email } = await reqBody;
     const extractingItems = await items.map((item: ProductType) => ({
-      quantity: item?.attributes?.quantity,
+      quantity: item?.quantity,
       price_data: {
-        currency: process.env.STRIPE_CURRENCY ,
-        unit_amount: item?.attributes?.price * 100,
+        currency: 'egp' ,
+        unit_amount: item?.price * 100,
         product_data: {
-          name: item?.attributes?.title,
-          description: item?.attributes?.description,
-          // images: [`http://127.0.0.1:1337${item?.attributes?.image?.data?.attributes?.url}`],
+          name: item?.title,
+          description: item?.description,
+          images: [item?.image],
         },
       },
     }));
