@@ -18,7 +18,6 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   const idString = searchPar.get("id");
   const id = Number(idString);
   const prefix = searchPar.get("prefix");
-  console.log(prefix)
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -35,13 +34,12 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   }, [id, prefix]);
 
   const dispatch = useDispatch();
-  console.log("product", product);
 
   return (
     <Container className="flex items-center flex-col md:flex-row px-4 xl:px-0">
       <div className="leaf md:bg-none rounded-[.5rem] bg-fixed w-full md:w-1/2 overflow-hidden bg-zinc-50 md:bg-transparent flex items-center justify-center p-5">
-        <Image
-          src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${product?.attributes?.image?.data?.attributes?.url || ""}`}
+        <img
+          src={product?.image}
           alt="product image"
           width={500}
           height={500}
@@ -49,14 +47,14 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
         />
       </div>
       <div className="w-full mt-5 md:w-1/2 flex flex-col gap-2">
-        <h2 className="text-3xl font-semibold">{product?.attributes?.title}</h2>
+        <h2 className="text-3xl font-semibold">{product?.title}</h2>
         <p className="flex items-center gap-10">
           <FormattedPrice
-            amount={product?.attributes?.price || 0}
+            amount={product?.price || 0}
             className="text-lg font-semibold"
           />
           <FormattedPrice
-            amount={product?.attributes?.previousPrice || 0}
+            amount={product?.previousPrice || 0}
             className="text-zinc-500 line-through"
           />
         </p>
@@ -64,7 +62,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
           You saved{" "}
           <FormattedPrice
             amount={
-              (product?.attributes?.previousPrice! - product?.attributes?.price!) || 0
+              (product?.previousPrice! - product?.price!) || 0
             }
             className="text-base font-semibold bg-designColor underline underline-offset-2"
           />{" "}
@@ -76,15 +74,15 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
         >
           add to cart
         </button>
-        {product?.attributes?.isNew && (
+        {product?.isNew && (
           <p className="text-designColor font-semibold">New Arrival</p>
         )}
         <p>
-          Brand: <span className="font-semibold">{product?.attributes?.brand}</span>
+          Brand: <span className="font-semibold">{product?.brand}</span>
         </p>
         <p>
           Quantity:{" "}
-          <span className="font-semibold">{product?.attributes?.quantity}</span>
+          <span className="font-semibold">{product?.quantity}</span>
         </p>
         <p className="">{ product?.attributes?.description}</p>
       </div>
