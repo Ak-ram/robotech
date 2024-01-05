@@ -133,7 +133,7 @@
 //               {productData ? productData.length : 0}
 //             </span>
 //           </Link>
-        
+
 //           {/* {session ? (
 //             <Link
 //               href={"/profile"}
@@ -175,6 +175,7 @@ import { getProducts } from "../helpers/getProducts"; // Update the import path
 interface ProductItem {
   id: number;
   title: string;
+  category: string
   // Add other properties as needed
 }
 
@@ -232,11 +233,7 @@ const Navbar = () => {
         {/* Navigation */}
         <ul className="order-last  md:order-none w-full md:w-fit flex py-2 items-center gap-5 text-sm uppercase font-semibold">
           {navigation.map((item) => (
-            <Link
-            
-            href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}
-            key={`${item.id}_${prefix}`}
-            >
+            <Link href={item?.href} key={item._id}>
               <li
                 className={`hover:text-black cursor-pointer duration-200 relative overflow-hidden group ${item.href === pathname && "text-designColor"
                   }`}
@@ -270,8 +267,8 @@ const Navbar = () => {
                   className={`${isInput ? "p-1 border-b" : "p-0 border-0"} cursor-pointer hover:bg-slate-200 rounded-sm my-1`}
                 >
                   <Link
-                    href={{ pathname: `/${item?._id}`, query: { _id: item?._id } }}
-                  >
+                    href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
+
                     {item.title}
                   </Link>
                 </li>
@@ -301,8 +298,8 @@ const Navbar = () => {
               {productData ? productData.length : 0}
             </span>
           </Link>
-        
-          
+
+
         </div>
 
       </div>
