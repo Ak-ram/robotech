@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import Categories from './Categories';
 import Product from './Product';
 import { getCategoryProducts } from '@/helpers/getCategoryProducts';
+import { getProducts } from '@/helpers/getProducts';
 // import { AlignJustify } from 'lucide-react';
 
 function FilterableProducts({ categories }) {
-  const [categoryName, setCategoryName] = useState('sensor');
-  const [products, setProducts] = useState([]);
+  const [categoryName, setCategoryName] = useState('');
+  const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,7 +27,23 @@ function FilterableProducts({ categories }) {
     }
   }, [categoryName]);
 
- 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const p = await getProducts();
+        setProducts(p);
+        
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      // Run the effect only in the browser environment
+      fetchProducts();
+    }
+  },[]);
+
 
   return (
     <div className='mt-5'>

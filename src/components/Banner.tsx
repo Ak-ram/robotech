@@ -13,8 +13,8 @@ const Banner: React.FC<BannerProps> = () => {
   const [slides, setSlides] = useState<any[]>([]);
 
   const settings: Settings = {
-    dots: true,
-    infinite: true,
+    // dots: true,
+    // infinite: true,
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -38,6 +38,7 @@ const Banner: React.FC<BannerProps> = () => {
             display: "flex",
             alignItems: "center",
             gap: 3,
+            userSelect: 'all'
           }}
           className="justify-center"
         >
@@ -100,7 +101,7 @@ const Banner: React.FC<BannerProps> = () => {
               key={slide?.id}
               className={`${dotActive === index ? "z-10" : "z-0"} lg:bg-none lg:bg-transparent w-full pb-5 h-[450px] bg-slate-200 relative`}
             >
-              <div className="w-full lg:w-1/3 flex items-center justify-center lg:inline-block h-[200px] lg:h-full bg-zinc-800 lg:bg-designColor z-0 relative">
+              <div className="w-full lg:w-1/3 flex items-center justify-center lg:inline-block h-[200px] lg:h-full bg-white lg:bg-designColor z-0 relative">
                 <img
                   src={slide?.image}
                   width={200}
@@ -110,7 +111,7 @@ const Banner: React.FC<BannerProps> = () => {
                 // priority
                 />
               </div>
-              <div className="h-300 p-5 lg:absolute lg:top-1/2 lg:left-2/3 transform lg:-translate-x-1/2 lg:-translate-y-1/2 flex flex-col items-center gap-5">
+              <div className="h-300 p-5 lg:absolute lg:top-1/2 lg:left-2/3 transform lg:-translate-x-1/2 lg:-translate-y-1/2 flex flex-col items-center justify-center gap-5">
                 <p className="text-2xl font-bold uppercase text-center">{slide?.title}</p>
                 <p className="w-96 px-4 text-center text-zinc-600">{slide?.description}</p>
                 <Link href={slide?.link_url} passHref>
