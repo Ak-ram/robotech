@@ -22,11 +22,11 @@ const Product = ({ products, prefix }: Item) => {
   const dispatch = useDispatch();
   return (
     <div className=' max-h-[800px] flex-1 overflow-y-auto'>
-      <div className="flex flex-wrap gap-6 justify-center mt-5 mx-auto">
+      <div className="flex flex-wrap  gap-6  mt-5 mx-auto">
         {products?.map((item) => (
           <div
             key={`${item.id}_${item.title}`}
-            className="max-w-[250px] lg:w-[31%] rounded-[.5rem] p-3 relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden"
+            className="w-[45%] max-w-[250px] lg:w-[31%] rounded-[.5rem] p-3 relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden"
           >
             <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
               <img
