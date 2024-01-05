@@ -10,7 +10,6 @@ import Link from 'next/link'
 import { deleteFavorite } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
 import FavImg from "@/assets/fav.png"
-
 const Wish = () => {
     const { favoriteData } = useSelector((state: StateProps) => state.pro);
     const dispatch = useDispatch();
