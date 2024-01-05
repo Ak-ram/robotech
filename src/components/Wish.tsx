@@ -9,6 +9,7 @@ import { Link2, Link2Icon, X } from "lucide-react";
 import Link from 'next/link'
 import { deleteFavorite } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
+import FavImg from "@/assets/fav.png"
 
 const Wish = () => {
     const { favoriteData } = useSelector((state: StateProps) => state.pro);
@@ -81,7 +82,7 @@ const Wish = () => {
                 </div>
             ) : (
                 <div className="py-10 flex flex-col gap-1 items-center justify-center">
-                    {/* <img src={AddToCartImg} style={{width: '200px'}}/> */}
+                    <Image className="" src={FavImg} alt="ShortLogo" width={200} height={200} />
                     <p className="text-lg font-bold">Your Favourite List is Empty</p>
                     <Link
                         href={"/"}

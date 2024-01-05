@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 // import { useSession } from "next-auth/react";
-// import AddToCartImg from "@/assets/shop/add_to_cart.png"
+import EmptyCard from "@/assets/empty.jpeg"
 const Cart = () => {
   const [totalAmt, setTotalAmt] = useState(0);
   const [isCheckout, setIsCheckout] = useState(false);
@@ -233,7 +233,8 @@ const Cart = () => {
         </div>
       ) : (
         <div className="py-10 flex flex-col gap-1 items-center justify-center">
-          {/* <img src={AddToCartImg} style={{width: '200px'}}/> */}
+          <Image className="" src={EmptyCard} alt="ShortLogo" width={200} height={200} />
+
           <p className="text-lg font-bold">Your Cart is Empty</p>
           <Link
             href={"/"}
