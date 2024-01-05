@@ -28,7 +28,7 @@ const Product = ({ products, prefix }: Item) => {
             key={item.id}
             className="w-[45%] max-w-[250px] lg:w-[31%] rounded-[.5rem] p-3 relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden"
           >
-            <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: prefix } }}>
+            <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
               <img
                 src={item?.image}
                 alt="Product image"

@@ -78,13 +78,13 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
           <p className="text-designColor font-semibold">New Arrival</p>
         )}
         <p>
-          Brand: <span className="font-semibold">{product?.brand}</span>
+          Category: <span className="font-semibold">{product?.category}</span>
         </p>
         <p>
           Quantity:{" "}
           <span className="font-semibold">{product?.quantity}</span>
         </p>
-        <p className="">{ product?.attributes?.description}</p>
+        <p className="">{ product?.description}</p>
       </div>
     </Container>
   );
