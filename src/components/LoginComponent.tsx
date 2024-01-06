@@ -1,13 +1,16 @@
+import { addUser } from '@/redux/proSlice';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const LoginComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(''); // Combined message state
+  const [isAuth, setIsAuth] = useState(false); // Combined message state
   const [route, setRoute] = useState('');
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-
+  const dispatch = useDispatch();
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     setIsSubmitDisabled(!e.target.value || !password);
@@ -21,11 +24,16 @@ const LoginComponent = () => {
   };
 
   const handleSubmit = () => {
-    if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_GITHUB_TOKEN) {
-      setRoute('/admin');
+    if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
+      // setRoute('/admin');
       setMessage('You are authorized to login.'); // Set authorized message
+      setIsAuth(true)
+      // dispatch(addUser({ email: email, password: password }))
+
     } else {
       setMessage('Forbidden: Incorrect username or password.'); // Set error message
+      setIsAuth(false)
+
     }
   };
 
@@ -39,7 +47,7 @@ const LoginComponent = () => {
               <h1 className="text-2xl font-semibold">Login Form with Floating Labels</h1>
             </div>
             <div className="divide-y divide-gray-200">
-                <div className={`${route === "/admin" ? 'hidden' : 'block'} py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7`}>    
+              <div className={`${isAuth ? 'hidden' : 'block'} py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7`}>
                 <div className="relative">
                   <input
                     id="email"
@@ -74,24 +82,24 @@ const LoginComponent = () => {
                     Password
                   </label>
                 </div>
-                  <button
-                    onClick={handleSubmit}
-                    className={`bg-blue-500 '} text-white rounded-md px-2 py-1 ${isSubmitDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    disabled={isSubmitDisabled}
-                  >
-                    Submit
-                  </button>
+                <button
+                  onClick={handleSubmit}
+                  className={`bg-blue-500 '} text-white rounded-md px-2 py-1 ${isSubmitDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={isSubmitDisabled}
+                >
+                  Submit
+                </button>
               </div>
-                <div className="relative mt-5">
-                  {!route && message && <p className={`${message.includes('authorized') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
-                  {route === "/admin" && (
-                    <div className='text-sm mt-2'>
-                      You are authorized now, click
-                      <Link className='underline hover:text-blue-600 mx-1' href={route}>Admin page</Link>
-                      to login
-                    </div>
-                  )}
-                </div>
+              <div className="relative mt-5">
+                {!isAuth && message && <p className={`${message.includes('authorized') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
+                {isAuth && (
+                  <div className='text-sm mt-2'>
+                    You are authorized now, visit
+                    <Link className='underline hover:text-blue-600 mx-1' href={route}>Admin page</Link>
+                    to manage your data
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

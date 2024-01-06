@@ -282,31 +282,31 @@
 
 //   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
 //     event.preventDefault();
-  
+
 //     // Add a new object to the JSON array
 //     const updatedArray = [...jsonArray, { question: newQuestion, answer: newAnswer }];
-  
+
 //     const owner = 'Akram-44';
 //     const repo = 'api';
 //     const path = 'robotech/pages/faq.json';
 //     const token = process.env.REACT_APP_GITHUB_TOKEN;
-  
+
 //     const octokit = new Octokit({ auth: token });
-  
+
 //     try {
 //       const response = await octokit.repos.getContent({
 //         owner,
 //         repo,
 //         path,
 //       });
-  
+
 //       if (!response || !response.data || !response.data.sha) {
 //         setError('Invalid response or missing SHA.');
 //         return;
 //       }
-  
+
 //       const sha = response.data.sha;
-  
+
 //       // Update the file on GitHub with the modified content
 //       await octokit.repos.createOrUpdateFileContents({
 //         owner,
@@ -316,15 +316,15 @@
 //         content: Buffer.from(JSON.stringify(updatedArray, null, 2)).toString('base64'),
 //         sha,
 //       });
-  
+
 //       // Update the local state after the file is successfully updated on GitHub
 //       setJsonArray(updatedArray);
-  
+
 //       console.log('JSON file updated successfully!');
 //       setError(null);
 //     } catch (error) {
 //       console.error('Error updating JSON file:', error.message);
-  
+
 //       if (error.status === 401) {
 //         setError('Bad credentials or insufficient permissions.');
 //       } else {
@@ -332,7 +332,7 @@
 //       }
 //     }
 //   };
-  
+
 //   const handleUploadButtonClick = async () => {
 //     if (selectedFile) {
 //       const reader = new FileReader();
@@ -452,15 +452,11 @@
 //     </div>
 //   );
 // }
-'use client'
 
 import Container from "@/components/Container";
 import React from "react";
-import { useRouter } from 'next/navigation';
 
 const page = async () => {
-  const router = useRouter();
-  router.push('/login');
 
   return (
     <Container>
