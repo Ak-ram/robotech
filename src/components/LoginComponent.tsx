@@ -21,7 +21,7 @@ const LoginComponent = () => {
   };
 
   const handleSubmit = () => {
-    if (email === 'ibrahem' && password === 'a') {
+    if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_GITHUB_TOKEN) {
       setRoute('/admin');
       setMessage('You are authorized to login.'); // Set authorized message
     } else {
