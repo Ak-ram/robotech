@@ -24,7 +24,7 @@
 //       const owner = 'Akram-44';
 //       const repo = 'api';
 //       const path = 'robotech/pages/faq.json';
-//       const token = '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';
+//       const token = process.env.REACT_APP_GITHUB_TOKEN;
 
 //       // Create an Octokit instance with your token
 //       const octokit = new Octokit({ auth: token });
@@ -83,7 +83,7 @@ export default function Home() {
       const owner = 'Akram-44';
       const repo = 'api';
       const path = 'robotech/pages/faq.json';
-      const token = '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';
+      const token = process.env.REACT_APP_GITHUB_TOKEN;      ;
 
       const octokit = new Octokit({ auth: token });
 
@@ -125,7 +125,7 @@ export default function Home() {
     const owner = 'Akram-44';
     const repo = 'api';
     const path = 'robotech/pages/faq.json';
-    const token = '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';
+    const token = process.env.REACT_APP_GITHUB_TOKEN;
 
     const octokit = new Octokit({ auth: token });
 
