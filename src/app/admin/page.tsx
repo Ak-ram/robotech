@@ -1,6 +1,6 @@
 "use client"
-// import { useState, ChangeEvent } from 'react';
-// import { Octokit } from '@octokit/rest';
+import { useState, ChangeEvent,useEffect } from 'react';
+import { Octokit } from '@octokit/rest';
 
 // export default function Home() {
 //   const [file, setFile] = useState<File | null>(null);
@@ -65,11 +65,7 @@
 //     </div>
 //   );
 // }
-
-
-// pages/index.tsx
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { Octokit } from '@octokit/rest';
+// ... (imports)
 
 export default function Home() {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -83,12 +79,12 @@ export default function Home() {
       const owner = 'Akram-44';
       const repo = 'api';
       const path = 'robotech/pages/faq.json';
-      const token = process.env.REACT_APP_GITHUB_TOKEN;      ;
+      const token = process.env.NEXT_PUBLIC_REACT_APP_GITHUB_TOKEN;
 
       const octokit = new Octokit({ auth: token });
 
       try {
-        const response = await octokit.repos.getContent({
+        const response = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
           owner,
           repo,
           path,
@@ -118,19 +114,27 @@ export default function Home() {
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Add a new object to the JSON array
+    if (!newQuestion.trim() || !newAnswer.trim()) {
+      setError('Question and answer cannot be empty.');
+      return;
+    }
+
+    // Optimistically update the UI
     const updatedArray = [...jsonArray, { question: newQuestion, answer: newAnswer }];
+    setJsonArray(updatedArray);
+    setNewQuestion('');
+    setNewAnswer('');
 
     // GitHub repository information
     const owner = 'Akram-44';
     const repo = 'api';
     const path = 'robotech/pages/faq.json';
-    const token = process.env.REACT_APP_GITHUB_TOKEN;
+    const token = process.env.NEXT_PUBLIC_REACT_APP_GITHUB_TOKEN;
 
     const octokit = new Octokit({ auth: token });
 
     try {
-      const response = await octokit.repos.getContent({
+      const response = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
         owner,
         repo,
         path,
@@ -144,7 +148,7 @@ export default function Home() {
       const sha = response.data.sha;
 
       // Update the file on GitHub with the modified content
-      await octokit.repos.createOrUpdateFileContents({
+      await octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
         owner,
         repo,
         path,
@@ -161,7 +165,7 @@ export default function Home() {
       if (error.status === 401) {
         setError('Bad credentials or insufficient permissions.');
       } else {
-        setError(`Error updating JSON file. Check console for details.`);
+        setError('Error updating JSON file. Check console for details.');
       }
     }
   };
