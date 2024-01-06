@@ -17,7 +17,7 @@ export interface ItemProps {
 export interface StateProps {
   pro: {
     productData: ProductType[];
-    userInfo: {};
+    userInfo: null | { email: string; password: string }; // Adjust this based on your actual state structure
     orderData: {
       length: number;
       map(arg0: (item: ProductType) => import("react").JSX.Element): import("react").ReactNode;

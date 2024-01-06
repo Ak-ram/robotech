@@ -452,11 +452,30 @@
 //     </div>
 //   );
 // }
-
+'use client'
 import Container from "@/components/Container";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { StateProps } from "../../../type";
 
-const page = async () => {
+const page = () => {
+  const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!userInfo) {
+      router.push("/login"); // Update the route to your login page
+    } else {
+      // Check if the user has the right authorization (you might need to customize this)
+      if (userInfo.email === "ibrahem" && userInfo.password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
+        // The user is authorized, continue rendering the admin page
+      } else {
+        // If the user is not authorized, redirect to the login page
+        router.push("/login"); // Update the route to your login page
+      }
+    }
+  }, [userInfo, router]);
 
   return (
     <Container>

@@ -23,19 +23,34 @@ const LoginComponent = () => {
     setMessage(''); // Clear previous messages when input changes
   };
 
-  const handleSubmit = () => {
-    if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
-      // setRoute('/admin');
-      setMessage('You are authorized to login.'); // Set authorized message
-      setIsAuth(true)
-      // dispatch(addUser({ email: email, password: password }))
+  // const handleSubmit = () => {
+    // if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
+    //   // setRoute('/admin');
+    //   setMessage('You are authorized to login.'); // Set authorized message
+    //   setIsAuth(true)
+    //   // dispatch(addUser({ email: email, password: password }))
 
-    } else {
-      setMessage('Forbidden: Incorrect username or password.'); // Set error message
-      setIsAuth(false)
+    // } else {
+    //   setMessage('Forbidden: Incorrect username or password.'); // Set error message
+    //   setIsAuth(false)
 
-    }
-  };
+    // }
+// }
+
+    const handleSubmit = () => {
+      if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
+        // Assuming you want to dispatch user information when the login is successful
+        const userInformation = { email, password };
+        dispatch(addUser(userInformation));
+    
+        setMessage('You are authorized to login.'); // Set authorized message
+        setIsAuth(true);
+        setRoute('/admin');
+      } else {
+        setMessage('Forbidden: Incorrect username or password.'); // Set error message
+        setIsAuth(false);
+      }
+    };
 
   return (
     <div className="bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
