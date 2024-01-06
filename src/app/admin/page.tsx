@@ -470,9 +470,11 @@ const page = () => {
   const [selectedItem, setSelectedItem] = useState<SidebarItem | null>(null);
 
   const sidebarItems: SidebarItem[] = [
-    { id: 1, label: 'Item 1', content: 'Content for Item 1' },
-    { id: 2, label: 'Item 2', content: 'Content for Item 2' },
-    { id: 3, label: 'Item 3', content: 'Content for Item 3' },
+    { id: 1, label: 'Products', content: 'Content for Products' },
+    { id: 2, label: '3D', content: 'Content for 3D' },
+    { id: 3, label: 'Courses', content: 'Content for Courses' },
+    { id: 4, label: 'About', content: 'Content for About' },
+    { id: 5, label: 'Faq', content: 'Content for Faq' },
     // Add more items as needed
   ];
 
