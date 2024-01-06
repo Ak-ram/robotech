@@ -455,13 +455,30 @@
 'use client'
 import Container from "@/components/Container";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { StateProps } from "../../../type";
 
 const page = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
   const router = useRouter();
+  interface SidebarItem {
+    id: number;
+    label: string;
+    content: string;
+  }
+  const [selectedItem, setSelectedItem] = useState<SidebarItem | null>(null);
+
+  const sidebarItems: SidebarItem[] = [
+    { id: 1, label: 'Item 1', content: 'Content for Item 1' },
+    { id: 2, label: 'Item 2', content: 'Content for Item 2' },
+    { id: 3, label: 'Item 3', content: 'Content for Item 3' },
+    // Add more items as needed
+  ];
+
+  const handleItemClick = (item: SidebarItem) => {
+    setSelectedItem(item);
+  };
 
   useEffect(() => {
     if (!userInfo) {
@@ -479,8 +496,38 @@ const page = () => {
 
   return (
     <Container>
-      <div className="border-b-[1px] border-b-zinc-400 pb-4 flex items-center justify-between">
+      <div className="border-b-[1px] border-b-zinc-400 pb-4 flex-col items-center justify-between">
         <h2 className="text-2xl font-bold">Admin</h2>
+        <div className="flex gap-3">
+          {/* Sidebar */}
+          <div className="w-1/4 p-4 border border-gray-400 bg-white rounded-[1rem]">
+            <h2 className="text-2xl font-bold mb-4">Sidebar</h2>
+            <ul>
+              {sidebarItems.map((item) => (
+                <li
+                  key={item.id}
+                  className={`cursor-pointer ${selectedItem === item ? 'font-bold' : ''
+                    }`}
+                  onClick={() => handleItemClick(item)}
+                >
+                  {item.label}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1 p-4 border border-gray-400 bg-white rounded-[1rem]">
+            {selectedItem ? (
+              <div>
+                <h2 className="text-2xl font-bold mb-4">{selectedItem.label}</h2>
+                <p>{selectedItem.content}</p>
+              </div>
+            ) : (
+              <p>Select an item from the sidebar.</p>
+            )}
+          </div>
+        </div>
       </div>
     </Container>
   );
