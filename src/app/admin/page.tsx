@@ -24,7 +24,7 @@
 //       const owner = 'Akram-44';
 //       const repo = 'api';
 //       const path = 'robotech/pages/faq.json';
-//       const token = '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';
+//       const token = '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';
 
 //       // Create an Octokit instance with your token
 //       const octokit = new Octokit({ auth: token });
@@ -67,18 +67,14 @@
 // }
 
 
-
-
-
-
-
 // pages/index.tsx
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Octokit } from '@octokit/rest';
 
 export default function Home() {
-  const [jsonData, setJsonData] = useState<any[]>([]);
-  const [newName, setNewName] = useState('');
+  const [jsonArray, setJsonArray] = useState<any[]>([]);
+  const [newQuestion, setNewQuestion] = useState('');
+  const [newAnswer, setNewAnswer] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -87,7 +83,7 @@ export default function Home() {
       const owner = 'Akram-44';
       const repo = 'api';
       const path = 'robotech/pages/faq.json';
-      const token = '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';
+      const token = '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';
 
       const octokit = new Octokit({ auth: token });
 
@@ -101,7 +97,7 @@ export default function Home() {
         const content = response.data.content;
         const decodedContent = Buffer.from(content, 'base64').toString('utf-8');
         const parsedData = JSON.parse(decodedContent);
-        setJsonData(parsedData);
+        setJsonArray(parsedData);
       } catch (error) {
         console.error('Error fetching JSON file:', error.message);
         setError('Error fetching JSON file. Check console for details.');
@@ -111,21 +107,25 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setNewName(event.target.value);
+  const handleQuestionChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setNewQuestion(event.target.value);
+  };
+
+  const handleAnswerChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setNewAnswer(event.target.value);
   };
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Add a new object to the JSON array
-    const updatedData = [...jsonData, { name: newName }];
+    const updatedArray = [...jsonArray, { question: newQuestion, answer: newAnswer }];
 
     // GitHub repository information
     const owner = 'Akram-44';
     const repo = 'api';
     const path = 'robotech/pages/faq.json';
-    const token = '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';
+    const token = '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';
 
     const octokit = new Octokit({ auth: token });
 
@@ -149,7 +149,7 @@ export default function Home() {
         repo,
         path,
         message: 'Update JSON file',
-        content: Buffer.from(JSON.stringify(updatedData, null, 2)).toString('base64'),
+        content: Buffer.from(JSON.stringify(updatedArray, null, 2)).toString('base64'),
         sha,
       });
 
@@ -169,16 +169,20 @@ export default function Home() {
   return (
     <div>
       <h2>Current JSON Data:</h2>
-      <pre>{JSON.stringify(jsonData, null, 2)}</pre>
+      <pre>{JSON.stringify(jsonArray, null, 2)}</pre>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <form onSubmit={handleFormSubmit}>
         <label>
-          New Name:
-          <input type="text" value={newName} onChange={handleNameChange} />
+          Question:
+          <input type="text" value={newQuestion} onChange={handleQuestionChange} />
         </label>
-        <button type="submit">Add Name</button>
+        <label>
+          Answer:
+          <input type="text" value={newAnswer} onChange={handleAnswerChange} />
+        </label>
+        <button type="submit">Add QA Pair</button>
       </form>
     </div>
   );
