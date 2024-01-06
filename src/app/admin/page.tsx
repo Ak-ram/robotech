@@ -452,12 +452,16 @@
 //     </div>
 //   );
 // }
-
+'use client'
 
 import Container from "@/components/Container";
 import React from "react";
+import { useRouter } from 'next/navigation';
 
 const page = async () => {
+  const router = useRouter();
+  router.push('/login');
+
   return (
     <Container>
       <div className="border-b-[1px] border-b-zinc-400 pb-4 flex items-center justify-between">
