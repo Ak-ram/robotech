@@ -22,13 +22,13 @@ const AdminAbout = () => {
     fetchData();
   }, []);
   const handleAddItemClick = () => {
-    setEditIndex(null);
+    setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
-      id: 'a', // Add any default values for the new item
-      title: 'akram',
-      description: '',
-      link_text: '',
-      link_url: '',
+      id: "",
+      title: "",
+      description: "",
+      link_text: "",
+      link_url: "",
     });
   };
   const handleRemoveItem = async (index: number) => {
@@ -50,9 +50,18 @@ const AdminAbout = () => {
 
   const handleEditSubmit = async () => {
     if (editIndex !== null) {
-      const updatedArray = [...jsonArray];
-      updatedArray[editIndex] = editedItem;
-
+      let updatedArray;
+  
+      if (editIndex === -1) {
+        // Add a new item
+        updatedArray = [...jsonArray, editedItem];
+      } else {
+        // Update an existing item
+        updatedArray = jsonArray.map((item, index) =>
+          index === editIndex ? editedItem : item
+        );
+      }
+  
       try {
         await updateJsonFile('robotech/pages/about.json', updatedArray);
         setJsonArray(updatedArray);
@@ -62,7 +71,6 @@ const AdminAbout = () => {
       }
     }
   };
-
   const handleEditCancel = () => {
     setEditIndex(null);
     setEditedItem({});
@@ -73,16 +81,24 @@ const AdminAbout = () => {
   };
 
   const handleAddItemSubmit = async () => {
+    // Logic to submit the new item
+    const updatedArray = [...jsonArray, editedItem];
+  
     try {
-      const updatedArray = [...jsonArray, editedItem];
-      await updateJsonFile('robotech/pages/about.json', updatedArray);
+      await updateJsonFile("robotech/pages/about.json", updatedArray);
       setJsonArray(updatedArray);
-      setEditedItem({});
+      setEditIndex(null);
+      setEditedItem({
+        id: "",
+        title: "",
+        description: "",
+        link_text: "",
+        link_url: "",
+      });
     } catch (error) {
-      setError((error as Error).message);
+      setError(error.message);
     }
   };
-
   return (
     <div className={`lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
       <h2 className="font-bold mb-4">Current About data:</h2>
