@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
-import { Delete, Edit, Link } from "lucide-react";
+import { Check, X, Delete, Edit, Link } from "lucide-react";
 
 const AdminAbout = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -91,12 +91,12 @@ const AdminAbout = () => {
                 <td className="border px-4 py-2">
                   {editIndex === index ? (
                     <>
-                      <button onClick={handleEditSubmit}>Save</button>
-                      <button onClick={handleEditCancel}>Cancel</button>
+                      <button className="text-green-400 mr-1" onClick={handleEditSubmit}><Check size={17}/></button>
+                      <button  className="text-red-400"  onClick={handleEditCancel}><X size={17}/></button>
                     </>
                   ) : (
                     <div className="flex gap-1 items-center flex-nowrap">
-                      <button  onClick={() => handleEditClick(index)}><Edit size={17}/></button>
+                      <button onClick={() => handleEditClick(index)}><Edit size={17}/></button>
                       <button onClick={() => handleRemoveItem(index)}><Delete size={17}/></button>
                     </div>
                   )}
