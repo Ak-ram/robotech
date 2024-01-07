@@ -7,12 +7,18 @@ const AdminAbout = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [editIndex, setEditIndex] = useState<number | null>(null);
-  const [editedItem, setEditedItem] = useState<any>({});
+  const [editedItem, setEditedItem] = useState<any>({
+    id: "",
+    title: "",
+    description: "",
+    link_text: "",
+    link_url: "",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchJsonData('robotech/pages/about.json');
+        const data = await fetchJsonData("robotech/pages/about.json");
         setJsonArray(data);
       } catch (error) {
         setError((error as Error).message);
@@ -21,6 +27,7 @@ const AdminAbout = () => {
 
     fetchData();
   }, []);
+
   const handleAddItemClick = () => {
     setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
@@ -31,14 +38,14 @@ const AdminAbout = () => {
       link_url: "",
     });
     setError(null); // Reset error state
-
   };
+
   const handleRemoveItem = async (index: number) => {
     const updatedArray = [...jsonArray];
     updatedArray.splice(index, 1);
 
     try {
-      await updateJsonFile('robotech/pages/about.json', updatedArray);
+      await updateJsonFile("robotech/pages/about.json", updatedArray);
       setJsonArray(updatedArray);
     } catch (error) {
       setError((error as Error).message);
@@ -51,18 +58,20 @@ const AdminAbout = () => {
   };
 
   const handleEditSubmit = async () => {
-
-     // Check for empty fields
-     if (!editedItem.title || !editedItem.description || !editedItem.link_text || !editedItem.link_url) {
+    // Check for empty fields
+    if (
+      !editedItem.title ||
+      !editedItem.description ||
+      !editedItem.link_text ||
+      !editedItem.link_url
+    ) {
       setError("All fields are required");
       return;
     }
 
-
-
     if (editIndex !== null) {
       let updatedArray;
-  
+
       if (editIndex === -1) {
         // Add a new item
         updatedArray = [...jsonArray, editedItem];
@@ -72,60 +81,28 @@ const AdminAbout = () => {
           index === editIndex ? editedItem : item
         );
       }
-  
+
       try {
-        await updateJsonFile('robotech/pages/about.json', updatedArray);
+        await updateJsonFile("robotech/pages/about.json", updatedArray);
         setJsonArray(updatedArray);
         setEditIndex(null);
         setError(null); // Reset error state
-
       } catch (error) {
         setError((error as Error).message);
       }
     }
   };
+
   const handleEditCancel = () => {
     setEditIndex(null);
     setEditedItem({});
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    key: string
+  ) => {
     setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
-  };
-
-  const handleAddItemSubmit = async () => {
-
-        // Check for empty fields
-        if (!editedItem.title || !editedItem.description || !editedItem.link_text || !editedItem.link_url) {
-          setError("All fields are required");
-          return;
-        }
-    
-
-
-    // Logic to submit the new item
-    const updatedArray = [...jsonArray, editedItem];
-  
-    try {
-      await updateJsonFile("robotech/pages/about.json", updatedArray);
-      setJsonArray(updatedArray);
-      setEditIndex(null);
-      setEditedItem({
-        id: "",
-        title: "",
-        description: "",
-        link_text: "",
-        link_url: "",
-      });
-    } catch (error) {
-      setError((error as Error).message);
-    }
-  };
-  const handleAddItemCancel = () => {
-    setEditIndex(null);
-    setEditedItem({});
-    setError(null); // Reset error state
-
   };
 
   return (
@@ -150,22 +127,24 @@ const AdminAbout = () => {
                 <td className="border px-4 py-2">{item.title}</td>
                 <td className="border px-4 py-2">{item.description}</td>
                 <td className="border px-4 py-2">{item.link_text}</td>
-                <td className="cursor-pointer border px-4 py-2 flex hover:underline hover:text-blue-400 group items-center gap-2">
-                  {item.link_url}
-                  <Link className="group-hover:opacity-100 opacity-0" size={13} />
+                <td className="cursor-pointer border px-4 py-2 flex hover:underline hover:text-blue-400 group:hover:bg-white">
+                  <a href={item.link_url} target="_blank" rel="noopener noreferrer" className="group-hover:text-blue-400">
+                    {item.link_url}
+                  </a>
                 </td>
                 <td className="border px-2 py-2">
-                  {editIndex === index ? (
-                    <>
-                      <button className="text-green-400 mr-1" onClick={handleEditSubmit}><Check size={17} /></button>
-                      <button className="text-red-400" onClick={handleEditCancel}><X size={17} /></button>
-                    </>
-                  ) : (
-                    <div className="flex gap-1 items-center flex-nowrap">
-                      <button onClick={() => handleEditClick(index)}><Edit size={17} /></button>
-                      <button className="text-red-400 hover:text-red-500" onClick={() => handleRemoveItem(index)}><Trash size={17} /></button>
-                    </div>
-                  )}
+                  <button
+                    className="mr-1"
+                    onClick={() => handleEditClick(index)}
+                  >
+                    <Edit size={16} />
+                  </button>
+                  <button
+                    className="mr-1"
+                    onClick={() => handleRemoveItem(index)}
+                  >
+                    <Trash size={16} />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -173,70 +152,87 @@ const AdminAbout = () => {
         </table>
       </div>
 
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-        onClick={handleAddItemClick}
-      >
-        <Plus size={17} className="mr-2" /> Add New Item
-      </button>
-
       {editIndex !== null && (
-        <div className="bg-gray-100 p-5 mt-5 border rounded">
-          <h2 className="font-bold text-lg mb-3">Edit Item</h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Title</label>
-            <input
-              type="text"
-              value={editedItem.title}
-              onChange={(e) => handleInputChange(e, 'title')}
-              className="border border-gray-300 rounded-md px-3 py-2 w-full"
-            />
+        <div className="mt-5">
+          <h2 className="font-bold mb-2">
+            {editIndex === -1 ? "Add New Item" : "Edit Item"}
+          </h2>
+          {error && <p className="text-red-500 mb-2">{error}</p>}
+          <div className="flex flex-col lg:flex-row">
+            <div className="lg:w-1/4 mb-2 lg:pr-4">
+              <input
+                type="text"
+                placeholder="ID"
+                className="p-2 border border-gray-300 rounded"
+                value={editedItem.id}
+                onChange={(e) => handleInputChange(e, "id")}
+              />
+            </div>
+            <div className="lg:w-1/4 mb-2 lg:pr-4">
+              <input
+                type="text"
+                placeholder="Title"
+                className="p-2 border border-gray-300 rounded"
+                value={editedItem.title}
+                onChange={(e) => handleInputChange(e, "title")}
+              />
+            </div>
+            <div className="lg:w-1/4 mb-2 lg:pr-4">
+              <input
+                type="text"
+                placeholder="Description"
+                className="p-2 border border-gray-300 rounded"
+                value={editedItem.description}
+                onChange={(e) => handleInputChange(e, "description")}
+              />
+            </div>
+            <div className="lg:w-1/4 mb-2 lg:pr-4">
+              <input
+                type="text"
+                placeholder="Link Text"
+                className="p-2 border border-gray-300 rounded"
+                value={editedItem.link_text}
+                onChange={(e) => handleInputChange(e, "link_text")}
+              />
+            </div>
+            <div className="lg:w-1/4 mb-2 lg:pr-4">
+              <input
+                type="text"
+                placeholder="URL"
+                className="p-2 border border-gray-300 rounded"
+                value={editedItem.link_url}
+                onChange={(e) => handleInputChange(e, "link_url")}
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Description</label>
-            <input
-              type="text"
-              value={editedItem.description}
-              onChange={(e) => handleInputChange(e, 'description')}
-              className="border border-gray-300 rounded-md px-3 py-2 w-full"
-            />
+          <div className="flex">
+            <button
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+              onClick={handleEditSubmit}
+            >
+              <Check size={18} className="mr-1" />
+              Save
+            </button>
+            <button
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+              onClick={handleEditCancel}
+            >
+              <X size={18} className="mr-1" />
+              Cancel
+            </button>
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Link Text</label>
-            <input
-              type="text"
-              value={editedItem.link_text}
-              onChange={(e) => handleInputChange(e, 'link_text')}
-              className="border border-gray-300 rounded-md px-3 py-2 w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Link URL</label>
-            <input
-              type="text"
-              value={editedItem.link_url}
-              onChange={(e) => handleInputChange(e, 'link_url')}
-              className="border border-gray-300 rounded-md px-3 py-2 w-full"
-            />
-          </div>
-          <button
-        className="bg-green-500 text-white px-4 py-2 rounded"
-        onClick={
-          editIndex !== null ? handleEditSubmit : handleAddItemSubmit
-        }
-      >
-        {editIndex !== null ? "Update" : "Add"} Item
-      </button>
-      <button
-        className="bg-green-500 text-white px-4 py-2 rounded"
-        onClick={handleEditCancel}
-      >
-        Cancel
-      </button>
         </div>
       )}
 
-      {error && <p className="text-red-500">{error}</p>}
+      <div className="mt-5">
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          onClick={handleAddItemClick}
+        >
+          <Plus size={18} className="mr-1" />
+          Add Item
+        </button>
+      </div>
     </div>
   );
 };
