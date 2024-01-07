@@ -159,20 +159,20 @@ const AdminAbout = () => {
           </h2>
           {error && <p className="text-red-500 mb-2">{error}</p>}
           <div className="flex flex-col lg:flex-row">
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+            <div className=" mb-2 lg:pr-4">
               <input
                 type="text"
                 placeholder="ID"
-                className="p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded"
                 value={editedItem.id}
                 onChange={(e) => handleInputChange(e, "id")}
               />
             </div>
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+            <div className=" mb-2 lg:pr-4">
               <input
                 type="text"
                 placeholder="Title"
-                className="p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded"
                 value={editedItem.title}
                 onChange={(e) => handleInputChange(e, "title")}
               />
@@ -181,7 +181,7 @@ const AdminAbout = () => {
               <input
                 type="text"
                 placeholder="Description"
-                className="p-2 border border-gray-300 rounded"
+                className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.description}
                 onChange={(e) => handleInputChange(e, "description")}
               />
@@ -190,16 +190,16 @@ const AdminAbout = () => {
               <input
                 type="text"
                 placeholder="Link Text"
-                className="p-2 border border-gray-300 rounded"
+                className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.link_text}
                 onChange={(e) => handleInputChange(e, "link_text")}
               />
             </div>
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+            <div className=" mb-2 lg:pr-4">
               <input
                 type="text"
                 placeholder="URL"
-                className="p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded"
                 value={editedItem.link_url}
                 onChange={(e) => handleInputChange(e, "link_url")}
               />
@@ -207,14 +207,14 @@ const AdminAbout = () => {
           </div>
           <div className="flex">
             <button
-              className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+              className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
               onClick={handleEditSubmit}
             >
               <Check size={18} className="mr-1" />
               Save
             </button>
             <button
-              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+              className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
               onClick={handleEditCancel}
             >
               <X size={18} className="mr-1" />
@@ -226,7 +226,7 @@ const AdminAbout = () => {
 
       <div className="mt-5">
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
           onClick={handleAddItemClick}
         >
           <Plus size={18} className="mr-1" />
