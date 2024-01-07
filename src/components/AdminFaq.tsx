@@ -1,3 +1,4 @@
+import { fetchJsonData } from "@/helpers/getJSONData";
 import { Octokit } from "@octokit/rest";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
@@ -10,35 +11,17 @@ const AdminFaq = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
-    // Fetch the existing JSON file from GitHub
     const fetchData = async () => {
-      const owner = 'Akram-44';
-      const repo = 'api';
-      const path = 'robotech/pages/faq.json';
-      const token = process.env.REACT_APP_GITHUB_TOKEN;
-
-      const octokit = new Octokit({ auth: token });
-
       try {
-        const response = await octokit.repos.getContent({
-          owner,
-          repo,
-          path,
-        });
-
-        const content = response.data.content;
-        const decodedContent = Buffer.from(content, 'base64').toString('utf-8');
-        const parsedData = JSON.parse(decodedContent);
-        setJsonArray(parsedData);
+        const data = await fetchJsonData();
+        setJsonArray(data);
       } catch (error) {
-        console.error('Error fetching JSON file:', error.message);
-        setError('Error fetching JSON file. Check console for details.');
+        setError(error.message);
       }
     };
 
     fetchData();
   }, []);
-
   const handleQuestionChange = (event: ChangeEvent<HTMLInputElement>) => {
     setNewQuestion(event.target.value);
   };
@@ -157,7 +140,7 @@ const AdminFaq = () => {
 
   return (
     <div className={` lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5 `}>
-        <h2 className="text-2xl font-bold mb-4">Current JSON Data:</h2>
+        <h2 className="font-bold mb-4">List of current Q&A:</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300">
             <thead>
