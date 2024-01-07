@@ -8,8 +8,14 @@ const AdminComponent = () => {
   const [error, setError] = useState<string | null>(null);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState<any>({
+    id: "",
     title: "",
-    price: 0,
+    price: "",
+    previousPrice: 0,
+    description: "",
+    count: 0,
+    image: "",
+    brand: ""
   });
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number | null>(null);
 
@@ -24,6 +30,7 @@ const AdminComponent = () => {
       } catch (error) {
         setError((error as Error).message);
       }
+      console.log(selectedSectionIndex)
     };
 
     fetchData();
@@ -32,8 +39,14 @@ const AdminComponent = () => {
   const handleAddItemClick = () => {
     setEditIndex(-1);
     setEditedItem({
+      id: "",
       title: "",
-      price: 0,
+      price: "",
+      previousPrice: 0,
+      description: "",
+      count: 0,
+      image: "",
+      brand: ""
     });
     setError(null);
   };
@@ -100,19 +113,19 @@ const AdminComponent = () => {
           <div className="mb-5">
             <label htmlFor="sectionDropdown" className="font-bold mb-2">Select Section:</label>
             <select
-  id="sectionDropdown"
-  className="p-2 border border-gray-300 rounded"
-  value={selectedSectionIndex !== null ? selectedSectionIndex.toString() : ''}
-  onChange={(e) => setSelectedSectionIndex(parseInt(e.target.value))}
->
-  {jsonData.flatMap((section, sectionIndex) =>
-    Object.keys(section).map((item, itemIndex) => (
-      <option key={`${sectionIndex}-${itemIndex}`} value={`${sectionIndex}-${itemIndex}`}>
-        {item}
-      </option>
-    ))
-  )}
-</select>
+              id="sectionDropdown"
+              className="p-2 border border-gray-300 rounded"
+              value={selectedSectionIndex !== null ? selectedSectionIndex.toString() : ''}
+              onChange={(e) => setSelectedSectionIndex(parseInt(e.target.value))}
+            >
+              {jsonData.flatMap((section, sectionIndex) =>
+                Object.keys(section).map((item, itemIndex) => (
+                  <option key={`${sectionIndex}-${itemIndex}`} value={`${sectionIndex}-${itemIndex}`}>
+                    {item}
+                  </option>
+                ))
+              )}
+            </select>
 
           </div>
         )}
@@ -123,16 +136,28 @@ const AdminComponent = () => {
             <table className="min-w-full border border-gray-300 text-sm">
               <thead>
                 <tr className="bg-zinc-800 text-white ">
+                  <th className="border px-4 py-2">Id</th>
                   <th className="border px-4 py-2">Title</th>
                   <th className="border px-4 py-2">Price</th>
+                  <th className="border px-4 py-2">Previous Price</th>
+                  <th className="border px-4 py-2">Image</th>
+                  <th className="border px-4 py-2">Description</th>
+                  <th className="border px-4 py-2">Count</th>
+                  <th className="border px-4 py-2">Brand</th>
                   <th className="border px-4 py-2">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {jsonData[selectedSectionIndex].sensors.map((item: any, itemIndex: number) => (
                   <tr key={itemIndex} className="hover:bg-slate-100">
+                    <td className="border px-4 py-2">{item.id}</td>
                     <td className="border px-4 py-2">{item.title}</td>
                     <td className="border px-4 py-2">{item.price}</td>
+                    <td className="border px-4 py-2">{item.previousPrice}</td>
+                    <td className="border px-4 py-2"><img src={item.image} width="70" /></td>
+                    <td className="border px-4 py-2">{item.description}</td>
+                    <td className="border px-4 py-2">{item.count}</td>
+                    <td className="border px-4 py-2">{item.brand}</td>
                     <td className="border px-2 py-2">
                       <button
                         className="mr-1"
@@ -162,19 +187,73 @@ const AdminComponent = () => {
                   <div className=" mb-2 lg:pr-4">
                     <input
                       type="text"
+                      placeholder="ID"
+                      className="w-full p-2 border border-gray-300 rounded"
+                      value={editedItem.id}
+                      onChange={(e) => handleInputChange(e, "id")}
+                    />
+                  </div>
+                  <div className=" mb-2 lg:pr-4">
+                    <input
+                      type="text"
                       placeholder="Title"
                       className="w-full p-2 border border-gray-300 rounded"
                       value={editedItem.title}
                       onChange={(e) => handleInputChange(e, "title")}
                     />
                   </div>
-                  <div className=" mb-2 lg:pr-4">
+                  <div className="lg:w-1/4 mb-2 lg:pr-4">
                     <input
-                      type="number"
+                      type="text"
                       placeholder="Price"
                       className="p-2 w-full border border-gray-300 rounded"
                       value={editedItem.price}
                       onChange={(e) => handleInputChange(e, "price")}
+                    />
+                  </div>
+                  <div className="lg:w-1/4 mb-2 lg:pr-4">
+                    <input
+                      type="text"
+                      placeholder="Previous Price"
+                      className="p-2 w-full border border-gray-300 rounded"
+                      value={editedItem.previousPrice}
+                      onChange={(e) => handleInputChange(e, "previousPrice")}
+                    />
+                  </div>
+                  <div className="lg:w-1/4 mb-2 lg:pr-4">
+                    <input
+                      type="text"
+                      placeholder="Image"
+                      className="p-2 w-full border border-gray-300 rounded"
+                      value={editedItem.image}
+                      onChange={(e) => handleInputChange(e, "image")}
+                    />
+                  </div>
+                  <div className="lg:w-1/4 mb-2 lg:pr-4">
+                    <input
+                      type="text"
+                      placeholder="Description"
+                      className="p-2 w-full border border-gray-300 rounded"
+                      value={editedItem.description}
+                      onChange={(e) => handleInputChange(e, "description")}
+                    />
+                  </div>
+                  <div className="lg:w-1/4 mb-2 lg:pr-4">
+                    <input
+                      type="text"
+                      placeholder="Count"
+                      className="p-2 w-full border border-gray-300 rounded"
+                      value={editedItem.count}
+                      onChange={(e) => handleInputChange(e, "count")}
+                    />
+                  </div>
+                  <div className="lg:w-1/4 mb-2 lg:pr-4">
+                    <input
+                      type="text"
+                      placeholder="Brand"
+                      className="p-2 w-full border border-gray-300 rounded"
+                      value={editedItem.brand}
+                      onChange={(e) => handleInputChange(e, "brand")}
                     />
                   </div>
                 </div>
