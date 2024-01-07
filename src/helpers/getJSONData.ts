@@ -4,7 +4,7 @@ interface FileContent {
     content: string;
 }
 
-export const fetchJsonData = async (jsonFilePath): Promise<any[]> => {
+export const fetchJsonData = async (jsonFilePath:string): Promise<any[]> => {
     const owner = 'Akram-44';
     const repo = 'api';
     const path = jsonFilePath;
