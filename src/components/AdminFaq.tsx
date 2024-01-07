@@ -173,7 +173,7 @@ const AdminFaq = () => {
                 onChange={(e) => handleInputChange(e, "answer")}
               />
             </div>
-            
+
           </div>
           <div className="flex">
             <button
