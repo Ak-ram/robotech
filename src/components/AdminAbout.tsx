@@ -108,13 +108,46 @@ const AdminAbout = () => {
       </div>
 
       {editIndex !== null && (
-        <div>
-          <h2>Edit Item</h2>
-          <label>Title: <input type="text" value={editedItem.title} onChange={(e) => handleInputChange(e, 'title')} /></label>
-          <label>Description: <input type="text" value={editedItem.description} onChange={(e) => handleInputChange(e, 'description')} /></label>
-          <label>Link Text: <input type="text" value={editedItem.link_text} onChange={(e) => handleInputChange(e, 'link_text')} /></label>
-          <label>Link URL: <input type="text" value={editedItem.link_url} onChange={(e) => handleInputChange(e, 'link_url')} /></label>
-        </div>
+       <div className="bg-gray-100 p-5 mt-5 border rounded">
+       <h2 className="font-bold text-lg mb-3">Edit Item</h2>
+       <div className="mb-4">
+         <label className="block text-sm font-medium text-gray-600">Title</label>
+         <input
+           type="text"
+           value={editedItem.title}
+           onChange={(e) => handleInputChange(e, 'title')}
+           className="border border-gray-300 rounded-md px-3 py-2 w-full"
+         />
+       </div>
+       <div className="mb-4">
+         <label className="block text-sm font-medium text-gray-600">Description</label>
+         <input
+           type="text"
+           value={editedItem.description}
+           onChange={(e) => handleInputChange(e, 'description')}
+           className="border border-gray-300 rounded-md px-3 py-2 w-full"
+         />
+       </div>
+       <div className="mb-4">
+         <label className="block text-sm font-medium text-gray-600">Link Text</label>
+         <input
+           type="text"
+           value={editedItem.link_text}
+           onChange={(e) => handleInputChange(e, 'link_text')}
+           className="border border-gray-300 rounded-md px-3 py-2 w-full"
+         />
+       </div>
+       <div className="mb-4">
+         <label className="block text-sm font-medium text-gray-600">Link URL</label>
+         <input
+           type="text"
+           value={editedItem.link_url}
+           onChange={(e) => handleInputChange(e, 'link_url')}
+           className="border border-gray-300 rounded-md px-3 py-2 w-full"
+         />
+       </div>
+     </div>
+     
       )}
 
       {error && <p className="text-red-500">{error}</p>}
