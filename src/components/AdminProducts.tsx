@@ -6,6 +6,7 @@ import { Check, X, Trash, Edit, Plus } from "lucide-react";
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [selectedCat, setSelectedCat] = useState<string | null>(null);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState<any>({
     id: "",
@@ -18,6 +19,12 @@ const AdminComponent = () => {
     brand: ""
   });
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number | null>(null);
+  useEffect(() => {
+    if (selectedSectionIndex !== null) {
+      const selectedItem = Object.keys(jsonData[selectedSectionIndex])[1];
+      setSelectedCat(selectedItem);
+    }
+  }, [selectedSectionIndex, jsonData]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +41,7 @@ const AdminComponent = () => {
     };
 
     fetchData();
-  }, []);
+  }, [selectedSectionIndex, jsonData, selectedCat]);
 
   const handleAddItemClick = () => {
     setEditIndex(-1);
@@ -69,7 +76,14 @@ const AdminComponent = () => {
   };
 
   const handleEditSubmit = async (sectionIndex: number) => {
-    if (!editedItem.title || editedItem.price === undefined) {
+    if (!editedItem.id ||
+      !editedItem.title ||
+      !editedItem.price ||
+      !editedItem.previousPrice ||
+      !editedItem.description ||
+      !editedItem.count ||
+      !editedItem.image ||
+      !editedItem.brand) {
       setError("All fields are required");
       return;
     }
@@ -116,23 +130,26 @@ const AdminComponent = () => {
               id="sectionDropdown"
               className="p-2 border border-gray-300 rounded"
               value={selectedSectionIndex !== null ? selectedSectionIndex.toString() : ''}
-              onChange={(e) => setSelectedSectionIndex(parseInt(e.target.value))}
+              onChange={(e) => {
+                setSelectedSectionIndex(parseInt(e.target.value));
+                const selectedItem = e.target.options[e.target.selectedIndex].dataset.selected;
+                setSelectedCat(selectedItem!)
+              }}
             >
               {jsonData.flatMap((section, sectionIndex) =>
                 Object.keys(section).map((item, itemIndex) => (
-                  <option key={`${sectionIndex}-${itemIndex}`} value={`${sectionIndex}-${itemIndex}`}>
+                  <option data-selected={item} key={`${sectionIndex}-${itemIndex}`} value={`${sectionIndex}-${itemIndex}`}>
                     {item}
                   </option>
                 ))
               )}
             </select>
-
           </div>
         )}
 
         {selectedSectionIndex !== null && jsonData[selectedSectionIndex] && (
           <div key={selectedSectionIndex} className="mt-5">
-            <h2 className="font-bold mb-4">{Object.keys(jsonData[selectedSectionIndex])[1]}</h2>
+            <h2 className="font-bold mb-4">{selectedCat}</h2>
             <table className="min-w-full border border-gray-300 text-sm">
               <thead>
                 <tr className="bg-zinc-800 text-white ">
@@ -148,7 +165,7 @@ const AdminComponent = () => {
                 </tr>
               </thead>
               <tbody>
-                {jsonData[selectedSectionIndex].sensors.map((item: any, itemIndex: number) => (
+              {jsonData[selectedSectionIndex][selectedCat!]?.map((item: any, itemIndex: number) => (
                   <tr key={itemIndex} className="hover:bg-slate-100">
                     <td className="border px-4 py-2">{item.id}</td>
                     <td className="border px-4 py-2">{item.title}</td>
