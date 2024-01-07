@@ -49,6 +49,15 @@ const AdminAbout = () => {
   };
 
   const handleEditSubmit = async () => {
+
+     // Check for empty fields
+     if (!editedItem.title || !editedItem.description || !editedItem.link_text || !editedItem.link_url) {
+      setError("All fields are required");
+      return;
+    }
+
+
+
     if (editIndex !== null) {
       let updatedArray;
   
@@ -81,6 +90,15 @@ const AdminAbout = () => {
   };
 
   const handleAddItemSubmit = async () => {
+
+        // Check for empty fields
+        if (!editedItem.title || !editedItem.description || !editedItem.link_text || !editedItem.link_url) {
+          setError("All fields are required");
+          return;
+        }
+    
+
+
     // Logic to submit the new item
     const updatedArray = [...jsonArray, editedItem];
   
@@ -99,6 +117,16 @@ const AdminAbout = () => {
       setError((error as Error).message);
     }
   };
+  const handleAddItemCancel = () => {
+
+
+
+
+
+    setEditIndex(null);
+    setEditedItem({});
+  };
+
   return (
     <div className={`lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
       <h2 className="font-bold mb-4">Current About data:</h2>
@@ -191,10 +219,18 @@ const AdminAbout = () => {
             />
           </div>
           <button
-            className="bg-green-500 text-white px-4 py-2 rounded"
-            onClick={editIndex !== null ? handleEditSubmit : handleAddItemSubmit}
+        className="bg-green-500 text-white px-4 py-2 rounded"
+        onClick={
+          editIndex !== null ? handleEditSubmit : handleAddItemSubmit
+        }
+      >
+        {editIndex !== null ? "Update" : "Add"} Item
+      </button>
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded ml-2"
+            onClick={editIndex !== null ? handleEditCancel : handleAddItemCancel}
           >
-            {editIndex !== null ? "Update" : "Add"} Item
+            Cancel
           </button>
         </div>
       )}
