@@ -30,6 +30,8 @@ const AdminAbout = () => {
       link_text: "",
       link_url: "",
     });
+    setError(null); // Reset error state
+
   };
   const handleRemoveItem = async (index: number) => {
     const updatedArray = [...jsonArray];
@@ -75,6 +77,8 @@ const AdminAbout = () => {
         await updateJsonFile('robotech/pages/about.json', updatedArray);
         setJsonArray(updatedArray);
         setEditIndex(null);
+        setError(null); // Reset error state
+
       } catch (error) {
         setError((error as Error).message);
       }
@@ -118,13 +122,10 @@ const AdminAbout = () => {
     }
   };
   const handleAddItemCancel = () => {
-
-
-
-
-
     setEditIndex(null);
     setEditedItem({});
+    setError(null); // Reset error state
+
   };
 
   return (
@@ -226,12 +227,12 @@ const AdminAbout = () => {
       >
         {editIndex !== null ? "Update" : "Add"} Item
       </button>
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded ml-2"
-            onClick={editIndex !== null ? handleEditCancel : handleAddItemCancel}
-          >
-            Cancel
-          </button>
+      <button
+        className="bg-green-500 text-white px-4 py-2 rounded"
+        onClick={handleEditCancel}
+      >
+        Cancel
+      </button>
         </div>
       )}
 
