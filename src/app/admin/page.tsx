@@ -455,9 +455,15 @@
 'use client'
 import Container from "@/components/Container";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { ReactComponentElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { StateProps } from "../../../type";
+import AdminProducts from "@/components/AdminProducts";
+import Print3DComponent from "@/components/Admin3DComponent";
+import AdminCourses from "@/components/AdminCourses";
+import Admin3DComponent from "@/components/Admin3DComponent";
+import AdminAbout from "@/components/AdminAbout";
+import AdminFaq from "@/components/AdminFaq";
 
 const page = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -465,16 +471,16 @@ const page = () => {
   interface SidebarItem {
     id: number;
     label: string;
-    content: string;
+    content: any;
   }
   const [selectedItem, setSelectedItem] = useState<SidebarItem | null>(null);
 
   const sidebarItems: SidebarItem[] = [
-    { id: 1, label: 'Products', content: 'Content for Products' },
-    { id: 2, label: '3D', content: 'Content for 3D' },
-    { id: 3, label: 'Courses', content: 'Content for Courses' },
-    { id: 4, label: 'About', content: 'Content for About' },
-    { id: 5, label: 'Faq', content: 'Content for Faq' },
+    { id: 1, label: 'Products', content: <AdminProducts /> },
+    { id: 2, label: '3D', content: <Admin3DComponent /> },
+    { id: 3, label: 'Courses', content: <AdminCourses /> },
+    { id: 4, label: 'About', content: <AdminAbout /> },
+    { id: 5, label: 'Faq', content: <AdminFaq /> },
     // Add more items as needed
   ];
 
