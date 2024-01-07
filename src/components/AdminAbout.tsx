@@ -75,12 +75,12 @@ const AdminAbout = () => {
               <th className="border px-4 py-2">Description</th>
               <th className="border px-4 py-2">Link text</th>
               <th className="border px-4 py-2">URL</th>
-              <th className="border px-4 py-2">Actions</th>
+              <th className="border px-2 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {jsonArray.map((item, index) => (
-              <tr key={index}>
+              <tr key={index} className="hover:bg-slate-100">
                 <td className="border px-4 py-2">{item.id}</td>
                 <td className="border px-4 py-2">{item.title}</td>
                 <td className="border px-4 py-2">{item.description}</td>
@@ -88,7 +88,7 @@ const AdminAbout = () => {
                 <td className="cursor-pointer border px-4 py-2 flex hover:underline hover:text-blue-400 group items-center gap-2">
                     {item.link_url} 
                     <Link className="group-hover:opacity-100 opacity-0" size={13}/></td>
-                <td className="border px-4 py-2">
+                <td className="border px-2 py-2">
                   {editIndex === index ? (
                     <>
                       <button className="text-green-400 mr-1" onClick={handleEditSubmit}><Check size={17}/></button>
