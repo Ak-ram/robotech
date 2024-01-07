@@ -96,7 +96,7 @@ const AdminAbout = () => {
         link_url: "",
       });
     } catch (error) {
-      setError(error.message);
+      setError((error as Error).message);
     }
   };
   return (
