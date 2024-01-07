@@ -9,8 +9,13 @@ const Admin3DComponent = () => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState<any>({
     id: "",
-    question: "",
-    answer: "",
+    title: "",
+    price: "",
+    previousPrice: 0,
+    description: "",
+    count: 0,
+    image: "",
+    brand: ""
   });
 
   useEffect(() => {
@@ -29,9 +34,14 @@ const Admin3DComponent = () => {
   const handleAddItemClick = () => {
     setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
-      id: "",
-      question: "",
-      answer: "",
+        id: "",
+        title: "",
+        price: "",
+        previousPrice: 0,
+        description: "",
+        count: 0,
+        image: "",
+        brand: ""
     });
     setError(null); // Reset error state
   };
