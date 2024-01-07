@@ -1,7 +1,7 @@
 // apiService.ts
 import { Octokit } from "@octokit/rest";
 
-export const fetchJsonData = async () => {
+export const fetchJsonData = async (JsonFilePath:string) => {
     const owner = 'Akram-44';
     const repo = 'api';
     const path = 'robotech/pages/faq.json';
@@ -29,7 +29,7 @@ export const fetchJsonData = async () => {
 export const updateJsonFile = async (data: any[]) => {
     const owner = 'Akram-44';
     const repo = 'api';
-    const path = 'robotech/pages/faq.json';
+    const path = JsonFilePath;
     const token = process.env.REACT_APP_GITHUB_TOKEN;
 
     const octokit = new Octokit({ auth: token });

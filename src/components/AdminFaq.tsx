@@ -13,10 +13,10 @@ const AdminFaq = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchJsonData();
+        const data = await fetchJsonData('robotech/pages/faq.json');
         setJsonArray(data);
       } catch (error) {
-        setError(error.message);
+        setError((error as Error).message);
       }
     };
 
@@ -140,30 +140,30 @@ const AdminFaq = () => {
 
   return (
     <div className={` lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5 `}>
-        <h2 className="font-bold mb-4">List of current Q&A:</h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-300">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border px-4 py-2">Question</th>
-                <th className="border px-4 py-2">Answer</th>
+      <h2 className="font-bold mb-4">List of current Q&A:</h2>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border px-4 py-2">Question</th>
+              <th className="border px-4 py-2">Answer</th>
+            </tr>
+          </thead>
+          <tbody>
+            {jsonArray.map((item, index) => (
+              <tr key={index}>
+                <td className="border px-4 py-2">{item.question}</td>
+                <td className="border px-4 py-2">{item.answer}</td>
               </tr>
-            </thead>
-            <tbody>
-              {jsonArray.map((item, index) => (
-                <tr key={index}>
-                  <td className="border px-4 py-2">{item.question}</td>
-                  <td className="border px-4 py-2">{item.answer}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-        {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-500">{error}</p>}
 
-        {/* <form onSubmit={handleFormSubmit} className="mt-4"> */}
-        {/* <form className="mt-4">
+      {/* <form onSubmit={handleFormSubmit} className="mt-4"> */}
+      {/* <form className="mt-4">
           <label className="block mb-2">
             Question:
             <input
@@ -187,7 +187,7 @@ const AdminFaq = () => {
           </button>
         </form> */}
 
-        {/* <div className="mt-4">
+      {/* <div className="mt-4">
           <label className="block mb-2">
             Upload JSON File:
             <input
