@@ -100,17 +100,20 @@ const AdminComponent = () => {
           <div className="mb-5">
             <label htmlFor="sectionDropdown" className="font-bold mb-2">Select Section:</label>
             <select
-              id="sectionDropdown"
-              className="p-2 border border-gray-300 rounded"
-              value={selectedSectionIndex !== null ? selectedSectionIndex.toString() : ''}
-              onChange={(e) => setSelectedSectionIndex(parseInt(e.target.value))}
-            >
-              {jsonData.map((section, index) => (
-                <option key={index} value={index.toString()}>
-                  {Object.keys(section)[1]}
-                </option>
-              ))}
-            </select>
+  id="sectionDropdown"
+  className="p-2 border border-gray-300 rounded"
+  value={selectedSectionIndex !== null ? selectedSectionIndex.toString() : ''}
+  onChange={(e) => setSelectedSectionIndex(parseInt(e.target.value))}
+>
+  {jsonData.flatMap((section, sectionIndex) =>
+    Object.keys(section).map((item, itemIndex) => (
+      <option key={`${sectionIndex}-${itemIndex}`} value={`${sectionIndex}-${itemIndex}`}>
+        {item}
+      </option>
+    ))
+  )}
+</select>
+
           </div>
         )}
 
