@@ -19,12 +19,6 @@ const AdminComponent = () => {
     brand: ""
   });
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number | null>(null);
-  useEffect(() => {
-    if (selectedSectionIndex !== null) {
-      const selectedItem = Object.keys(jsonData[selectedSectionIndex])[1];
-      setSelectedCat(selectedItem);
-    }
-  }, [selectedSectionIndex, jsonData]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +35,7 @@ const AdminComponent = () => {
     };
 
     fetchData();
-  }, [selectedSectionIndex, jsonData, selectedCat]);
+  }, []);
 
   const handleAddItemClick = () => {
     setEditIndex(-1);
@@ -149,7 +143,7 @@ const AdminComponent = () => {
 
         {selectedSectionIndex !== null && jsonData[selectedSectionIndex] && (
           <div key={selectedSectionIndex} className="mt-5">
-            <h2 className="font-bold mb-4">{selectedCat}</h2>
+            <h2 className="font-bold mb-4">{Object.keys(jsonData[selectedSectionIndex])[1]}</h2>
             <table className="min-w-full border border-gray-300 text-sm">
               <thead>
                 <tr className="bg-zinc-800 text-white ">
@@ -165,7 +159,7 @@ const AdminComponent = () => {
                 </tr>
               </thead>
               <tbody>
-              {jsonData[selectedSectionIndex][selectedCat!]?.map((item: any, itemIndex: number) => (
+                {jsonData[selectedSectionIndex].sensors.map((item: any, itemIndex: number) => (
                   <tr key={itemIndex} className="hover:bg-slate-100">
                     <td className="border px-4 py-2">{item.id}</td>
                     <td className="border px-4 py-2">{item.title}</td>
