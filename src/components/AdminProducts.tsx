@@ -158,7 +158,7 @@ const AdminComponent = () => {
 
   return (
     <>
-      <div className={`lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
+      <div className={`lg:p-3 w-full z-10 bottom-0 left-0 overflow-hidden mt-5`}>
         <div className="overflow-x-auto">
           {jsonData.length > 0 && (
             <div className="mb-5">
@@ -189,10 +189,10 @@ const AdminComponent = () => {
                 )}
               </select>
               <button
-                className="ml-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                className="text-xs rounded-md absolute top-0 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
                 onClick={handleDeleteCategory}
               >
-                Delete Category
+                Delete {selectedCat} Category
               </button>
               <input
                 type="text"
