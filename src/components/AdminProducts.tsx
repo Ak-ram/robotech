@@ -72,8 +72,20 @@ const AdminComponent = () => {
   };
 
   const handleEditSubmit = async (sectionIndex: number) => {
-    // ... (same as before)
-
+    if (
+      !editedItem.id ||
+      !editedItem.id ||
+      !editedItem.title ||
+      !editedItem.price ||
+      !editedItem.previousPrice ||
+      !editedItem.description ||
+      !editedItem.count ||
+      !editedItem.image ||
+      !editedItem.brand
+    ) {
+      toast.error("All fields are required");
+      return;
+    }
     if (editIndex !== null) {
       let updatedData = [...jsonData];
 
@@ -209,7 +221,7 @@ const AdminComponent = () => {
               </button>
             </div>
           )}
-          {selectedSectionIndex !== null && jsonData[selectedSectionIndex] && (
+          {selectedSectionIndex !== null && jsonData[selectedSectionIndex] && selectedCat && (
             <div key={selectedSectionIndex} className="mt-5">
               <h2 className="font-bold mb-4">{selectedCat}</h2>
               <table className="min-w-full border border-gray-300 text-sm">
@@ -260,8 +272,79 @@ const AdminComponent = () => {
                   <h2 className="font-bold mb-2">
                     {editIndex === -1 ? "Add New Item" : "Edit Item"}
                   </h2>
-                  <div className="flex flex-col lg:flex-row">
-                    {/* ... (existing JSX for input fields) */}
+                  <div className="flex flex-col lg:flex-row flex-wrap">
+                    <div className=" flex-col mb-2 lg:pr-4">
+                      <input
+                        type="text"
+                        placeholder="ID"
+                        className="w-full p-2 border border-gray-300 rounded"
+                        value={editedItem.id}
+                        onChange={(e) => handleInputChange(e, "id")}
+                      />
+                    </div>
+                    <div className=" flex-col mb-2 lg:pr-4">
+                      <input
+                        type="text"
+                        placeholder="Title"
+                        className="w-full p-2 border border-gray-300 rounded"
+                        value={editedItem.title}
+                        onChange={(e) => handleInputChange(e, "title")}
+                      />
+                    </div>
+                    <div className="flex-col mb-2 lg:pr-4">
+                      <input
+                        type="text"
+                        placeholder="Price"
+                        className="p-2 w-full border border-gray-300 rounded"
+                        value={editedItem.price}
+                        onChange={(e) => handleInputChange(e, "price")}
+                      />
+                    </div>
+                    <div className="flex-col mb-2 lg:pr-4">
+                      <input
+                        type="text"
+                        placeholder="Previous Price"
+                        className="p-2 w-full border border-gray-300 rounded"
+                        value={editedItem.previousPrice}
+                        onChange={(e) => handleInputChange(e, "previousPrice")}
+                      />
+                    </div>
+                    <div className="flex-col mb-2 lg:pr-4">
+                      <input
+                        type="text"
+                        placeholder="Image"
+                        className="p-2 w-full border border-gray-300 rounded"
+                        value={editedItem.image}
+                        onChange={(e) => handleInputChange(e, "image")}
+                      />
+                    </div>
+                    <div className="flex-1 mb-2 lg:pr-4">
+                      <input
+                        type="text"
+                        placeholder="Description"
+                        className="p-2 w-full border border-gray-300 rounded"
+                        value={editedItem.description}
+                        onChange={(e) => handleInputChange(e, "description")}
+                      />
+                    </div>
+                    <div className="flex-col mb-2 lg:pr-4">
+                      <input
+                        type="text"
+                        placeholder="Count"
+                        className="p-2 w-full border border-gray-300 rounded"
+                        value={editedItem.count}
+                        onChange={(e) => handleInputChange(e, "count")}
+                      />
+                    </div>
+                    <div className="flex-col mb-2 lg:pr-4">
+                      <input
+                        type="text"
+                        placeholder="Brand"
+                        className="p-2 w-full border border-gray-300 rounded"
+                        value={editedItem.brand}
+                        onChange={(e) => handleInputChange(e, "brand")}
+                      />
+                    </div>
                   </div>
                   <div className="flex">
                     <button
@@ -280,11 +363,12 @@ const AdminComponent = () => {
                     </button>
                   </div>
                 </div>
+
               )}
             </div>
           )}
         </div>
-        <div className="mt-5">
+        {selectedCat && <div className="mt-5">
           <button
             className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
             onClick={handleAddItemClick}
@@ -292,7 +376,7 @@ const AdminComponent = () => {
             <Plus size={18} className="mr-1" />
             Add Item
           </button>
-        </div>
+        </div>}
       </div>
       <Toaster
         position="bottom-right"
