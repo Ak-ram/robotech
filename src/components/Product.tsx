@@ -36,6 +36,7 @@ const Product = ({ products, prefix }: Item) => {
                 className="object-cover object-center w-full h-full group-hover:scale-105 duration-300"
               />
             </div>
+            
           </Link>
           <div className="absolute top-2 right-2 flex items-center space-x-2">
             <Heart
