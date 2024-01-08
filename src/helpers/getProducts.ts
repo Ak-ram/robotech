@@ -1,18 +1,24 @@
-// import { getCategories } from "./getCategories";
-// import { getCategoryProducts } from "./getCategoryProducts";
-import { getCategories } from "./getCategories";
-import { getCategoryProducts } from "./getCategoryProducts";
-
-export async function getProducts() {
-  const categoryList = await getCategories();
-  const all: any[] = await Promise.all(
-    categoryList?.map(async (categoryName: string) => {
-      const products = await getCategoryProducts(categoryName);
-      return products;
-    })
+export const getProducts = async () => {
+  const res = await fetch(
+    "https://akram-44.github.io/api/robotech/pages/categories.json",
+    {
+      cache: "no-cache",
+    }
   );
 
-  const flattenedAll = all.flat(); // Flatten the array of arrays
+  if (!res.ok) {
+    throw new Error("Failed to fetch courses");
+  }
+  let result = await res.json()
+  let newArray = [];
 
-  return flattenedAll;
-}
+  // Loop through each object in the input JSON
+  result.forEach(obj => {
+    // Loop through the keys of each object
+    Object.keys(obj).forEach(key => {
+      // Concatenate the values of each key to the new array
+      newArray = newArray.concat(obj[key]);
+    });
+  });
+  return newArray;
+};
