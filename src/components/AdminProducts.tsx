@@ -122,26 +122,32 @@ const AdminComponent = () => {
             <select
               id="sectionDropdown"
               className="p-2 border border-gray-300 rounded"
-              value={selectedSectionIndex !== null ? selectedSectionIndex.toString() : ''}
+              value={selectedCat !== null ? selectedCat : ''}
               onChange={(e) => {
-                setSelectedSectionIndex(parseInt(e.target.value));
-                const selectedItem = e.target.options[e.target.selectedIndex].dataset.selected;
-                setSelectedCat(selectedItem!);
+                const selectedItem = e.target.value;
+                setSelectedCat(selectedItem);
+                const sectionIndex = e.target.selectedIndex;
+                setSelectedSectionIndex(sectionIndex);
               }}
             >
               {jsonData.flatMap((section, sectionIndex) =>
-                Object.keys(section).map((item, itemIndex) => (
-                  <option data-selected={item} key={`${sectionIndex}-${itemIndex}`} value={`${sectionIndex}-${itemIndex}`}>
+                Object.keys(section).map((item) => (
+                  <option
+                    data-selected={item}
+                    key={`${sectionIndex}-${item}`}
+                    value={item}
+                  >
                     {item}
                   </option>
                 ))
               )}
             </select>
+
           </div>
         )}
         {selectedSectionIndex !== null && jsonData[selectedSectionIndex] && (
           <div key={selectedSectionIndex} className="mt-5">
-            <h2 className="font-bold mb-4">{Object.keys(jsonData[selectedSectionIndex])[1]}</h2>
+            <h2 className="font-bold mb-4">{selectedCat}</h2>
             <table className="min-w-full border border-gray-300 text-sm">
               <thead>
                 <tr className="bg-zinc-800 text-white ">
