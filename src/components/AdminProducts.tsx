@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Plus } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
 
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedCat, setSelectedCat] = useState<string | null>(null);
+  const [newCategory, setNewCategory] = useState<string>("");
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState<any>({
     id: "",
@@ -29,9 +31,10 @@ const AdminComponent = () => {
           setSelectedSectionIndex(0); // Initialize with the first section
         }
       } catch (error) {
-        setError((error as Error).message);
+        toast.error(
+          `${(error as Error).message}`
+        )
       }
-      console.log(selectedSectionIndex)
     };
 
     fetchData();
@@ -59,8 +62,13 @@ const AdminComponent = () => {
     try {
       await updateJsonFile("robotech/pages/categories.json", updatedData);
       setJsonData(updatedData);
+      toast.success(
+        `Add one item`
+      )
     } catch (error) {
-      setError((error as Error).message);
+      toast.error(
+        `${(error as Error).message}`
+      )
     }
   };
 
@@ -70,17 +78,7 @@ const AdminComponent = () => {
   };
 
   const handleEditSubmit = async (sectionIndex: number) => {
-    if (!editedItem.id ||
-      !editedItem.title ||
-      !editedItem.price ||
-      !editedItem.previousPrice ||
-      !editedItem.description ||
-      !editedItem.count ||
-      !editedItem.image ||
-      !editedItem.brand) {
-      setError("All fields are required");
-      return;
-    }
+    // ... (same as before)
 
     if (editIndex !== null) {
       let updatedData = [...jsonData];
@@ -96,8 +94,13 @@ const AdminComponent = () => {
         setJsonData(updatedData);
         setEditIndex(null);
         setError(null);
+        toast.success(
+          `Item was updated`
+        )
       } catch (error) {
-        setError((error as Error).message);
+        toast.error(
+          `${(error as Error).message}`
+        )
       }
     }
   };
@@ -105,6 +108,9 @@ const AdminComponent = () => {
   const handleEditCancel = () => {
     setEditIndex(null);
     setEditedItem({});
+    toast.success(
+      `The cancellation process was successful.`
+    )
   };
 
   const handleInputChange = (
@@ -113,8 +119,52 @@ const AdminComponent = () => {
   ) => {
     setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
   };
-  return (
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewCategory(e.target.value);
+  };
+
+  const handleAddCategory = async () => {
+    if (newCategory.trim() !== "") {
+      const updatedData = [...jsonData];
+      const newCategoryName = newCategory.toLowerCase();
+
+      if (!updatedData[selectedSectionIndex!][newCategoryName]) {
+        updatedData[selectedSectionIndex!][newCategoryName] = [];
+        setJsonData(updatedData);
+        setSelectedCat(newCategoryName);
+        setNewCategory("");
+
+        // Update JSON file
+        try {
+          await updateJsonFile("robotech/pages/categories.json", updatedData);
+          setError(null); // Clear any previous error
+          toast.success(
+            `Add new category "${newCategoryName}"`
+          )
+        } catch (error) {
+          // setError((error as Error).message);
+          toast.error(
+            `${(error as Error).message}`
+          )
+        }
+      } else {
+        toast.error(
+          `Category already exists`
+        )
+      }
+    } else {
+      toast.error(
+        `Category name cannot be empty`
+      );
+    }
+  };
+
+
+
+  return (<>
     <div className={`lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
+
       <div className="overflow-x-auto">
         {jsonData.length > 0 && (
           <div className="mb-5">
@@ -142,7 +192,19 @@ const AdminComponent = () => {
                 ))
               )}
             </select>
-
+            <input
+              type="text"
+              placeholder="New Category"
+              className="w-full p-2 border mt-3 border-gray-300 rounded"
+              value={newCategory}
+              onChange={handleCategoryChange}
+            />
+            <button
+              className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              onClick={handleAddCategory}
+            >
+              Add Category
+            </button>
           </div>
         )}
         {selectedSectionIndex !== null && jsonData[selectedSectionIndex] && (
@@ -196,7 +258,6 @@ const AdminComponent = () => {
                 <h2 className="font-bold mb-2">
                   {editIndex === -1 ? "Add New Item" : "Edit Item"}
                 </h2>
-                {error && <p className="text-red-500 mb-2">{error}</p>}
                 <div className="flex flex-col lg:flex-row">
                   <div className=" mb-2 lg:pr-4">
                     <input
@@ -303,6 +364,16 @@ const AdminComponent = () => {
         </button>
       </div>
     </div>
+    <Toaster
+      position="bottom-right"
+      toastOptions={{
+        style: {
+          background: "#000",
+          color: "#fff",
+        },
+      }}
+    />
+  </>
   );
 };
 

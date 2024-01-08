@@ -527,7 +527,7 @@ const page = () => {
           {/* Main Content */}
           <div className="flex-1 p-4 border border-gray-400 bg-white rounded-[1rem]">
             {selectedItem ? (
-              <div>
+              <div className="relative">
                 <h2 className="text-2xl font-bold mb-4">{selectedItem.label}</h2>
                 <p>{selectedItem.content}</p>
               </div>
