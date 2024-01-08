@@ -11,12 +11,8 @@ export const getProducts = async () => {
   }
   let result = await res.json()
   let newArray = [];
-
-  // Loop through each object in the input JSON
   result.forEach(obj => {
-    // Loop through the keys of each object
     Object.keys(obj).forEach(key => {
-      // Concatenate the values of each key to the new array
       newArray = newArray.concat(obj[key]);
     });
   });

@@ -1,13 +1,26 @@
-export async function getCategories() {
+export const getCategories = async () => {
+  try {
     const res = await fetch(
-      "https://robotech-space.github.io/robotech/pages/shop/categories.json",
+      "https://akram-44.github.io/api/robotech/pages/categories.json",
       {
         cache: "no-cache",
       }
     );
-  
+
     if (!res.ok) {
-      throw new Error("Failed to fetch categories list");
+      throw new Error("Failed to fetch categories");
     }
-    return res.json();
-  };
+
+    const result = await res.json();
+
+    // Retrieve the keys from the first object in the result array
+    const uniqueKeys = Object.keys(result[0]);
+
+    console.log(uniqueKeys);
+    
+    return uniqueKeys; // Return the array of unique keys if needed
+  } catch (error) {
+    console.error("Error fetching categories:", (error as Error).message);
+    throw error;
+  }
+};
