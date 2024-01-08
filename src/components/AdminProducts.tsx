@@ -35,7 +35,7 @@ const AdminComponent = () => {
     };
 
     fetchData();
-  }, []);
+  }, [selectedCat]);
 
   const handleAddItemClick = () => {
     setEditIndex(-1);
