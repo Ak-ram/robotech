@@ -54,7 +54,7 @@ const AdminComponent = () => {
 
   const handleRemoveItem = async (sectionIndex: number, itemIndex: number) => {
     const updatedData = [...jsonData];
-    updatedData[sectionIndex].sensors.splice(itemIndex, 1);
+    updatedData[sectionIndex][selectedCat!].splice(itemIndex, 1);
 
     try {
       await updateJsonFile("robotech/pages/categories.json", updatedData);
@@ -66,7 +66,7 @@ const AdminComponent = () => {
 
   const handleEditClick = (sectionIndex: number, itemIndex: number) => {
     setEditIndex(itemIndex);
-    setEditedItem({ ...jsonData[sectionIndex].sensors[itemIndex] });
+    setEditedItem({ ...jsonData[sectionIndex][selectedCat!][itemIndex] });
   };
 
   const handleEditSubmit = async (sectionIndex: number) => {
@@ -86,9 +86,9 @@ const AdminComponent = () => {
       let updatedData = [...jsonData];
 
       if (editIndex === -1) {
-        updatedData[sectionIndex].sensors.push(editedItem);
+        updatedData[sectionIndex][selectedCat!].push(editedItem);
       } else {
-        updatedData[sectionIndex].sensors[editIndex] = editedItem;
+        updatedData[sectionIndex][selectedCat!][editIndex] = editedItem;
       }
 
       try {
