@@ -1,6 +1,5 @@
 'use client'
 import Container from "./Container";
-import Link from "next/link";
 import FilterableProducts from "./FilterableProducts";
 import { getCategories } from "@/helpers/getCategories";
 import { useState, useEffect } from "react";
