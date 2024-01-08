@@ -1,6 +1,6 @@
 export const getCourses = async () => {
   const res = await fetch(
-    "https://robotech-space.github.io/robotech/pages/courses.json",
+    "https://akram-44.github.io/api/robotech/pages/courses.json",
     {
       cache: "no-cache",
     }

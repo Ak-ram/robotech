@@ -1,6 +1,6 @@
 export const getPrintServices = async () => {
   const res = await fetch(
-    "https://robotech-space.github.io/robotech/pages/3d.json",
+    "https://akram-44.github.io/api/robotech/pages/3d.json",
     // "https://akram-44.github.io/api/robotech/pages/3d.json",
 
     {

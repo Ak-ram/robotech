@@ -1,6 +1,6 @@
 export const getAboutData = async () => {
   const res = await fetch(
-    "https://robotech-space.github.io/robotech/pages/about.json",
+    "https://akram-44.github.io/api/robotech/pages/about.json",
     {
       cache: "no-cache",
     }
