@@ -113,7 +113,6 @@ const AdminComponent = () => {
   ) => {
     setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
   };
-
   return (
     <div className={`lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
       <div className="overflow-x-auto">
@@ -127,7 +126,7 @@ const AdminComponent = () => {
               onChange={(e) => {
                 setSelectedSectionIndex(parseInt(e.target.value));
                 const selectedItem = e.target.options[e.target.selectedIndex].dataset.selected;
-                setSelectedCat(selectedItem!)
+                setSelectedCat(selectedItem!);
               }}
             >
               {jsonData.flatMap((section, sectionIndex) =>
@@ -140,7 +139,6 @@ const AdminComponent = () => {
             </select>
           </div>
         )}
-
         {selectedSectionIndex !== null && jsonData[selectedSectionIndex] && (
           <div key={selectedSectionIndex} className="mt-5">
             <h2 className="font-bold mb-4">{Object.keys(jsonData[selectedSectionIndex])[1]}</h2>
@@ -159,7 +157,7 @@ const AdminComponent = () => {
                 </tr>
               </thead>
               <tbody>
-                {jsonData[selectedSectionIndex].sensors.map((item: any, itemIndex: number) => (
+                {jsonData[selectedSectionIndex][selectedCat!]?.map((item: any, itemIndex: number) => (
                   <tr key={itemIndex} className="hover:bg-slate-100">
                     <td className="border px-4 py-2">{item.id}</td>
                     <td className="border px-4 py-2">{item.title}</td>
@@ -187,7 +185,6 @@ const AdminComponent = () => {
                 ))}
               </tbody>
             </table>
-
             {editIndex !== null && (
               <div className="mt-5">
                 <h2 className="font-bold mb-2">
