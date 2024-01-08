@@ -188,17 +188,19 @@ const AdminComponent = () => {
                   setSelectedSectionIndex(sectionIndex);
                 }}
               >
+                {/* <optgroup label="Swedish Cars"> */}
                 {jsonData.flatMap((section, sectionIndex) =>
-                  Object.keys(section).map((item) => (
-                    <option
+                  Object.keys(section).map((item) => {
+                    return <option
                       data-selected={item}
                       key={`${sectionIndex}-${item}`}
                       value={item}
                     >
                       {item}
                     </option>
-                  ))
-                )}
+                  }))
+                }
+                {/* </optgroup> */}
               </select>
               <button
                 className="text-xs rounded-md absolute top-0 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
