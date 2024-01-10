@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/proSlice";
 import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
-import { Magnifier } from 'react-image-magnify';
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
 import { Gift } from "lucide-react";

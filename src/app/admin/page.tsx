@@ -503,39 +503,81 @@ const page = () => {
   }, [userInfo, router]);
 
   return (
-    <Container>
-      <div className="border-b-[1px] border-b-zinc-400 pb-4 flex-col items-center justify-between">
-        <h2 className="text-2xl font-bold">Admin</h2>
-        <div className="flex gap-3">
-          {/* Sidebar */}
-          <div className="w-1/4 p-4 border border-gray-400 bg-white rounded-[1rem]">
-            <h2 className="text-2xl font-bold mb-4">Sidebar</h2>
-            <ul>
-              {sidebarItems.map((item) => (
-                <li
-                  key={item.id}
-                  className={`cursor-pointer ${selectedItem === item ? 'font-bold' : ''
-                    }`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  {item.label}
-                </li>
-              ))}
-            </ul>
-          </div>
+    // <Container>
+    //   <div className="border-b-[1px] border-b-zinc-400 pb-4 flex-col items-center justify-between">
+    //     <h2 className="text-2xl font-bold">Admin</h2>
+    //     <div className="flex gap-3">
+    //       {/* Sidebar */}
+    //       <div className="w-1/4 p-4 border border-gray-400 bg-white rounded-[1rem]">
+    //         <h2 className="text-2xl font-bold mb-4">Sidebar</h2>
+    //         <ul>
+    //           {sidebarItems.map((item) => (
+    //             <li
+    //               key={item.id}
+    //               className={`cursor-pointer ${selectedItem === item ? 'font-bold' : ''
+    //                 }`}
+    //               onClick={() => handleItemClick(item)}
+    //             >
+    //               {item.label}
+    //             </li>
+    //           ))}
+    //         </ul>
+    //       </div>
 
-          {/* Main Content */}
-          <div className="flex-1 p-4 border border-gray-400 bg-white rounded-[1rem]">
-            {selectedItem ? (
-              <div className="relative">
-                <h2 className="text-2xl font-bold mb-4">{selectedItem.label}</h2>
-                <p>{selectedItem.content}</p>
-              </div>
-            ) : (
-              <p>Select an item from the sidebar.</p>
-            )}
-          </div>
+    //       {/* Main Content */}
+    //       <div className="flex-1 p-4 border border-gray-400 bg-white rounded-[1rem]">
+    //         {selectedItem ? (
+    //           <div className="relative">
+    //             <h2 className="text-2xl font-bold mb-4">{selectedItem.label}</h2>
+    //             <p>{selectedItem.content}</p>
+    //           </div>
+    //         ) : (
+    //           <p>Select an item from the sidebar.</p>
+    //         )}
+    //       </div>
+    //     </div>
+    //   </div>
+    // </Container>
+    <Container>
+      <div className="flex flex-col lg:flex-row h-screen">
+
+        {/* Sidebar */}
+        <div className="lg:w-1/4 border-r border-gray-200 p-4">
+
+          <h2 className="text-2xl font-bold mb-4">Pages</h2>
+
+          <ul className="space-y-2 flex items-center bg-white py-2 px-5 font-bold justify-between lg:flex-col lg:bg-transparent lg:items-start">
+            {sidebarItems.map((item) => (
+              <li
+                key={item.id}
+                className={`cursor-pointer ${selectedItem === item ? 'font-bold' : ''}`}
+                onClick={() => handleItemClick(item)}
+              >
+                {item.label}
+              </li>
+            ))}
+          </ul>
+
         </div>
+
+        {/* Main content */}
+        <div className="flex-1 p-4 relative">
+
+          <header className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-bold">Robotech Panel</h2>
+          </header>
+
+          {selectedItem ? (
+            <div className="">
+              <h3 className="text-xl font-bold mb-2">{selectedItem.label} Page</h3>
+              <p className="text-gray-600">{selectedItem.content}</p>
+            </div>
+          ) : (
+            <p className="font-bold text-lg flex items-center justify-center bg-white h-[500px] mb-5 text-gray-600">Select an item from the sidebar.</p>
+          )}
+
+        </div>
+
       </div>
     </Container>
   );

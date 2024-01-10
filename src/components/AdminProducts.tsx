@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
+  const [toggleNewCat, setToggleNewCat] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedCat, setSelectedCat] = useState<string | null>(null);
   const [newCategory, setNewCategory] = useState<string>("");
@@ -175,7 +176,7 @@ const AdminComponent = () => {
           {jsonData.length > 0 && (
             <div className="mb-5">
               <label htmlFor="sectionDropdown" className="font-bold mb-2">
-                Select Section:
+                Select Category:
               </label>
               <select
                 id="sectionDropdown"
@@ -208,19 +209,32 @@ const AdminComponent = () => {
               >
                 Delete {selectedCat} Category
               </button>
-              <input
-                type="text"
-                placeholder="New Category"
-                className="w-full p-2 border mt-3 border-gray-300 rounded"
-                value={newCategory}
-                onChange={handleCategoryChange}
-              />
-              <button
-                className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                onClick={handleAddCategory}
-              >
-                Add Category
-              </button>
+              <div>
+                <span
+                  onClick={() => setToggleNewCat(false)}
+                  className={`${toggleNewCat ? "block" : "hidden"}`}>Category not exist ? <span className=" text-blue-400">add category</span></span>
+                <div className={`${toggleNewCat ? "hidden" : "block"}`}>
+                  <input
+                    type="text"
+                    placeholder="New Category"
+                    className="w-full p-2 border mt-3 border-gray-300 rounded"
+                    value={newCategory}
+                    onChange={handleCategoryChange}
+                  />
+                  <button
+                    className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                    onClick={handleAddCategory}
+                  >
+                    Add Category
+                  </button>
+                  <button
+                    className="mt-2 ml-3 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => setToggleNewCat(true)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </div>
           )}
           {selectedSectionIndex !== null && jsonData[selectedSectionIndex] && selectedCat && (
@@ -320,7 +334,7 @@ const AdminComponent = () => {
                         onChange={(e) => handleInputChange(e, "image")}
                       />
                     </div>
-                    <div className="flex-1 mb-2 lg:pr-4">
+                    <div className="flex-1 mb-2  lg:pr-4">
                       <input
                         type="text"
                         placeholder="Description"
