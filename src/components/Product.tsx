@@ -12,14 +12,18 @@ import toast, { Toaster } from "react-hot-toast";
 interface Item {
   products: ProductType[];
   prefix: string
+  categoryName:string
 }
 
-const Product = ({ products, prefix }: Item) => {
+const Product = ({ products, prefix, categoryName}: Item) => {
   const { favoriteData } = useSelector((state: StateProps) => state.pro);
   const isFavorite = (productId: any) => {
     return favoriteData.some((favoriteItem) => favoriteItem.id === productId);
   };
   const dispatch = useDispatch();
+  const handleStock = ()=>{
+
+  }
   return (
     <div className="flex-1">
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-5 mx-auto">
@@ -28,7 +32,7 @@ const Product = ({ products, prefix }: Item) => {
           key={`${item.id}_${item.title}`}
           className="relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
         >
-          <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
+          <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: categoryName } }}>
             <div className="block h-[200px] bg-gray-200 aspect-w-2 aspect-h-3">
               <img
                 src={item?.image}
@@ -71,6 +75,7 @@ const Product = ({ products, prefix }: Item) => {
                 onClick={() => {
                   dispatch(addToCart(item));
                   toast.success(`${item?.title} is added to Cart!`);
+                  handleStock()
                 }}
                 className="uppercase text-xs font-semibold text-white bg-designColor py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
               >

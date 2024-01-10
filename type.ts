@@ -1,4 +1,5 @@
 export interface ProductType {
+  categoryName: string | number | boolean | readonly string[] | readonly number[] | readonly boolean[] | null | undefined;
   count: ReactNode;
   id: number | null | undefined;
   title: string;

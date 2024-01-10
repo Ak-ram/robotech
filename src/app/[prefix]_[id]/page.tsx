@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/proSlice";
-import { getProduct } from "@/helpers/getProduct";
+import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import Container from "@/components/Container";
 import FormattedPrice from "@/components/FormattedPrice";
@@ -21,7 +21,8 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const p = await getProduct(id, prefix??"");
+        const p = await getOneProduct(prefix,id);
+        console.log(p)
         setProduct(p);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -77,12 +78,10 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
         {product?.isNew && (
           <p className="text-designColor font-semibold">New Arrival</p>
         )}
+       
         <p>
-          Category: <span className="font-semibold">{product?.category}</span>
-        </p>
-        <p>
-          Quantity:{" "}
-          <span className="font-semibold">{product?.quantity}</span>
+          In stock:{" "}
+          <span className="font-semibold">{product?.count} pieces</span>
         </p>
         <p className="">{ product?.description}</p>
       </div>
