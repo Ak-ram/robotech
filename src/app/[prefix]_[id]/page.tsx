@@ -8,6 +8,7 @@ import { ProductType } from "../../../type";
 import Container from "@/components/Container";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
+import { Gift } from "lucide-react";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -39,56 +40,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   const dispatch = useDispatch();
 
   return (
-    // <Container className="flex items-center flex-col md:flex-row px-4 xl:px-0">
-    //   <div className="leaf md:bg-none rounded-[.5rem] bg-fixed w-full md:w-1/2 overflow-hidden bg-zinc-50 md:bg-transparent flex items-center justify-center p-5">
-    //     <img
-    //       src={product?.image}
-    //       alt="product image"
-    //       width={500}
-    //       height={500}
-    //       className="w-[250px] sm:w-[50%] md:w-[100%] lg:w-[70%] border rounded-[.5rem] transform transition-transform hover:scale-110 duration-500"
-    //     />
-    //   </div>
-    //   <div className="w-full mt-5 md:w-1/2 flex flex-col gap-2">
-    //     <h2 className="text-3xl font-semibold">{product?.title}</h2>
-    //     <p className="flex items-center gap-10">
-    //       <FormattedPrice
-    //         amount={product?.price || 0}
-    //         className="text-lg font-semibold"
-    //       />
-    //       <FormattedPrice
-    //         amount={product?.previousPrice || 0}
-    //         className="text-zinc-500 line-through"
-    //       />
-    //     </p>
-    //     <p>
-    //       You saved{" "}
-    //       <FormattedPrice
-    //         amount={
-    //           (product?.previousPrice! - product?.price!) || 0
-    //         }
-    //         className="text-base font-semibold bg-designColor underline underline-offset-2"
-    //       />{" "}
-    //       from this product.
-    //     </p>
-    //     <button
-    //       onClick={() => dispatch(addToCart(product))}
-    //       className="bg-designColor/80 text-zinc-700 px-6 py-2 font-medium rounded-md hover:bg-designColor hover:text-black cursor-pointer duration-200 hover:shadow-lg w-40 my-2"
-    //     >
-    //       add to cart
-    //     </button>
-    //     {product?.isNew && (
-    //       <p className="text-designColor font-semibold">New Arrival</p>
-    //     )}
-
-    //     <p>
-    //       In stock:{" "}
-    //       <span className="font-semibold">{product?.count || 0} pieces</span>
-    //     </p>
-    //     <p className="">{ product?.description}</p>
-    //   </div>
-    // </Container>
-    <section className="py-12 sm:py-16">
+    <section className="py-6 sm:py-12">
       <div className="container mx-auto px-4">
         <nav className="flex">
           <ol role="list" className="flex items-center">
@@ -165,7 +117,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 <span className="text-base">/piece</span>
               </div>
 
-              <button type="button" className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
+              <button onClick={() => dispatch(addToCart(product))} type="button" className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
                 <svg xmlns="http://www.w3.org/2000/svg" className="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
@@ -178,15 +130,13 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 <svg className="mr-2 block h-5 w-5 align-middle text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" className=""></path>
                 </svg>
-                Save: <FormattedPrice amount={(product?.previousPrice! - product?.price!)} />
+                You saved:<span className="mr-1"></span> <FormattedPrice amount={(product?.previousPrice! - product?.price!)} /> <span className="ml-1"></span> from this product.
               </li>
 
-              <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                <svg className="mr-2 block h-5 w-5 align-middle text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" className=""></path>
-                </svg>
-                Cancel Anytime
-              </li>
+              {product?.isNew ? <li className="flex items-center text-left text-sm font-medium text-gray-600">
+                <Gift size={18} className="mr-2"/>
+                Newly added
+              </li> : null}
             </ul>
           </div>
 
@@ -194,20 +144,14 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
             <div className="border-b border-gray-300">
               <nav className="flex gap-4">
                 <a href="#" title="" className="border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800"> Description </a>
-
-                <a href="#" title="" className="inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-gray-600">
-                  Reviews
-                  <span className="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100"> 1,209 </span>
-                </a>
               </nav>
             </div>
 
             <div className="mt-8 flow-root sm:mt-12">
               <h1 className="text-3xl font-bold">Delivered To Your Door</h1>
-              <p className="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia accusantium nesciunt fuga.</p>
-              <h1 className="mt-8 text-3xl font-bold">From the Fine Farms of Brazil</h1>
-              <p className="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio numquam enim facere.</p>
-              <p className="mt-4">Amet consectetur adipisicing elit. Optio numquam enim facere. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore rerum nostrum eius facere, ad neque.</p>
+              <p className="mt-4">{product?.description}</p>
+              <h1 className="mt-8 text-3xl font-bold">Quick Order ?</h1>
+              <p className="mt-4">Contact Us in Whatsapp : 01066745733</p>
             </div>
           </div>
         </div>
