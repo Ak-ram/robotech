@@ -76,8 +76,8 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
 
         <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3 lg:row-end-1">
-            <div className="lg:flex lg:items-start">
-              <div className="lg:order-2 lg:ml-5">
+            <div className="lg:flex lg:items-center">
+              <div className="flex-1 p-10 lg:p-5 lg:order-2 lg:ml-5">
                 <div className="max-w-xl overflow-hidden rounded-lg">
                   <img className="h-full w-full max-w-full object-cover" src={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} alt="" />
 
@@ -85,7 +85,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
               </div>
 
               <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
-                <div className="flex gap-3 flex-row items-start lg:flex-col">
+                <div className="flex gap-3 flex-row justify-center items-start lg:flex-col">
                   {product?.image1 ? <button onClick={() => setMainImg(1)} type="button" className="p-2 flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center">
                     <img className="h-full w-full object-cover" src={product?.image1} alt="" />
                   </button> : null}
