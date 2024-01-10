@@ -10,11 +10,12 @@ import Link from 'next/link'
 import { deleteFavorite } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
 import FavImg from "@/assets/fav.png"
+import Container from "./Container";
 const Wish = () => {
     const { favoriteData } = useSelector((state: StateProps) => state.pro);
     const dispatch = useDispatch();
     return (
-        <>
+        <Container>
             {favoriteData.length > 0 ? (
                 <div className="mt-5 flex flex-col">
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -41,11 +42,11 @@ const Wish = () => {
                                             className="flex items-center gap-3"
                                         >
                                             <img
-                                                src={item?.image}
+                                                src={item?.image1}
                                                 alt="proudct image"
                                                 width={500}
                                                 height={500}
-                                                className="w-24 object-contain"
+                                                className="w-20 object-contain"
                                             />
                                             <p className="text-ellipsis overflow-hidden whitespace-nowrap w-[70%] text-base font-medium text-black">
                                                 {item?.title}
@@ -100,7 +101,7 @@ const Wish = () => {
                     },
                 }}
             />
-        </>
+        </Container>
     );
 };
 

@@ -203,16 +203,19 @@ const AdminComponent = () => {
                 }
                 {/* </optgroup> */}
               </select>
-              <button
-                className="text-xs rounded-md absolute top-0 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
-                onClick={handleDeleteCategory}
-              >
-                Delete {selectedCat} Category
-              </button>
+              {
+                selectedCat ? <button
+                  className="text-xs rounded-md absolute top-0 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
+                  onClick={handleDeleteCategory}
+                >
+                  Delete {selectedCat} Category
+                </button> : null
+              }
+
               <div>
                 <span
                   onClick={() => setToggleNewCat(false)}
-                  className={`${toggleNewCat ? "block" : "hidden"}`}>Category not exist ? <span className=" text-blue-400">add category</span></span>
+                  className={`${toggleNewCat ? "block" : "hidden"} mt-2`}>Category not exist ? <span className="cursor-pointer text-blue-400">add category</span></span>
                 <div className={`${toggleNewCat ? "hidden" : "block"}`}>
                   <input
                     type="text"
