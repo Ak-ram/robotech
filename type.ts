@@ -1,12 +1,12 @@
 export interface ProductType {
   image1: string | undefined;
   image2: string | undefined;
+  image3: string | undefined;
   categoryName: string | number | boolean | readonly string[] | readonly number[] | readonly boolean[] | null | undefined;
-  count: ReactNode;
+  count: number;
   id: number | null | undefined;
   title: string;
   description: string;
-  image: string;
   price: number;
   previousPrice: number;
   isNew: boolean;
