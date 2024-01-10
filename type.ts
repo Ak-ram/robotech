@@ -1,4 +1,10 @@
 export interface ProductType {
+  studentsEnrolled: ReactNode;
+  enrollmentOpen: any;
+  duration: ReactNode;
+  instructor: ReactNode;
+  level: ReactNode;
+  creator: ReactNode;
   image1: string | undefined;
   image2: string | undefined;
   image3: string | undefined;
