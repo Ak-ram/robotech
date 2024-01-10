@@ -134,7 +134,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
               </li>
 
               {product?.isNew ? <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                <Gift size={18} className="mr-2"/>
+                <Gift size={18} className="mr-2" />
                 Newly added
               </li> : null}
             </ul>
@@ -148,7 +148,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
             </div>
 
             <div className="mt-8 flow-root sm:mt-12">
-              <h1 className="text-3xl font-bold">Delivered To Your Door</h1>
+              <h1 className="text-3xl font-bold">More details about {product?.title}</h1>
               <p className="mt-4">{product?.description}</p>
               <h1 className="mt-8 text-3xl font-bold">Quick Order ?</h1>
               <p className="mt-4">Contact Us in Whatsapp : 01066745733</p>
