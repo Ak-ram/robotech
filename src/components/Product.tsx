@@ -21,7 +21,7 @@ const Product = ({ products, prefix }: Item) => {
   };
   const dispatch = useDispatch();
   return (
-    <div className="max-h-[800px] flex-1 overflow-y-auto">
+    <div className="flex-1">
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-5 mx-auto">
       {products?.map((item) => (
         <div
@@ -29,7 +29,7 @@ const Product = ({ products, prefix }: Item) => {
           className="relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
         >
           <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
-            <div className="aspect-w-2 aspect-h-3">
+            <div className="block h-[200px] bg-gray-200 aspect-w-2 aspect-h-3">
               <img
                 src={item?.image}
                 alt="Product image"
@@ -67,15 +67,16 @@ const Product = ({ products, prefix }: Item) => {
               <FormattedPrice amount={item?.price} />
             </p>
             <div className="flex items-center justify-between mt-2">
-              <button
+             {item?.count > 0?  <button
                 onClick={() => {
                   dispatch(addToCart(item));
                   toast.success(`${item?.title} is added to Cart!`);
                 }}
-                className="uppercase font-semibold text-white bg-designColor py-2 px-4 rounded-full hover:bg-opacity-80 duration-300"
+                className="uppercase text-xs font-semibold text-white bg-designColor py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
               >
                 Add to Cart
-              </button>
+              </button>: <span className='uppercase text-xs font-semibold py-1 px-2 rounded-sm hover:bg-opacity-80 duration-300 text-red-500 bg-red-200'>Out of stock</span>}
+              <span className='text-xs flex flex-col items-center justify-center'><b className='text-designColor'>{item?.count}</b> Pieces in stock.</span>
             </div>
           </div>
         </div>

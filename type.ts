@@ -1,4 +1,5 @@
 export interface ProductType {
+  count: ReactNode;
   id: number | null | undefined;
   title: string;
   description: string;
