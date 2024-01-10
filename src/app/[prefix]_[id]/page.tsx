@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/proSlice";
 import { getOneProduct } from "@/helpers/getOneProduct";
@@ -81,7 +80,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
        
         <p>
           In stock:{" "}
-          <span className="font-semibold">{product?.count} pieces</span>
+          <span className="font-semibold">{product?.count || 0} pieces</span>
         </p>
         <p className="">{ product?.description}</p>
       </div>
