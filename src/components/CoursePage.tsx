@@ -44,8 +44,11 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
         <div className="space-y-3">
           <h5 className="text-sm font-medium uppercase text-gray-400">{course?.category}</h5>
           <h1 className="text-3xl font-semibold">{course?.title}</h1>
+          <video className="w-full" height="360" controls>
+            <source src={course?.video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
           <p className="">{course?.description}</p>
-
           <ul className="flex gap-4">
             <li className="flex items-center">
               <span className="mr-1.5 rounded bg-gray-900 px-2 text-sm font-semibold text-white"> {course?.rate} </span>
@@ -74,7 +77,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
 
         <div className="mt-10 bg-white py-2">
           <nav className="flex flex-wrap gap-4">
-            <a href="#" className="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out hover:border-b-purple-600 hover:text-purple-600"> Announcements </a>
+            <a href="#" className="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out border-b-purple-600 text-purple-600"> Announcements </a>
           </nav>
         </div>
 
@@ -95,7 +98,8 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mr-2 w-6">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
                       </svg>
-                      {item} <span className="ml-auto text-sm"> 23 min </span>
+                      {item}
+                      {/* <span className="ml-auto text-sm"> 23 min </span> */}
                     </li>
                   )))}
 
