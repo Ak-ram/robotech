@@ -71,13 +71,13 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
               <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
-             {course?.studentsEnrolled} Enrolled
+              {course?.studentsEnrolled} Enrolled
             </li>
           </ul>
           <ul className="sm:flex items-center text-sm text-gray-500">
             <li>Created by <a href="#" className="font-bold"> {course?.instructor} </a></li>
             <span className="hidden sm:inline mx-3 text-2xl">·</span>
-            <li>Last updated 01/2022</li>
+            <li>Last updated </li>
           </ul>
         </div>
 
@@ -103,7 +103,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
               <div className="relative ml-4 cursor-pointer select-none items-center py-4 pr-2">
-                <h3 className="text-base font-bold text-gray-600 lg:text-base">What are Closures</h3>
+                <h3 className="text-base font-bold text-gray-600 lg:text-base">In this course</h3>
               </div>
               <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
                 <ul className="space-y-1 font-semibold text-gray-600 mb-6">
@@ -150,12 +150,12 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
               <div className="relative ml-4 cursor-pointer select-none items-center py-4 pr-2">
-                <h3 className="text-base font-bold text-gray-600 lg:text-base">I care about javascript</h3>
+                <h3 className="text-base font-bold text-gray-600 lg:text-base">About the Instructor</h3>
               </div>
               <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
-
-
-                <ul className="space-y-1 font-semibold text-gray-600 mb-6">
+                <ul className="pl-5 space-y-1 font-semibold text-gray-600 mb-6">
+                  <li>Name: {course?.instructor}</li>
+                  <li>Info: {course?.instructor}</li>
                 </ul>
 
               </div>
@@ -168,35 +168,16 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
               <div className="relative ml-4 cursor-pointer select-none items-center py-4 pr-2">
-                <h3 className="text-base font-bold text-gray-600 lg:text-base">Who made javascript</h3>
+                <h3 className="text-base font-bold text-gray-600 lg:text-base">More Details</h3>
               </div>
               <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
-
-
                 <ul className="space-y-1 font-semibold text-gray-600 mb-6">
                 </ul>
 
               </div>
             </label>
           </li>
-          <li className="text-left">
-            <label htmlFor="accordion-4" className="relative flex flex-col rounded-md border border-gray-100 shadow-md">
-              <input className="peer hidden" type="checkbox" id="accordion-4" />
-              <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-0 top-4 ml-auto mr-5 h-4 text-gray-500 transition peer-checked:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-              <div className="relative ml-4 cursor-pointer select-none items-center py-4 pr-2">
-                <h3 className="text-base font-bold text-gray-600 lg:text-base">Why they made javascript</h3>
-              </div>
-              <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
 
-
-                <ul className="space-y-1 font-semibold text-gray-600 mb-6">
-                </ul>
-
-              </div>
-            </label>
-          </li>
         </ul>
       </div>
 
