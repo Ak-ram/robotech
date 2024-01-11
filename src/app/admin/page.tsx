@@ -539,7 +539,7 @@ const page = () => {
     //   </div>
     // </Container>
     <Container>
-      <div className="flex flex-col lg:flex-row h-screen">
+      <div className="flex flex-col lg:flex-row">
 
         {/* Sidebar */}
         <div className="lg:w-1/4 border-r border-gray-200 p-4">

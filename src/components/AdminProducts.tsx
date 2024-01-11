@@ -18,8 +18,11 @@ const AdminComponent = () => {
     previousPrice: 0,
     description: "",
     count: 0,
-    image: "",
-    brand: ""
+    image1: "",
+    image2: "",
+    image3: "",
+    brand: "",
+    isNew: false
   });
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number | null>(null);
 
@@ -48,8 +51,11 @@ const AdminComponent = () => {
       previousPrice: 0,
       description: "",
       count: 0,
-      image: "",
-      brand: ""
+      image1: "",
+      image2: "",
+      image3: "",
+      brand: "",
+      isNew: false,
     });
     setError(null);
   };
@@ -81,7 +87,7 @@ const AdminComponent = () => {
       !editedItem.previousPrice ||
       !editedItem.description ||
       !editedItem.count ||
-      !editedItem.image ||
+      !editedItem.image1 ||
       !editedItem.brand
     ) {
       toast.error("All fields are required");
@@ -250,10 +256,13 @@ const AdminComponent = () => {
                     <th className="border px-4 py-2">Title</th>
                     <th className="border px-4 py-2">Price</th>
                     <th className="border px-4 py-2">Previous Price</th>
-                    <th className="border px-4 py-2">Image</th>
+                    <th className="border px-4 py-2">Image1</th>
+                    <th className="border px-4 py-2">Image2</th>
+                    <th className="border px-4 py-2">Image3</th>
                     <th className="border px-4 py-2">Description</th>
                     <th className="border px-4 py-2">Count</th>
                     <th className="border px-4 py-2">Brand</th>
+                    <th className="border px-4 py-2">Is New</th>
                     <th className="border px-4 py-2">Actions</th>
                   </tr>
                 </thead>
@@ -264,10 +273,13 @@ const AdminComponent = () => {
                       <td className="border px-4 py-2">{item.title}</td>
                       <td className="border px-4 py-2">{item.price}</td>
                       <td className="border px-4 py-2">{item.previousPrice}</td>
-                      <td className="border px-4 py-2"><img src={item.image} alt={`Item ${item.id}`} width="70" /></td>
+                      <td className="border px-4 py-2"><img src={item.image1} alt={`Item ${item.id}`} width="70" /></td>
+                      <td className="border px-4 py-2"><img src={item.image2} alt={`Item ${item.id}`} width="70" /></td>
+                      <td className="border px-4 py-2"><img src={item.image3} alt={`Item ${item.id}`} width="70" /></td>
                       <td className="border px-4 py-2">{item.description}</td>
                       <td className="border px-4 py-2">{item.count}</td>
                       <td className="border px-4 py-2">{item.brand}</td>
+                      {/* <td className="border px-4 py-2">{item.isNew ? "Yes": "No"}</td> */}
                       <td className="border px-2 py-2">
                         <button
                           className="mr-1"
@@ -331,11 +343,32 @@ const AdminComponent = () => {
                     <div className="flex-col mb-2 lg:pr-4">
                       <input
                         type="text"
-                        placeholder="Image"
+                        placeholder="Image1"
                         className="p-2 w-full border border-gray-300 rounded"
-                        value={editedItem.image}
-                        onChange={(e) => handleInputChange(e, "image")}
+                        value={editedItem.image1}
+                        onChange={(e) => handleInputChange(e, "image1")}
                       />
+                      
+                    </div>
+                    <div className="flex-col mb-2 lg:pr-4">
+                      <input
+                        type="text"
+                        placeholder="Image2"
+                        className="p-2 w-full border border-gray-300 rounded"
+                        value={editedItem.image2}
+                        onChange={(e) => handleInputChange(e, "image2")}
+                      />
+                      
+                    </div>
+                    <div className="flex-col mb-2 lg:pr-4">
+                      <input
+                        type="text"
+                        placeholder="Image3"
+                        className="p-2 w-full border border-gray-300 rounded"
+                        value={editedItem.image3}
+                        onChange={(e) => handleInputChange(e, "image3")}
+                      />
+                      
                     </div>
                     <div className="flex-1 mb-2  lg:pr-4">
                       <input
@@ -364,6 +397,15 @@ const AdminComponent = () => {
                         onChange={(e) => handleInputChange(e, "brand")}
                       />
                     </div>
+                    {/* <div className="flex-col mb-2 lg:pr-4">
+                      <input
+                        type="checkbox"
+                        placeholder="is New ?"
+                        className="p-2 w-full border border-gray-300 rounded"
+                        value={editedItem.brand}
+                        onChange={(e) => handleInputChange(e, "brand")}
+                      />
+                    </div> */}
                   </div>
                   <div className="flex">
                     <button
