@@ -192,60 +192,63 @@ const Cart = () => {
           >
             Reset Cart
           </button>
-          <div className="m-auto w-full shadow-lg border border-zinc-400 rounded-[.5rem] mt-4 bg-white max-w-xl p-4 flex flex-col gap-1">
-            <p className="border-b-[1px] border-b-designColor py-1">
-              Cart Summary
-            </p>
-            <p className="flex items-center justify-between">
-              Total Items <span>{productData.length}</span>
-            </p>
-            <p className="flex items-center justify-between">
-              Price{" "}
-              <span>
-                <FormattedPrice amount={rowPrice} />
-              </span>
-            </p>
-            <p className="flex items-center justify-between">
-              Discount{" "}
-              <span>
-                <FormattedPrice amount={rowPrice - totalAmt} />
-              </span>
-            </p>
-            <p className="flex items-center justify-between">
-              Total Price{" "}
-              <span>
-                <FormattedPrice
-                  amount={totalAmt}
-                  className="font-semibold text-lg"
-                />
-              </span>
-            </p>
-            <div className="flex items-center justify-center gap-1">
-              <span className="flex-1">Pay with:</span>
-              <button
-                onClick={handleCheckout}
-                className="bg-zinc-800 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-black hover:text-white duration-200"
-              >
-                Cards <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={16} /></span>
-              </button>
+          <div className="lg:flex items-start justify-between py-10">
+            <div className="w-full shadow-lg border border-zinc-400 rounded-[.5rem] bg-white max-w-xl p-4 flex flex-col gap-1">
+              <p className="border-b-[1px] border-b-designColor py-1">
+                Cart Summary
+              </p>
+              <p className="flex items-center justify-between">
+                Total Items <span>{productData.length}</span>
+              </p>
+              <p className="flex items-center justify-between">
+                Price{" "}
+                <span>
+                  <FormattedPrice amount={rowPrice} />
+                </span>
+              </p>
+              <p className="flex items-center justify-between">
+                Discount{" "}
+                <span>
+                  <FormattedPrice amount={rowPrice - totalAmt} />
+                </span>
+              </p>
+              <p className="flex items-center justify-between">
+                Total Price{" "}
+                <span>
+                  <FormattedPrice
+                    amount={totalAmt}
+                    className="font-semibold text-lg"
+                  />
+                </span>
+              </p>
+              <div className="flex items-center justify-center gap-1">
+                <span className="flex-1">Pay with:</span>
+                <button
+                  onClick={handleCheckout}
+                  className="text-xs bg-zinc-800 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-black hover:text-white duration-200"
+                >
+                  Cards <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={16} /></span>
+                </button>
 
-              <button
-                onClick={() => setIsVodafoneCashOpened(true)}
-                className="bg-red-600 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-red-700 hover:text-white duration-200"
-              >
-                Vodafone Cash <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={16} /></span>
-              </button>
-            </div>
-            {/* <div>
-<span>Take a screenshot to the product you need</span>
+                <button
+                  onClick={() => setIsVodafoneCashOpened(true)}
+                  className="text-xs bg-red-600 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-red-700 hover:text-white duration-200"
+                >
+                  Vodafone Cash
+                </button>
+              </div>
+
+              {/* <div>
+<span></span>
 <span>Send price to this number: 010122-----</span>
 <span>Contact us on whatsapp via 010122-----</span>
 </div> */}
 
-
-
+            </div>
+            <div className="">
+              <VodafoneCash isVodafoneCashOpened={isVodafoneCashOpened} setIsVodafoneCashOpened={setIsVodafoneCashOpened} />
+            </div>
           </div>
-          <VodafoneCash isVodafoneCashOpened={isVodafoneCashOpened} setIsVodafoneCashOpened={setIsVodafoneCashOpened} />
         </div>
       ) : (
         <div className="py-10 flex flex-col gap-1 items-center justify-center">
