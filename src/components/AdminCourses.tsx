@@ -155,7 +155,7 @@ const AdminCourses = () => {
     return (
         <div className={`lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
             <h2 className="font-bold mb-4">Current courses data:</h2>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto max-w-screen-lg">
                 <table className="min-w-full border border-gray-300 text-sm">
                     <thead>
                         <tr className="bg-zinc-800 text-white ">
@@ -229,8 +229,8 @@ const AdminCourses = () => {
                         {editIndex === -1 ? "Add New Item" : "Edit Item"}
                     </h2>
                     {error && <p className="text-red-500 mb-2">{error}</p>}
-                    <div className="flex flex-col lg:flex-row">
-                        <div className=" mb-2 lg:pr-4">
+                    <div className="flex flex-col lg:flex-row mb-2 lg:pr-4 flex-wrap">
+                        <div className="lg:w-1/4  mb-2 lg:pr-4">
                             <input
                                 type="text"
                                 placeholder="ID"
@@ -239,7 +239,7 @@ const AdminCourses = () => {
                                 onChange={(e) => handleInputChange(e, "id")}
                             />
                         </div>
-                        <div className=" mb-2 lg:pr-4">
+                        <div className="lg:w-1/4  mb-2 lg:pr-4">
                             <input
                                 type="text"
                                 placeholder="Title"
