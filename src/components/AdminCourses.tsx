@@ -100,7 +100,7 @@ const AdminCourses = () => {
             !editedItem.price ||
             !editedItem.previousPrice ||
             !editedItem.description ||
-            !editedItem.enrollmentOpen ||
+            // !editedItem.enrollmentOpen ||
             !editedItem.instructor ||
             !editedItem.instructor_info ||
             !editedItem.duration ||
@@ -189,7 +189,7 @@ const AdminCourses = () => {
                                 <td className="border px-4 py-2">{item.previousPrice}</td>
                                 <td className="border px-4 py-2"><img src={item.image} width="70" /></td>
                                 <td className="border px-4 py-2">{item.description}</td>
-                                <td className="border px-4 py-2">{item.video}</td>
+                                <td className="border px-4 py-2"><video src={item.video} width={70}/></td>
                                 <td className="border px-4 py-2">{item.rate}</td>
                                 <td className="border px-4 py-2">{item.studentsEnrolled}</td>
                                 <td className="border px-4 py-2">{item.enrollmentOpen}</td>
