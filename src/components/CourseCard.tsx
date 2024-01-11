@@ -104,8 +104,8 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
                         //       </div>
                         //     </div>
                         //   </div>
-                        <>
 
+                        <>
                             <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: categoryName } }}
                                 className="border shadow hover:shadow-sm col-span-2 text-left text-gray-600 hover:text-gray-700">
                                 <div className="group flex relative h-full w-full overflow-hidden">
@@ -118,15 +118,13 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
                                     className="hover:underline mt-3 overflow-hidden text-2xl font-semibold">{item?.title} </Link>
                                 <p className="overflow-hidden text-sm">{item?.description}</p>
                                 <span className="text-sm font-semibold text-gray-500 hover:text-gray-700">{item?.instructor}</span>
-
-                                <div className="lg:flex flex-col text-gray-700 sm:flex-row">
+                                <div className="text-gray-700">
                                     <div className="flex flex-wrap h-fit gap-2 text-sm font-medium">
                                         <div className="rounded-full bg-green-100 px-2 py-0.5 text-green-700">level: {item?.level}</div>
                                         <div className="rounded-full bg-zinc-100 px-2 py-0.5 text-zinc-700">{item?.duration} weeks</div>
                                         <div className="rounded-full bg-orange-100 px-2 py-0.5 text-orange-700">{item?.studentsEnrolled} students</div>
                                         <div className="rounded-full bg-blue-100 px-2 py-0.5 text-blue-700"><FormattedPrice amount={item.price} /></div>
                                     </div>
-                                    {/* {item.enrollmentOpen ?  */}
                                     <button disabled={item.enrollmentOpen ? false : true} className={`${item.enrollmentOpen ? "bg-orange-600 text-white" : "bg-red-200 text-red-500 font-bold"} my-5 rounded-md px-5 py-2 text-sm text-center transition sm:ml-auto`}>
                                         {!item.enrollmentOpen ? 'Enrolment closed' : 'Enroll Now'}
                                     </button>
