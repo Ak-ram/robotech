@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react'
 import Link from "next/link";
-import { ProductType, StateProps } from "../../type";
+import { CourseType, ProductType, StateProps } from "../../type";
 import Image from "next/image";
 import { Heart, ShoppingBasket, ShoppingCart } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
@@ -10,7 +10,7 @@ import { addToCart, addToFavorite } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
 
 interface Item {
-    products: ProductType[];
+    products: CourseType[];
     prefix: string
     categoryName: string
 }
@@ -119,8 +119,8 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
                                 <p className="overflow-hidden text-sm">{item?.description}</p>
                                 <span className="text-sm font-semibold text-gray-500 hover:text-gray-700">{item?.instructor}</span>
 
-                                <div className="flex flex-col text-gray-700 sm:flex-row">
-                                    <div className="flex h-fit space-x-2 text-sm font-medium">
+                                <div className="lg:flex flex-col text-gray-700 sm:flex-row">
+                                    <div className="flex flex-wrap h-fit gap-2 text-sm font-medium">
                                         <div className="rounded-full bg-green-100 px-2 py-0.5 text-green-700">level: {item?.level}</div>
                                         <div className="rounded-full bg-zinc-100 px-2 py-0.5 text-zinc-700">{item?.duration} weeks</div>
                                         <div className="rounded-full bg-orange-100 px-2 py-0.5 text-orange-700">{item?.studentsEnrolled} students</div>

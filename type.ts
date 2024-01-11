@@ -35,7 +35,8 @@ export interface CourseType {
   startDateTime: string,
   level: string,
   index: string[],
-  last_updated: string
+  last_updated: string,
+  more_details: string
 }
 
 

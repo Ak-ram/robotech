@@ -6,8 +6,8 @@ import { addToCart } from "@/redux/proSlice";
 import { getOneProduct } from "@/helpers/getOneProduct";
 import { CourseType } from "../../type";
 import FormattedPrice from "@/components/FormattedPrice";
-import Link from "next/link";
 import { Gift } from "lucide-react";
+import toast from "react-hot-toast";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -44,7 +44,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
         <div className="space-y-3">
           <h5 className="text-sm font-medium uppercase text-gray-400">{course?.category}</h5>
           <h1 className="text-3xl font-semibold">{course?.title}</h1>
-          <video className="w-full" height="360" controls>
+          <video className="w-full p-5" height="360" controls>
             <source src={course?.video} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
@@ -72,9 +72,22 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
             <li>Created by <a href="#" className="font-bold"> {course?.instructor} </a></li>
             <span className="hidden sm:inline mx-3 text-2xl">·</span>
             <li>Last updated {course?.last_updated} </li>
+
           </ul>
         </div>
-
+        <div className="bg-white p-3 rounded-[.5rem] flex gap-4 items-center">
+          
+          <div className="flex-1">Price: <FormattedPrice amount={course?.price!} /></div>
+          {course?.enrollmentOpen ? <button
+            onClick={() => {
+              dispatch(addToCart(course));
+              toast.success(`${course?.title} is added to Cart!`);
+            }}
+            className="uppercase text-xs font-semibold text-white bg-designColor py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
+          >
+            Add to Cart
+          </button> : null}
+        </div>
         <div className="mt-10 bg-white py-2">
           <nav className="flex flex-wrap gap-4">
             <a href="#" className="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out border-b-purple-600 text-purple-600"> Announcements </a>
@@ -137,9 +150,9 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                 <h3 className="text-base font-bold text-gray-600 lg:text-base">More Details</h3>
               </div>
               <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
-                <ul className="space-y-1 font-semibold text-gray-600 mb-6">
-                </ul>
-
+                <p className="px-4 font-semibold text-gray-600 mb-6">
+                  {course?.more_details}
+                </p>
               </div>
             </label>
           </li>
