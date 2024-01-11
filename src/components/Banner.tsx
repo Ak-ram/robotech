@@ -4,7 +4,7 @@ import Link from "next/link";
 import Slider, { Settings } from "react-slick";
 import Image from "next/image";
 import { Clock, Smartphone, Map, MailPlus } from "lucide-react";
-import { getSlides } from "@/helpers/getSlides";
+import { getSlidesData } from "@/helpers/getSlidesData";
 
 interface BannerProps { }
 
@@ -80,7 +80,7 @@ const Banner: React.FC<BannerProps> = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const slideList = await getSlides();
+        const slideList = await getSlidesData();
         setSlides(slideList);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -112,8 +112,8 @@ const Banner: React.FC<BannerProps> = () => {
                 />
               </div>
               <div className="h-300 p-5 lg:absolute lg:top-1/2 lg:left-2/3 transform lg:-translate-x-1/2 lg:-translate-y-1/2 flex flex-col items-center justify-center gap-5">
-                <p className="text-2xl font-bold uppercase text-center">{slide?.title}</p>
-                <p className="w-96 px-4 text-center text-zinc-600">{slide?.description}</p>
+                <p className="text-2xl font-bold uppercase text-center">{slide?.heading}</p>
+                <p className="w-96 px-4 text-center text-zinc-600">{slide?.sub_heading}</p>
                 <Link href={slide?.link_url} passHref>
                   <span className="text-base font-medium text-white bg-designColor rounded-md px-4 py-2">{slide?.link_text}</span>
                 </Link>
