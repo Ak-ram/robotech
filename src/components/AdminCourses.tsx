@@ -99,7 +99,6 @@ const AdminCourses = () => {
             !editedItem.title ||
             !editedItem.price ||
             !editedItem.previousPrice ||
-            !editedItem.studentsEnrolled ||
             !editedItem.description ||
             !editedItem.enrollmentOpen ||
             !editedItem.instructor ||
@@ -295,7 +294,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                                type="number"
+                                type="string"
                                 placeholder="Rate"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.rate}
@@ -308,7 +307,7 @@ const AdminCourses = () => {
                                 placeholder="Students Enrolled"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.studentsEnrolled}
-                                onChange={(e) => handleInputChange(e, "studentEnrolled")}
+                                onChange={(e) => handleInputChange(e, "studentsEnrolled")}
                             />
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
