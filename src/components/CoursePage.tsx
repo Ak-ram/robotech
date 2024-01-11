@@ -39,7 +39,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
   const dispatch = useDispatch();
 
   return (
-    <><div className="w-screen h-screen overflow-hidden">
+    <><div className="w-screen overflow-hidden">
       <div className="mx-auto max-w-screen-lg px-3 py-10">
         <div className="space-y-3">
           <h5 className="text-sm font-medium uppercase text-gray-400">{course?.category}</h5>
