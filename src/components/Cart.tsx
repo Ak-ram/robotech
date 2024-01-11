@@ -24,6 +24,7 @@ const Cart = () => {
   const [isCheckout, setIsCheckout] = useState(false);
   const [rowPrice, setRowPrice] = useState(0);
   const { productData } = useSelector((state: StateProps) => state.pro);
+  const [isVodafoneCashOpened, setIsVodafoneCashOpened] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   // const { data: session } = useSession();
@@ -229,22 +230,22 @@ const Cart = () => {
               </button>
 
               <button
-                onClick={handleCheckout}
+                onClick={() => setIsVodafoneCashOpened(true)}
                 className="bg-red-600 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-red-700 hover:text-white duration-200"
               >
                 Vodafone Cash <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={16} /></span>
               </button>
             </div>
-{/* <div>
+            {/* <div>
 <span>Take a screenshot to the product you need</span>
 <span>Send price to this number: 010122-----</span>
 <span>Contact us on whatsapp via 010122-----</span>
 </div> */}
-<VodafoneCash />
 
 
 
           </div>
+          <VodafoneCash isVodafoneCashOpened={isVodafoneCashOpened} setIsVodafoneCashOpened={setIsVodafoneCashOpened} />
         </div>
       ) : (
         <div className="py-10 flex flex-col gap-1 items-center justify-center">

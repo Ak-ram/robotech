@@ -1,13 +1,19 @@
-const VodafoneCash = () => {
+const VodafoneCash = ({ isVodafoneCashOpened, setIsVodafoneCashOpened }) => {
     return (
         <>
-            <div className="flex min-h-screen w-screen items-center justify-center bg-gray-100">
-                <div className="flex w-[38rem] flex-col rounded-2xl bg-white px-6 shadow-2xl sm:px-14">
+            <div className={`${isVodafoneCashOpened ? "flex" : "hidden"} mt-10 items-center justify-center bg-gray-100`}>
+                <div className="flex w-[35rem] flex-col rounded-2xl bg-white px-6 shadow-2xl sm:px-14">
                     <div className="flex w-full justify-between self-start pt-12 pb-8">
-                        <h2 className="font-serif text-2xl font-semibold text-gray-700">Choose a trial plan</h2>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                        <h2 className="font-serif text-2xl font-semibold text-gray-700">Follow this steps to checkout</h2>
+
+
+                        <button onClick={() => setIsVodafoneCashOpened(false)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+
+                        </button>
+
                     </div>
                     <div className="flex w-full flex-col pb-8 pt-4">
                         <div className="relative mb-4">
