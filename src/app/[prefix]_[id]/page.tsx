@@ -8,6 +8,7 @@ import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
 import { Gift } from "lucide-react";
+import CoursePage from "@/components/CoursePage";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -37,7 +38,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   }, [id, prefix]);
 
   const dispatch = useDispatch();
-
+if(prefix === 'courses') return <CoursePage searchParams={{}}/>
   return (
     <section className="py-6 sm:py-12">
       <div className="container mx-auto px-4">
