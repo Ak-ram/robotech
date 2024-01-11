@@ -464,6 +464,7 @@ import AdminCourses from "@/components/AdminCourses";
 import Admin3DComponent from "@/components/Admin3DComponent";
 import AdminAbout from "@/components/AdminAbout";
 import AdminFaq from "@/components/AdminFaq";
+import AdminSlides from "@/components/AdminSlides";
 
 const page = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -481,6 +482,7 @@ const page = () => {
     { id: 3, label: 'Courses', content: <AdminCourses /> },
     { id: 4, label: 'About', content: <AdminAbout /> },
     { id: 5, label: 'Faq', content: <AdminFaq /> },
+    { id: 6, label: 'Slides', content: <AdminSlides /> },
     // Add more items as needed
   ];
 
