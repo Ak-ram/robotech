@@ -56,27 +56,62 @@ const Cart = () => {
     setRowPrice(rowAmt);
   }, [productData]);
 
-  //   Stripe Payment
-  const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-  );
+  let thirdStep = async (token) => {
+    let data = {}
+    let request = await fetch('https://accept.paymob.com/api/ecommerce/orders', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    let response = await request?.json()
+    console.log(response)
+  }
+
+  let secondStep = async (token) => {
+    let data = {
+      "auth_token": token,
+      "delivery_needed": "false",
+      "amount_cents": "100",
+      "currency": "EGP",
+      // "items": [
+      //   {
+      //     "name": "ASC1515",
+      //     "amount_cents": "500000",
+      //     "description": "Smart Watch",
+      //     "quantity": "1"
+      //   },
+      //   {
+      //     "name": "ERT6565",
+      //     "amount_cents": "200000",
+      //     "description": "Power Bank",
+      //     "quantity": "1"
+      //   }
+      // ]
+    };
+    let request = await fetch('https://accept.paymob.com/api/ecommerce/orders', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    let response = await request?.json()
+    console.log(response)
+  }
+
+
+
   const handleCheckout = async () => {
     setIsCheckout(true)
     let data = {
-      "api_key": process.env.PAYMOB_API
-  }
-    let request = await fetch('https://accept.paymob.com/api/auth/tokens',{
+      "api_key": process.env.NEXT_PUBLIC_PAYMOB_API
+    }
+    let request = await fetch('https://accept.paymob.com/api/auth/tokens', {
       method: 'post',
-      headers:{'Content-Type':'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
     let response = await request.json();
-    console.log(response)
-  //   if () {
-    
-  //   } else {
-  //     throw new Error("Failed to create Stripe Payment");
-  //   }
+    let token = response.token;
+    secondStep(token)
   };
   // console.log('cart', productData)
   const handleDecreasement = (item: ProductType) => {
