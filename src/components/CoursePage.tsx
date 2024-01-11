@@ -6,7 +6,6 @@ import { addToCart } from "@/redux/proSlice";
 import { getOneProduct } from "@/helpers/getOneProduct";
 import { CourseType } from "../../type";
 import FormattedPrice from "@/components/FormattedPrice";
-import { Gift } from "lucide-react";
 import toast from "react-hot-toast";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -14,7 +13,6 @@ type Props = {
 
 const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
   const [course, setCourse] = useState<CourseType | undefined>();
-  const [mainImg, setMainImg] = useState<1 | 2 | 3>(1);
   const searchPar = useSearchParams();
   const idString = searchPar.get("id");
   const id = Number(idString);
@@ -106,7 +104,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
               </div>
               <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
                 <ul className="space-y-1 font-semibold text-gray-600 mb-6">
-                  {course?.index?.split("|").map((item => (
+                  {course?.index && course?.index?.split("|").map((item => (
                     <li className="flex px-2 sm:px-6 py-2.5 hover:bg-gray-100">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mr-2 w-6">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>

@@ -24,7 +24,7 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
     return (
         <div className="flex-1">
             <div className="mx-auto">
-                <div className="max-w-xl group gap-x-0 mt-10 grid grid-cols-1 overflow-hidden text-gray-700 transition sm:grid-cols-5">
+                <div className="group gap-3 gap-x-0 mt-10 grid grid-cols-1 overflow-hidden text-gray-700 transition sm:grid-cols-5">
 
                     {products?.map((item) => (
                         //   <div
