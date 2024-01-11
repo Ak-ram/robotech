@@ -268,10 +268,10 @@ const AdminCourses = () => {
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
                                 type="text"
-                                placeholder="Image"
+                                placeholder="Poster"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.poster}
-                                onChange={(e) => handleInputChange(e, "image")}
+                                onChange={(e) => handleInputChange(e, "poster")}
                             />
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">

@@ -43,7 +43,12 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
         <div className="space-y-3">
           <h5 className="text-sm font-medium uppercase text-gray-400">{course?.category}</h5>
           <h1 className="text-3xl font-semibold">{course?.title}</h1>
-         
+          <div className="video-player-wrapper">
+      {/* <video height="250" className=" p-5 video-player w-full" controls poster={course?.poster}>
+        <source src={course?.video} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video> */}
+    </div>
           <ReactPlayer poster={course?.poster}  url={course?.video} controls={true} className="w-full p-5" width="100%" height="360"/>
           <p className="">{course?.description}</p>
           <ul className="flex gap-4">
