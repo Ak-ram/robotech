@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductType, StateProps } from "../../type";
-import { Minus, Plus, X , RefreshCw } from "lucide-react";
+import { Minus, Plus, X, RefreshCw } from "lucide-react";
 import {
   decreaseQuantity,
   deleteProduct,
@@ -18,6 +18,7 @@ import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 // import { useSession } from "next-auth/react";
 import EmptyCard from "@/assets/empty.jpeg"
+import VodafoneCash from "./VodafoneCash";
 const Cart = () => {
   const [totalAmt, setTotalAmt] = useState(0);
   const [isCheckout, setIsCheckout] = useState(false);
@@ -125,9 +126,9 @@ const Cart = () => {
                     <th
                       scope="row"
                       className="px-6 py-4 flex items-center gap-3"
-                      style={{width: 'max-content'}}
+                      style={{ width: 'max-content' }}
                     >
-                      <X 
+                      <X
                         onClick={() => {
                           dispatch(deleteProduct(item)),
                             toast.success(
@@ -137,7 +138,7 @@ const Cart = () => {
                         className="w-4 h-4 hover:text-red-600 cursor-pointer duration-200"
                       />
                       <img
-                        src={item?.image}
+                        src={item?.image1}
                         alt="proudct image"
                         width={500}
                         height={500}
@@ -218,14 +219,28 @@ const Cart = () => {
                 />
               </span>
             </p>
+            <div className="flex items-center justify-center gap-1">
+              <span className="flex-1">Pay with:</span>
+              <button
+                onClick={handleCheckout}
+                className="bg-zinc-800 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-black hover:text-white duration-200"
+              >
+                Cards <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={16} /></span>
+              </button>
 
-            <button
-              onClick={handleCheckout}
-              className="bg-zinc-800 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-black hover:text-white duration-200"
-            >
-              Proceed to Checkout <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={16} /></span>
-            </button>
-
+              <button
+                onClick={handleCheckout}
+                className="bg-red-600 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-red-700 hover:text-white duration-200"
+              >
+                Vodafone Cash <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={16} /></span>
+              </button>
+            </div>
+{/* <div>
+<span>Take a screenshot to the product you need</span>
+<span>Send price to this number: 010122-----</span>
+<span>Contact us on whatsapp via 010122-----</span>
+</div> */}
+<VodafoneCash />
 
 
 
