@@ -399,16 +399,16 @@ const AdminComponent = () => {
                         onChange={(e) => handleInputChange(e, "brand")}
                       />
                     </div>
-                    <div className="flex-col mb-2 lg:pr-4">
+                    {/* <div className="flex-col mb-2 lg:pr-4">
                       <input
                         type="quantity"
-                        placeholder=" ?"
+                        placeholder="1"
                         className="p-2 w-full border border-gray-300 rounded"
                         value={editedItem.quantity}
                         onChange={(e) => handleInputChange(e, "quantity")}
                         disabled
                       />
-                    </div>
+                    </div> */}
                   </div>
                   <div className="flex">
                     <button
