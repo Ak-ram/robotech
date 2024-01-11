@@ -24,7 +24,7 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
     return (
         <div className="flex-1">
             <div className="mx-auto">
-                <div className="gap-8 group gap-x-0 mt-10 grid grid-cols-1 overflow-hidden text-gray-700 transition sm:grid-cols-5">
+                <div className="max-w-xl group gap-x-0 mt-10 grid grid-cols-1 overflow-hidden text-gray-700 transition sm:grid-cols-5">
 
                     {products?.map((item) => (
                         //   <div
@@ -115,7 +115,7 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
                             </Link>
                             <div className="pl-5 bg-white rounded-tr-lg rounded-br-lg border-b col-span-3 flex flex-col space-y-3 pr-8 text-left">
                                 <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: categoryName } }}
-                                className="hover:underline mt-3 overflow-hidden text-2xl font-semibold">{item?.title} </Link>
+                                    className="hover:underline mt-3 overflow-hidden text-2xl font-semibold">{item?.title} </Link>
                                 <p className="overflow-hidden text-sm">{item?.description}</p>
                                 <span className="text-sm font-semibold text-gray-500 hover:text-gray-700">{item?.instructor}</span>
 
