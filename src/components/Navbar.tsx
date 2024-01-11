@@ -107,6 +107,7 @@ const Navbar = () => {
                   className={`${isInput ? "p-1 border-b" : "p-0 border-0"} cursor-pointer hover:bg-slate-200 rounded-sm my-1`}
                 >
                   <Link
+                  className='flex items-center justify-between px-3'
                     href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
 
                     {item.title}
