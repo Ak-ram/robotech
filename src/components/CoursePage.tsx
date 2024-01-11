@@ -7,6 +7,7 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { CourseType } from "../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import toast from "react-hot-toast";
+import ReactPlayer from "react-player";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -42,10 +43,8 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
         <div className="space-y-3">
           <h5 className="text-sm font-medium uppercase text-gray-400">{course?.category}</h5>
           <h1 className="text-3xl font-semibold">{course?.title}</h1>
-          <video className="w-full p-5" height="360" controls>
-            <source src={course?.video} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+         
+          <ReactPlayer poster={course?.image1}  url={course?.video} controls={true} className="w-full p-5" width="100%" height="360"/>
           <p className="">{course?.description}</p>
           <ul className="flex gap-4">
             <li className="flex items-center">
