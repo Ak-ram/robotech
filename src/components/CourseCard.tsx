@@ -109,7 +109,7 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
                             <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: categoryName } }}
                                 className="border shadow hover:shadow-sm col-span-2 text-left text-gray-600 hover:text-gray-700">
                                 <div className="group flex relative h-full w-full overflow-hidden">
-                                    <img src={item?.image1} alt="" className="w-full border-none object-contain text-gray-700 transition group-hover:scale-115" />
+                                    <img src={item?.poster} alt="" className="w-full border-none object-contain text-gray-700 transition group-hover:scale-115" />
                                     <span className="absolute top-2 left-2 rounded-full bg-yellow-200 px-2 text-xs font-semibold text-yellow-600">{item?.category}</span>
                                 </div>
                             </Link>

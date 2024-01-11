@@ -162,7 +162,7 @@ const AdminCourses = () => {
                             <th className="border px-4 py-2">Title</th>
                             <th className="border px-4 py-2">Price</th>
                             <th className="border px-4 py-2">Previous Price</th>
-                            <th className="border px-4 py-2">Image</th>
+                            <th className="border px-4 py-2">Poster</th>
                             <th className="border px-4 py-2">Description</th>
                             <th className="border px-4 py-2">Video</th>
                             <th className="border px-4 py-2">Rate</th>
@@ -187,7 +187,7 @@ const AdminCourses = () => {
                                 <td className="border px-4 py-2">{item.title}</td>
                                 <td className="border px-4 py-2">{item.price}</td>
                                 <td className="border px-4 py-2">{item.previousPrice}</td>
-                                <td className="border px-4 py-2"><img src={item.image} width="70" /></td>
+                                <td className="border px-4 py-2"><img src={item.poster} width="70" /></td>
                                 <td className="border px-4 py-2">{item.description}</td>
                                 <td className="border px-4 py-2"><video src={item.video} width={70}/></td>
                                 <td className="border px-4 py-2">{item.rate}</td>
@@ -270,7 +270,7 @@ const AdminCourses = () => {
                                 type="text"
                                 placeholder="Image"
                                 className="p-2 w-full border border-gray-300 rounded"
-                                value={editedItem.image}
+                                value={editedItem.poster}
                                 onChange={(e) => handleInputChange(e, "image")}
                             />
                         </div>

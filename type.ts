@@ -17,9 +17,7 @@ export interface ProductType {
 
 export interface CourseType {
   id: number,
-  image1: string,
-  image2: string,
-  image3: string,
+  poster: string,
   video: string,
   rate: number,
   title: string,

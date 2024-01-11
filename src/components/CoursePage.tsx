@@ -44,7 +44,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
           <h5 className="text-sm font-medium uppercase text-gray-400">{course?.category}</h5>
           <h1 className="text-3xl font-semibold">{course?.title}</h1>
          
-          <ReactPlayer poster={course?.image1}  url={course?.video} controls={true} className="w-full p-5" width="100%" height="360"/>
+          <ReactPlayer poster={course?.poster}  url={course?.video} controls={true} className="w-full p-5" width="100%" height="360"/>
           <p className="">{course?.description}</p>
           <ul className="flex gap-4">
             <li className="flex items-center">
