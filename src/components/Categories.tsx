@@ -26,7 +26,7 @@ const Categories = ({ categories, setCategoryName }) => {
     //     ))}
     //   </ul>
     // </div>
-    <div className="min-w-[300px] lg:w-[300px] lg:p-3 w-full z-10 fixed bottom-0 left-0 lg:relative overflow-hidden w-64">
+    <div className="min-w-[300px] lg:w-[300px] lg:p-3 w-full z-10 fixed border-t lg:border-t-0 border-gray-300 bottom-0 left-0 lg:relative overflow-hidden w-64">
       <div className="flex h-full flex-grow flex-col overflow-y-auto lg:rounded-br-lg lg:rounded-tr-lg bg-white shadow-md">
 
         <div className="flex flex-col">

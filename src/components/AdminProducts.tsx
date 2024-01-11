@@ -22,7 +22,8 @@ const AdminComponent = () => {
     image2: "",
     image3: "",
     brand: "",
-    isNew: false
+    isNew: false,
+    quantity: 1,
   });
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number | null>(null);
 
@@ -56,6 +57,7 @@ const AdminComponent = () => {
       image3: "",
       brand: "",
       isNew: false,
+      quantity: 1,
     });
     setError(null);
   };
@@ -397,15 +399,16 @@ const AdminComponent = () => {
                         onChange={(e) => handleInputChange(e, "brand")}
                       />
                     </div>
-                    {/* <div className="flex-col mb-2 lg:pr-4">
+                    <div className="flex-col mb-2 lg:pr-4">
                       <input
-                        type="checkbox"
-                        placeholder="is New ?"
+                        type="quantity"
+                        placeholder=" ?"
                         className="p-2 w-full border border-gray-300 rounded"
-                        value={editedItem.brand}
-                        onChange={(e) => handleInputChange(e, "brand")}
+                        value={editedItem.quantity}
+                        onChange={(e) => handleInputChange(e, "quantity")}
+                        disabled
                       />
-                    </div> */}
+                    </div>
                   </div>
                   <div className="flex">
                     <button
