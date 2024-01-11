@@ -8,14 +8,27 @@ const AdminCourses = () => {
     const [error, setError] = useState<string | null>(null);
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [editedItem, setEditedItem] = useState<any>({
-        id: "",
+        id: 0,
+        image1: "",
+        image2: "",
+        image3: "",
+        video: "",
+        rate: 0,
         title: "",
-        price: "",
+        price: 0,
         previousPrice: 0,
+        studentsEnrolled: 0,
         description: "",
-        count: 0,
-        image: "",
-        brand: ""
+        enrollmentOpen: false,
+        instructor: "",
+        instructor_info: "",
+        duration: 0,
+        category: "",
+        startDateTime: "",
+        level: "",
+        index: [],
+        last_updated: "",
+        more_details: ""
     });
 
     useEffect(() => {
@@ -34,14 +47,27 @@ const AdminCourses = () => {
     const handleAddItemClick = () => {
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
-            id: "",
+            id: 0,
+            image1: "",
+            image2: "",
+            image3: "",
+            video: "",
+            rate: 0,
             title: "",
-            price: "",
+            price: 0,
             previousPrice: 0,
+            studentsEnrolled: 0,
             description: "",
-            count: 0,
-            image: "",
-            brand: ""
+            enrollmentOpen: false,
+            instructor: "",
+            instructor_info: "",
+            duration: 0,
+            category: "",
+            startDateTime: "",
+            level: "",
+            index: [],
+            last_updated: "",
+            more_details: ""
         });
         setError(null); // Reset error state
     };
@@ -67,13 +93,24 @@ const AdminCourses = () => {
         // Check for empty fields
         if (
             !editedItem.id ||
+            !editedItem.image||
+            !editedItem.video||
+            !editedItem.rate ||
             !editedItem.title ||
             !editedItem.price ||
             !editedItem.previousPrice ||
+            !editedItem.studentsEnrolled ||
             !editedItem.description ||
-            !editedItem.count ||
-            !editedItem.image ||
-            !editedItem.brand
+            !editedItem.enrollmentOpen ||
+            !editedItem.instructor ||
+            !editedItem.instructor_info ||
+            !editedItem.duration ||
+            !editedItem.category ||
+            !editedItem.startDate ||
+            !editedItem.level ||
+            !editedItem.index ||
+            !editedItem.last_updated ||
+            !editedItem.more_details
         ) {
             setError("All fields are required");
             return;
@@ -128,8 +165,19 @@ const AdminCourses = () => {
                             <th className="border px-4 py-2">Previous Price</th>
                             <th className="border px-4 py-2">Image</th>
                             <th className="border px-4 py-2">Description</th>
-                            <th className="border px-4 py-2">Count</th>
-                            <th className="border px-4 py-2">Brand</th>
+                            <th className="border px-4 py-2">Video</th>
+                            <th className="border px-4 py-2">Rate</th>
+                            <th className="border px-4 py-2">Students Enrolled</th>
+                            <th className="border px-4 py-2">Enrollment Open</th>
+                            <th className="border px-4 py-2">Instructor</th>
+                            <th className="border px-4 py-2">Instructor Info</th>
+                            <th className="border px-4 py-2">duration</th>
+                            <th className="border px-4 py-2">start Date</th>
+                            <th className="border px-4 py-2">category</th>
+                            <th className="border px-4 py-2">level</th>
+                            <th className="border px-4 py-2">index</th>
+                            <th className="border px-4 py-2">last_updated</th>
+                            <th className="border px-4 py-2">more_details</th>
                             <th className="border px-4 py-2">Actions</th>
                         </tr>
                     </thead>
@@ -142,8 +190,19 @@ const AdminCourses = () => {
                                 <td className="border px-4 py-2">{item.previousPrice}</td>
                                 <td className="border px-4 py-2"><img src={item.image} width="70" /></td>
                                 <td className="border px-4 py-2">{item.description}</td>
-                                <td className="border px-4 py-2">{item.count}</td>
-                                <td className="border px-4 py-2">{item.brand}</td>
+                                <td className="border px-4 py-2">{item.video}</td>
+                                <td className="border px-4 py-2">{item.rate}</td>
+                                <td className="border px-4 py-2">{item.studentsEnrolled}</td>
+                                <td className="border px-4 py-2">{item.enrollmentOpen}</td>
+                                <td className="border px-4 py-2">{item.instructor}</td>
+                                <td className="border px-4 py-2">{item.instructor_info}</td>
+                                <td className="border px-4 py-2">{item.duration}</td>
+                                <td className="border px-4 py-2">{item.startDate}</td>
+                                <td className="border px-4 py-2">{item.category}</td>
+                                <td className="border px-4 py-2">{item.level}</td>
+                                <td className="border px-4 py-2">{item.index}</td>
+                                <td className="border px-4 py-2">{item.last_updated}</td>
+                                <td className="border px-4 py-2">{item.more_details}</td>
                                 <td className="border px-2 py-2">
                                     <button
                                         className="mr-1"
@@ -228,19 +287,119 @@ const AdminCourses = () => {
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
                                 type="text"
-                                placeholder="Count"
+                                placeholder="Video"
                                 className="p-2 w-full border border-gray-300 rounded"
-                                value={editedItem.count}
-                                onChange={(e) => handleInputChange(e, "count")}
+                                value={editedItem.video}
+                                onChange={(e) => handleInputChange(e, "video")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="number"
+                                placeholder="Rate"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.rate}
+                                onChange={(e) => handleInputChange(e, "rate")}
                             />
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
                                 type="text"
-                                placeholder="Brand"
+                                placeholder="Students Enrolled"
                                 className="p-2 w-full border border-gray-300 rounded"
-                                value={editedItem.brand}
-                                onChange={(e) => handleInputChange(e, "brand")}
+                                value={editedItem.studentsEnrolled}
+                                onChange={(e) => handleInputChange(e, "studentEnrolled")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="text"
+                                placeholder="Enrollment Open"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.enrollmentOpen}
+                                onChange={(e) => handleInputChange(e, "enrollmentOpen")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="text"
+                                placeholder="Instructor"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.instructor}
+                                onChange={(e) => handleInputChange(e, "instructor")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="text"
+                                placeholder="Instructor Info"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.instructor_info}
+                                onChange={(e) => handleInputChange(e, "instructor_info")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="text"
+                                placeholder="Duration"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.duration}
+                                onChange={(e) => handleInputChange(e, "duration")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="text"
+                                placeholder="Start Date"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.startDate}
+                                onChange={(e) => handleInputChange(e, "startDate")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="text"
+                                placeholder="Categorye"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.category}
+                                onChange={(e) => handleInputChange(e, "category")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="text"
+                                placeholder="Level"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.level}
+                                onChange={(e) => handleInputChange(e, "level")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="text"
+                                placeholder="Index"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.index}
+                                onChange={(e) => handleInputChange(e, "index")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="text"
+                                placeholder="last updated"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.last_updated}
+                                onChange={(e) => handleInputChange(e, "last_updated")}
+                            />
+                        </div>
+                    
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                type="text"
+                                placeholder="More Details"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.more_details}
+                                onChange={(e) => handleInputChange(e, "more_details")}
                             />
                         </div>
                     </div>
