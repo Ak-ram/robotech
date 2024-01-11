@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/proSlice";
 import { getOneProduct } from "@/helpers/getOneProduct";
-import { ProductType } from "../../type";
+import { CourseType } from "../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
 import { Gift } from "lucide-react";
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
-  const [course, setCourse] = useState<ProductType | undefined>();
+  const [course, setCourse] = useState<CourseType | undefined>();
   const [mainImg, setMainImg] = useState<1 | 2 | 3>(1);
   const searchPar = useSearchParams();
   const idString = searchPar.get("id");
@@ -77,21 +77,13 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
           <ul className="sm:flex items-center text-sm text-gray-500">
             <li>Created by <a href="#" className="font-bold"> {course?.instructor} </a></li>
             <span className="hidden sm:inline mx-3 text-2xl">·</span>
-            <li>Last updated </li>
+            <li>Last updated {course?.last_updated} </li>
           </ul>
         </div>
 
         <div className="mt-10 bg-white py-2">
           <nav className="flex flex-wrap gap-4">
             <a href="#" className="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out hover:border-b-purple-600 hover:text-purple-600"> Announcements </a>
-
-            <a href="#" className="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out hover:border-b-purple-600 hover:text-purple-600"> FAQs </a>
-
-            <a href="#" className="inline-flex whitespace-nowrap border-b-2 border-transparent border-b-purple-600 py-2 px-3 text-sm font-semibold text-purple-600 transition-all duration-200 ease-in-out"> Curriculum </a>
-
-            <a href="#" className="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out hover:border-b-purple-600 hover:text-purple-600"> Reviews </a>
-
-            <a href="#" className="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out hover:border-b-purple-600 hover:text-purple-600"> Suppliers </a>
           </nav>
         </div>
 
@@ -107,38 +99,17 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
               </div>
               <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
                 <ul className="space-y-1 font-semibold text-gray-600 mb-6">
-                  <li className="flex px-2 sm:px-6 py-2.5 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mr-2 w-6">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                    </svg>
-                    Something to Ponder <span className="ml-auto text-sm"> 23 min </span>
-                  </li>
-                  <li className="flex px-2 sm:px-6 py-2.5 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mr-2 w-6">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                    </svg>
-                    Tables <span className="ml-auto text-sm"> 23 min </span>
-                  </li>
-                  <li className="flex px-2 sm:px-6 py-2.5 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mr-2 w-6">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                    </svg>
-                    HTML Entities <span className="ml-auto text-sm"> 23 min </span>
-                  </li>
-                  <li className="flex px-2 sm:px-6 py-2.5 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mr-2 w-6">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                    </svg>
-                    HTML Iframes <a href="#trailer-modal" className="ml-2 rounded-full border bg-purple-100 px-2 py-1 text-xs font-semibold text-purple-500" uk-toggle=""> Preview </a>
-                    <span className="ml-auto text-sm"> 23 min </span>
-                  </li>
-                  <li className="flex px-2 sm:px-6 py-2.5 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mr-2 w-6">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                    </svg>
-                    Some important things
-                    <span className="ml-auto text-sm"> 23 min </span>
-                  </li>
+                  {course?.index.map((item => (
+                    <li className="flex px-2 sm:px-6 py-2.5 hover:bg-gray-100">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mr-2 w-6">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                      </svg>
+                      {item} <span className="ml-auto text-sm"> 23 min </span>
+                    </li>
+                  )))}
+
+
+                
                 </ul>
               </div>
             </label>

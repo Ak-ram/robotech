@@ -1,10 +1,5 @@
 export interface ProductType {
-  studentsEnrolled: ReactNode;
   enrollmentOpen: any;
-  duration: ReactNode;
-  instructor: ReactNode;
-  level: ReactNode;
-  creator: ReactNode;
   image1: string | undefined;
   image2: string | undefined;
   image3: string | undefined;
@@ -19,6 +14,31 @@ export interface ProductType {
   category: string;
   quantity: number;
 }
+
+export interface CourseType {
+  id: number,
+  image1: string,
+  image2: string,
+  image3: string,
+  video: string,
+  rate: number,
+  title: string,
+  price: number,
+  previousPrice: number,
+  studentsEnrolled: number,
+  description: string,
+  enrollmentOpen: boolean,
+  instructor: string,
+  instructor_info: string,
+  duration: number,
+  category: string,
+  startDateTime: string,
+  level: string,
+  index: string[],
+  last_updated: string
+}
+
+
 
 export interface ItemProps {
   item: ProductType;
