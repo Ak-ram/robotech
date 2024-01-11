@@ -19,6 +19,7 @@ import { loadStripe } from "@stripe/stripe-js";
 // import { useSession } from "next-auth/react";
 import EmptyCard from "@/assets/empty.jpeg"
 import VodafoneCash from "./VodafoneCash";
+import { json } from "stream/consumers";
 const Cart = () => {
   const [totalAmt, setTotalAmt] = useState(0);
   const [isCheckout, setIsCheckout] = useState(false);
@@ -61,26 +62,21 @@ const Cart = () => {
   );
   const handleCheckout = async () => {
     setIsCheckout(true)
-    const stripe = await stripePromise;
-    let url = 'https://robotech.vercel.app/api/checkout';
-    // let url = 'http://localhost:3000/api/checkout';
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        items: productData,
-        // email: session?.user?.email,
-      }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      // await dispatch(saveOrder({ order: productData, id: data.id }));
-      stripe?.redirectToCheckout({ sessionId: data.id });
-      setIsCheckout(false)
-      dispatch(resetCart());
-    } else {
-      throw new Error("Failed to create Stripe Payment");
-    }
+    let data = {
+      "api_key": process.env.PAYMOB_API
+  }
+    let request = await fetch('https://accept.paymob.com/api/auth/tokens',{
+      method: 'post',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(data)
+    })
+    let response = await request.json();
+    console.log(response)
+  //   if () {
+    
+  //   } else {
+  //     throw new Error("Failed to create Stripe Payment");
+  //   }
   };
   // console.log('cart', productData)
   const handleDecreasement = (item: ProductType) => {
