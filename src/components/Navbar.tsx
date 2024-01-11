@@ -3,7 +3,7 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import Link from "next/link";
 import Logo from "./Logo";
-import { Heart, ShoppingBagIcon  } from "lucide-react";
+import { Heart, ShoppingBagIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/constants/data";
 import { useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import { getProducts } from "../helpers/getProducts"; // Update the import path
 
 // Define the type for product items
 interface ProductItem {
+  image: string | undefined;
   id: number;
   title: string;
   category: string
@@ -72,7 +73,7 @@ const Navbar = () => {
         {/* Navigation */}
         <ul className="order-last  md:order-none w-full md:w-fit flex py-2 items-center gap-5 text-sm uppercase font-semibold">
           {navigation.map((item) => (
-            <Link href={item?.href} key={item._id}>
+            <Link href={item?.href} key={item.title}>
               <li
                 className={`hover:text-black cursor-pointer duration-200 relative overflow-hidden group ${item.href === pathname && "text-designColor"
                   }`}
@@ -109,6 +110,7 @@ const Navbar = () => {
                     href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
 
                     {item.title}
+                    <img src={item.image} width={70} height={70} />
                   </Link>
                 </li>
               ))
@@ -132,7 +134,7 @@ const Navbar = () => {
             href={"/cart"}
             className="hover:text-black cursor-pointer duration-200 relative group"
           >
-            <ShoppingBagIcon  className="w-7 h-7" />
+            <ShoppingBagIcon className="w-7 h-7" />
             <span className="absolute top-0 -left-1 bg-zinc-800 text-zinc-200 w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-black font-semibold group-hover:text-white">
               {productData ? productData.length : 0}
             </span>
