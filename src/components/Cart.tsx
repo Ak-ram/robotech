@@ -97,7 +97,7 @@ const Cart = () => {
   return (
     <>
       {productData.length > 0 ? (
-        <div className="mt-5 flex flex-col">
+        <div className="mt-5 flex flex-col max-w-screen-xl mx-auto">
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left">
               <thead className="text-xs text-white uppercase bg-zinc-950">
