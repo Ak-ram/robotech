@@ -54,31 +54,32 @@ const Cart = () => {
     });
     setTotalAmt(amt);
     setRowPrice(rowAmt);
+    console.log(productData)
   }, [productData]);
 
-  let thirdStep = async (token,id) => {
+  let thirdStep = async (token, id) => {
     let data = {
       "auth_token": token,
-      "amount_cents": "100", 
-      "expiration": 3600, 
+      "amount_cents": "100",
+      "expiration": 3600,
       "order_id": id,
       "billing_data": {
-        "apartment": "803", 
-        "email": "claudette09@exa.com", 
-        "floor": "42", 
-        "first_name": "Clifford", 
-        "street": "Ethan Land", 
-        "building": "8028", 
-        "phone_number": "+86(8)9135210487", 
-        "shipping_method": "PKG", 
-        "postal_code": "01898", 
-        "city": "Jaskolskiburgh", 
-        "country": "CR", 
-        "last_name": "Nicolas", 
+        "apartment": "803",
+        "email": "claudette09@exa.com",
+        "floor": "42",
+        "first_name": "Clifford",
+        "street": "Ethan Land",
+        "building": "8028",
+        "phone_number": "+86(8)9135210487",
+        "shipping_method": "PKG",
+        "postal_code": "01898",
+        "city": "Jaskolskiburgh",
+        "country": "CR",
+        "last_name": "Nicolas",
         "state": "Utah"
-      }, 
-      "currency": "EGP", 
-      "integration_id": 4423017	
+      },
+      "currency": "EGP",
+      "integration_id": 4423017
     }
     let request = await fetch('https://accept.paymob.com/api/acceptance/payment_keys', {
       method: 'post',
@@ -91,25 +92,18 @@ const Cart = () => {
   }
 
   let secondStep = async (token) => {
+    let items = productData.map((item) => ({
+      name: item.title,
+      amount_cents: item.price * 100, // Convert to cents
+      description: item.description,
+      // quantity: item.quantity,
+    }));
     let data = {
       "auth_token": token,
       "delivery_needed": "false",
-      "amount_cents": "100",
+      "amount_cents": totalAmt,
       "currency": "EGP",
-      // "items": [
-      //   {
-      //     "name": "ASC1515",
-      //     "amount_cents": "500000",
-      //     "description": "Smart Watch",
-      //     "quantity": "1"
-      //   },
-      //   {
-      //     "name": "ERT6565",
-      //     "amount_cents": "200000",
-      //     "description": "Power Bank",
-      //     "quantity": "1"
-      //   }
-      // ]
+      "items": items
     };
     let request = await fetch('https://accept.paymob.com/api/ecommerce/orders', {
       method: 'post',
@@ -118,13 +112,13 @@ const Cart = () => {
     })
     let response = await request?.json();
     let id = response.id;
-    thirdStep(token,id)
+    thirdStep(token, id)
   }
 
-const cardPayment = async(_token)=>{
-let iframeURL = `https://accept.paymob.com/api/acceptance/iframes/811079?payment_token=${_token}`;
-location.href = iframeURL
-}
+  const cardPayment = async (_token) => {
+    let iframeURL = `https://accept.paymob.com/api/acceptance/iframes/811079?payment_token=${_token}`;
+    location.href = iframeURL
+  }
 
   const handleCheckout = async () => {
     setIsCheckout(true)
