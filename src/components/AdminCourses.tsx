@@ -152,7 +152,7 @@ const AdminCourses = () => {
     };
 
     return (
-        <div className={`lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
+        <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
             <h2 className="font-bold mb-4">Current courses data:</h2>
             <div className="overflow-x-auto max-w-screen-lg">
                 <table className="min-w-full border border-gray-300 text-sm">

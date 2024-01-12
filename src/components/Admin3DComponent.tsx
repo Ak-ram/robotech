@@ -116,7 +116,7 @@ const Admin3DComponent = () => {
   };
 
   return (
-    <div className={`lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
+    <div className={`lg:p-3 min-h-[400px] w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
       <h2 className="font-bold mb-4">Current 3D Print data:</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300 text-sm">

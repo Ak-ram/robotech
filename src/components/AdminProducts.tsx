@@ -642,7 +642,7 @@ const AdminComponent = () => {
 
   return (
     <>
-      <div className="lg:p-3 w-full z-10 bottom-0 left-0 overflow-hidden mt-5">
+      <div className="lg:p-3 w-full  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
         <div className="overflow-x-auto">
           {jsonData.length > 0 && (
             <div className="mb-5">

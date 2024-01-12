@@ -575,7 +575,7 @@ const page = () => {
               <p className="text-gray-600">{selectedItem.content}</p>
             </div>
           ) : (
-            <p className="font-bold text-lg flex items-center justify-center bg-white h-[500px] mb-5 text-gray-600">Select an item from the sidebar.</p>
+            <p className="font-bold text-lg flex items-center justify-center bg-white h-[500px] mb-5 text-gray-600">Select Page from the sidebar.</p>
           )}
 
         </div>
