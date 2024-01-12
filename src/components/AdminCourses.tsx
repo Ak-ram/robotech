@@ -10,10 +10,7 @@ const AdminCourses = () => {
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [editedItem, setEditedItem] = useState<any>({
         id: 0,
-        image1: "",
-        image2: "",
-        image3: "",
-        video: "",
+        image: "",
         rate: 0,
         title: "",
         price: 0,
@@ -49,9 +46,7 @@ const AdminCourses = () => {
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
             id: 0,
-            image1: "",
-            image2: "",
-            image3: "",
+            image: "",
             video: "",
             rate: 0,
             title: "",
@@ -82,8 +77,8 @@ const AdminCourses = () => {
             toast.success(`Item removed successfully`);
             toast.loading(`Be patient, changes takes a few moments to be reflected`);
             setTimeout(() => {
-              toast.dismiss();
-      
+                toast.dismiss();
+
             }, 5000);
         } catch (error) {
             toast.error((error as Error).message);
@@ -98,29 +93,29 @@ const AdminCourses = () => {
 
     const handleEditSubmit = async () => {
         // Check for empty fields
-        if (
-            !editedItem.id ||
-            !editedItem.image ||
-            !editedItem.video ||
-            !editedItem.rate ||
-            !editedItem.title ||
-            !editedItem.price ||
-            !editedItem.previousPrice ||
-            !editedItem.description ||
-            // !editedItem.enrollmentOpen ||
-            !editedItem.instructor ||
-            !editedItem.instructor_info ||
-            !editedItem.duration ||
-            !editedItem.category ||
-            !editedItem.startDate ||
-            !editedItem.level ||
-            !editedItem.index ||
-            !editedItem.last_updated ||
-            !editedItem.more_details
-        ) {
-            toast.error("All fields are required")
-            return;
-        }
+        // if (
+        //     !editedItem.id ||
+        //     !editedItem.image ||
+        //     !editedItem.video ||
+        //     !editedItem.rate ||
+        //     !editedItem.title ||
+        //     !editedItem.price ||
+        //     !editedItem.previousPrice ||
+        //     !editedItem.description ||
+        //     // !editedItem.enrollmentOpen ||
+        //     !editedItem.instructor ||
+        //     !editedItem.instructor_info ||
+        //     !editedItem.duration ||
+        //     !editedItem.category ||
+        //     !editedItem.startDate ||
+        //     !editedItem.level ||
+        //     !editedItem.index ||
+        //     !editedItem.last_updated ||
+        //     !editedItem.more_details
+        // ) {
+        //     toast.error("All fields are required")
+        //     return;
+        // }
 
         if (editIndex !== null) {
             let updatedArray;
@@ -142,8 +137,8 @@ const AdminCourses = () => {
                 toast.success(`Item Added/Updated successfully`);
                 toast.loading(`Be patient, changes takes a few moments to be reflected`);
                 setTimeout(() => {
-                  toast.dismiss();
-          
+                    toast.dismiss();
+
                 }, 5000);
             } catch (error) {
                 toast.error((error as Error).message);
@@ -258,10 +253,12 @@ const AdminCourses = () => {
                                 className="w-full p-2 border border-gray-300 rounded"
                                 value={editedItem.id}
                                 onChange={(e) => handleInputChange(e, "id")}
+                                required
                             />
                         </div>
                         <div className="lg:w-1/4  mb-2 lg:pr-4">
                             <input
+                            required
                                 type="text"
                                 placeholder="Title"
                                 className="w-full p-2 border border-gray-300 rounded"
@@ -271,6 +268,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
+                            required
                                 type="text"
                                 placeholder="Price"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -280,6 +278,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
+                            required
                                 type="text"
                                 placeholder="Previous Price"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -289,6 +288,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
+                            required
                                 type="text"
                                 placeholder="Poster"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -298,6 +298,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
+                            required
                                 type="text"
                                 placeholder="Description"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -307,6 +308,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
+
                                 type="text"
                                 placeholder="Video"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -334,6 +336,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
+                            required
                                 type="text"
                                 placeholder="Enrollment Open"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -343,6 +346,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
+                            required
                                 type="text"
                                 placeholder="Instructor"
                                 className="p-2 w-full border border-gray-300 rounded"
