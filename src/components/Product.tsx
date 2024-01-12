@@ -55,7 +55,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               />
             </div>
           </Link> */}
-            <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: categoryName } }} className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
+            <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }} className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
               <img className="peer  absolute top-0 right-0 h-full w-full object-contain" src={item.image1} alt="product image" />
               {
                 item.image2 ? <img className="peer  bg-white absolute top-0 -right-96 h-full w-full object-contain transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0" src={item.image2} alt="product image" />

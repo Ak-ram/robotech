@@ -483,6 +483,7 @@ const AdminComponent = () => {
     brand: "",
     isNew: false,
     quantity: 1,
+    category: selectedCat,
   });
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number | null>(null);
 
@@ -522,6 +523,7 @@ const AdminComponent = () => {
       brand: "",
       isNew: false,
       quantity: 1,
+      category: selectedCat,
     });
   };
 
