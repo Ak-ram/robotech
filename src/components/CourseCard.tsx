@@ -91,7 +91,7 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
                                         {!item.enrollmentOpen ? 'Enrolment closed' : 'Enroll Now'}
                                     </button>
                                     <div className="flex flex-nowrap h-fit gap-2 text-sm font-medium">
-                                        <div className={`rounded-full bg-green-100 px-2 py-0.5 ${item?.level.toLowerCase() === 'beginner' ?'text-green-700': item.level.toLowerCase()==='intermediate'}`}>{item?.level}</div>
+                                        <div className={`rounded-full px-2 py-0.5 ${item?.level.toLowerCase() === 'beginner' ? 'bg-green-100 text-green-700' : item.level.toLowerCase() === 'intermediate' ? 'bg-yellow-100 text-yellow-700' : item.level.toLowerCase() === 'advanced' ? "bg-red-100  text-red-700" : ""}`}>{item?.level}</div>
                                         {/* <div className="rounded-full bg-zinc-100 px-2 py-0.5 text-zinc-700">{item?.duration} weeks</div> */}
                                     </div>
                                 </div>
