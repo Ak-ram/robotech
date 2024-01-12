@@ -1,19 +1,31 @@
 import { useRef, useState } from "react";
 import emailjs from '@emailjs/browser'
+import toast, { Toaster } from "react-hot-toast";
 const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => {
     const [clientName, setClientName] = useState("");
     const [phone, setPhone] = useState("");
+    const [message, setMessage] = useState("");
     const formElement = useRef(null);
 
     const sendEmail = (e) => {
         e.preventDefault();
+        if (!phone || !clientName) {
+            toast.error("Please provide both your name and phone number.")
+            return;
+        }
+
 
         emailjs.sendForm('service_3sfjede', 'template_u5fzfku', formElement.current!, 'sZweBI7aeMXeHKL6g')
             .then((result) => {
                 console.log(result.text);
-
+                toast.success('Order submitted. Expect a call from customer service soon. Thank you.')
+                setClientName('')
+                setPhone('')
+                setMessage('')
             }, (error) => {
                 console.log(error.text);
+                toast.error("Order unsuccessful. An error occurred.")
+
             });
     };
     const handleNameChange = (e) => {
@@ -22,6 +34,9 @@ const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => 
 
     const handlePhoneChange = (e) => {
         setPhone(e.target.value);
+    }
+    const handleMessageChange = (e) => {
+        setMessage(e.target.value);
     }
 
 
@@ -80,6 +95,17 @@ const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => 
                                         onChange={handlePhoneChange} type="tel" id="phoneNumber" className="relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-2 px-3 text-sm outline-none focus:border-indigo-500 focus:bg-white focus:text-gray-600 focus:shadow" placeholder="01XXXXXXXXX" />
                                 </div>
                             </div>
+                            <div className="mb-4">
+                                <div className="flex justify-between">
+                                    <label className="mb-2 inline-block text-xs font-medium uppercase text-gray-700" htmlFor="clientMessage">Message</label>
+
+                                </div>
+                                <div className="relative flex w-full flex-wrap items-stretch">
+                                    <input value={message}
+                                        name="client_message"
+                                        onChange={handleMessageChange} type="textarea" id="clientMessage" className="relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-2 px-3 text-sm outline-none focus:border-indigo-500 focus:bg-white focus:text-gray-600 focus:shadow" placeholder="Have any question?" />
+                                </div>
+                            </div>
 
                             <div className="mb-4">
                                 <button onClick={sendEmail} className="grid w-full cursor-pointer select-none rounded-md border border-indigo-500 bg-indigo-500 py-2 px-5 text-center align-middle text-sm text-white shadow hover:border-indigo-600 hover:bg-indigo-600 hover:text-white focus:border-indigo-600 focus:bg-indigo-600 focus:text-white focus:shadow-none" type="submit">Submit</button>
@@ -94,6 +120,15 @@ const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => 
                 </div>
             </div>
         </div>
+        <Toaster
+            position="bottom-right"
+            toastOptions={{
+                style: {
+                    background: "#000",
+                    color: "#fff",
+                },
+            }}
+        />
     </div>)
 }
 
