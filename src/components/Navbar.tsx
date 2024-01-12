@@ -12,7 +12,7 @@ import { getProducts } from "../helpers/getProducts"; // Update the import path
 
 // Define the type for product items
 interface ProductItem {
-  image: string | undefined;
+  image1: string | undefined;
   id: number;
   title: string;
   category: string
@@ -111,7 +111,7 @@ const Navbar = () => {
                     href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
 
                     {item.title}
-                    <img src={item.image} width={70} height={70} />
+                    <img src={item.image1} width={70} height={70} />
                   </Link>
                 </li>
               ))
