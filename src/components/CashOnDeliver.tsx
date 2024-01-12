@@ -8,10 +8,10 @@ const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => 
     const sendEmail = (e) => {
         e.preventDefault();
 
-        emailjs.sendForm('service_3sfjede', 'service_3sfjede', formElement.current!, 'sZweBI7aeMXeHKL6g')
+        emailjs.sendForm('service_3sfjede', 'template_u5fzfku', formElement.current!, 'sZweBI7aeMXeHKL6g')
             .then((result) => {
                 console.log(result.text);
-                
+
             }, (error) => {
                 console.log(error.text);
             });
