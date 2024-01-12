@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductType, StateProps } from "../../type";
-import { Minus, Plus, X, RefreshCw, CreditCard } from "lucide-react";
+import { Minus, Plus, X, RefreshCw, CreditCard, PackageOpen } from "lucide-react";
 import {
   decreaseQuantity,
   deleteProduct,
@@ -21,12 +21,14 @@ import EmptyCard from "@/assets/empty.jpeg"
 import VodafoneCash from "./VodafoneCash";
 import VodafoneIcon from '@/assets/vodafoneIcon.png';
 import { json } from "stream/consumers";
+import CashOnDelivery from "./CashOnDeliver";
 const Cart = () => {
   const [totalAmt, setTotalAmt] = useState(0);
   const [isCheckout, setIsCheckout] = useState(false);
   const [rowPrice, setRowPrice] = useState(0);
   const { productData } = useSelector((state: StateProps) => state.pro);
   const [isVodafoneCashOpened, setIsVodafoneCashOpened] = useState(false);
+  const [isCashOnDeliveryOpened, setIsCashOnDeliveryOpened] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   // const { data: session } = useSession();
@@ -280,14 +282,21 @@ const Cart = () => {
                   onClick={handleCheckout}
                   className="flex items-center gap-1 text-xs bg-zinc-800 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-black hover:text-white duration-200"
                 >
-                 <CreditCard size={16}/> Cards <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={15} /></span>
+                  <CreditCard size={16} /> Cards <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={15} /></span>
                 </button>
 
                 <button
                   onClick={() => setIsVodafoneCashOpened(true)}
                   className="flex items-center gap-1 text-xs bg-red-600 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-red-700 hover:text-white duration-200"
                 >
-                 <Image alt="vodafone cash" src={VodafoneIcon} width={16} height={16}/> Wallet
+                  <Image alt="vodafone cash" src={VodafoneIcon} width={16} height={16} /> Wallet
+                </button>
+
+                <button
+                  onClick={() => setIsCashOnDeliveryOpened(true)}
+                  className="flex items-center gap-1 text-xs bg-blue-600 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-blue-700 hover:text-white duration-200"
+                >
+                  <PackageOpen size={16} /> On Delivery
                 </button>
               </div>
 
@@ -300,6 +309,7 @@ const Cart = () => {
             </div>
             <div className="">
               <VodafoneCash isVodafoneCashOpened={isVodafoneCashOpened} setIsVodafoneCashOpened={setIsVodafoneCashOpened} />
+              <CashOnDelivery isCashOnDeliveryOpened={isCashOnDeliveryOpened} setCashOnDeliveryOpened={setIsCashOnDeliveryOpened} />
             </div>
           </div>
         </div>
