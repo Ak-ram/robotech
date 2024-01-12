@@ -293,7 +293,7 @@ const Admin3DComponent = () => {
         </button>
       </div> */}
       <Toaster
-        position="bottom-left"
+        position="bottom-right"
         toastOptions={{
           style: {
             background: "#000",

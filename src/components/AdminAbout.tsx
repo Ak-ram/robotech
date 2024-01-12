@@ -255,7 +255,7 @@ const AdminAbout = () => {
         </button>
       </div> */}
        <Toaster
-        position="bottom-left"
+        position="bottom-right"
         toastOptions={{
           style: {
             background: "#000",
