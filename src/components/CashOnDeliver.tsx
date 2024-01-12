@@ -15,7 +15,7 @@ const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => 
         }
 
 
-        emailjs.sendForm('service_3sfjede', 'template_u5fzfku', formElement.current!, 'sZweBI7aeMXeHKL6g')
+        emailjs.sendForm(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, formElement.current!, process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!)
             .then((result) => {
                 console.log(result.text);
                 toast.success('Order submitted. Expect a call from customer service soon. Thank you.')
