@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.12.1",
     "@octokit/rest": "^20.0.2",
     "@reduxjs/toolkit": "^1.9.7",
     "@stripe/stripe-js": "^2.1.11",

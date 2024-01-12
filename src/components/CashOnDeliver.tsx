@@ -1,4 +1,30 @@
+import { useRef, useState } from "react";
+import emailjs from '@emailjs/browser'
 const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => {
+    const [clientName, setClientName] = useState("");
+    const [phone, setPhone] = useState("");
+    const formElement = useRef(null);
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        emailjs.sendForm('service_3sfjede', 'service_3sfjede', formElement.current!, 'sZweBI7aeMXeHKL6g')
+            .then((result) => {
+                console.log(result.text);
+                
+            }, (error) => {
+                console.log(error.text);
+            });
+    };
+    const handleNameChange = (e) => {
+        setClientName(e.target.value);
+    }
+
+    const handlePhoneChange = (e) => {
+        setPhone(e.target.value);
+    }
+
+
     return (<div
         className={`${isCashOnDeliveryOpened ? "flex" : "hidden"
             } w-full h-full top-0 left-0 flex items-center justify-center backdrop-blur-2xl fixed mt-8 lg:m-0 items-center justify-center bg-gray-100`}
@@ -37,10 +63,11 @@ const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => 
                         <h4 className="mb-2 font-medium text-gray-700 xl:text-xl">Welcome to Robotech!</h4>
                         <p className="mb-6 text-gray-500">Please provide us with you data</p>
 
-                        <form id="" className="mb-4" action="#" method="POST">
+                        <form ref={formElement} onSubmit={sendEmail} className="mb-4">
                             <div className="mb-4">
                                 <label htmlFor="name" className="mb-2 inline-block text-xs font-medium uppercase text-gray-700">Your Name</label>
-                                <input type="text" className="block w-full cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-2 px-3 text-sm outline-none focus:border-indigo-500 focus:bg-white focus:text-gray-600 focus:shadow" id="name" name="client-name" placeholder="Enter your name" />
+                                <input value={clientName} name='client_name'
+                                    onChange={handleNameChange} type="text" className="block w-full cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-2 px-3 text-sm outline-none focus:border-indigo-500 focus:bg-white focus:text-gray-600 focus:shadow" id="name" placeholder="Enter your name" />
                             </div>
                             <div className="mb-4">
                                 <div className="flex justify-between">
@@ -48,12 +75,14 @@ const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => 
 
                                 </div>
                                 <div className="relative flex w-full flex-wrap items-stretch">
-                                    <input type="tel" id="phoneNumber" className="relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-2 px-3 text-sm outline-none focus:border-indigo-500 focus:bg-white focus:text-gray-600 focus:shadow" name="password" placeholder="01XXXXXXXXX" />
+                                    <input value={phone}
+                                        name="client_phone"
+                                        onChange={handlePhoneChange} type="tel" id="phoneNumber" className="relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-2 px-3 text-sm outline-none focus:border-indigo-500 focus:bg-white focus:text-gray-600 focus:shadow" placeholder="01XXXXXXXXX" />
                                 </div>
                             </div>
 
                             <div className="mb-4">
-                                <button className="grid w-full cursor-pointer select-none rounded-md border border-indigo-500 bg-indigo-500 py-2 px-5 text-center align-middle text-sm text-white shadow hover:border-indigo-600 hover:bg-indigo-600 hover:text-white focus:border-indigo-600 focus:bg-indigo-600 focus:text-white focus:shadow-none" type="submit">Submit</button>
+                                <button onClick={sendEmail} className="grid w-full cursor-pointer select-none rounded-md border border-indigo-500 bg-indigo-500 py-2 px-5 text-center align-middle text-sm text-white shadow hover:border-indigo-600 hover:bg-indigo-600 hover:text-white focus:border-indigo-600 focus:bg-indigo-600 focus:text-white focus:shadow-none" type="submit">Submit</button>
                             </div>
                         </form>
 
