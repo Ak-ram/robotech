@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
+import NoContent from "./NoContent";
 
 const AdminCourses = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -153,7 +154,18 @@ const AdminCourses = () => {
 
     return (
         <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
-            <h2 className="font-bold mb-4">Current courses data:</h2>
+           
+            {!jsonArray && <h2 className="font-bold mb-4">Current courses data:</h2>}
+            <div className="mb-5 flex items-center justify-end">
+                <button
+                    className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                    onClick={handleAddItemClick}
+                >
+                    <Plus size={18} className="mr-1" />
+                    Add Course
+                </button>
+            </div>
+           {jsonArray.length !== 0? 
             <div className="overflow-x-auto max-w-screen-lg">
                 <table className="min-w-full border border-gray-300 text-sm">
                     <thead>
@@ -220,7 +232,7 @@ const AdminCourses = () => {
                         ))}
                     </tbody>
                 </table>
-            </div>
+            </div>:<NoContent/>}
 
             {editIndex !== null && (
                 <div className="mt-5">
@@ -421,7 +433,7 @@ const AdminCourses = () => {
                 </div>
             )}
 
-            <div className="mt-5">
+            {/* <div className="mt-5">
                 <button
                     className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                     onClick={handleAddItemClick}
@@ -429,7 +441,7 @@ const AdminCourses = () => {
                     <Plus size={18} className="mr-1" />
                     Add Item
                 </button>
-            </div>
+            </div> */}
         </div>
     );
 };

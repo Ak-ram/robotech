@@ -112,7 +112,7 @@ const AdminSlides = () => {
 // if(jsonArray.length ===0) return 'no items' 
     return (
         <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
-            <h2 className="font-bold mb-4">Current Slides data:</h2>
+             {!jsonArray && <h2 className="font-bold mb-4">Current Slides data:</h2>}
             <div className="mb-5 flex items-center justify-end">
                 <button
                     className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
@@ -122,7 +122,9 @@ const AdminSlides = () => {
                     Add Slide
                 </button>
             </div>
-           {jsonArray.length !== 0? <div className="overflow-x-auto">
+           {jsonArray.length !== 0? 
+           
+           <div className="overflow-x-auto">
                 <table className="min-w-full border border-gray-300 text-sm">
                     <thead>
                         <tr className="bg-zinc-800 text-white ">

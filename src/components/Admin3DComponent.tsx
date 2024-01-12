@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
+import NoContent from "./NoContent";
 
 const Admin3DComponent = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -117,7 +118,17 @@ const Admin3DComponent = () => {
 
   return (
     <div className={`lg:p-3 min-h-[400px] w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
-      <h2 className="font-bold mb-4">Current 3D Print data:</h2>
+      {!jsonArray && <h2 className="font-bold mb-4">Current 3D Print data:</h2>}
+      <div className="mb-5 flex items-center justify-end">
+                <button
+                    className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                    onClick={handleAddItemClick}
+                >
+                    <Plus size={18} className="mr-1" />
+                    Add Service
+                </button>
+            </div>
+           {jsonArray.length !== 0? 
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300 text-sm">
           <thead>
@@ -162,7 +173,7 @@ const Admin3DComponent = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div>:<NoContent/>}
 
       {editIndex !== null && (
         <div className="mt-5">
@@ -262,7 +273,7 @@ const Admin3DComponent = () => {
           </div>
         </div>
       )}
-
+{/* 
       <div className="mt-5">
         <button
           className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
@@ -271,7 +282,7 @@ const Admin3DComponent = () => {
           <Plus size={18} className="mr-1" />
           Add Item
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
