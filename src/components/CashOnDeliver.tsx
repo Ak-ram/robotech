@@ -76,8 +76,8 @@ const CashOnDelivery = ({ totalAmt,isCashOnDeliveryOpened, setCashOnDeliveryOpen
                                 </svg>
                             </button>
                         </div>
-                        <h4 className="mb-2 font-medium text-gray-700 xl:text-xl">Total Price: <FormattedPrice amount={totalAmt}/></h4>
-                        <p className="mb-6 text-gray-500">Kindly share your information to finalize the payment process.</p>
+                        <h4 className="mb-2 font-medium text-gray-700 xl:text-xl text-center">Total Price: <FormattedPrice amount={totalAmt}/></h4>
+                        <p className="mb-6 text-gray-500 text-center">Kindly share your information to finalize the payment process.</p>
 
                         <form ref={formElement} onSubmit={sendEmail} className="mb-4">
                             <div className="mb-4">

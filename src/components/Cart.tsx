@@ -63,7 +63,7 @@ const Cart = () => {
   let thirdStep = async (token, id) => {
     let data = {
       "auth_token": token,
-      "amount_cents": "100",
+      "amount_cents": totalAmt * 100,
       "expiration": 3600,
       "order_id": id,
       "billing_data": {
