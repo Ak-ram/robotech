@@ -245,7 +245,7 @@ const Cart = () => {
             Reset Cart
           </button>
           <div className="lg:flex items-start justify-between py-10">
-            <div className="w-full shadow-lg border border-zinc-400 rounded-[.5rem] bg-white max-w-xl p-4 flex flex-col gap-1">
+            <div className=" mx-auto w-full shadow-lg border border-zinc-400 rounded-[.5rem] bg-white max-w-xl p-4 flex flex-col gap-1">
               <p className="border-b-[1px] border-b-designColor py-1">
                 Cart Summary
               </p>
