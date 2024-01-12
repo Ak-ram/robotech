@@ -1,4 +1,5 @@
-import { Copy } from "lucide-react";
+import { Copy, ExternalLink } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -26,6 +27,12 @@ const VodafoneCash = ({ isVodafoneCashOpened, setIsVodafoneCashOpened }) => {
         // Provide user feedback (you can customize this part)
         toast.success("Phone number copied to clipboard!");
     };
+    const openWhatsApp = () => {
+        const phoneNumber = "201066745733";
+        const message = "Hello, I want to inquire about Vodafone Cash payment.";
+        const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappLink, '_blank');
+      };
 
     return (
         <>
@@ -35,7 +42,7 @@ const VodafoneCash = ({ isVodafoneCashOpened, setIsVodafoneCashOpened }) => {
             >
                 <div className="flex w-[35rem] flex-col rounded-lg bg-white px-6 shadow-lg sm:px-14">
                     <div className="flex w-full justify-between self-start pt-12 pb-8">
-                        <h2 className="font-serif font-semibold text-gray-700 lg:text-2xl">
+                        <h2 className="font-sansserif font-semibold text-gray-700 lg:text-2xl">
                             Follow these steps to pay with Vodafone Cash
                         </h2>
                         <button onClick={() => setIsVodafoneCashOpened(false)}>
@@ -60,7 +67,7 @@ const VodafoneCash = ({ isVodafoneCashOpened, setIsVodafoneCashOpened }) => {
                             <label className="flex flex-col rounded-2xl border border-gray-300 bg-slate-100/80 p-4 pr-8 sm:pr-16">
                                 <span className="mb-2 font-bold">Step 1</span>
                                 <p className="text-sm sm:text-base">
-                                    Take a screenshot of this page.
+                                    Take a screenshot of your <Link target="_blank" className="text-blue-600 cursor-pointer" href={'./cart'}>cart page <ExternalLink className="m-0 inline-block" size={16} /></Link>
                                 </p>
                             </label>
                         </div>
@@ -70,11 +77,11 @@ const VodafoneCash = ({ isVodafoneCashOpened, setIsVodafoneCashOpened }) => {
                                 <p className="text-sm sm:text-base">
                                     Send the total price to the following Vodafone Cash number:{" "}
                                     {showNumber ? (
-                                        <span className="flex items-center justify-start gap-2">
+                                        <span className="items-center justify-start gap-2">
                                             <span>01066745733</span>
                                             <span className="cursor-pointer" onClick={() => {
                                                 copyToClipboard("01066745733");
-                                            }}><Copy size={16}/></span>
+                                            }}><Copy className="m-0 inline-block ml-2" size={16} /></span>
 
                                         </span>
                                     ) : (
@@ -91,7 +98,7 @@ const VodafoneCash = ({ isVodafoneCashOpened, setIsVodafoneCashOpened }) => {
                             </label>
                         </div>
 
-                        <button className="my-2 rounded-md bg-gray-900 py-3 font-medium text-white">
+                        <button onClick={openWhatsApp} className="my-2 rounded-md bg-gray-900 py-3 font-medium text-white">
                             Contact us in WhatsApp
                         </button>
                     </div>
