@@ -21,7 +21,7 @@ const VodafoneCash = ({ isVodafoneCashOpened, setIsVodafoneCashOpened }) => {
                         <div className="relative mb-4">
                             <label className="flex cursor-pointer flex-col rounded-2xl border border-gray-300 bg-slate-100/80 p-4 pr-8 sm:pr-16">
                                 <span className="mb-2 font-bold">Step 2</span>
-                                <p className="text-sm sm:text-base">Send the total price to the following Vodafone Cash number: 0101XXXXXXX.</p>
+                                <p className="text-sm sm:text-base">Send the total price to the following Vodafone Cash number: 01066745733</p>
                             </label>
                         </div>
 

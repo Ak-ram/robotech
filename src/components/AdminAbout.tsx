@@ -3,10 +3,10 @@ import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
+import toast, { Toaster } from "react-hot-toast";
 
 const AdminAbout = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState<any>({
     id: "",
@@ -22,7 +22,7 @@ const AdminAbout = () => {
         const data = await fetchJsonData("robotech/pages/about.json");
         setJsonArray(data);
       } catch (error) {
-        setError((error as Error).message);
+        toast.error((error as Error).message);
       }
     };
 
@@ -38,7 +38,6 @@ const AdminAbout = () => {
       link_text: "",
       link_url: "",
     });
-    setError(null); // Reset error state
   };
 
   const handleRemoveItem = async (index: number) => {
@@ -48,8 +47,14 @@ const AdminAbout = () => {
     try {
       await updateJsonFile("robotech/pages/about.json", updatedArray);
       setJsonArray(updatedArray);
+      toast.success(`Item removed successfully`);
+            toast.loading(`Be patient, changes takes a few moments to be reflected`);
+            setTimeout(() => {
+              toast.dismiss();
+      
+            }, 5000);
     } catch (error) {
-      setError((error as Error).message);
+      toast.error((error as Error).message);
     }
   };
 
@@ -66,7 +71,7 @@ const AdminAbout = () => {
       !editedItem.link_text ||
       !editedItem.link_url
     ) {
-      setError("All fields are required");
+      toast.error("All fields are required");
       return;
     }
 
@@ -87,9 +92,14 @@ const AdminAbout = () => {
         await updateJsonFile("robotech/pages/about.json", updatedArray);
         setJsonArray(updatedArray);
         setEditIndex(null);
-        setError(null); // Reset error state
+        toast.success(`Item Added/Updated successfully`);
+            toast.loading(`Be patient, changes takes a few moments to be reflected`);
+            setTimeout(() => {
+              toast.dismiss();
+      
+            }, 5000);
       } catch (error) {
-        setError((error as Error).message);
+        toast.error((error as Error).message);
       }
     }
   };
@@ -169,7 +179,6 @@ const AdminAbout = () => {
           <h2 className="font-bold mb-2">
             {editIndex === -1 ? "Add New Item" : "Edit Item"}
           </h2>
-          {error && <p className="text-red-500 mb-2">{error}</p>}
           <div className="flex flex-col lg:flex-row">
             <div className=" mb-2 lg:pr-4">
               <input
@@ -245,6 +254,15 @@ const AdminAbout = () => {
           Add Item
         </button>
       </div> */}
+       <Toaster
+        position="bottom-left"
+        toastOptions={{
+          style: {
+            background: "#000",
+            color: "#fff",
+          },
+        }}
+      />
     </div>
   );
 };

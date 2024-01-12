@@ -467,7 +467,6 @@ import toast, { Toaster } from "react-hot-toast";
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
   const [toggleNewCat, setToggleNewCat] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedCat, setSelectedCat] = useState<string | null>(null);
   const [newCategory, setNewCategory] = useState<string>("");
   const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -524,7 +523,6 @@ const AdminComponent = () => {
       isNew: false,
       quantity: 1,
     });
-    setError(null);
   };
 
   const handleRemoveItem = async (sectionIndex: number, itemIndex: number) => {
@@ -535,6 +533,11 @@ const AdminComponent = () => {
       await updateJsonFile("robotech/pages/categories.json", updatedData);
       setJsonData(updatedData);
       toast.success(`Item removed successfully`);
+      toast.loading(`Be patient, changes takes a few moments to be reflected`);
+      setTimeout(() => {
+        toast.dismiss();
+
+      }, 5000);
     } catch (error) {
       toast.error(`${(error as Error).message}`);
     }
@@ -575,8 +578,12 @@ const AdminComponent = () => {
         await updateJsonFile("robotech/pages/categories.json", updatedData);
         setJsonData(updatedData);
         setEditIndex(null);
-        setError(null);
         toast.success(`Item was updated`);
+        toast.loading(`Be patient, changes takes a few moments to be reflected`);
+        setTimeout(() => {
+          toast.dismiss();
+
+        }, 5000);
       } catch (error) {
         toast.error(`${(error as Error).message}`);
       }
@@ -610,8 +617,12 @@ const AdminComponent = () => {
 
         try {
           await updateJsonFile("robotech/pages/categories.json", updatedData);
-          setError(null);
           toast.success(`Added new category "${newCategoryName}"`);
+          toast.loading(`Be patient, changes takes a few moments to be reflected`);
+          setTimeout(() => {
+            toast.dismiss();
+
+          }, 5000);
         } catch (error) {
           toast.error(`${(error as Error).message}`);
         }
@@ -634,6 +645,11 @@ const AdminComponent = () => {
         setSelectedCat(null);
         setNewCategory("");
         toast.success(`Category "${selectedCat}" has been deleted`);
+        toast.loading(`Be patient, changes takes a few moments to be reflected`);
+        setTimeout(() => {
+          toast.dismiss();
+
+        }, 5000);
       } catch (error) {
         toast.error(`${(error as Error).message}`);
       }

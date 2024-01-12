@@ -3,10 +3,10 @@ import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
+import toast, { Toaster } from "react-hot-toast";
 
 const AdminSlides = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
-    const [error, setError] = useState<string | null>(null);
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [editedItem, setEditedItem] = useState<any>({
         id: "",
@@ -23,7 +23,7 @@ const AdminSlides = () => {
                 const data = await fetchJsonData("robotech/pages/slides.json");
                 setJsonArray(data);
             } catch (error) {
-                setError((error as Error).message);
+                toast.error((error as Error).message);
             }
         };
 
@@ -40,7 +40,6 @@ const AdminSlides = () => {
             link_text: "",
             link_url: ""
         });
-        setError(null); // Reset error state
     };
 
     const handleRemoveItem = async (index: number) => {
@@ -50,8 +49,14 @@ const AdminSlides = () => {
         try {
             await updateJsonFile("robotech/pages/slides.json", updatedArray);
             setJsonArray(updatedArray);
+            toast.success(`Slide Removed successfully`);
+            toast.loading(`Be patient, changes takes a few moments to be reflected`);
+            setTimeout(() => {
+                toast.dismiss();
+
+            }, 5000);
         } catch (error) {
-            setError((error as Error).message);
+            toast.error((error as Error).message);
         }
     };
 
@@ -70,7 +75,7 @@ const AdminSlides = () => {
             !editedItem.link_text ||
             !editedItem.link_url
         ) {
-            setError("All fields are required");
+            toast.error("All fields are required");
             return;
         }
 
@@ -91,9 +96,14 @@ const AdminSlides = () => {
                 await updateJsonFile("robotech/pages/slides.json", updatedArray);
                 setJsonArray(updatedArray);
                 setEditIndex(null);
-                setError(null); // Reset error state
+                toast.success(`Slide Added/Updated successfully`);
+                toast.loading(`Be patient, changes takes a few moments to be reflected`);
+                setTimeout(() => {
+                    toast.dismiss();
+
+                }, 5000);
             } catch (error) {
-                setError((error as Error).message);
+                toast.error((error as Error).message);
             }
         }
     };
@@ -109,10 +119,10 @@ const AdminSlides = () => {
     ) => {
         setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
     };
-// if(jsonArray.length ===0) return 'no items' 
+    // if(jsonArray.length ===0) return 'no items' 
     return (
         <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
-             {!jsonArray && <h2 className="font-bold mb-4">Current Slides data:</h2>}
+            {!jsonArray && <h2 className="font-bold mb-4">Current Slides data:</h2>}
             <div className="mb-5 flex items-center justify-end">
                 <button
                     className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
@@ -122,54 +132,53 @@ const AdminSlides = () => {
                     Add Slide
                 </button>
             </div>
-           {jsonArray.length !== 0? 
-           
-           <div className="overflow-x-auto">
-                <table className="min-w-full border border-gray-300 text-sm">
-                    <thead>
-                        <tr className="bg-zinc-800 text-white ">
-                            <th className="border px-4 py-2">Id</th>
-                            <th className="border px-4 py-2">Heading</th>
-                            <th className="border px-4 py-2">Sub Heading</th>
-                            <th className="border px-4 py-2">Img</th>
-                            <th className="border px-4 py-2">Link</th>
-                            <th className="border px-4 py-2">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {jsonArray.map((item, index) => (
-                            <tr key={index} className="hover:bg-slate-100">
-                                <td className="border px-4 py-2">{item.id}</td>
-                                <td className="border px-4 py-2">{item.heading}</td>
-                                <td className="border px-4 py-2">{item.sub_heading}</td>
-                                <td className="border px-4 py-2"><img width={50} height={50} src={item.image} /></td>
-                                <td className="border px-4 py-2"><Link href={item.link_url}>{item.link_text}</Link></td>
-                                <td className="border px-2 py-2">
-                                    <button
-                                        className="mr-1"
-                                        onClick={() => handleEditClick(index)}
-                                    >
-                                        <Edit size={16} />
-                                    </button>
-                                    <button
-                                        className="mr-1"
-                                        onClick={() => handleRemoveItem(index)}
-                                    >
-                                        <Trash size={16} />
-                                    </button>
-                                </td>
+            {jsonArray.length !== 0 ?
+
+                <div className="overflow-x-auto">
+                    <table className="min-w-full border border-gray-300 text-sm">
+                        <thead>
+                            <tr className="bg-zinc-800 text-white ">
+                                <th className="border px-4 py-2">Id</th>
+                                <th className="border px-4 py-2">Heading</th>
+                                <th className="border px-4 py-2">Sub Heading</th>
+                                <th className="border px-4 py-2">Img</th>
+                                <th className="border px-4 py-2">Link</th>
+                                <th className="border px-4 py-2">Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>: <NoContent />}
+                        </thead>
+                        <tbody>
+                            {jsonArray.map((item, index) => (
+                                <tr key={index} className="hover:bg-slate-100">
+                                    <td className="border px-4 py-2">{item.id}</td>
+                                    <td className="border px-4 py-2">{item.heading}</td>
+                                    <td className="border px-4 py-2">{item.sub_heading}</td>
+                                    <td className="border px-4 py-2"><img width={50} height={50} src={item.image} /></td>
+                                    <td className="border px-4 py-2"><Link href={item.link_url}>{item.link_text}</Link></td>
+                                    <td className="border px-2 py-2">
+                                        <button
+                                            className="mr-1"
+                                            onClick={() => handleEditClick(index)}
+                                        >
+                                            <Edit size={16} />
+                                        </button>
+                                        <button
+                                            className="mr-1"
+                                            onClick={() => handleRemoveItem(index)}
+                                        >
+                                            <Trash size={16} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div> : <NoContent />}
 
             {editIndex !== null && (
                 <div className="mt-5">
                     <h2 className="font-bold mb-2">
                         {editIndex === -1 ? "Add New Item" : "Edit Item"}
                     </h2>
-                    {error && <p className="text-red-500 mb-2">{error}</p>}
                     <div className="flex flex-col lg:flex-row">
                         <div className=" mb-2 lg:pr-4">
                             <input
@@ -245,7 +254,15 @@ const AdminSlides = () => {
                 </div>
             )}
 
-          
+            <Toaster
+                position="bottom-left"
+                toastOptions={{
+                    style: {
+                        background: "#000",
+                        color: "#fff",
+                    },
+                }}
+            />
         </div>
     );
 };

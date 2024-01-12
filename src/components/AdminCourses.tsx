@@ -3,10 +3,10 @@ import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
+import toast, { Toaster } from "react-hot-toast";
 
 const AdminCourses = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
-    const [error, setError] = useState<string | null>(null);
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [editedItem, setEditedItem] = useState<any>({
         id: 0,
@@ -38,7 +38,7 @@ const AdminCourses = () => {
                 const data = await fetchJsonData("robotech/pages/courses.json");
                 setJsonArray(data);
             } catch (error) {
-                setError((error as Error).message);
+                toast.error((error as Error).message)
             }
         };
 
@@ -70,7 +70,6 @@ const AdminCourses = () => {
             last_updated: "",
             more_details: ""
         });
-        setError(null); // Reset error state
     };
 
     const handleRemoveItem = async (index: number) => {
@@ -80,8 +79,15 @@ const AdminCourses = () => {
         try {
             await updateJsonFile("robotech/pages/courses.json", updatedArray);
             setJsonArray(updatedArray);
+            toast.success(`Item removed successfully`);
+            toast.loading(`Be patient, changes takes a few moments to be reflected`);
+            setTimeout(() => {
+              toast.dismiss();
+      
+            }, 5000);
         } catch (error) {
-            setError((error as Error).message);
+            toast.error((error as Error).message);
+
         }
     };
 
@@ -94,8 +100,8 @@ const AdminCourses = () => {
         // Check for empty fields
         if (
             !editedItem.id ||
-            !editedItem.image||
-            !editedItem.video||
+            !editedItem.image ||
+            !editedItem.video ||
             !editedItem.rate ||
             !editedItem.title ||
             !editedItem.price ||
@@ -112,7 +118,7 @@ const AdminCourses = () => {
             !editedItem.last_updated ||
             !editedItem.more_details
         ) {
-            setError("All fields are required");
+            toast.error("All fields are required")
             return;
         }
 
@@ -133,9 +139,14 @@ const AdminCourses = () => {
                 await updateJsonFile("robotech/pages/courses.json", updatedArray);
                 setJsonArray(updatedArray);
                 setEditIndex(null);
-                setError(null); // Reset error state
+                toast.success(`Item Added/Updated successfully`);
+                toast.loading(`Be patient, changes takes a few moments to be reflected`);
+                setTimeout(() => {
+                  toast.dismiss();
+          
+                }, 5000);
             } catch (error) {
-                setError((error as Error).message);
+                toast.error((error as Error).message);
             }
         }
     };
@@ -154,7 +165,7 @@ const AdminCourses = () => {
 
     return (
         <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
-           
+
             {!jsonArray && <h2 className="font-bold mb-4">Current courses data:</h2>}
             <div className="mb-5 flex items-center justify-end">
                 <button
@@ -165,81 +176,80 @@ const AdminCourses = () => {
                     Add Course
                 </button>
             </div>
-           {jsonArray.length !== 0? 
-            <div className="overflow-x-auto max-w-screen-lg">
-                <table className="min-w-full border border-gray-300 text-sm">
-                    <thead>
-                        <tr className="bg-zinc-800 text-white ">
-                            <th className="border px-4 py-2">Id</th>
-                            <th className="border px-4 py-2">Title</th>
-                            <th className="border px-4 py-2">Price</th>
-                            <th className="border px-4 py-2">Previous Price</th>
-                            <th className="border px-4 py-2">Poster</th>
-                            <th className="border px-4 py-2">Description</th>
-                            <th className="border px-4 py-2">Video</th>
-                            <th className="border px-4 py-2">Rate</th>
-                            <th className="border px-4 py-2">Students Enrolled</th>
-                            <th className="border px-4 py-2">Enrollment Open</th>
-                            <th className="border px-4 py-2">Instructor</th>
-                            <th className="border px-4 py-2">Instructor Info</th>
-                            <th className="border px-4 py-2">duration</th>
-                            <th className="border px-4 py-2">start Date</th>
-                            <th className="border px-4 py-2">category</th>
-                            <th className="border px-4 py-2">level</th>
-                            <th className="border px-4 py-2">index</th>
-                            <th className="border px-4 py-2">last_updated</th>
-                            <th className="border px-4 py-2">more_details</th>
-                            <th className="border px-4 py-2">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {jsonArray.map((item, index) => (
-                            <tr key={index} className="hover:bg-slate-100">
-                                <td className="border px-4 py-2">{item.id}</td>
-                                <td className="border px-4 py-2">{item.title}</td>
-                                <td className="border px-4 py-2">{item.price}</td>
-                                <td className="border px-4 py-2">{item.previousPrice}</td>
-                                <td className="border px-4 py-2"><img src={item.poster} width="70" /></td>
-                                <td className="border px-4 py-2">{item.description}</td>
-                                <td className="border px-4 py-2"><video src={item.video} width={70}/></td>
-                                <td className="border px-4 py-2">{item.rate}</td>
-                                <td className="border px-4 py-2">{item.studentsEnrolled}</td>
-                                <td className="border px-4 py-2">{item.enrollmentOpen}</td>
-                                <td className="border px-4 py-2">{item.instructor}</td>
-                                <td className="border px-4 py-2">{item.instructor_info}</td>
-                                <td className="border px-4 py-2">{item.duration}</td>
-                                <td className="border px-4 py-2">{item.startDate}</td>
-                                <td className="border px-4 py-2">{item.category}</td>
-                                <td className="border px-4 py-2">{item.level}</td>
-                                <td className="border px-4 py-2">{item.index}</td>
-                                <td className="border px-4 py-2">{item.last_updated}</td>
-                                <td className="border px-4 py-2">{item.more_details}</td>
-                                <td className="border px-2 py-2">
-                                    <button
-                                        className="mr-1"
-                                        onClick={() => handleEditClick(index)}
-                                    >
-                                        <Edit size={16} />
-                                    </button>
-                                    <button
-                                        className="mr-1"
-                                        onClick={() => handleRemoveItem(index)}
-                                    >
-                                        <Trash size={16} />
-                                    </button>
-                                </td>
+            {jsonArray.length !== 0 ?
+                <div className="overflow-x-auto max-w-screen-lg">
+                    <table className="min-w-full border border-gray-300 text-sm">
+                        <thead>
+                            <tr className="bg-zinc-800 text-white ">
+                                <th className="border px-4 py-2">Id</th>
+                                <th className="border px-4 py-2">Title</th>
+                                <th className="border px-4 py-2">Price</th>
+                                <th className="border px-4 py-2">Previous Price</th>
+                                <th className="border px-4 py-2">Poster</th>
+                                <th className="border px-4 py-2">Description</th>
+                                <th className="border px-4 py-2">Video</th>
+                                <th className="border px-4 py-2">Rate</th>
+                                <th className="border px-4 py-2">Students Enrolled</th>
+                                <th className="border px-4 py-2">Enrollment Open</th>
+                                <th className="border px-4 py-2">Instructor</th>
+                                <th className="border px-4 py-2">Instructor Info</th>
+                                <th className="border px-4 py-2">duration</th>
+                                <th className="border px-4 py-2">start Date</th>
+                                <th className="border px-4 py-2">category</th>
+                                <th className="border px-4 py-2">level</th>
+                                <th className="border px-4 py-2">index</th>
+                                <th className="border px-4 py-2">last_updated</th>
+                                <th className="border px-4 py-2">more_details</th>
+                                <th className="border px-4 py-2">Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>:<NoContent/>}
+                        </thead>
+                        <tbody>
+                            {jsonArray.map((item, index) => (
+                                <tr key={index} className="hover:bg-slate-100">
+                                    <td className="border px-4 py-2">{item.id}</td>
+                                    <td className="border px-4 py-2">{item.title}</td>
+                                    <td className="border px-4 py-2">{item.price}</td>
+                                    <td className="border px-4 py-2">{item.previousPrice}</td>
+                                    <td className="border px-4 py-2"><img src={item.poster} width="70" /></td>
+                                    <td className="border px-4 py-2">{item.description}</td>
+                                    <td className="border px-4 py-2"><video src={item.video} width={70} /></td>
+                                    <td className="border px-4 py-2">{item.rate}</td>
+                                    <td className="border px-4 py-2">{item.studentsEnrolled}</td>
+                                    <td className="border px-4 py-2">{item.enrollmentOpen}</td>
+                                    <td className="border px-4 py-2">{item.instructor}</td>
+                                    <td className="border px-4 py-2">{item.instructor_info}</td>
+                                    <td className="border px-4 py-2">{item.duration}</td>
+                                    <td className="border px-4 py-2">{item.startDate}</td>
+                                    <td className="border px-4 py-2">{item.category}</td>
+                                    <td className="border px-4 py-2">{item.level}</td>
+                                    <td className="border px-4 py-2">{item.index}</td>
+                                    <td className="border px-4 py-2">{item.last_updated}</td>
+                                    <td className="border px-4 py-2">{item.more_details}</td>
+                                    <td className="border px-2 py-2">
+                                        <button
+                                            className="mr-1"
+                                            onClick={() => handleEditClick(index)}
+                                        >
+                                            <Edit size={16} />
+                                        </button>
+                                        <button
+                                            className="mr-1"
+                                            onClick={() => handleRemoveItem(index)}
+                                        >
+                                            <Trash size={16} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div> : <NoContent />}
 
             {editIndex !== null && (
                 <div className="mt-5">
                     <h2 className="font-bold mb-2">
                         {editIndex === -1 ? "Add New Item" : "Edit Item"}
                     </h2>
-                    {error && <p className="text-red-500 mb-2">{error}</p>}
                     <div className="flex flex-col lg:flex-row mb-2 lg:pr-4 flex-wrap">
                         <div className="lg:w-1/4  mb-2 lg:pr-4">
                             <input
@@ -403,7 +413,7 @@ const AdminCourses = () => {
                                 onChange={(e) => handleInputChange(e, "last_updated")}
                             />
                         </div>
-                    
+
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
                                 type="text"
@@ -442,6 +452,15 @@ const AdminCourses = () => {
                     Add Item
                 </button>
             </div> */}
+            <Toaster
+                position="bottom-left"
+                toastOptions={{
+                    style: {
+                        background: "#000",
+                        color: "#fff",
+                    },
+                }}
+            />
         </div>
     );
 };

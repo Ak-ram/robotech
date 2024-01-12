@@ -3,6 +3,7 @@ import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
+import toast, { Toaster } from "react-hot-toast";
 
 const AdminFaq = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -44,6 +45,13 @@ const AdminFaq = () => {
     try {
       await updateJsonFile("robotech/pages/faq.json", updatedArray);
       setJsonArray(updatedArray);
+      toast.success('Question removed successfully')
+      toast.loading(`Be patient, changes takes a few moments to be reflected`);
+      console.log('ddddddddddddd')
+      setTimeout(() => {
+        toast.dismiss();
+
+      }, 5000);
     } catch (error) {
       setError((error as Error).message);
     }
@@ -83,6 +91,12 @@ const AdminFaq = () => {
         setJsonArray(updatedArray);
         setEditIndex(null);
         setError(null); // Reset error state
+        toast.success('Question added successfully')
+        toast.loading(`Be patient, changes takes a few moments to be reflected`);
+        setTimeout(() => {
+          toast.dismiss();
+
+        }, 5000);
       } catch (error) {
         setError((error as Error).message);
       }
@@ -215,6 +229,15 @@ const AdminFaq = () => {
           Add Item
         </button>
       </div> */}
+        <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            background: "#000",
+            color: "#fff",
+          },
+        }}
+      />
     </div>
   );
 };
