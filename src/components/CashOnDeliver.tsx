@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import emailjs from '@emailjs/browser'
 import toast, { Toaster } from "react-hot-toast";
-const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => {
+import FormattedPrice from "./FormattedPrice";
+const CashOnDelivery = ({ totalAmt,isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => {
     const [clientName, setClientName] = useState("");
     const [phone, setPhone] = useState("");
     const [message, setMessage] = useState("");
@@ -75,8 +76,8 @@ const CashOnDelivery = ({ isCashOnDeliveryOpened, setCashOnDeliveryOpened }) => 
                                 </svg>
                             </button>
                         </div>
-                        <h4 className="mb-2 font-medium text-gray-700 xl:text-xl">Welcome to Robotech!</h4>
-                        <p className="mb-6 text-gray-500">Please provide us with you data</p>
+                        <h4 className="mb-2 font-medium text-gray-700 xl:text-xl">Total Price: <FormattedPrice amount={totalAmt}/></h4>
+                        <p className="mb-6 text-gray-500">Kindly share your information to finalize the payment process.</p>
 
                         <form ref={formElement} onSubmit={sendEmail} className="mb-4">
                             <div className="mb-4">
