@@ -87,9 +87,12 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
                                 <del className='text-xs text-zinc-400'><FormattedPrice amount={item.previousPrice} /></del>
                                 <span className='font-bold'><FormattedPrice amount={item.price} /></span>
                                 <div className='flex items-center justify-between mt-4'>
-                                    <button disabled={item.enrollmentOpen ? false : true} className={`${item.enrollmentOpen ? "bg-orange-600 text-white" : "bg-red-200 text-red-500 font-bold"} my-2 rounded-md px-5 py-2 text-sm text-center transition`}>
-                                        {!item.enrollmentOpen ? 'Enrolment closed' : 'Enroll Now'}
-                                    </button>
+                                    {item.enrollmentOpen === 'open' && item.enrollmentLink? <Link className='bg-orange-200 text-orange-500 font-bold my-2 rounded-md px-3 py-1.5 text-sm text-center transition' href={item.enrollmentLink!} >Enroll Now</Link> :
+                                        <button disabled={true} className={`bg-red-200 text-red-500 font-bold my-2 rounded-md px-3 py-1.5 text-xs text-center transition`}>
+                                            Enrolment Closed
+                                        </button>
+                                    }
+
                                     <div className="flex flex-nowrap h-fit gap-2 text-sm font-medium">
                                         <div className={`rounded-full px-2 py-0.5 ${item?.level.toLowerCase() === 'beginner' ? 'bg-green-100 text-green-700' : item.level.toLowerCase() === 'intermediate' ? 'bg-yellow-100 text-yellow-700' : item.level.toLowerCase() === 'advanced' ? "bg-red-100  text-red-700" : ""}`}>{item?.level}</div>
                                         {/* <div className="rounded-full bg-zinc-100 px-2 py-0.5 text-zinc-700">{item?.duration} weeks</div> */}

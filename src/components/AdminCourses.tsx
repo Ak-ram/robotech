@@ -10,14 +10,15 @@ const AdminCourses = () => {
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [editedItem, setEditedItem] = useState<any>({
         id: 0,
-        image: "",
+        poster: "",
         rate: 0,
         title: "",
         price: 0,
         previousPrice: 0,
         studentsEnrolled: 0,
         description: "",
-        enrollmentOpen: false,
+        enrollmentOpen: 'close',
+        enrollmentLink: '',
         instructor: "",
         instructor_info: "",
         duration: 0,
@@ -46,7 +47,7 @@ const AdminCourses = () => {
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
             id: 0,
-            image: "",
+            poster: "",
             video: "",
             rate: 0,
             title: "",
@@ -54,7 +55,8 @@ const AdminCourses = () => {
             previousPrice: 0,
             studentsEnrolled: 0,
             description: "",
-            enrollmentOpen: false,
+            enrollmentOpen: 'close',
+            enrollmentLink: '',
             instructor: "",
             instructor_info: "",
             duration: 0,
@@ -93,29 +95,30 @@ const AdminCourses = () => {
 
     const handleEditSubmit = async () => {
         // Check for empty fields
-        // if (
-        //     !editedItem.id ||
-        //     !editedItem.image ||
-        //     !editedItem.video ||
-        //     !editedItem.rate ||
-        //     !editedItem.title ||
-        //     !editedItem.price ||
-        //     !editedItem.previousPrice ||
-        //     !editedItem.description ||
-        //     // !editedItem.enrollmentOpen ||
-        //     !editedItem.instructor ||
-        //     !editedItem.instructor_info ||
-        //     !editedItem.duration ||
-        //     !editedItem.category ||
-        //     !editedItem.startDate ||
-        //     !editedItem.level ||
-        //     !editedItem.index ||
-        //     !editedItem.last_updated ||
-        //     !editedItem.more_details
-        // ) {
-        //     toast.error("All fields are required")
-        //     return;
-        // }
+        if (
+            !editedItem.id ||
+            !editedItem.poster ||
+            !editedItem.video ||
+            !editedItem.rate ||
+            !editedItem.title ||
+            !editedItem.price ||
+            !editedItem.previousPrice ||
+            !editedItem.description ||
+            !editedItem.enrollmentOpen ||
+            !editedItem.enrollmentLink ||
+            !editedItem.instructor ||
+            !editedItem.instructor_info ||
+            !editedItem.duration ||
+            !editedItem.category ||
+            !editedItem.startDate ||
+            !editedItem.level ||
+            !editedItem.index ||
+            !editedItem.last_updated ||
+            !editedItem.more_details
+        ) {
+            toast.error("All fields are required")
+            return;
+        }
 
         if (editIndex !== null) {
             let updatedArray;
@@ -186,6 +189,7 @@ const AdminCourses = () => {
                                 <th className="border px-4 py-2">Rate</th>
                                 <th className="border px-4 py-2">Students Enrolled</th>
                                 <th className="border px-4 py-2">Enrollment Open</th>
+                                <th className="border px-4 py-2">Enrollment Link</th>
                                 <th className="border px-4 py-2">Instructor</th>
                                 <th className="border px-4 py-2">Instructor Info</th>
                                 <th className="border px-4 py-2">duration</th>
@@ -211,6 +215,7 @@ const AdminCourses = () => {
                                     <td className="border px-4 py-2">{item.rate}</td>
                                     <td className="border px-4 py-2">{item.studentsEnrolled}</td>
                                     <td className="border px-4 py-2">{item.enrollmentOpen}</td>
+                                    <td className="border px-4 py-2">{item.enrollmentLink}</td>
                                     <td className="border px-4 py-2">{item.instructor}</td>
                                     <td className="border px-4 py-2">{item.instructor_info}</td>
                                     <td className="border px-4 py-2">{item.duration}</td>
@@ -258,7 +263,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4  mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Title"
                                 className="w-full p-2 border border-gray-300 rounded"
@@ -268,7 +273,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Price"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -278,7 +283,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Previous Price"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -288,7 +293,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Poster"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -298,7 +303,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Description"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -336,7 +341,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Enrollment Open"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -346,7 +351,17 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
+                                type="text"
+                                placeholder="Enrollment Link"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.enrollmentLink}
+                                onChange={(e) => handleInputChange(e, "enrollmentLink")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                required
                                 type="text"
                                 placeholder="Instructor"
                                 className="p-2 w-full border border-gray-300 rounded"
