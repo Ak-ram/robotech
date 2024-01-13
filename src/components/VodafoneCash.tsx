@@ -72,11 +72,12 @@ const VodafoneCash = ({ totalAmt,isVodafoneCashOpened, setIsVodafoneCashOpened }
                                 </p>
                             </label>
                         </div>
+                       
                         <div className="relative mb-4">
                             <label className="flex flex-col rounded-2xl border border-gray-300 bg-slate-100/80 p-4 pr-8 sm:pr-16">
                                 <span className="mb-2 font-bold">Step 2</span>
                                 <p className="text-sm sm:text-base">
-                                    Send the total price "<FormattedPrice amount={totalAmt}/>" to the following Vodafone Cash number:{" "}
+                                    Send Screenshot & "<FormattedPrice amount={totalAmt}/>" to the following Vodafone Cash number:{" "}
                                     {showNumber ? (
                                         <span className="items-center justify-start gap-2">
                                             <span>01066745733</span>
