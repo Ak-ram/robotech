@@ -735,7 +735,7 @@ const AdminComponent = () => {
             jsonData[selectedSectionIndex] &&
             selectedCat && (
               <div key={selectedSectionIndex} className="mt-5">
-                <h2 className="font-bold mb-4">{selectedCat}</h2>
+                <span className="font-bold mb-4">list of {selectedCat} products</span>
                 <table className="min-w-full border border-gray-300 text-sm">
                   <thead>
                     <tr className="bg-zinc-800 text-white ">

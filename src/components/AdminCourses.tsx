@@ -10,14 +10,15 @@ const AdminCourses = () => {
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [editedItem, setEditedItem] = useState<any>({
         id: 0,
-        image: "",
+        poster: "",
         rate: 0,
         title: "",
         price: 0,
         previousPrice: 0,
         studentsEnrolled: 0,
         description: "",
-        enrollmentOpen: false,
+        enrollmentOpen: 'close',
+        enrollmentLink: '',
         instructor: "",
         instructor_info: "",
         duration: 0,
@@ -46,7 +47,7 @@ const AdminCourses = () => {
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
             id: 0,
-            image: "",
+            poster: "",
             video: "",
             rate: 0,
             title: "",
@@ -54,7 +55,8 @@ const AdminCourses = () => {
             previousPrice: 0,
             studentsEnrolled: 0,
             description: "",
-            enrollmentOpen: false,
+            enrollmentOpen: 'close',
+            enrollmentLink: '',
             instructor: "",
             instructor_info: "",
             duration: 0,
@@ -93,29 +95,30 @@ const AdminCourses = () => {
 
     const handleEditSubmit = async () => {
         // Check for empty fields
-        // if (
-        //     !editedItem.id ||
-        //     !editedItem.image ||
-        //     !editedItem.video ||
-        //     !editedItem.rate ||
-        //     !editedItem.title ||
-        //     !editedItem.price ||
-        //     !editedItem.previousPrice ||
-        //     !editedItem.description ||
-        //     // !editedItem.enrollmentOpen ||
-        //     !editedItem.instructor ||
-        //     !editedItem.instructor_info ||
-        //     !editedItem.duration ||
-        //     !editedItem.category ||
-        //     !editedItem.startDate ||
-        //     !editedItem.level ||
-        //     !editedItem.index ||
-        //     !editedItem.last_updated ||
-        //     !editedItem.more_details
-        // ) {
-        //     toast.error("All fields are required")
-        //     return;
-        // }
+        if (
+            !editedItem.id ||
+            !editedItem.poster ||
+            !editedItem.video ||
+            !editedItem.rate ||
+            !editedItem.title ||
+            !editedItem.price ||
+            !editedItem.previousPrice ||
+            !editedItem.description ||
+            !editedItem.enrollmentOpen ||
+            !editedItem.enrollmentLink ||
+            !editedItem.instructor ||
+            !editedItem.instructor_info ||
+            !editedItem.duration ||
+            !editedItem.category ||
+            !editedItem.startDate ||
+            !editedItem.level ||
+            !editedItem.index ||
+            !editedItem.last_updated ||
+            !editedItem.more_details
+        ) {
+            toast.error("All fields are required")
+            return;
+        }
 
         if (editIndex !== null) {
             let updatedArray;
@@ -176,51 +179,53 @@ const AdminCourses = () => {
                     <table className="min-w-full border border-gray-300 text-sm">
                         <thead>
                             <tr className="bg-zinc-800 text-white ">
-                                <th className="border px-4 py-2">Id</th>
-                                <th className="border px-4 py-2">Title</th>
-                                <th className="border px-4 py-2">Price</th>
-                                <th className="border px-4 py-2">Previous Price</th>
-                                <th className="border px-4 py-2">Poster</th>
-                                <th className="border px-4 py-2">Description</th>
-                                <th className="border px-4 py-2">Video</th>
-                                <th className="border px-4 py-2">Rate</th>
-                                <th className="border px-4 py-2">Students Enrolled</th>
-                                <th className="border px-4 py-2">Enrollment Open</th>
-                                <th className="border px-4 py-2">Instructor</th>
-                                <th className="border px-4 py-2">Instructor Info</th>
-                                <th className="border px-4 py-2">duration</th>
-                                <th className="border px-4 py-2">start Date</th>
-                                <th className="border px-4 py-2">category</th>
-                                <th className="border px-4 py-2">level</th>
-                                <th className="border px-4 py-2">index</th>
-                                <th className="border px-4 py-2">last_updated</th>
-                                <th className="border px-4 py-2">more_details</th>
-                                <th className="border px-4 py-2">Actions</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Id</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Title</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Price</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Previous Price</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Poster</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Description</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Video</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Rate</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Students Enrolled</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Enrollment Open</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Enrollment Link</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Instructor</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Instructor Info</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">duration</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">start Date</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">category</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">level</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">index</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">last_updated</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">more_details</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {jsonArray.map((item, index) => (
                                 <tr key={index} className="hover:bg-slate-100">
-                                    <td className="border px-4 py-2">{item.id}</td>
-                                    <td className="border px-4 py-2">{item.title}</td>
-                                    <td className="border px-4 py-2">{item.price}</td>
-                                    <td className="border px-4 py-2">{item.previousPrice}</td>
-                                    <td className="border px-4 py-2"><img src={item.poster} width="70" /></td>
-                                    <td className="border px-4 py-2">{item.description}</td>
-                                    <td className="border px-4 py-2"><video src={item.video} width={70} /></td>
-                                    <td className="border px-4 py-2">{item.rate}</td>
-                                    <td className="border px-4 py-2">{item.studentsEnrolled}</td>
-                                    <td className="border px-4 py-2">{item.enrollmentOpen}</td>
-                                    <td className="border px-4 py-2">{item.instructor}</td>
-                                    <td className="border px-4 py-2">{item.instructor_info}</td>
-                                    <td className="border px-4 py-2">{item.duration}</td>
-                                    <td className="border px-4 py-2">{item.startDate}</td>
-                                    <td className="border px-4 py-2">{item.category}</td>
-                                    <td className="border px-4 py-2">{item.level}</td>
-                                    <td className="border px-4 py-2">{item.index}</td>
-                                    <td className="border px-4 py-2">{item.last_updated}</td>
-                                    <td className="border px-4 py-2">{item.more_details}</td>
-                                    <td className="border px-2 py-2">
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.id}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.title}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.price}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.previousPrice}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2"><img src={item.poster} width="70" /></td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.description}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2"><video src={item.video} width={70} /></td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.rate}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.studentsEnrolled}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.enrollmentOpen}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.enrollmentLink}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.instructor}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.instructor_info}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.duration}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.startDate}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.category}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.level}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.index}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.last_updated}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.more_details}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-2 py-2">
                                         <button
                                             className="mr-1"
                                             onClick={() => handleEditClick(index)}
@@ -258,7 +263,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4  mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Title"
                                 className="w-full p-2 border border-gray-300 rounded"
@@ -268,7 +273,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Price"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -278,7 +283,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Previous Price"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -288,7 +293,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Poster"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -298,7 +303,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Description"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -336,7 +341,7 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
                                 type="text"
                                 placeholder="Enrollment Open"
                                 className="p-2 w-full border border-gray-300 rounded"
@@ -346,7 +351,17 @@ const AdminCourses = () => {
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
-                            required
+                                required
+                                type="text"
+                                placeholder="Enrollment Link"
+                                className="p-2 w-full border border-gray-300 rounded"
+                                value={editedItem.enrollmentLink}
+                                onChange={(e) => handleInputChange(e, "enrollmentLink")}
+                            />
+                        </div>
+                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                            <input
+                                required
                                 type="text"
                                 placeholder="Instructor"
                                 className="p-2 w-full border border-gray-300 rounded"

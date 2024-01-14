@@ -1,5 +1,4 @@
 export interface ProductType {
-  enrollmentOpen: any;
   image1: string | undefined;
   image2: string | undefined;
   image3: string | undefined;
@@ -16,25 +15,26 @@ export interface ProductType {
 }
 
 export interface CourseType {
-  id: number,
-  poster: string,
-  video: string,
-  rate: number,
-  title: string,
-  price: number,
-  previousPrice: number,
-  studentsEnrolled: number,
-  description: string,
-  enrollmentOpen: boolean,
-  instructor: string,
-  instructor_info: string,
-  duration: number,
-  category: string,
-  startDateTime: string,
-  level: string,
-  index: string,
-  last_updated: string,
-  more_details: string
+  enrollmentLink: string;
+  id: number;
+  poster: string;
+  video: string;
+  rate: number;
+  title: string;
+  price: number;
+  previousPrice: number;
+  studentsEnrolled: number;
+  description: string;
+  enrollmentOpen: string;
+  instructor: string;
+  instructor_info: string;
+  duration: number;
+  category: string;
+  startDateTime: string;
+  level: string;
+  index: string;
+  last_updated: string;
+  more_details: string;
 }
 
 
