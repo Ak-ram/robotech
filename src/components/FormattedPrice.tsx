@@ -6,13 +6,16 @@ type Props = {
 };
 
 const FormattedPrice = ({ amount, className }: Props) => {
-  const formattedAmount = new Number(amount).toLocaleString("ar", {
+  const formattedAmount = new Number(amount).toLocaleString("en", {
     style: "currency",
     currency: "EGP",
+    currencyDisplay: "symbol",
     maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+    useGrouping: true,
   });
   return (
-    <span className={cn("text-base text-black", className)}>
+    <span className={cn("", className)}>
       {formattedAmount}
     </span>
   );

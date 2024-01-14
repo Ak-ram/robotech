@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductType, StateProps } from "../../type";
-import { Minus, Plus, X , RefreshCw } from "lucide-react";
+import { Minus, Plus, X, RefreshCw, CreditCard, PackageOpen } from "lucide-react";
 import {
   decreaseQuantity,
   deleteProduct,
@@ -18,11 +18,17 @@ import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 // import { useSession } from "next-auth/react";
 import EmptyCard from "@/assets/empty.jpeg"
+import VodafoneCash from "./VodafoneCash";
+import VodafoneIcon from '@/assets/vodafoneIcon.png';
+import { json } from "stream/consumers";
+import CashOnDelivery from "./CashOnDeliver";
 const Cart = () => {
   const [totalAmt, setTotalAmt] = useState(0);
   const [isCheckout, setIsCheckout] = useState(false);
   const [rowPrice, setRowPrice] = useState(0);
   const { productData } = useSelector((state: StateProps) => state.pro);
+  const [isVodafoneCashOpened, setIsVodafoneCashOpened] = useState(false);
+  const [isCashOnDeliveryOpened, setIsCashOnDeliveryOpened] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   // const { data: session } = useSession();
@@ -51,34 +57,85 @@ const Cart = () => {
     });
     setTotalAmt(amt);
     setRowPrice(rowAmt);
+    console.log(productData)
   }, [productData]);
 
-  //   Stripe Payment
-  const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-  );
+  let thirdStep = async (token, id) => {
+    let data = {
+      "auth_token": token,
+      "amount_cents": totalAmt * 100,
+      "expiration": 3600,
+      "order_id": id,
+      "billing_data": {
+        "apartment": "803",
+        "email": "claudette09@exa.com",
+        "floor": "42",
+        "first_name": "Clifford",
+        "street": "Ethan Land",
+        "building": "8028",
+        "phone_number": "+86(8)9135210487",
+        "shipping_method": "PKG",
+        "postal_code": "01898",
+        "city": "Jaskolskiburgh",
+        "country": "CR",
+        "last_name": "Nicolas",
+        "state": "Utah"
+      },
+      "currency": "EGP",
+      "integration_id": 4423017
+    }
+    let request = await fetch('https://accept.paymob.com/api/acceptance/payment_keys', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    let response = await request?.json();
+    let _token = response.token;
+    cardPayment(_token)
+  }
+
+  let secondStep = async (token) => {
+    let items = productData.map((item) => ({
+      name: item.title,
+      amount_cents: item.price * 100, // Convert to cents
+      description: item.description,
+      // quantity: item.quantity,
+    }));
+    let data = {
+      "auth_token": token,
+      "delivery_needed": "false",
+      "amount_cents": totalAmt,
+      "currency": "EGP",
+      "items": items
+    };
+    let request = await fetch('https://accept.paymob.com/api/ecommerce/orders', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    let response = await request?.json();
+    let id = response.id;
+    thirdStep(token, id)
+  }
+
+  const cardPayment = async (_token) => {
+    let iframeURL = `https://accept.paymob.com/api/acceptance/iframes/811079?payment_token=${_token}`;
+    location.href = iframeURL
+  }
+
   const handleCheckout = async () => {
     setIsCheckout(true)
-    const stripe = await stripePromise;
-    let url = 'https://robotech.vercel.app/api/checkout';
-    // let url = 'http://localhost:3000/api/checkout';
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        items: productData,
-        // email: session?.user?.email,
-      }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      // await dispatch(saveOrder({ order: productData, id: data.id }));
-      stripe?.redirectToCheckout({ sessionId: data.id });
-      setIsCheckout(false)
-      dispatch(resetCart());
-    } else {
-      throw new Error("Failed to create Stripe Payment");
+    let data = {
+      "api_key": process.env.NEXT_PUBLIC_PAYMOB_API
     }
+    let request = await fetch('https://accept.paymob.com/api/auth/tokens', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    let response = await request.json();
+    let token = response.token;
+    secondStep(token)
   };
   // console.log('cart', productData)
   const handleDecreasement = (item: ProductType) => {
@@ -97,7 +154,7 @@ const Cart = () => {
   return (
     <>
       {productData.length > 0 ? (
-        <div className="mt-5 flex flex-col">
+        <div className="mt-5 flex flex-col max-w-screen-xl mx-auto">
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left">
               <thead className="text-xs text-white uppercase bg-zinc-950">
@@ -125,9 +182,9 @@ const Cart = () => {
                     <th
                       scope="row"
                       className="px-6 py-4 flex items-center gap-3"
-                      style={{width: 'max-content'}}
+                      style={{ width: 'max-content' }}
                     >
-                      <X 
+                      <X
                         onClick={() => {
                           dispatch(deleteProduct(item)),
                             toast.success(
@@ -137,7 +194,7 @@ const Cart = () => {
                         className="w-4 h-4 hover:text-red-600 cursor-pointer duration-200"
                       />
                       <img
-                        src={item?.image}
+                        src={item?.image1}
                         alt="proudct image"
                         width={500}
                         height={500}
@@ -190,45 +247,70 @@ const Cart = () => {
           >
             Reset Cart
           </button>
-          <div className="m-auto w-full shadow-lg border border-zinc-400 rounded-[.5rem] mt-4 bg-white max-w-xl p-4 flex flex-col gap-1">
-            <p className="border-b-[1px] border-b-designColor py-1">
-              Cart Summary
-            </p>
-            <p className="flex items-center justify-between">
-              Total Items <span>{productData.length}</span>
-            </p>
-            <p className="flex items-center justify-between">
-              Price{" "}
-              <span>
-                <FormattedPrice amount={rowPrice} />
-              </span>
-            </p>
-            <p className="flex items-center justify-between">
-              Discount{" "}
-              <span>
-                <FormattedPrice amount={rowPrice - totalAmt} />
-              </span>
-            </p>
-            <p className="flex items-center justify-between">
-              Total Price{" "}
-              <span>
-                <FormattedPrice
-                  amount={totalAmt}
-                  className="font-semibold text-lg"
-                />
-              </span>
-            </p>
+          <div className="lg:flex items-start justify-between py-10">
+            <div className=" mx-auto w-full shadow-lg border border-zinc-400 rounded-[.5rem] bg-white max-w-xl p-4 flex flex-col gap-1">
+              <p className="border-b-[1px] border-b-designColor py-1">
+                Cart Summary
+              </p>
+              <p className="flex items-center justify-between">
+                Total Items <span>{productData.length}</span>
+              </p>
+              <p className="flex items-center justify-between">
+                Price{" "}
+                <span>
+                  <FormattedPrice amount={rowPrice} />
+                </span>
+              </p>
+              <p className="flex items-center justify-between">
+                Discount{" "}
+                <span>
+                  <FormattedPrice amount={rowPrice - totalAmt} />
+                </span>
+              </p>
+              <p className="flex items-center justify-between">
+                Total Price{" "}
+                <span>
+                  <FormattedPrice
+                    amount={totalAmt}
+                    className="font-semibold text-lg"
+                  />
+                </span>
+              </p>
+              <div className="flex items-center justify-center gap-1">
+                <span className="flex-1">Pay with:</span>
+                <button
+                  onClick={handleCheckout}
+                  className="flex items-center gap-1 text-xs bg-zinc-800 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-black hover:text-white duration-200"
+                >
+                  <CreditCard size={16} /> Cards <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={15} /></span>
+                </button>
 
-            <button
-              onClick={handleCheckout}
-              className="bg-zinc-800 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-black hover:text-white duration-200"
-            >
-              Proceed to Checkout <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={16} /></span>
-            </button>
+                <button
+                  onClick={() => setIsVodafoneCashOpened(true)}
+                  className="flex items-center gap-1 text-xs bg-red-600 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-red-700 hover:text-white duration-200"
+                >
+                  <Image alt="vodafone cash" src={VodafoneIcon} width={16} height={16} /> Wallet
+                </button>
 
+                <button
+                  onClick={() => setIsCashOnDeliveryOpened(true)}
+                  className="flex items-center gap-1 text-xs bg-blue-600 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-blue-700 hover:text-white duration-200"
+                >
+                  <PackageOpen size={16} /> On Delivery
+                </button>
+              </div>
 
+              {/* <div>
+<span></span>
+<span>Send price to this number: 010122-----</span>
+<span>Contact us on whatsapp via 010122-----</span>
+</div> */}
 
-
+            </div>
+            <div className="">
+              <VodafoneCash totalAmt={totalAmt} isVodafoneCashOpened={isVodafoneCashOpened} setIsVodafoneCashOpened={setIsVodafoneCashOpened} />
+              <CashOnDelivery totalAmt={totalAmt} isCashOnDeliveryOpened={isCashOnDeliveryOpened} setCashOnDeliveryOpened={setIsCashOnDeliveryOpened} />
+            </div>
           </div>
         </div>
       ) : (

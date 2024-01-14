@@ -24,7 +24,7 @@ function PrintServices() {
 
 
     return (
-        <Product prefix='print' products={services} />
+        <Product categoryName='3d_print' prefix='print' products={services} />
         )
 }
 

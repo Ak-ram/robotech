@@ -3,20 +3,16 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import Link from "next/link";
 import Logo from "./Logo";
-import { Heart, ShoppingBagIcon  } from "lucide-react";
+import { Heart, ShoppingBagIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/constants/data";
 import { useSelector } from "react-redux";
-import { StateProps } from "../../type";
+import { ProductType, StateProps } from "../../type";
 import { getProducts } from "../helpers/getProducts"; // Update the import path
+import FormattedPrice from './FormattedPrice';
 
 // Define the type for product items
-interface ProductItem {
-  id: number;
-  title: string;
-  category: string
-  // Add other properties as needed
-}
+
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -24,7 +20,7 @@ const Navbar = () => {
     (state: StateProps) => state.pro
   );
 
-  const [res, setRes] = useState<ProductItem[]>([]);
+  const [res, setRes] = useState<ProductType[]>([]);
   const [isInput, setIsInput] = useState(false);
   const [inputQuery, setInputQuery] = useState<string>("");
 
@@ -37,7 +33,7 @@ const Navbar = () => {
     const fetchData = async () => {
       let allProducts = await getProducts();
       // Perform the search operation here and update the 'res' state
-      const searchResults = allProducts.filter((item: ProductItem) =>
+      const searchResults = allProducts.filter((item: ProductType) =>
         item.title.toLowerCase().includes(inputQuery.toLowerCase())
       );
 
@@ -72,7 +68,7 @@ const Navbar = () => {
         {/* Navigation */}
         <ul className="order-last  md:order-none w-full md:w-fit flex py-2 items-center gap-5 text-sm uppercase font-semibold">
           {navigation.map((item) => (
-            <Link href={item?.href} key={item._id}>
+            <Link href={item?.href} key={item.title}>
               <li
                 className={`hover:text-black cursor-pointer duration-200 relative overflow-hidden group ${item.href === pathname && "text-designColor"
                   }`}
@@ -97,18 +93,22 @@ const Navbar = () => {
           />
           <ul
             className={`${isInput ? "block py-3 " : "hidden p-0 "
-              } shadow-lg top-10 w-full border shadow-md border-zinc-400 absolute bgDesign mt-2 rounded-sm`}
+              } shadow-lg top-11 w-full border shadow-md border-zinc-400 absolute bg-white mt-2 rounded-sm`}
           >
             {res.length > 0 ? (
               res.map((item) => (
                 <li
                   key={item.title}
-                  className={`${isInput ? "p-1 border-b" : "p-0 border-0"} cursor-pointer hover:bg-slate-200 rounded-sm my-1`}
+                  className={`${isInput ? "py-2.5 border-b" : "p-0 border-0"} hover:bg-zinc-100 cursor-pointer hover:bg-slate-200 rounded-sm my-1`}
                 >
                   <Link
+                    className='flex items-center font-bold justify-between px-3'
                     href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
-
-                    {item.title}
+                    <span className='flex-col flex'>
+                      <span className='text-xl  text-blue-400'>{item.title}</span>
+                      <span className='text-xs font-bold'><FormattedPrice amount={item?.price} /></span>
+                    </span>
+                    <img className='rounded-md' src={item.image1} width={70} height={70} />
                   </Link>
                 </li>
               ))
@@ -132,7 +132,7 @@ const Navbar = () => {
             href={"/cart"}
             className="hover:text-black cursor-pointer duration-200 relative group"
           >
-            <ShoppingBagIcon  className="w-7 h-7" />
+            <ShoppingBagIcon className="w-7 h-7" />
             <span className="absolute top-0 -left-1 bg-zinc-800 text-zinc-200 w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-black font-semibold group-hover:text-white">
               {productData ? productData.length : 0}
             </span>

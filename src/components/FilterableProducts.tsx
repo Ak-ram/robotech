@@ -49,7 +49,7 @@ function FilterableProducts({ categories }) {
     <div className='mt-5'>
       <div className='relative mt-5 flex gap-4 m-auto '>
         <Categories setCategoryName={setCategoryName} categories={categories} />
-        <Product prefix={'pr'} products={products} />
+        <Product categoryName={categoryName} prefix={'pr'} products={products} />
       </div>
     </div>
   );

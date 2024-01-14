@@ -1,12 +1,11 @@
 'use client'
 import Container from "./Container";
-import Link from "next/link";
 import FilterableProducts from "./FilterableProducts";
 import { getCategories } from "@/helpers/getCategories";
 import { useState, useEffect } from "react";
 
 const Products = () => {
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState<string[]>([])
   useEffect(() => {
     const fetchCategories = async () => {
       try {

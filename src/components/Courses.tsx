@@ -2,6 +2,7 @@
 import { getCourses } from '@/helpers/getCourses';
 import React, { useEffect, useState } from 'react'
 import Product from './Product';
+import CourseCard from './CourseCard';
 
 function Courses() {
     const [courses, setCourses] = useState([])
@@ -24,7 +25,7 @@ function Courses() {
 
 
     return (
-        <Product prefix='cr' products={courses} />
+        <CourseCard categoryName= "courses" prefix='cr' products={courses} />
         )
 }
 

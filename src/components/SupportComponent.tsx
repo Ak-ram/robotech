@@ -51,7 +51,7 @@ function SupportComponent() {
           <div className="mx-auto text-center px-4 mt-8 text-2xl text-indigo-900 font-semibold">
             Frequently Asked Questions
           </div>
-          <dl className="mt-8 mx-auto max-w-screen-sm lg:max-w-screen-lg flex flex-col lg:flex-row lg:flex-wrap">
+          <dl style={{direction: 'rtl'}} className="mt-8 mx-auto max-w-screen-sm lg:max-w-screen-lg flex flex-col lg:flex-row lg:flex-wrap">
             {data &&
               data.map((item, i) => (
                 <div className="lg:w-1/2" key={`${i}_${item?.question}`}>

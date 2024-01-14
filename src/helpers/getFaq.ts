@@ -1,6 +1,6 @@
 export const getFaq = async () => {
     const res = await fetch(
-      "https://robotech-space.github.io/robotech/pages/faq.json",
+      "https://akram-44.github.io/api/robotech/pages/faq.json",
       {
         cache: "no-cache",
       }

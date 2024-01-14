@@ -88,7 +88,7 @@ function AboutComponent() {
 
                                 <Link
                                     href={item?.link_url}
-                                    className="w-20 items-center justify-center bg-black text-white p-2 rounded-md inline-flex items-center font-semibold transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800"
+                                    className="items-center justify-center bg-black text-white p-2 rounded-md inline-flex items-center font-semibold transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800"
                                 >
                                     {item?.link_text.charAt(0).toUpperCase() + item?.link_text.slice(1).toLowerCase()}
                                 </Link>
