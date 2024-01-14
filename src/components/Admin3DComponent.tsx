@@ -16,7 +16,9 @@ const Admin3DComponent = () => {
     description: "",
     count: 0,
     image1: "",
-    brand: ""
+    image2: "",
+    image3: "",
+    brand: "",
   });
 
   useEffect(() => {
@@ -42,7 +44,9 @@ const Admin3DComponent = () => {
       description: "",
       count: 0,
       image1: "",
-      brand: ""
+      image2: "",
+      image3: "",
+      brand: "",
     });
   };
 
@@ -57,7 +61,6 @@ const Admin3DComponent = () => {
       toast.loading(`Be patient, changes takes a few moments to be reflected`);
       setTimeout(() => {
         toast.dismiss();
-
       }, 5000);
     } catch (error) {
       toast.error((error as Error).message);
@@ -103,10 +106,11 @@ const Admin3DComponent = () => {
         setJsonArray(updatedArray);
         setEditIndex(null);
         toast.success(`Item Added/Updated successfully`);
-        toast.loading(`Be patient, changes takes a few moments to be reflected`);
+        toast.loading(
+          `Be patient, changes takes a few moments to be reflected`
+        );
         setTimeout(() => {
           toast.dismiss();
-
         }, 5000);
       } catch (error) {
         toast.error((error as Error).message);
@@ -127,7 +131,9 @@ const Admin3DComponent = () => {
   };
 
   return (
-    <div className={`lg:p-3 min-h-[400px] w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
+    <div
+      className={`lg:p-3 min-h-[400px] w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}
+    >
       {!jsonArray && <h2 className="font-bold mb-4">Current 3D Print data:</h2>}
       <div className="mb-5 flex items-center justify-end">
         <button
@@ -138,33 +144,79 @@ const Admin3DComponent = () => {
           Add Service
         </button>
       </div>
-      {jsonArray.length !== 0 ?
+      {jsonArray.length !== 0 ? (
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300 text-sm">
             <thead>
               <tr className="bg-zinc-800 text-white ">
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Id</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Title</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Price</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Previous Price</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Image</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Description</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Count</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Brand</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Actions</th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Id
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Title
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Price
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Previous Price
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Image 1
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Image 2
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Image 3
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Description
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Count
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Brand
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {jsonArray.map((item, index) => (
                 <tr key={index} className="hover:bg-slate-100">
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.id}</td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.title}</td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.price}</td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.previousPrice}</td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2"><img src={item.image1} width="70" /></td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.description}</td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.count}</td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.brand}</td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    {item.id}
+                  </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    {item.title}
+                  </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    {item.price}
+                  </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    {item.previousPrice}
+                  </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    <img src={item.image1} width="70" />
+                  </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    <img src={item.image2} width="70" />
+                  </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    <img src={item.image3} width="70" />
+                  </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    {item.description}
+                  </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    {item.count}
+                  </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    {item.brand}
+                  </td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
                     <button
                       className="mr-1"
@@ -183,7 +235,10 @@ const Admin3DComponent = () => {
               ))}
             </tbody>
           </table>
-        </div> : <NoContent />}
+        </div>
+      ) : (
+        <NoContent />
+      )}
 
       {editIndex !== null && (
         <div className="mt-5">
@@ -230,10 +285,28 @@ const Admin3DComponent = () => {
             <div className="lg:w-1/4 mb-2 lg:pr-4">
               <input
                 type="text"
-                placeholder="Image"
+                placeholder="Image 1"
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.image1}
                 onChange={(e) => handleInputChange(e, "image1")}
+              />
+            </div>
+            <div className="lg:w-1/4 mb-2 lg:pr-4">
+              <input
+                type="text"
+                placeholder="Image 2"
+                className="p-2 w-full border border-gray-300 rounded"
+                value={editedItem.image2}
+                onChange={(e) => handleInputChange(e, "image2")}
+              />
+            </div>
+            <div className="lg:w-1/4 mb-2 lg:pr-4">
+              <input
+                type="text"
+                placeholder="Image 3"
+                className="p-2 w-full border border-gray-300 rounded"
+                value={editedItem.image3}
+                onChange={(e) => handleInputChange(e, "image3")}
               />
             </div>
             <div className="lg:w-1/4 mb-2 lg:pr-4">
