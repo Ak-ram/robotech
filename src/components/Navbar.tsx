@@ -92,23 +92,23 @@ const Navbar = () => {
             placeholder="Search..."
           />
           <ul
-            className={`${isInput ? "block py-3 " : "hidden p-0 "
+            className={`${isInput ? "block py-1 lg:py-3 " : "hidden p-0 "
               } shadow-lg top-11 w-full border shadow-md border-zinc-400 absolute bg-white mt-2 rounded-sm`}
           >
             {res.length > 0 ? (
               res.map((item) => (
                 <li
                   key={item.title}
-                  className={`${isInput ? "py-2.5 border-b" : "p-0 border-0"} hover:bg-zinc-100 cursor-pointer hover:bg-slate-200 rounded-sm my-1`}
+                  className={`${isInput ? "py-1 lg:py-2.5 border-b" : "p-0 border-0"} hover:bg-zinc-100 cursor-pointer hover:bg-slate-200 rounded-sm my-1`}
                 >
                   <Link
                     className='flex items-center font-bold justify-between px-3'
                     href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
                     <span className='flex-col flex'>
-                      <span className='text-xl  text-blue-400'>{item.title}</span>
+                      <span className='text-sm mb-2 md:text-xl text-blue-400'>{item.title}</span>
                       <span className='text-xs font-bold'><FormattedPrice amount={item?.price} /></span>
                     </span>
-                    <img className='rounded-md' src={item.image1} width={70} height={70} />
+                    <img className='hidden md:inline-block rounded-md' src={item.image1} width={70} height={70} />
                   </Link>
                 </li>
               ))
