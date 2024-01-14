@@ -179,53 +179,53 @@ const AdminCourses = () => {
                     <table className="min-w-full border border-gray-300 text-sm">
                         <thead>
                             <tr className="bg-zinc-800 text-white ">
-                                <th className="border px-4 py-2">Id</th>
-                                <th className="border px-4 py-2">Title</th>
-                                <th className="border px-4 py-2">Price</th>
-                                <th className="border px-4 py-2">Previous Price</th>
-                                <th className="border px-4 py-2">Poster</th>
-                                <th className="border px-4 py-2">Description</th>
-                                <th className="border px-4 py-2">Video</th>
-                                <th className="border px-4 py-2">Rate</th>
-                                <th className="border px-4 py-2">Students Enrolled</th>
-                                <th className="border px-4 py-2">Enrollment Open</th>
-                                <th className="border px-4 py-2">Enrollment Link</th>
-                                <th className="border px-4 py-2">Instructor</th>
-                                <th className="border px-4 py-2">Instructor Info</th>
-                                <th className="border px-4 py-2">duration</th>
-                                <th className="border px-4 py-2">start Date</th>
-                                <th className="border px-4 py-2">category</th>
-                                <th className="border px-4 py-2">level</th>
-                                <th className="border px-4 py-2">index</th>
-                                <th className="border px-4 py-2">last_updated</th>
-                                <th className="border px-4 py-2">more_details</th>
-                                <th className="border px-4 py-2">Actions</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Id</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Title</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Price</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Previous Price</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Poster</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Description</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Video</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Rate</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Students Enrolled</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Enrollment Open</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Enrollment Link</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Instructor</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Instructor Info</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">duration</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">start Date</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">category</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">level</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">index</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">last_updated</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">more_details</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {jsonArray.map((item, index) => (
                                 <tr key={index} className="hover:bg-slate-100">
-                                    <td className="border px-4 py-2">{item.id}</td>
-                                    <td className="border px-4 py-2">{item.title}</td>
-                                    <td className="border px-4 py-2">{item.price}</td>
-                                    <td className="border px-4 py-2">{item.previousPrice}</td>
-                                    <td className="border px-4 py-2"><img src={item.poster} width="70" /></td>
-                                    <td className="border px-4 py-2">{item.description}</td>
-                                    <td className="border px-4 py-2"><video src={item.video} width={70} /></td>
-                                    <td className="border px-4 py-2">{item.rate}</td>
-                                    <td className="border px-4 py-2">{item.studentsEnrolled}</td>
-                                    <td className="border px-4 py-2">{item.enrollmentOpen}</td>
-                                    <td className="border px-4 py-2">{item.enrollmentLink}</td>
-                                    <td className="border px-4 py-2">{item.instructor}</td>
-                                    <td className="border px-4 py-2">{item.instructor_info}</td>
-                                    <td className="border px-4 py-2">{item.duration}</td>
-                                    <td className="border px-4 py-2">{item.startDate}</td>
-                                    <td className="border px-4 py-2">{item.category}</td>
-                                    <td className="border px-4 py-2">{item.level}</td>
-                                    <td className="border px-4 py-2">{item.index}</td>
-                                    <td className="border px-4 py-2">{item.last_updated}</td>
-                                    <td className="border px-4 py-2">{item.more_details}</td>
-                                    <td className="border px-2 py-2">
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.id}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.title}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.price}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.previousPrice}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2"><img src={item.poster} width="70" /></td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.description}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2"><video src={item.video} width={70} /></td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.rate}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.studentsEnrolled}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.enrollmentOpen}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.enrollmentLink}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.instructor}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.instructor_info}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.duration}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.startDate}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.category}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.level}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.index}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.last_updated}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.more_details}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-2 py-2">
                                         <button
                                             className="mr-1"
                                             onClick={() => handleEditClick(index)}
