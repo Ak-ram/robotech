@@ -47,7 +47,6 @@ const AdminFaq = () => {
       setJsonArray(updatedArray);
       toast.success('Question removed successfully')
       toast.loading(`Be patient, changes takes a few moments to be reflected`);
-      console.log('ddddddddddddd')
       setTimeout(() => {
         toast.dismiss();
 
