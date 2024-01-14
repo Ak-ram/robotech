@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react"; // Import useState from React
 const Categories = ({ categories, setCategoryName }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
+  console.log(categories)
   return (
     // <div className={`min-w-[300px] lg:w-[300px] lg:p-3 border w-full z-10 fixed bottom-0 left-0 lg:relative overflow-hidden bg-white mt-5 shadow-lg border-zinc-400 lg:rounded-md`}>
     //   <h3 className="font-bold text-lg mt-3 hidden lg:inline-block ">List Of Categories</h3>

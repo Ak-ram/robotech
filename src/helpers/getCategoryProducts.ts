@@ -14,9 +14,9 @@ export async function getCategoryProducts(categoryName: string) {
     const result = await res.json();
 
     // Check if the target key exists in the first object
-    if (result.length > 0 && result[0].hasOwnProperty(categoryName)) {
-      const targetArray = result.map(obj => obj[categoryName]);
-      return targetArray[0]; // Return the array of the target key
+    if (result.length > 0) {
+      let f = result.find(obj => Object.keys(obj)[0] === categoryName);
+      return f[`${categoryName}`]
     } else {
       console.error(`Key '${categoryName}' not found in the data.`);
       return null; // or handle the case where the key is not found

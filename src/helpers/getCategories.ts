@@ -12,12 +12,15 @@ export const getCategories = async () => {
     }
 
     const result = await res.json();
+    const uniqueKeys: string[] = [];
 
+    result.map(obj => {
+      let key = Object.keys(obj);
+      uniqueKeys.push(...key)
+    })
     // Retrieve the keys from the first object in the result array
-    const uniqueKeys = Object.keys(result[0]);
 
-    console.log(uniqueKeys);
-    
+
     return uniqueKeys; // Return the array of unique keys if needed
   } catch (error) {
     console.error("Error fetching categories:", (error as Error).message);
