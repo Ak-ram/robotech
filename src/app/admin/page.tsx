@@ -505,41 +505,7 @@ const page = () => {
   }, [userInfo, router]);
 
   return (
-    // <Container>
-    //   <div className="border-b-[1px] border-b-zinc-400 pb-4 flex-col items-center justify-between">
-    //     <h2 className="text-2xl font-bold">Admin</h2>
-    //     <div className="flex gap-3">
-    //       {/* Sidebar */}
-    //       <div className="w-1/4 p-4 border border-gray-400 bg-white rounded-[1rem]">
-    //         <h2 className="text-2xl font-bold mb-4">Sidebar</h2>
-    //         <ul>
-    //           {sidebarItems.map((item) => (
-    //             <li
-    //               key={item.id}
-    //               className={`cursor-pointer ${selectedItem === item ? 'font-bold' : ''
-    //                 }`}
-    //               onClick={() => handleItemClick(item)}
-    //             >
-    //               {item.label}
-    //             </li>
-    //           ))}
-    //         </ul>
-    //       </div>
 
-    //       {/* Main Content */}
-    //       <div className="flex-1 p-4 border border-gray-400 bg-white rounded-[1rem]">
-    //         {selectedItem ? (
-    //           <div className="relative">
-    //             <h2 className="text-2xl font-bold mb-4">{selectedItem.label}</h2>
-    //             <p>{selectedItem.content}</p>
-    //           </div>
-    //         ) : (
-    //           <p>Select an item from the sidebar.</p>
-    //         )}
-    //       </div>
-    //     </div>
-    //   </div>
-    // </Container>
     <Container>
       <div className="flex flex-col lg:flex-row">
 
@@ -548,11 +514,11 @@ const page = () => {
 
           <h2 className="text-2xl font-bold mb-4">Pages</h2>
 
-          <ul className="space-y-2 flex items-center bg-white py-2 px-5 font-bold justify-between lg:flex-col lg:bg-transparent lg:items-start">
+          <ul className="flex items-center bg-white py-2 px-5 font-bold justify-between overflow-x-auto gap-x-3 lg:flex-col lg:bg-transparent lg:items-start">
             {sidebarItems.map((item) => (
               <li
                 key={item.id}
-                className={`cursor-pointer ${selectedItem === item ? 'font-bold' : ''}`}
+                className={`cursor-pointer ${selectedItem === item ? 'text-blue-400' : ''} my-0`}
                 onClick={() => handleItemClick(item)}
               >
                 {item.label}
