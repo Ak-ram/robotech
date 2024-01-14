@@ -34,9 +34,9 @@ const AdminComponent = () => {
       try {
         const data = await fetchJsonData("robotech/pages/categories.json");
         setJsonData(data);
-        // if (data.length > 0) {
-        //   setSelectedSectionIndex(0);
-        // }
+        if (data.length > 0) {
+          setSelectedSectionIndex(0);
+        }
         if (
           data.length > 0 &&
           Object.keys(data[0]).length > 0 &&
@@ -113,7 +113,7 @@ const AdminComponent = () => {
 
     if (editIndex !== null) {
       let updatedData = [...jsonData];
-
+console.log(updatedData)
       if (editIndex === -1) {
         updatedData[sectionIndex][selectedCat!].push(editedItem);
       } else {
@@ -157,6 +157,7 @@ const AdminComponent = () => {
   const handleAddCategory = async () => {
     if (newCategory.trim() !== "") {
       const updatedData = [...jsonData];
+      console.log(jsonData)
       const newCategoryName = newCategory.toLowerCase();
 
       if (!updatedData[selectedSectionIndex!][newCategoryName]) {
@@ -283,7 +284,7 @@ const AdminComponent = () => {
                 </div>
               </div>
             </div>
-          )}
+           )} 
           {selectedSectionIndex !== null &&
             jsonData[selectedSectionIndex] &&
             selectedCat && (

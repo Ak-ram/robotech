@@ -15,8 +15,7 @@ export async function getCategoryProducts(categoryName: string) {
 
     // Check if the target key exists in the first object
     if (result.length > 0) {
-      let f = result.find(obj => Object.keys(obj)[0] === categoryName);
-      return f[`${categoryName}`]
+      return result[0][categoryName];
     } else {
       console.error(`Key '${categoryName}' not found in the data.`);
       return null; // or handle the case where the key is not found
@@ -25,4 +24,4 @@ export async function getCategoryProducts(categoryName: string) {
     console.error("Error fetching categories:", (error as Error).message);
     throw error;
   }
-};
+}
