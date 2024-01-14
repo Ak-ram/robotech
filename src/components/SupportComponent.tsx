@@ -21,7 +21,6 @@ function SupportComponent() {
       try {
         const p = await getFaq();
         setData(p);
-        console.log(p);
       } catch (error) {
         console.error('Error fetching products:', error);
       }

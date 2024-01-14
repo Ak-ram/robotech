@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductType, StateProps } from "../../type";
-import { Minus, Plus, X, RefreshCw, CreditCard, PackageOpen } from "lucide-react";
+import { Minus, Plus, X, RefreshCw, CreditCard, PackageOpen, Wind } from "lucide-react";
 import {
   decreaseQuantity,
   deleteProduct,
@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 // import { useSession } from "next-auth/react";
-import EmptyCard from "@/assets/empty.jpeg"
+import EmptyCard from "@/assets/empty.png"
 import VodafoneCash from "./VodafoneCash";
 import VodafoneIcon from '@/assets/vodafoneIcon.png';
 import { json } from "stream/consumers";
@@ -315,9 +315,8 @@ const Cart = () => {
         </div>
       ) : (
         <div className="py-10 flex flex-col gap-1 items-center justify-center">
-          <Image className="" src={EmptyCard} alt="ShortLogo" width={200} height={200} />
-
-          <p className="text-lg font-bold">Your Cart is Empty</p>
+<Wind size={70}/>
+          <p className="text-lg font-bold mt-5">Your Cart is Empty</p>
           <Link
             href={"/"}
             className="text-sm uppercase font-semibold underline underline-offset-2 hover:text-designColor duration-200 cursor-pointer"
