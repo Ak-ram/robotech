@@ -37,8 +37,11 @@ export const getOneProduct = async (categoryName, id) => {
         if (!res.ok) {
             throw new Error("Failed to fetch product");
         }
-        let result = await res.json()
-        return result[0][categoryName]?.find((item: { id: string | number; }) => +item.id === id);
+        let result = await res.json();
+        let f = result.find(obj => Object.keys(obj)[0] === categoryName);
+
+        let item = f[`${categoryName}`].find(item => +item.id === +id)
+        return item
 
     }
 
