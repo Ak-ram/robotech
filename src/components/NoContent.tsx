@@ -11,7 +11,7 @@ const NoContent = () => {
                 <div className="absolute left-14 bottom-0 h-4 w-4 -translate-x-1/2 translate-y-1/2 rotate-45 transform border-r border-b border-gray-100 bg-white"></div>
                 <div className="px-8">
                     <h1 className="mt-6 text-2xl font-bold text-orange-600">Hi {userInfo?.email}</h1>
-                    <p className="text-gray-600">No content is available at the moment. Click the 'Add' button to begin adding content.</p>
+                    <p className="text-gray-600">No content is available at the moment. Click the Add button to begin adding content.</p>
                 </div>
             </div>
             {/* <Image width={100} height={100} className="mt-4 w-36" src={} alt="" /> */}

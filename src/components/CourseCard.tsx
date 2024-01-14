@@ -70,7 +70,7 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
             <div className="container max-w-4xl m-auto flex flex-wrap items-start justify-start">
                 {products?.map((item) => (
 
-                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 flex flex-col mb-8 px-3">
+                    <div key={item?.id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 flex flex-col mb-8 px-3">
                         <div className="overflow-hidden bg-white rounded-lg shadow hover:shadow-raised hover:translateY-2px transition">
                             <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: categoryName } }}>
 
