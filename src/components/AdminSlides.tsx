@@ -138,23 +138,23 @@ const AdminSlides = () => {
                     <table className="min-w-full border border-gray-300 text-sm">
                         <thead>
                             <tr className="bg-zinc-800 text-white ">
-                                <th className="border px-4 py-2">Id</th>
-                                <th className="border px-4 py-2">Heading</th>
-                                <th className="border px-4 py-2">Sub Heading</th>
-                                <th className="border px-4 py-2">Img</th>
-                                <th className="border px-4 py-2">Link</th>
-                                <th className="border px-4 py-2">Actions</th>
+                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Id</th>
+                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Heading</th>
+                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Sub Heading</th>
+                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Img</th>
+                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Link</th>
+                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {jsonArray.map((item, index) => (
                                 <tr key={index} className="hover:bg-slate-100">
-                                    <td className="border px-4 py-2">{item.id}</td>
-                                    <td className="border px-4 py-2">{item.heading}</td>
-                                    <td className="border px-4 py-2">{item.sub_heading}</td>
-                                    <td className="border px-4 py-2"><img width={50} height={50} src={item.image} /></td>
-                                    <td className="border px-4 py-2"><Link href={item.link_url}>{item.link_text}</Link></td>
-                                    <td className="border px-2 py-2">
+                                    <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">{item.id}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">{item.heading}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">{item.sub_heading}</td>
+                                    <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2"><img width={50} height={50} src={item.image} /></td>
+                                    <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2"><Link href={item.link_url}>{item.link_text}</Link></td>
+                                    <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-2 py-2">
                                         <button
                                             className="mr-1"
                                             onClick={() => handleEditClick(index)}
@@ -235,7 +235,7 @@ const AdminSlides = () => {
                             />
                         </div>
                     </div>
-                    <div className="flex">
+                    <div className="flex  justify-center">
                         <button
                             className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
                             onClick={handleEditSubmit}
