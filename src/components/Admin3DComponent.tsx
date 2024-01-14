@@ -15,7 +15,7 @@ const Admin3DComponent = () => {
     previousPrice: 0,
     description: "",
     count: 0,
-    image: "",
+    image1: "",
     brand: ""
   });
 
@@ -41,7 +41,7 @@ const Admin3DComponent = () => {
       previousPrice: 0,
       description: "",
       count: 0,
-      image: "",
+      image1: "",
       brand: ""
     });
   };
@@ -78,7 +78,7 @@ const Admin3DComponent = () => {
       !editedItem.previousPrice ||
       !editedItem.description ||
       !editedItem.count ||
-      !editedItem.image ||
+      !editedItem.image1 ||
       !editedItem.brand
     ) {
       toast.error("All fields are required");
@@ -161,7 +161,7 @@ const Admin3DComponent = () => {
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.title}</td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.price}</td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.previousPrice}</td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2"><img src={item.image} width="70" /></td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2"><img src={item.image1} width="70" /></td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.description}</td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.count}</td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.brand}</td>
@@ -232,8 +232,8 @@ const Admin3DComponent = () => {
                 type="text"
                 placeholder="Image"
                 className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.image}
-                onChange={(e) => handleInputChange(e, "image")}
+                value={editedItem.image1}
+                onChange={(e) => handleInputChange(e, "image1")}
               />
             </div>
             <div className="lg:w-1/4 mb-2 lg:pr-4">
