@@ -43,7 +43,6 @@
 // };
 
 import { Octokit } from "@octokit/rest";
-import { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
 
 export const updateJsonFile = async (jsonFilePath: string, newData: any[]): Promise<void> => {
   const owner = 'Akram-44';
