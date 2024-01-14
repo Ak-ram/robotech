@@ -15,7 +15,6 @@ function FilterableProducts({ categories }) {
       try {
         const p = await getCategoryProducts(categoryName);
         setProducts(p);
-        console.log(p);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
