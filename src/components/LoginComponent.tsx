@@ -38,7 +38,8 @@ const LoginComponent = () => {
 // }
 
     const handleSubmit = () => {
-      if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
+      // if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
+        if (email === process.env.NEXT_PUBLIC_AUTH_UserName && password === process.env.NEXT_PUBLIC_AUTH_PASSWORD) {
         // Assuming you want to dispatch user information when the login is successful
         const userInformation = { email, password };
         dispatch(addUser(userInformation));
