@@ -107,7 +107,7 @@ const Banner: React.FC<BannerProps> = () => {
                   width={200}
                   height={200}
                   alt="sliderone"
-                  className="p-3 rounded-[.5rem] lg:absolute object-cover  lg:top-10 lg:-right-44 lg:w-[80%]"
+                  className="p-3 w-fit rounded-[.5rem] lg:absolute object-cover  lg:top-10 lg:-right-44 lg:w-[80%]"
                 // priority
                 />
               </div>
