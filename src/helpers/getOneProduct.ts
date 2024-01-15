@@ -11,7 +11,6 @@ export const getOneProduct = async (categoryName, id) => {
             throw new Error("Failed to fetch print service");
         }
         let result = await res.json();
-        console.log("print", result)
         return result?.find((item: { id: string | number; }) => +item.id === id);
     } else if (categoryName === "courses") {
         const res = await fetch(
@@ -25,7 +24,6 @@ export const getOneProduct = async (categoryName, id) => {
             throw new Error("Failed to fetch print service");
         }
         let result = await res.json();
-        console.log("print", result)
         return result?.find((item: { id: string | number; }) => +item.id === id);
     } else {
         const res = await fetch(
@@ -38,10 +36,9 @@ export const getOneProduct = async (categoryName, id) => {
             throw new Error("Failed to fetch product");
         }
         let result = await res.json();
-        let f = result.find(obj => Object.keys(obj)[0] === categoryName);
+        let f = result[0][`${categoryName}`].find(obj => +obj.id === +id);
 
-        let item = f[`${categoryName}`].find(item => +item.id === +id)
-        return item
+        return f
 
     }
 
