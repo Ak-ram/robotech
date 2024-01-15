@@ -110,7 +110,7 @@ const Banner: React.FC<BannerProps> = () => {
                   width={200}
                   height={200}
                   alt="sliderone"
-                  className={`w-80 lg:w-[400px] p-3 rounded-3xl lg:absolute object-cover lg:top-10 lg:-right-44 transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
+                  className={`w-[70%] md:w-[400px] p-3 rounded-3xl lg:absolute object-cover lg:top-10 lg:-right-44 transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
                 // priority
                 />
               </div>

@@ -105,7 +105,7 @@ const Navbar = () => {
                     className='flex items-center font-bold justify-between px-3'
                     href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
                     <span className='flex-col flex'>
-                      <span className='text-sm mb-2 md:text-xl text-blue-400'>{item.title}</span>
+                      <span className='text-sm mb-2 md:text-lg text-blue-400'>{item.title}</span>
                       <span className='text-xs font-bold'><FormattedPrice amount={item?.price} /></span>
                     </span>
                     <img className='hidden md:inline-block rounded-md' src={item.image1} width={70} height={70} />

@@ -11,7 +11,7 @@ const Categories = ({ categories, setCategoryName }) => {
 
         <div className="flex flex-col">
 
-          <span className="hidden log:block ml-3 mt-5 lg:mt-10 mb-2 block text-xs font-semibold text-gray-500">Product Mangement</span>
+          <span className="hidden lg:block ml-3 mt-5 lg:mt-10 mb-2 block text-xs font-semibold text-gray-500">Product Mangement</span>
 
           <nav className="text-zinc-600 flex lg:block overflow-x-auto">
             {categories?.map((cat_title: string, i: number) => (
