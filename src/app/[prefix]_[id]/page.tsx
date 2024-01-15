@@ -9,6 +9,7 @@ import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
 import { Gift } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
+import MagnifierComponent from "@/components/Magnifier";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -79,14 +80,15 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
             <div className="lg:flex lg:items-center">
               <div className="flex-1 p-10 lg:p-5 lg:order-2 lg:ml-5">
                 <div className="max-w-xl overflow-hidden rounded-lg">
-                {/* <Magnifier
+                 {/* <Magnifier
                       className="max-w-xl overflow-hidden rounded-lg"
                       style={{ height: '100%', width: '100%' }}
-                      imageSrc={product?.image1}
+                      imageSrc={product?.image1!}
                       imageAlt=""
-                      enlargedImagePosition="over"
-                    /> */}
-                      <img className="h-full w-full max-w-full object-cover" src={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} alt="" />
+                      // enlargedImagePosition="over"
+                    />  */}
+                    <MagnifierComponent img={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} />
+                      {/* <img className="h-full w-full max-w-full object-cover" src={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} alt="" /> */}
                 </div>
               </div>
 
