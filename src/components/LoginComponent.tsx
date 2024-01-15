@@ -22,7 +22,7 @@ const LoginComponent = () => {
     setIsSubmitDisabled(!email || !e.target.value);
     setMessage(''); // Clear previous messages when input changes
   };
-
+  
     const handleSubmit = () => {
       // if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
         if (email === process.env.NEXT_PUBLIC_AUTH_USERNAME && password === process.env.NEXT_PUBLIC_AUTH_PASSWORD) {
