@@ -23,23 +23,9 @@ const LoginComponent = () => {
     setMessage(''); // Clear previous messages when input changes
   };
 
-  // const handleSubmit = () => {
-    // if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
-    //   // setRoute('/admin');
-    //   setMessage('You are authorized to login.'); // Set authorized message
-    //   setIsAuth(true)
-    //   // dispatch(addUser({ email: email, password: password }))
-
-    // } else {
-    //   setMessage('Forbidden: Incorrect username or password.'); // Set error message
-    //   setIsAuth(false)
-
-    // }
-// }
-
     const handleSubmit = () => {
       // if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
-        if (email === process.env.NEXT_PUBLIC_AUTH_UserName && password === process.env.NEXT_PUBLIC_AUTH_PASSWORD) {
+        if (email === process.env.NEXT_PUBLIC_AUTH_USERNAME && password === process.env.NEXT_PUBLIC_AUTH_PASSWORD) {
         // Assuming you want to dispatch user information when the login is successful
         const userInformation = { email, password };
         dispatch(addUser(userInformation));
