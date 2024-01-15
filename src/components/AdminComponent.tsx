@@ -42,8 +42,8 @@ const AdminComponent = () => {
     } else {
       // Check if the user has the right authorization (you might need to customize this)
       if (
-        userInfo.email === "ibrahem" &&
-        userInfo.password === process.env.NEXT_PUBLIC_AUTH_TOKEN
+        userInfo.email === process.env.NEXT_PUBLIC_AUTH_USERNAME &&
+        userInfo.password === process.env.NEXT_PUBLIC_AUTH_PASSWORD
       ) {
         // The user is authorized, continue rendering the admin page
       } else {
