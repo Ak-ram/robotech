@@ -12,7 +12,7 @@ interface Props {
 const Logo = ({ className }: Props) => {
   return (
     <Link href="/" className={cn(
-      "text-zinc-950 text-xl underline underline-offset-4 decoration-[1px] group",
+      "text-zinc-950 md:mr-5 text-xl underline underline-offset-4 decoration-[1px] group",
       className
     )}>
       <Image className="lg:hidden" src={ShortLogo} alt="ShortLogo" width={70} height={50} />

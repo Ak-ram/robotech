@@ -70,7 +70,7 @@ const Navbar = () => {
           {navigation.map((item) => (
             <Link href={item?.href} key={item.title}>
               <li
-                className={`hover:text-black cursor-pointer duration-200 relative overflow-hidden group ${item.href === pathname && "text-designColor"
+                className={`mt-2 hover:text-black cursor-pointer duration-200 relative overflow-hidden group ${item.href === pathname && "text-designColor"
                   }`}
               >
                 {item?.title}
