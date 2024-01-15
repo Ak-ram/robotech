@@ -12,7 +12,7 @@ export async function getProduct(id: number, prefix: string) {
         return product[0]
       }
     }
-    if (prefix === '3d') {
+    if (prefix === 'print') {
       const data = await getPrintServices()
       if (data) {
         let product = data.filter(item => item.id === id);

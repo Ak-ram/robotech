@@ -1,5 +1,5 @@
 export const getOneProduct = async (categoryName, id) => {
-    if (categoryName === "3d_print") {
+    if (categoryName === "print") {
         const res = await fetch(
             "https://akram-44.github.io/api/robotech/pages/3d.json",
             {
