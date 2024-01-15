@@ -82,7 +82,7 @@ const Navbar = () => {
             </Link>
           ))}
         </ul>
-        <div className="relative flex-1 max-w-lg mx-4 relative flex justify-center items-center">
+        <div className="order-last mt-2 md:mt-0 relative flex-1 md:mx-4 relative flex justify-center items-center">
           <input
             onInput={(e: ChangeEvent<HTMLInputElement>) =>
               searching(e.target.value)
@@ -93,7 +93,7 @@ const Navbar = () => {
           />
           <ul
             className={`${isInput ? "block py-1 lg:py-3 " : "hidden p-0 "
-              } shadow-lg top-11 w-full border shadow-md border-zinc-400 absolute bg-white mt-2 rounded-sm`}
+              } shadow-lg mx-0 top-11 w-full border shadow-md border-zinc-400 absolute bg-white mt-2 rounded-sm`}
           >
             {res.length > 0 ? (
               res.map((item) => (

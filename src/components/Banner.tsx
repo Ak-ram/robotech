@@ -29,6 +29,7 @@ const Banner: React.FC<BannerProps> = () => {
         style={{
           top: "80%",
           left: "67%",
+          userSelect: 'none'
         }}
         className="absolute translate-x[-50%] translate-y[-50%]"
       >
@@ -100,10 +101,10 @@ const Banner: React.FC<BannerProps> = () => {
             <div
               key={slide?.id}
               // className={`${dotActive === index ? "z-10" : "z-0"} lg:bg-none lg:bg-transparent w-full pb-5 h-[450px] bg-slate-200 relative`}
-              className={`${dotActive === index ? "z-10" : "z-0"} lg:bg-none lg:bg-transparent w-full pb-5 h-[450px] bg-slate-200 relative transition-all duration-500 ease-in-out`}
+              className={`${dotActive === index ? "z-10" : "z-0"} lg:bg-none lg:bg-transparent w-full pb-5 lg:h-[450px] bg-slate-200 relative transition-all duration-500 ease-in-out`}
 
             >
-              <div className="w-full lg:w-1/3 flex items-center justify-center lg:inline-block h-[200px] lg:h-full bg-white lg:bg-designColor z-0 relative">
+              <div className="w-full lg:w-1/3 flex items-center justify-center lg:inline-block h-[300px] lg:h-full bg-white lg:bg-designColor z-0 relative">
                 <img
                   src={slide?.image}
                   width={200}
@@ -113,7 +114,7 @@ const Banner: React.FC<BannerProps> = () => {
                 // priority
                 />
               </div>
-              <div className="h-300 p-5 lg:absolute lg:top-1/2 lg:left-2/3 transform lg:-translate-x-1/2 lg:-translate-y-1/2 flex flex-col items-center justify-center gap-5">
+              <div className="p-5 lg:absolute lg:top-1/2 lg:left-2/3 transform lg:-translate-x-1/2 lg:-translate-y-1/2 flex flex-col items-center justify-center gap-5">
                 <p className="text-2xl font-bold uppercase text-center">{slide?.heading}</p>
                 <p className="w-96 px-4 text-center text-zinc-600">{slide?.sub_heading}</p>
                 <Link href={slide?.link_url} passHref>
