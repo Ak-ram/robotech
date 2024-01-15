@@ -13,8 +13,8 @@ const Banner: React.FC<BannerProps> = () => {
   const [slides, setSlides] = useState<any[]>([]);
 
   const settings: Settings = {
-    // dots: true,
-    // infinite: true,
+    dots: true,
+    infinite: true,
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -99,7 +99,9 @@ const Banner: React.FC<BannerProps> = () => {
           slides.map((slide, index) => (
             <div
               key={slide?.id}
-              className={`${dotActive === index ? "z-10" : "z-0"} lg:bg-none lg:bg-transparent w-full pb-5 h-[450px] bg-slate-200 relative`}
+              // className={`${dotActive === index ? "z-10" : "z-0"} lg:bg-none lg:bg-transparent w-full pb-5 h-[450px] bg-slate-200 relative`}
+              className={`${dotActive === index ? "z-10" : "z-0"} lg:bg-none lg:bg-transparent w-full pb-5 h-[450px] bg-slate-200 relative transition-all duration-500 ease-in-out`}
+
             >
               <div className="w-full lg:w-1/3 flex items-center justify-center lg:inline-block h-[200px] lg:h-full bg-white lg:bg-designColor z-0 relative">
                 <img
@@ -107,7 +109,7 @@ const Banner: React.FC<BannerProps> = () => {
                   width={200}
                   height={200}
                   alt="sliderone"
-                  className="p-3 w-fit rounded-[.5rem] lg:absolute object-cover  lg:top-10 lg:-right-44 lg:w-[80%]"
+                  className={`w-80 lg:w-[400px] p-3 rounded-3xl lg:absolute object-cover lg:top-10 lg:-right-44 transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
                 // priority
                 />
               </div>
