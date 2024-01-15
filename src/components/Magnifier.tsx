@@ -8,23 +8,24 @@ const MagnifierComponent = ({ img }) => {
     const boundingBox = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - boundingBox.left) / boundingBox.width;
     const y = (e.clientY - boundingBox.top) / boundingBox.height;
-setZoomScale(1.3)
+    setZoomScale(1.3);
     setCoords({ x, y });
   };
 
   const resetCoords = () => {
     setCoords({ x: 0, y: 0 });
-    setZoomScale(1)
+    setZoomScale(1.0);
   };
 
   return (
     <div
-    className="bg-white"
+      className="bg-white"
       style={{
         overflow: "hidden",
         position: "relative",
         width: "100%",
         height: "100%",
+        transition: "background-color 0.2s ease",
       }}
       onMouseMove={zoomEffect}
       onMouseLeave={resetCoords}
@@ -35,7 +36,7 @@ setZoomScale(1.3)
           height: "100%", // Ensure the image fills the container
           transform: `scale(${zoomScale}) translate(-${coords.x * 50}%, -${coords.y * 50}%)`,
           transformOrigin: "top left",
-          transition: "transform 0.1s ease-out transition",
+          transition: "transform 0.2s ease-out",
         }}
         src={img}
         alt="Magnified Image"
