@@ -42,27 +42,7 @@ const VodafoneCash = ({ totalAmt, isVodafoneCashOpened, setIsVodafoneCashOpened 
 
             >
                 <div className="flex flex-col rounded-lg px-6 ">
-                    {/* <div className="flex w-full justify-between self-start pt-12 pb-8"> */}
-                    {/* <h2 className="font-sansserif font-semibold text-gray-700 lg:text-2xl">
-                            Follow these steps to pay with Vodafone Cash
-                        </h2> */}
-                    {/* <button onClick={() => setIsVodafoneCashOpened(false)}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5 cursor-pointer text-gray-400"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </button> */}
-                    {/* </div> */}
+
                     <div className="flex w-full flex-col pb-8 pt-4">
                         <p className="text-xl font-medium">Payment Details</p>
                         <p className="text-gray-400">Complete your order by providing your payment details.</p>
