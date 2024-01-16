@@ -91,7 +91,8 @@ const CashOnDelivery = ({ rowPrice, totalAmt, isCashOnDeliveryOpened, setCashOnD
         //         }}
         //     />
         // </div>
-        <><div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
+        <>
+        <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
             <p className="text-xl font-medium">Payment Details</p>
             <p className="text-gray-400">Complete your order by providing your payment details.</p>
             <form ref={formElement} onSubmit={sendEmail}>
