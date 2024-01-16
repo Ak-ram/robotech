@@ -243,60 +243,9 @@ const Cart = () => {
     //               ))}
     //             </table>
     //           </div>
-    //           <button
-    //             onClick={handleReset}
-    //             className="bg-zinc-950 text-zinc-200 w-36 py-3 mt-5 rounded-md uppercase text-xs font-semibold hover:bg-red-700 hover:text-white duration-200"
-    //           >
-    //             Reset Cart
-    //           </button>
-    //           <div className="lg:flex items-start justify-between py-10">
-    //             <div className=" mx-auto w-full shadow-lg border border-zinc-400 rounded-[.5rem] bg-white max-w-xl p-4 flex flex-col gap-1">
-    //               <p className="border-b-[1px] border-b-designColor py-1">
-    //                 Cart Summary
-    //               </p>
-    //               <p className="flex items-center justify-between">
-    //                 Total Items <span>{productData.length}</span>
-    //               </p>
-    //             
-    //              
-    //      
-    //              
-    // </div>              </div>
+    //           
 
-    //               {/* <div>
-    // <span></span>
-    // <span>Send price to this number: 010122-----</span>
-    // <span>Contact us on whatsapp via 010122-----</span>
-    // </div> */}
 
-    //             </div>
-    //             <div className="">
-    //               <VodafoneCash totalAmt={totalAmt} isVodafoneCashOpened={isVodafoneCashOpened} setIsVodafoneCashOpened={setIsVodafoneCashOpened} />
-    //               <CashOnDelivery totalAmt={totalAmt} isCashOnDeliveryOpened={isCashOnDeliveryOpened} setCashOnDeliveryOpened={setIsCashOnDeliveryOpened} />
-    //             </div>
-    //           </div>
-    //         </div>
-    //       ) : (
-    //         <div className="py-10 flex flex-col gap-1 items-center justify-center">
-    // <Wind size={70}/>
-    //           <p className="text-lg font-bold mt-5">Your Cart is Empty</p>
-    //           <Link
-    //             href={"/"}
-    //             className="text-sm uppercase font-semibold underline underline-offset-2 hover:text-designColor duration-200 cursor-pointer"
-    //           >
-    //             Go back to Shopping
-    //           </Link>
-    //         </div>
-    //       )}
-    //       <Toaster
-    //         position="bottom-right"
-    //         toastOptions={{
-    //           style: {
-    //             background: "#000",
-    //             color: "#fff",
-    //           },
-    //         }}
-    //       />
     //     </>
     <>
       <div className="-mt-10 flex px-3 flex-col items-center border-b bg-white py-4 sm:flex-row">
@@ -327,7 +276,7 @@ const Cart = () => {
         <div className="px-4 pt-8">
           <p className="text-xl font-medium">Order Summary</p>
           <p className="text-gray-400">Check your items. And select a suitable payment method.</p>
-          <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
+          <div className="h-[300px] overflow-y-auto mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
             {productData?.map((item: ProductType, i) => (
               <div className={`flex flex-col items-center ${(i + 1) === productData.length ? "" : "border-b"} rounded-lg bg-white sm:flex-row`}>
 
@@ -339,7 +288,7 @@ const Cart = () => {
                 </div>
                 <div className="flex flex-col items-center mx-2">
                   <span className=" rounded-md hover:border-zinc-800 cursor-pointer duration-200 inline-flex items-center justify-center">
-                  <ChevronUp
+                    <ChevronUp
                       onClick={() => {
                         dispatch(increaseQuantity(item)),
                           toast.success(`${item?.title} quantity added`);
@@ -350,11 +299,11 @@ const Cart = () => {
                   <span className="text-sm font-semibold">{item?.quantity}</span>
                   {/* <span className="font-semibold">{productQuantity}</span> */}
                   <span className=" rounded-md hover:border-zinc-800 cursor-pointer duration-200 inline-flex items-center justify-center">
-                      <ChevronDown
-                    onClick={() => handleDecreasement(item)
-                    }
-                    className="w-4 h-4"
-                  />
+                    <ChevronDown
+                      onClick={() => handleDecreasement(item)
+                      }
+                      className="w-4 h-4"
+                    />
                   </span>
                 </div>
                 <X
@@ -371,7 +320,15 @@ const Cart = () => {
             ))}
 
           </div>
-          <span className="text-gray-400 my-4">Total items: {productData.length}</span>
+          <div className="flex items-center justify-between my-4">
+            <span className="text-gray-400">Total items: {productData.length}</span>
+            <button
+              onClick={handleReset}
+              className="bg-zinc-950 text-zinc-200 w-24 py-2 rounded-md uppercase text-xs font-semibold hover:bg-red-700 hover:text-white duration-200"
+            >
+              Reset Cart
+            </button>
+          </div>
 
           <p className="mt-8 text-lg font-medium">Payment Methods</p>
           <form className="mt-5 grid gap-6">
