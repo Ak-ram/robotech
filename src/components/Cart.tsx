@@ -373,14 +373,24 @@ const Cart = () => {
           <p className="text-xl font-medium">Order Summary</p>
           <p className="text-gray-400">Check your items. And select a suitable shipping method.</p>
           <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
-            {productData?.map((item: ProductType) => (
-              <div className="flex flex-col rounded-lg bg-white sm:flex-row">
+            {productData?.map((item: ProductType,i) => (
+              <div className={`flex flex-col items-center ${(i+1) ===productData.length ? "":"border-b"} rounded-lg bg-white sm:flex-row`}>
+                
                 <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src={item.image1} alt="" />
                 <div className="flex w-full flex-col px-4 py-4">
                   <span className="font-semibold">{item.title}</span>
                   <span className="float-right text-gray-400"><FormattedPrice amount={item.previousPrice} /></span>
                   <p className="text-lg font-bold"><FormattedPrice amount={item.price} /></p>
                 </div>
+                <X
+                  onClick={() => {
+                    dispatch(deleteProduct(item)),
+                      toast.success(
+                        `${item?.title} is removed from Wishlist!`
+                      );
+                  }}
+                  className="w-8 h-8 hover:text-red-600 cursor-pointer duration-200"
+                />
               </div>
 
             ))}
