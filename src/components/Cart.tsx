@@ -425,7 +425,7 @@ const Cart = () => {
         {currentMethod === 'vodafoneCash' ?
           <VodafoneCash totalAmt={totalAmt} isVodafoneCashOpened={isVodafoneCashOpened} setIsVodafoneCashOpened={setIsVodafoneCashOpened} />
           : currentMethod === 'cashOnDelivery' ?
-            <CashOnDelivery totalAmt={totalAmt} isCashOnDeliveryOpened={isCashOnDeliveryOpened} setCashOnDeliveryOpened={setIsCashOnDeliveryOpened} />
+            <CashOnDelivery rowPrice={rowPrice} totalAmt={totalAmt} isCashOnDeliveryOpened={isCashOnDeliveryOpened} setCashOnDeliveryOpened={setIsCashOnDeliveryOpened} />
             : null}
         {/* */}
       </div>
