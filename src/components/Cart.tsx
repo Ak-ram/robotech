@@ -276,29 +276,30 @@ const Cart = () => {
                   />
                 </span>
               </p>
-              <div className="flex items-center justify-center gap-1">
-                <span className="flex-1">Pay with:</span>
+              <div className="flex flex-wrap items-stretch items-center justify-center gap-1">
+                <span className="flex-1 mb-2 min-w-[100px]">Pay with:</span>
+                <div className='flex flex-wrap gap-1'>
                 <button
                   onClick={handleCheckout}
-                  className="flex items-center gap-1 text-xs bg-zinc-800 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-black hover:text-white duration-200"
+                  className="flex items-center max-w-[120px] flex-1 sm:flex-0 gap-1 text-xs bg-zinc-800 px-2 md:px-4 text-zinc-200 md:my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-black hover:text-white duration-200"
                 >
                   <CreditCard size={16} /> Cards <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={15} /></span>
                 </button>
 
                 <button
                   onClick={() => setIsVodafoneCashOpened(true)}
-                  className="flex items-center gap-1 text-xs bg-red-600 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-red-700 hover:text-white duration-200"
+                  className="flex items-center max-w-[120px] flex-1 sm:flex-0 gap-1 text-xs bg-red-600 px-2 md:px-4 text-zinc-200 md:my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-red-700 hover:text-white duration-200"
                 >
                   <Image alt="vodafone cash" src={VodafoneIcon} width={16} height={16} /> Wallet
                 </button>
 
                 <button
                   onClick={() => setIsCashOnDeliveryOpened(true)}
-                  className="flex items-center gap-1 text-xs bg-blue-600 px-4 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-blue-700 hover:text-white duration-200"
+                  className="flex items-center flex-1 sm:flex-0 whitespace-nowrap gap-1 text-xs bg-blue-600 px-2 md:px-4 text-zinc-200 md:my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-blue-700 hover:text-white duration-200"
                 >
                   <PackageOpen size={16} /> On Delivery
                 </button>
-              </div>
+</div>              </div>
 
               {/* <div>
 <span></span>

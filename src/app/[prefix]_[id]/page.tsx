@@ -65,10 +65,10 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
               </div>
             </li>
             <li className="text-left">
-              <div className="flex items-center">
+              <div className="flex items-end">
                 <span className="mx-2 text-gray-400">/</span>
-                <div className="-m-1">
-                  <Link href="#" className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800" aria-current="page"> {product?.title} </Link>
+                <div className="">
+                  <Link href="#" className="overflow-hidden text-ellipsis whitespace-nowrap block w-36 rounded-md text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800" aria-current="page"> {product?.title} </Link>
                 </div>
               </div>
             </li>
@@ -120,13 +120,13 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
               <p className="ml-2 text-sm font-medium text-gray-500">{product?.count} Piece(s)</p>
             </div>
 
-            <div className="mt-10 flex lg:flex-col lg:items-start gap-4 items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
+            <div className="mt-10 flex lg:flex-col lg:items-start gap-4 items-center justify-between border-t border-b py-4 sm:flex-row sm:space-y-0">
               <div className="flex items-end">
-                <h1 className="text-3xl font-bold"><FormattedPrice amount={(product?.price!)} /></h1>
+                <h1 className="sm:text-lg md:text-3xl font-bold"><FormattedPrice amount={(product?.price!)} /></h1>
                 <span className="text-base">/piece</span>
               </div>
 
-              <button onClick={() => dispatch(addToCart(product))} type="button" className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
+              <button onClick={() => dispatch(addToCart(product))} type="button" className="mt-0 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-3 py-2 md:px-12 md:py-3 text-center  text-sm sm:text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
                 <svg xmlns="http://www.w3.org/2000/svg" className="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
@@ -157,8 +157,8 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
             </div>
 
             <div className="mt-8 flow-root sm:mt-12">
-              <h1 className="text-3xl font-bold">More details about {product?.title}</h1>
-              <p className="mt-4">{product?.description}</p>
+              <h1 className="text-lg md:text-3xl font-bold">More details about {product?.title}</h1>
+              <p className="mt-4 text-xs sm:text-base">{product?.description}</p>
               <h1 className="mt-8 text-3xl font-bold">Quick Order ?</h1>
               <p className="mt-4">Contact Us in Whatsapp : 01066745733</p>
             </div>
