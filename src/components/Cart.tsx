@@ -29,7 +29,7 @@ const Cart = () => {
   const { productData } = useSelector((state: StateProps) => state.pro);
   const [isVodafoneCashOpened, setIsVodafoneCashOpened] = useState(false);
   const [isCashOnDeliveryOpened, setIsCashOnDeliveryOpened] = useState(false);
-  const [currentMethod, setCurrentMethod] = useState('cashOnDelivery');
+  const [currentMethod, setCurrentMethod] = useState('vodafoneCash');
   const dispatch = useDispatch();
   const router = useRouter();
   // const { data: session } = useSession();
@@ -254,18 +254,26 @@ const Cart = () => {
           <div className="relative ">
             <ul className="relative flex w-full items-center justify-between space-x-2 sm:space-x-4">
               <li className="flex items-center space-x-3 text-left sm:space-x-4">
-                <a className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-200 text-xs font-semibold text-emerald-700" href="#"
-                ><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                  </svg></a>
-                <span className="font-semibold text-gray-900">Shop</span>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-200 text-xs font-semibold text-emerald-700"                 ><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                </span>
+                <Link href={'./'}>
+
+                  <span className="font-semibold text-gray-900">Shop</span>
+                </Link>
               </li>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
               </svg>
               <li className="flex items-center space-x-3 text-left sm:space-x-4">
-                <a className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-600 text-xs font-semibold text-white ring ring-gray-600 ring-offset-2" href="#">2</a>
-                <span className="font-semibold text-gray-900">Payment</span>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-600 text-xs font-semibold text-white ring ring-gray-600 ring-offset-2">
+                  2
+                </span>
+                <Link href={'./cart'} >
+
+                  <span className="font-semibold text-gray-900">Payment</span>
+                </Link>
               </li>
 
             </ul>
@@ -334,7 +342,7 @@ const Cart = () => {
           <form className="mt-5 grid gap-6">
 
             <div className="relative" onClick={() => setCurrentMethod('vodafoneCash')} >
-              <input className="peer hidden" id="radio_2" type="radio" name="radio" checked />
+              <input className="peer hidden" id="radio_2" type="radio" name="radio" />
               <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
               <label className="items-center peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_2">
                 <Image className="h-[25px] w-[25px]" alt="vodafone cash" src={VodafoneIcon} width={25} height={25} />
@@ -345,7 +353,7 @@ const Cart = () => {
               </label>
             </div>
             <div className="relative" onClick={() => setCurrentMethod('cashOnDelivery')} >
-              <input className="peer hidden" id="radio_3" type="radio" name="radio" checked />
+              <input className="peer hidden" id="radio_3" type="radio" name="radio" />
               <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
               <label className="items-center peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_3">
                 <PackageOpen />
@@ -355,8 +363,11 @@ const Cart = () => {
                 </div>
               </label>
             </div>
-            <div className="relative" onClick={handleCheckout}  >
-              <input className="peer hidden" id="radio_1" type="radio" name="radio" checked />
+            <div className="relative"
+              onClick={() => setCurrentMethod("cards")}
+            // onClick={handleCheckout}  
+            >
+              <input className="peer hidden" id="radio_1" type="radio" name="radio" />
               <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
               <label className="items-center peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_1">
                 <CreditCard className="" />
@@ -373,10 +384,11 @@ const Cart = () => {
           : currentMethod === 'cashOnDelivery' ?
             <CashOnDelivery rowPrice={rowPrice} totalAmt={totalAmt} isCashOnDeliveryOpened={isCashOnDeliveryOpened} setCashOnDeliveryOpened={setIsCashOnDeliveryOpened} />
             : <div
-              className="pt-8 mt-8 bg-gray-50 lg:mt-0"
+              className="flex gap-2 bg-white items-center justify-center flex-col pt-8 mt-8 bg-gray-50 lg:mt-0"
 
             >
-              <span className={`${isCheckout ? 'inline-block' : 'hidden'} animate-spin`}><RefreshCw size={15} /></span>
+              <span className={`animate-spin`}><RefreshCw size={25} /></span>
+              <p>Wait, You will be redirected to payment page</p>
             </div>}
         {/* */}
       </div>
