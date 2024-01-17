@@ -212,7 +212,7 @@ console.log(updatedData)
 
   return (
     <>
-      <div className="lg:p-3 w-full  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
+      <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
         <div className="overflow-x-auto">
           {jsonData.length > 0 && (
             <div className="mb-5">
@@ -253,11 +253,11 @@ console.log(updatedData)
 
               <div>
                 <span
-                  onClick={() => setToggleNewCat(false)}
+                  
                   className={`${toggleNewCat ? "block" : "hidden"} mt-2`}
                 >
                   Category not exist ?{" "}
-                  <span className="cursor-pointer text-blue-400">
+                  <span onClick={() => setToggleNewCat(false)} className="cursor-pointer text-blue-400">
                     add category
                   </span>
                 </span>
