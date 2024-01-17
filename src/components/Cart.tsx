@@ -194,7 +194,7 @@ const Cart = () => {
           <p className="text-gray-400">Check your items. And select a suitable payment method.</p>
           <div className="h-[300px] overflow-y-auto mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
             {productData?.map((item: ProductType, i) => (
-              <div className={`flex flex-col items-center ${(i + 1) === productData.length ? "" : "border-b"} rounded-lg bg-white sm:flex-row`}>
+              <div key={item?.id} className={`flex flex-col items-center ${(i + 1) === productData.length ? "" : "border-b"} rounded-lg bg-white sm:flex-row`}>
 
                 <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src={item.image1} alt="" />
                 <div className="flex w-full flex-col px-4 py-4">
