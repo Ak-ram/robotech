@@ -154,99 +154,7 @@ const Cart = () => {
 
   }
   return (
-    //     <>
-    //       {productData.length > 0 ? (
-    //         <div className="mt-5 flex flex-col max-w-screen-xl mx-auto">
-    //           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-    //             <table className="w-full text-sm text-left">
-    //               <thead className="text-xs text-white uppercase bg-zinc-950">
-    //                 <tr>
-    //                   <th scope="col" className="px-6 py-3">
-    //                     Product Information
-    //                   </th>
-    //                   <th scope="col" className="px-6 py-3">
-    //                     Unit Price
-    //                   </th>
-    //                   <th scope="col" className="px-6 py-3">
-    //                     Quantity
-    //                   </th>
-    //                   <th scope="col" className="px-6 py-3">
-    //                     SubTotal
-    //                   </th>
-    //                   <th scope="col" className="px-6 py-3">
-    //                     Saving
-    //                   </th>
-    //                 </tr>
-    //               </thead>
-    //               {productData?.map((item: ProductType) => (
-    //                 <tbody key={item?.id}>
-    //                   <tr className="bg-white border-b-[1px] border-b-zinc-300">
-    //                     <th
-    //                       scope="row"
-    //                       className="px-6 py-4 flex items-center gap-3"
-    //                       style={{ width: 'max-content' }}
-    //                     >
-    //                       <X
-    //                         onClick={() => {
-    //                           dispatch(deleteProduct(item)),
-    //                             toast.success(
-    //                               `${item?.title} is removed from Wishlist!`
-    //                             );
-    //                         }}
-    //                         className="w-4 h-4 hover:text-red-600 cursor-pointer duration-200"
-    //                       />
-    //                       <img
-    //                         src={item?.image1}
-    //                         alt="proudct image"
-    //                         width={500}
-    //                         height={500}
-    //                         className="w-24 object-contain"
-    //                       />
-    //                       <p className="text-base font-medium text-black whitespace-nowrap">
-    //                         {item?.title}
-    //                       </p>
-    //                     </th>
-    //                     <td className="px-6 py-4">
-    //                       <FormattedPrice amount={item?.price} />
-    //                     </td>
-    //                     <td className="px-6 py-4 flex items-center gap-4">
-    //                       <span className="border border-zinc-300 p-1 rounded-md hover:border-zinc-800 cursor-pointer duration-200 inline-flex items-center justify-center">
-    //                         <Minus
-    //                           onClick={() => handleDecreasement(item)
-    //                           }
-    //                           className="w-4 h-4"
-    //                         />
-    //                       </span>
-    //                       <span className="font-semibold">{item?.quantity}</span>
-    //                       {/* <span className="font-semibold">{productQuantity}</span> */}
-    //                       <span className="border border-zinc-300 p-1 rounded-md hover:border-zinc-800 cursor-pointer duration-200 inline-flex items-center justify-center">
-    //                         <Plus
-    //                           onClick={() => {
-    //                             dispatch(increaseQuantity(item)),
-    //                               toast.success(`${item?.title} quantity added`);
-    //                           }}
-    //                           className="w-4 h-4"
-    //                         />
-    //                       </span>
-    //                     </td>
-    //                     <td className="px-6 py-4">
-    //                       <FormattedPrice amount={item?.price * item?.quantity} />
-    //                     </td>
-    //                     <td className="px-6 py-4">
-    //                       <p className="bg-zinc-900 w-20 text-sm font-semibold text-center text-white py-1 rounded-md">
-    //                         {calculatePercentage(item?.price, item?.previousPrice)}{" "}
-    //                         %save
-    //                       </p>
-    //                     </td>
-    //                   </tr>
-    //                 </tbody>
-    //               ))}
-    //             </table>
-    //           </div>
-    //           
 
-
-    //     </>
     <>
       <div className="-mt-10 flex px-3 flex-col items-center border-b bg-white py-4 sm:flex-row">
         <a href="#" className="text-2xl font-bold text-gray-800">Checkout</a>
@@ -291,8 +199,18 @@ const Cart = () => {
                 <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src={item.image1} alt="" />
                 <div className="flex w-full flex-col px-4 py-4">
                   <span className="font-semibold">{item.title}</span>
-                  <span className="float-right text-gray-400"><FormattedPrice amount={item.previousPrice} /></span>
-                  <p className="text-lg font-bold"><FormattedPrice amount={item.price} /></p>
+                  <div className="flex items-center gap-1">
+                    {
+                      item.price !== item.previousPrice ? <del className="text-xs float-right text-gray-400"><FormattedPrice amount={item.previousPrice} /></del>
+                        : null
+                    }
+                    <p className="text-lg font-bold"><FormattedPrice amount={item.price} /></p>
+                  </div>
+                  {
+                    item.price !== item.previousPrice ? <span className="font-bold text-sm">Save: {calculatePercentage(item?.price, item?.previousPrice)}%</span>
+
+                      : null
+                  }
                 </div>
                 <div className="flex flex-col items-center mx-2">
                   <span className=" rounded-md hover:border-zinc-800 cursor-pointer duration-200 inline-flex items-center justify-center">
