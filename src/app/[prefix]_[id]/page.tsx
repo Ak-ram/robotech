@@ -75,10 +75,10 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
           </ol>
         </nav>
 
-        <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
+        <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-8 lg:mt-12 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3 lg:row-end-1">
             <div className="lg:flex lg:items-center">
-              <div className="flex-1 p-10 lg:p-5 lg:order-2 lg:ml-5">
+              <div className="flex-1 lg:p-10 lg:p-5 lg:order-2 lg:ml-5">
                 <div className="max-w-xl overflow-hidden rounded-lg">
                  {/* <Magnifier
                       className="max-w-xl overflow-hidden rounded-lg"
@@ -94,14 +94,14 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
 
               <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
                 <div className="flex gap-3 flex-row justify-center items-start lg:flex-col">
-                  {product?.image1 ? <button onClick={() => setMainImg(1)} type="button" className="p-2 flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center">
+                  {product?.image1 ? <button onClick={() => setMainImg(1)} type="button" className="border-gray-300 flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 p-2 text-center">
                   <img className="h-full w-full object-cover" src={product?.image1} alt="" />
 
                   </button> : null}
-                  {product?.image2 ? <button onClick={() => setMainImg(2)} type="button" className="p-2 flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center">
+                  {product?.image2 ? <button onClick={() => setMainImg(2)} type="button" className="border-gray-300 flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 p-2 text-center">
                     <img className="h-full w-full object-cover" src={product?.image2} alt="" />
                   </button> : null}
-                  {product?.image3 ? <button onClick={() => setMainImg(3)} type="button" className="p-2 flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center">
+                  {product?.image3 ? <button onClick={() => setMainImg(3)} type="button" className="border-gray-300 flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 p-2 text-center">
                     <img className="h-full w-full object-cover" src={product?.image3} alt="" />
                   </button> : null}
                 </div>
@@ -110,7 +110,7 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
           </div>
 
           <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
-            <h1 className="sm: text-2xl font-bold text-gray-900 sm:text-3xl">{product?.title}</h1>
+            <h1 className="sm:text-2xl font-bold text-gray-900 sm:text-3xl">{product?.title}</h1>
 
             <div className="mt-5 flex items-center">
               <div className="flex items-center">
@@ -159,8 +159,8 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
             <div className="mt-8 flow-root sm:mt-12">
               <h1 className="text-lg md:text-3xl font-bold">More details about {product?.title}</h1>
               <p className="mt-4 text-xs sm:text-base">{product?.description}</p>
-              <h1 className="mt-8 text-3xl font-bold">Quick Order ?</h1>
-              <p className="mt-4">Contact Us in Whatsapp : 01066745733</p>
+              <h1 className="mt-8 text-lg md:text-3xl  font-bold">Quick Order ?</h1>
+              <p className="mt-4 text-xs sm:text-base">Contact Us in Whatsapp : 01066745733</p>
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 
-const VodafoneCash = ({ totalAmt,isVodafoneCashOpened, setIsVodafoneCashOpened }) => {
+const VodafoneCash = ({ totalAmt, isVodafoneCashOpened, setIsVodafoneCashOpened }) => {
     const [showNumber, setShowNumber] = useState(false);
 
     const copyToClipboard = (text) => {
@@ -33,38 +33,20 @@ const VodafoneCash = ({ totalAmt,isVodafoneCashOpened, setIsVodafoneCashOpened }
         const message = "Hello, I want to inquire about Vodafone Cash payment.";
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappLink, '_blank');
-      };
+    };
 
     return (
         <>
             <div
-                className={`${isVodafoneCashOpened ? "flex" : "hidden"
-                    } w-full h-full top-0 left-0 flex items-center justify-center backdrop-blur-2xl fixed mt-8 lg:m-0 items-center justify-center bg-gray-100`}
+                className="pt-8 mt-8 bg-gray-50 lg:mt-0"
+
             >
-                <div className="flex w-[35rem] flex-col rounded-lg bg-white px-6 shadow-lg sm:px-14">
-                    <div className="flex w-full justify-between self-start pt-12 pb-8">
-                        <h2 className="font-sansserif font-semibold text-gray-700 lg:text-2xl">
-                            Follow these steps to pay with Vodafone Cash
-                        </h2>
-                        <button onClick={() => setIsVodafoneCashOpened(false)}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5 cursor-pointer text-gray-400"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </button>
-                    </div>
+                <div className="flex flex-col rounded-lg px-6 ">
+
                     <div className="flex w-full flex-col pb-8 pt-4">
-                        <div className="relative mb-4">
+                        <p className="text-xl font-medium">Payment Details</p>
+                        <p className="text-gray-400">Complete your order by providing your payment details.</p>
+                        <div className="relative my-4">
                             <label className="flex flex-col rounded-2xl border border-gray-300 bg-slate-100/80 p-4 pr-8 sm:pr-16">
                                 <span className="mb-2 font-bold">Step 1</span>
                                 <p className="text-sm sm:text-base">
@@ -72,12 +54,12 @@ const VodafoneCash = ({ totalAmt,isVodafoneCashOpened, setIsVodafoneCashOpened }
                                 </p>
                             </label>
                         </div>
-                       
+
                         <div className="relative mb-4">
                             <label className="flex flex-col rounded-2xl border border-gray-300 bg-slate-100/80 p-4 pr-8 sm:pr-16">
                                 <span className="mb-2 font-bold">Step 2</span>
                                 <p className="text-sm sm:text-base">
-                                    Send Screenshot & &quot;<FormattedPrice amount={totalAmt}/>&quot; to the following Vodafone Cash number:{" "}
+                                    Send Screenshot & &quot;<FormattedPrice amount={totalAmt} />&quot; to the following Vodafone Cash number:{" "}
                                     {showNumber ? (
                                         <span className="items-center justify-start gap-2">
                                             <span>01066745733</span>
@@ -116,6 +98,7 @@ const VodafoneCash = ({ totalAmt,isVodafoneCashOpened, setIsVodafoneCashOpened }
                 }}
             />
         </>
+
     );
 };
 

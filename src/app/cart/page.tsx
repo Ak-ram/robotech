@@ -6,7 +6,6 @@ import React from "react";
 const page = () => {
   return (
     <Container>
-      <Title title="Your Cart" />
       <Cart />
     </Container>
   );

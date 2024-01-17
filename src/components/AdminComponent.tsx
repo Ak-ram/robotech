@@ -57,7 +57,7 @@ const AdminComponent = () => {
   return (
       <>
         {/* Sidebar */}
-        <div className="lg:w-1/4 border-r border-gray-200 p-4">
+        <div className="lg:w-1/4 min-w-[250px] border-r border-gray-200 p-4">
           <h2 className="text-2xl font-bold mb-4">Pages</h2>
 
           <ul className="flex items-center bg-white py-2 px-5 font-bold justify-between overflow-x-auto gap-x-3 lg:flex-col lg:bg-transparent lg:items-start">
@@ -76,7 +76,7 @@ const AdminComponent = () => {
         </div>
 
         {/* Main content */}
-        <div className="flex-1 p-4 relative">
+        <div className="flex-1 max-w-4xl p-4 relative">
           <header className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold">Robotech Panel</h2>
           </header>
