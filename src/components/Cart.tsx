@@ -282,8 +282,7 @@ const Cart = () => {
               </label>
             </div>
             <div className="relative"
-              onClick={() => setCurrentMethod("cards")}
-            // onClick={handleCheckout}  
+            onClick={handleCheckout}  
             >
               <input className="peer hidden" id="radio_1" type="radio" name="radio" />
               <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
