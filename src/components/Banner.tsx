@@ -14,8 +14,8 @@ const Banner: React.FC<BannerProps> = () => {
 
   const settings: Settings = {
     dots: true,
-    // infinite: true,
-    // autoplay: true,
+    infinite: true,
+    autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
@@ -104,23 +104,27 @@ const Banner: React.FC<BannerProps> = () => {
               className={`${dotActive === index ? "z-10" : "z-0"} lg:bg-none lg:bg-transparent w-full pb-5 lg:h-[450px] bg-slate-200 relative transition-all duration-500 ease-in-out`}
 
             >
-              <div className="w-full lg:w-1/3 flex items-center justify-center lg:inline-block h-[250px] lg:h-full bg-white lg:bg-designColor z-0 relative">
+              {/* <div className="w-full lg:w-1/3 flex items-center justify-center lg:inline-block h-[250px] lg:h-full bg-white lg:bg-designColor z-0 relative"> */}
+              <div className="w-full l flex items-center justify-center lg:inline-block h-[250px] lg:h-full bg-white z-0 relative">
+                <Link href={slide?.link_url}>
                 <img
                   src={slide?.image}
                   width={200}
                   height={200}
                   alt="sliderone"
-                  className={`w-[70%] md:w-[400px] p-3 rounded-3xl lg:absolute object-cover lg:top-10 lg:-right-44 transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
+                  // className={`w-[70%] md:w-[400px] p-3 rounded-3xl lg:absolute object-cover lg:top-10 lg:-right-44 transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
+                  className={`p-3 rounded-3xl object-contain w-full h-full transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
                 // priority
                 />
+                </Link>
               </div>
-              <div className="p-5 lg:absolute lg:top-1/2 lg:left-2/3 transform lg:-translate-x-1/2 lg:-translate-y-1/2 flex flex-col items-center justify-center gap-5">
+              {/* <div className="p-5 lg:absolute lg:top-1/2 lg:left-2/3 transform lg:-translate-x-1/2 lg:-translate-y-1/2 flex flex-col items-center justify-center gap-5">
                 <p className="text-lg md:text-2xl font-bold uppercase text-center">{slide?.heading}</p>
                 <p className="w-96 px-8 lg:px-4 text-center text-zinc-600">{slide?.sub_heading}</p>
                 <Link href={slide?.link_url} passHref>
                   <span className="text-sm px-3 p-2 md:text-base font-medium text-white bg-black rounded-md md:px-4 md:py-2">{slide?.link_text}</span>
                 </Link>
-              </div>
+              </div> */}
             </div>
           ))}
       </Slider>
