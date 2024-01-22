@@ -288,7 +288,7 @@ console.log(updatedData)
           {selectedSectionIndex !== null &&
             jsonData[selectedSectionIndex] &&
             selectedCat && (
-              <div key={selectedSectionIndex} className="mt-5">
+              <div key={selectedSectionIndex} className="mt-5 max-w-4xl">
                 <span className="font-bold mb-4">
                   list of {selectedCat} products
                 </span>

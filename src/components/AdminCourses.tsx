@@ -175,7 +175,7 @@ const AdminCourses = () => {
                 </button>
             </div>
             {jsonArray.length !== 0 ?
-                <div className="overflow-x-auto max-w-screen-lg">
+                <div className="overflow-x-auto max-w-4xl">
                     <table className="min-w-full border border-gray-300 text-sm">
                         <thead>
                             <tr className="bg-zinc-800 text-white ">

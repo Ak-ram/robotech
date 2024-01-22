@@ -55,46 +55,48 @@ const AdminComponent = () => {
   }, [userInfo, router]);
 
   return (
-      <>
-        {/* Sidebar */}
-        <div className="lg:w-1/4 min-w-[250px] border-r border-gray-200 p-4">
-          <h2 className="text-2xl font-bold mb-4">Pages</h2>
-
-          <ul className="flex items-center bg-white py-2 px-5 font-bold justify-between overflow-x-auto gap-x-3 lg:flex-col lg:bg-transparent lg:items-start">
-            {sidebarItems.map((item) => (
-              <li
-                key={item.id}
-                className={`cursor-pointer ${
-                  selectedItem === item ? "text-blue-400" : ""
-                } my-0`}
-                onClick={() => handleItemClick(item)}
-              >
-                {item.label}
-              </li>
-            ))}
-          </ul>
+    <>
+    {/* Sidebar */}
+    <div className="lg:w-1/4 min-w-[250px] lg:border-r lg:border-gray-200 p-4">
+      <h2 className="text-2xl font-bold mb-4">Pages</h2>
+  
+      <ul className="flex items-center bg-white py-2 px-5 font-bold justify-between overflow-x-auto gap-x-3 lg:flex-col lg:bg-transparent lg:items-start">
+        {sidebarItems.map((item) => (
+          <li
+            key={item.id}
+            className={`cursor-pointer ${
+              selectedItem === item ? "text-blue-400" : ""
+            } my-0`}
+            onClick={() => handleItemClick(item)}
+          >
+            {item.label}
+          </li>
+        ))}
+      </ul>
+    </div>
+  
+    {/* Main content */}
+    <div className="flex-1 p-4 relative">
+      <header className="flex items-center justify-between mb-8">
+        <h2 className="text-2xl font-bold">Robotech Panel</h2>
+      </header>
+  
+      {selectedItem ? (
+        <div className="">
+          <h3 className="text-xl font-bold mb-2">
+            {selectedItem.label} Page
+          </h3>
+          <div>{selectedItem.content}</div>
         </div>
-
-        {/* Main content */}
-        <div className="flex-1 max-w-4xl p-4 relative">
-          <header className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold">Robotech Panel</h2>
-          </header>
-
-          {selectedItem ? (
-            <div className="">
-              <h3 className="text-xl font-bold mb-2">
-                {selectedItem.label} Page
-              </h3>
-              <p className="text-gray-600">{selectedItem.content}</p>
-            </div>
-          ) : (
-            <p className="font-bold text-lg flex items-center justify-center bg-white h-[500px] mb-5 text-gray-600">
-              Select Page from the sidebar.
-            </p>
-          )}
-        </div>
-      </>
+      ) : (
+        <p className="font-bold text-lg flex items-center justify-center bg-white lg:h-[500px] mb-5 text-gray-600">
+          Select Page from the sidebar.
+        </p>
+      )}
+    </div>
+  </>
+  
+  
   );
 };
 

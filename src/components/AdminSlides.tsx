@@ -10,10 +10,7 @@ const AdminSlides = () => {
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [editedItem, setEditedItem] = useState<any>({
         id: "",
-        heading: "",
-        sub_heading: "",
         image: "",
-        link_text: "",
         link_url: ""
     });
 
@@ -34,10 +31,7 @@ const AdminSlides = () => {
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
             id: "",
-            heading: "",
-            sub_heading: "",
             image: "",
-            link_text: "",
             link_url: ""
         });
     };
@@ -69,10 +63,7 @@ const AdminSlides = () => {
         // Check for empty fields
         if (
             !editedItem.id ||
-            !editedItem.heading ||
-            !editedItem.sub_heading ||
             !editedItem.image ||
-            !editedItem.link_text ||
             !editedItem.link_url
         ) {
             toast.error("All fields are required");
@@ -139,8 +130,6 @@ const AdminSlides = () => {
                         <thead>
                             <tr className="bg-zinc-800 text-white ">
                                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Id</th>
-                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Heading</th>
-                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Sub Heading</th>
                                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Img</th>
                                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Link</th>
                                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Actions</th>
@@ -150,10 +139,8 @@ const AdminSlides = () => {
                             {jsonArray.map((item, index) => (
                                 <tr key={index} className="hover:bg-slate-100">
                                     <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">{item.id}</td>
-                                    <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">{item.heading}</td>
-                                    <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">{item.sub_heading}</td>
                                     <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2"><img width={50} height={50} src={item.image} /></td>
-                                    <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2"><Link href={item.link_url}>{item.link_text}</Link></td>
+                                    <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2"><Link href={item.link_url}>{item.link_url}</Link></td>
                                     <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-2 py-2">
                                         <button
                                             className="mr-1"
@@ -189,24 +176,8 @@ const AdminSlides = () => {
                                 onChange={(e) => handleInputChange(e, "id")}
                             />
                         </div>
-                        <div className=" mb-2 lg:pr-4">
-                            <input
-                                type="text"
-                                placeholder="Heading"
-                                className="w-full p-2 border border-gray-300 rounded"
-                                value={editedItem.heading}
-                                onChange={(e) => handleInputChange(e, "heading")}
-                            />
-                        </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
-                            <input
-                                type="text"
-                                placeholder="Sub Heading"
-                                className="p-2 w-full border border-gray-300 rounded"
-                                value={editedItem.sub_heading}
-                                onChange={(e) => handleInputChange(e, "sub_heading")}
-                            />
-                        </div>
+                      
+                       
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
                                 type="text"
@@ -216,15 +187,7 @@ const AdminSlides = () => {
                                 onChange={(e) => handleInputChange(e, "image")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
-                            <input
-                                type="text"
-                                placeholder="Link Text"
-                                className="p-2 w-full border border-gray-300 rounded"
-                                value={editedItem.link_text}
-                                onChange={(e) => handleInputChange(e, "link_text")}
-                            />
-                        </div>
+                      
                         <div className="lg:w-1/4 mb-2 lg:pr-4">
                             <input
                                 type="text"

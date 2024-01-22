@@ -192,7 +192,7 @@ const Cart = () => {
         <div className="px-4 pt-8">
           <p className="text-xl font-medium">Order Summary</p>
           <p className="text-gray-400">Check your items. And select a suitable payment method.</p>
-          <div className="h-[300px] overflow-y-auto mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
+          <div className="max-h-[300px] overflow-y-auto mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
             {productData?.map((item: ProductType, i) => (
               <div key={item?.id} className={`flex flex-col items-center ${(i + 1) === productData.length ? "" : "border-b"} rounded-lg bg-white sm:flex-row`}>
 
@@ -211,6 +211,10 @@ const Cart = () => {
 
                       : null
                   }
+
+                  <span className={`mt-1 ${item.quantity > 1 ? 'visible text-sm font-bold text-blue-400' : 'invisible'}`}>{item.price}* {item.quantity} = <FormattedPrice amount={item.price * item.quantity} /></span>
+
+
                 </div>
                 <div className="flex flex-col items-center mx-2">
                   <span className=" rounded-md hover:border-zinc-800 cursor-pointer duration-200 inline-flex items-center justify-center">
@@ -282,7 +286,7 @@ const Cart = () => {
               </label>
             </div>
             <div className="relative"
-            onClick={handleCheckout}  
+              onClick={handleCheckout}
             >
               <input className="peer hidden" id="radio_1" type="radio" name="radio" />
               <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
