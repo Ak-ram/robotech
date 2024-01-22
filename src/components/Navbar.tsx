@@ -124,33 +124,33 @@ const Navbar = () => {
 
       </div>
       <div className="w-[400px] order-last mt-2 md:mt-0 relative flex-1 md:mx-4 relative flex justify-center items-center">
-      <Search className="absolute top-7 left-2 md:w-5 md:h-5" />
+      <Search className="text-zinc-500 absolute top-7 left-2 md:w-5 md:h-5" />
         <input
           onInput={(e: ChangeEvent<HTMLInputElement>) =>
             searching(e.target.value)
           }
-          className="outline-none h-10 pl-10 border border-slate-100 rounded-md pr-4 py-2 md:py-3 mr-auto mt-4  max-width-lg"
+          className="outline-none h-10 pl-10 border rounded-md pr-4 py-2 md:py-3 mr-auto mt-4 w-full"
           type="search"
           placeholder="Search..."
         />
         <ul
           className={`${isInput ? "block py-1 lg:py-3 " : "hidden p-0 "
-            } shadow-lg mx-0 top-11 w-full border shadow-md border-zinc-400 absolute bg-white mt-2 rounded-sm`}
+            } shadow-lg mx-0 top-11 w-full border shadow-md border-zinc-400 absolute bg-white mt-2 rounded-lg`}
         >
           {res.length > 0 ? (
             res.map((item) => (
               <li
                 key={item.title}
-                className={`${isInput ? "py-1 lg:py-2.5 border-b" : "p-0 border-0"} hover:bg-zinc-100 cursor-pointer hover:bg-slate-200 rounded-sm my-1`}
+                className={`${isInput ? "py-1 border-b" : "p-0 border-0"} hover:bg-zinc-100 cursor-pointer hover:bg-slate-200 rounded-sm my-1`}
               >
                 <Link
                   className='flex items-center font-bold justify-between px-3'
                   href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
                   <span className='flex-col flex'>
-                    <span className='text-sm mb-2 md:text-lg text-blue-400'>{item.title}</span>
+                    <span className='text-sm mb-2 text-blue-400'>{item.title}</span>
                     <span className='text-xs font-bold'><FormattedPrice amount={item?.price} /></span>
                   </span>
-                  <img className='hidden md:inline-block rounded-md' src={item.image1} width={70} height={70} />
+                  <img className='w-16 h-16 hidden md:inline-block rounded-md' src={item.image1} width={70} height={70} />
                 </Link>
               </li>
             ))
