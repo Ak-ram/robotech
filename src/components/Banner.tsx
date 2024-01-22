@@ -101,19 +101,19 @@ const Banner: React.FC<BannerProps> = () => {
             <div
               key={slide?.id}
               // className={`${dotActive === index ? "z-10" : "z-0"} lg:bg-none lg:bg-transparent w-full pb-5 h-[450px] bg-slate-200 relative`}
-              className={`${dotActive === index ? "z-10" : "z-0"} lg:bg-none lg:bg-transparent w-full pb-5 lg:h-[450px] bg-slate-200 relative transition-all duration-500 ease-in-out`}
+              className={`${dotActive === index ? "z-10" : "z-0"} w-full pb-5 lg:h-[450px] relative transition-all duration-500 ease-in-out`}
 
             >
               {/* <div className="w-full lg:w-1/3 flex items-center justify-center lg:inline-block h-[250px] lg:h-full bg-white lg:bg-designColor z-0 relative"> */}
               <div className="w-full l flex items-center justify-center lg:inline-block h-[250px] lg:h-full bg-white z-0 relative">
-                <Link href={slide?.link_url}>
+                <Link className='outline-none' href={slide?.link_url}>
                 <img
                   src={slide?.image}
                   width={200}
                   height={200}
                   alt="sliderone"
                   // className={`w-[70%] md:w-[400px] p-3 rounded-3xl lg:absolute object-cover lg:top-10 lg:-right-44 transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
-                  className={`p-3 rounded-3xl object-contain w-full h-full transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
+                  className={`rounded-3xl object-contain w-full h-full transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
                 // priority
                 />
                 </Link>
