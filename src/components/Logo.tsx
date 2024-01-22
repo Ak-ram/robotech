@@ -15,7 +15,7 @@ const Logo = ({ className }: Props) => {
       "text-zinc-950 md:mr-5 text-xl underline underline-offset-4 decoration-[1px] group",
       className
     )}>
-      <Image className="lg:hidden" src={ShortLogo} alt="ShortLogo" width={70} height={50} />
+      <Image className="lg:hidden" src={ShortLogo} alt="ShortLogo" width={50} height={50} />
       <Image className="hidden lg:inline-block" src={DetailedLogo} alt="DetailedLogo" width={150} height={50} />
     </Link>
   );
