@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
-import { Check, X, Trash, Edit, Plus } from "lucide-react";
+import { Check, X, Trash, Edit, Plus, Upload } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
+import ImageUpload from "./ImageUpload";
 
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
@@ -113,7 +114,7 @@ const AdminComponent = () => {
 
     if (editIndex !== null) {
       let updatedData = [...jsonData];
-console.log(updatedData)
+      console.log(updatedData)
       if (editIndex === -1) {
         updatedData[sectionIndex][selectedCat!].push(editedItem);
       } else {
@@ -209,7 +210,9 @@ console.log(updatedData)
       }
     }
   };
-
+  const handleImageChange = (index: number, imageUrl: string | null) => {
+    setEditedItem((prev) => ({ ...prev, [`image${index}`]: imageUrl }));
+  };
   return (
     <>
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
@@ -253,7 +256,7 @@ console.log(updatedData)
 
               <div>
                 <span
-                  
+
                   className={`${toggleNewCat ? "block" : "hidden"} mt-2`}
                 >
                   Category not exist ?{" "}
@@ -284,7 +287,7 @@ console.log(updatedData)
                 </div>
               </div>
             </div>
-           )} 
+          )}
           {selectedSectionIndex !== null &&
             jsonData[selectedSectionIndex] &&
             selectedCat && (
@@ -407,24 +410,28 @@ console.log(updatedData)
                     <h2 className="font-bold mb-2">
                       {editIndex === -1 ? "Add New Item" : "Edit Item"}
                     </h2>
-                    <div className="flex flex-col lg:flex-row flex-wrap">
+                    <div className="flex  lg:flex-row flex-wrap">
                       {Object.entries({
-                        id: "ID",
-                        title: "Title",
-                        price: "Price",
-                        previousPrice: "Previous Price",
-                        image1: "Image1",
-                        image2: "Image2",
-                        image3: "Image3",
-                        description: "Description",
-                        count: "Count",
-                        brand: "Brand",
-                      }).map(([key, placeholder]) => (
-                        <div key={key} className=" flex-col mb-2 lg:pr-4">
+                        id: 'ID',
+                        title: 'Title',
+                        description: 'Description',
+                        image1: 'Image1',
+                        image2: 'Image2',
+                        image3: 'Image3',
+                        price: 'Price',
+                        previousPrice: 'Previous Price',
+                        count: 'Count',
+                        brand: 'Brand',
+                      }).map(([key, placeholder], index) => (
+                        <div key={key} className={`${key.startsWith('image') ? 'h-[200px] border inline-block border-slate-400 rounded flex-col flex items-center justify-center gap-3 border-dashed' : null} flex-col mb-2 lg:pr-4`}>
+                          {/* {key.startsWith('image') ? <ImageUpload onInputChange={(e) => handleInputChange(e, key)} onImageChange={handleImageChange} index={index} /> : null} */}
+                          {editedItem[key] && key.startsWith('image') && (
+                            <img src={editedItem[key]} alt={`Uploaded ${key}`} className="mt-2" style={{ maxWidth: '100%', maxHeight: '100px' }} />
+                          )}
                           <input
                             type="text"
                             placeholder={placeholder}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className={`outline-none w-full p-2 border-0 rounded`}
                             value={editedItem[key]}
                             onChange={(e) => handleInputChange(e, key)}
                           />
