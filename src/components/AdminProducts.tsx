@@ -304,13 +304,13 @@ console.log(updatedData)
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Price
                       </th>
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
+                      {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Previous Price
-                      </th>
+                      </th> */}
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Image1
                       </th>
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
+                      {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Image2
                       </th>
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
@@ -324,7 +324,7 @@ console.log(updatedData)
                       </th>
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Brand
-                      </th>
+                      </th> */}
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Actions
                       </th>
@@ -334,49 +334,49 @@ console.log(updatedData)
                     {jsonData[selectedSectionIndex][selectedCat!]?.map(
                       (item: any, itemIndex: number) => (
                         <tr key={itemIndex} className="hover:bg-slate-100">
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.id}
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.title}
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.price}
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          {/* <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.previousPrice}
-                          </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          </td> */}
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             <img
                               src={item.image1}
                               alt={`Item ${item.id}`}
                               width="70"
                             />
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                            <img
+                          {/* <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2"> 
+                          <img
                               src={item.image2}
                               alt={`Item ${item.id}`}
                               width="70"
                             />
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                           <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             <img
                               src={item.image3}
                               alt={`Item ${item.id}`}
                               width="70"
                             />
-                          </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses order px-4 py-2">
+                          </td>  
+                           <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses order px-4 py-2">
                             {item.description}
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.count}
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.brand}
-                          </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
+                          </td> */}
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
                             <button
                               className="mr-1"
                               onClick={() =>
