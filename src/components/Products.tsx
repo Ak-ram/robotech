@@ -26,12 +26,7 @@ const Products = () => {
   return (
     <div className="mt-10">
       <Container>
-        <div className="hidden flex flex-col gap-2 items-center">
-          <h2 className="text-3xl font-semibold">Choose a category</h2>
-          <p className="text-lg text-center">
-            Explore custom layouts designed for seamless electronic shopping.
-          </p>
-        </div>
+       
         <FilterableProducts categories={categories} />
       </Container>
     </div>

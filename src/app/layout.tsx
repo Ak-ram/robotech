@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import "slick-carousel/slick/slick.css";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
+import Announcement from "@/components/Announcement";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,11 +27,13 @@ export default function RootLayout({
       <body
 
         className={cn(
-          "min-h-screen font-sans antialiased bgDesign",
+          "min-h-screen font-sans antialiased bg-slate-200",
           inter.className
         )}
       >
         <Layout>
+        <Announcement/>
+
           <Navbar />
           {children}
           <Footer />

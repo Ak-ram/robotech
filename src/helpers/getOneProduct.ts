@@ -1,7 +1,7 @@
 export const getOneProduct = async (categoryName, id) => {
     if (categoryName === "print") {
         const res = await fetch(
-            "https://akram-44.github.io/api/robotech/pages/3d.json",
+            `${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/3d.json`,
             {
                 cache: "no-cache",
             }
@@ -14,7 +14,7 @@ export const getOneProduct = async (categoryName, id) => {
         return result?.find((item: { id: string | number; }) => +item.id === id);
     } else if (categoryName === "courses") {
         const res = await fetch(
-            "https://akram-44.github.io/api/robotech/pages/courses.json",
+            `${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/courses.json`,
             {
                 cache: "no-cache",
             }
@@ -27,7 +27,7 @@ export const getOneProduct = async (categoryName, id) => {
         return result?.find((item: { id: string | number; }) => +item.id === id);
     } else {
         const res = await fetch(
-            "https://akram-44.github.io/api/robotech/pages/categories.json",
+            `${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/categories.json`,
             {
                 cache: "no-cache",
             }

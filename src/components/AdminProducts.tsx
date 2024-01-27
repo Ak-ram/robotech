@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
-import { Check, X, Trash, Edit, Plus } from "lucide-react";
+import { Check, X, Trash, Edit, Plus, Upload } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
+import ImageUpload from "./ImageUpload";
 
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
@@ -113,7 +114,7 @@ const AdminComponent = () => {
 
     if (editIndex !== null) {
       let updatedData = [...jsonData];
-console.log(updatedData)
+      console.log(updatedData)
       if (editIndex === -1) {
         updatedData[sectionIndex][selectedCat!].push(editedItem);
       } else {
@@ -209,7 +210,9 @@ console.log(updatedData)
       }
     }
   };
-
+  const handleImageChange = (index: number, imageUrl: string | null) => {
+    setEditedItem((prev) => ({ ...prev, [`image${index}`]: imageUrl }));
+  };
   return (
     <>
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
@@ -253,7 +256,7 @@ console.log(updatedData)
 
               <div>
                 <span
-                  
+
                   className={`${toggleNewCat ? "block" : "hidden"} mt-2`}
                 >
                   Category not exist ?{" "}
@@ -284,7 +287,7 @@ console.log(updatedData)
                 </div>
               </div>
             </div>
-           )} 
+          )}
           {selectedSectionIndex !== null &&
             jsonData[selectedSectionIndex] &&
             selectedCat && (
@@ -304,13 +307,13 @@ console.log(updatedData)
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Price
                       </th>
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
+                      {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Previous Price
-                      </th>
+                      </th> */}
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Image1
                       </th>
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
+                      {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Image2
                       </th>
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
@@ -324,7 +327,7 @@ console.log(updatedData)
                       </th>
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Brand
-                      </th>
+                      </th> */}
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Actions
                       </th>
@@ -334,49 +337,49 @@ console.log(updatedData)
                     {jsonData[selectedSectionIndex][selectedCat!]?.map(
                       (item: any, itemIndex: number) => (
                         <tr key={itemIndex} className="hover:bg-slate-100">
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.id}
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.title}
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.price}
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          {/* <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.previousPrice}
-                          </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          </td> */}
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             <img
                               src={item.image1}
                               alt={`Item ${item.id}`}
                               width="70"
                             />
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                            <img
+                          {/* <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2"> 
+                          <img
                               src={item.image2}
                               alt={`Item ${item.id}`}
                               width="70"
                             />
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                           <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             <img
                               src={item.image3}
                               alt={`Item ${item.id}`}
                               width="70"
                             />
-                          </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses order px-4 py-2">
+                          </td>  
+                           <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses order px-4 py-2">
                             {item.description}
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.count}
                           </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.brand}
-                          </td>
-                          <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
+                          </td> */}
+                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
                             <button
                               className="mr-1"
                               onClick={() =>
@@ -409,22 +412,27 @@ console.log(updatedData)
                     </h2>
                     <div className="flex flex-col lg:flex-row flex-wrap">
                       {Object.entries({
-                        id: "ID",
-                        title: "Title",
-                        price: "Price",
-                        previousPrice: "Previous Price",
-                        image1: "Image1",
-                        image2: "Image2",
-                        image3: "Image3",
-                        description: "Description",
-                        count: "Count",
-                        brand: "Brand",
-                      }).map(([key, placeholder]) => (
-                        <div key={key} className=" flex-col mb-2 lg:pr-4">
+                        id: 'ID',
+                        title: 'Title',
+                        description: 'Description',
+                        price: 'Price',
+                        previousPrice: 'Previous Price',
+                        count: 'Count',
+                        brand: 'Brand',
+                        image1: 'Image1',
+                        image2: 'Image2',
+                        image3: 'Image3',
+                      }).map(([key, placeholder], index) => (
+                        <div key={key} className={`${key.startsWith('image') ? 'h-[200px] border inline-block border-slate-400 rounded flex-col mx-auto flex items-center justify-center gap-3 border-dashed' : 'w-full'} flex-col mb-2 lg:pr-4`}>
+                          {/* {key.startsWith('image') ? <ImageUpload onInputChange={(e) => handleInputChange(e, key)} onImageChange={handleImageChange} index={index} /> : null} */}
+                          {editedItem[key] && key.startsWith('image') && (
+                            <img src={editedItem[key]} alt={`Uploaded ${key}`} className="mt-2" style={{ maxWidth: '100%', maxHeight: '100px' }} />
+                          )}
+                          <span className="font-bold text-sm mb-2 inline-block ml-1">{placeholder}</span>
                           <input
                             type="text"
                             placeholder={placeholder}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className={`outline-none w-full p-2 border-0 rounded`}
                             value={editedItem[key]}
                             onChange={(e) => handleInputChange(e, key)}
                           />

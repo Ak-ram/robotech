@@ -1,7 +1,7 @@
 export const getCategories = async () => {
   try {
     const res = await fetch(
-      "https://akram-44.github.io/api/robotech/pages/categories.json",
+      `${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/categories.json`,
       {
         cache: "no-cache",
       }
