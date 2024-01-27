@@ -11,8 +11,6 @@ const Related = ({ prefix, products, product }) => {
         setFilteration(filteredProducts);
     }, [product, products]);
 
-    console.log(filteration);
-
     return (
         <div className="bg-white p-5">
         <h3 className="text-2xl font-bold">Related Products</h3>
