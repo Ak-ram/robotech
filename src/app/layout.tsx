@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import "slick-carousel/slick/slick.css";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
+import Announcement from "@/components/Announcement";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,8 @@ export default function RootLayout({
         )}
       >
         <Layout>
+        <Announcement/>
+
           <Navbar />
           {children}
           <Footer />

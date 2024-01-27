@@ -145,7 +145,7 @@ const Navbar = () => {
         </div>
 
       </div>
-      <div className="w-[400px] order-last mt-2 md:mt-0 relative flex-1 md:mx-4 relative flex justify-center items-center">
+      <div className="max-w-[400px] order-last mt-2 md:mt-0 relative flex-1 md:mx-4 relative flex justify-center items-center">
         <Search className="text-zinc-500 absolute top-7 left-2 md:w-5 md:h-5" />
         <input
           onInput={(e: ChangeEvent<HTMLInputElement>) =>
