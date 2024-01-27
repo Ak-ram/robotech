@@ -10,18 +10,36 @@ import Link from "next/link";
 import { Gift } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
+import Product from "@/components/Product";
+import { getCategoryProducts } from "@/helpers/getCategoryProducts";
+import Related from "@/components/Related";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
 const Page: React.FC<Props> = ({ searchParams }: Props) => {
   const [product, setProduct] = useState<ProductType | undefined>();
-  const [mainImg, setMainImg] = useState<1 | 2 | 3>(1);
+  const [products, setProducts] = useState<any[]>([]);
+    const [mainImg, setMainImg] = useState<1 | 2 | 3>(1);
   const searchPar = useSearchParams();
   const idString = searchPar.get("id");
   const id = Number(idString);
   const prefix = searchPar.get("prefix");
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const p = await getCategoryProducts(prefix!);
+        setProducts(p);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
 
+    if (typeof window !== 'undefined') {
+      // Run the effect only in the browser environment
+      fetchProducts();
+    }
+  }, [prefix]);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -165,6 +183,7 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
           </div>
         </div>
       </div>
+      <Related prefix={prefix} products={products} product={product}/>
     </section>
   );
 };
