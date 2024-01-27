@@ -39,7 +39,7 @@ const Announcement = () => {
                 </Link>
             )}
         </div>
-        <span className="cursor-pointer" onClick={() => setClosing(true)}><X /></span>
+        <span className="hover:text-red-500 cursor-pointer" onClick={() => setClosing(true)}><X /></span>
     </div>
     return (
         announcement
