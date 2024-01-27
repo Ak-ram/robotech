@@ -145,8 +145,8 @@ const Admin3DComponent = () => {
         </button>
       </div>
       {jsonArray.length !== 0 ? (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-300 text-sm">
+                <div className="overflow-x-auto max-w-4xl">
+                <table className="min-w-full border border-gray-300 text-sm">
             <thead>
               <tr className="bg-zinc-800 text-white ">
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
