@@ -410,24 +410,25 @@ const AdminComponent = () => {
                     <h2 className="font-bold mb-2">
                       {editIndex === -1 ? "Add New Item" : "Edit Item"}
                     </h2>
-                    <div className="flex  lg:flex-row flex-wrap">
+                    <div className="flex flex-col lg:flex-row flex-wrap">
                       {Object.entries({
                         id: 'ID',
                         title: 'Title',
                         description: 'Description',
-                        image1: 'Image1',
-                        image2: 'Image2',
-                        image3: 'Image3',
                         price: 'Price',
                         previousPrice: 'Previous Price',
                         count: 'Count',
                         brand: 'Brand',
+                        image1: 'Image1',
+                        image2: 'Image2',
+                        image3: 'Image3',
                       }).map(([key, placeholder], index) => (
-                        <div key={key} className={`${key.startsWith('image') ? 'h-[200px] border inline-block border-slate-400 rounded flex-col flex items-center justify-center gap-3 border-dashed' : null} flex-col mb-2 lg:pr-4`}>
+                        <div key={key} className={`${key.startsWith('image') ? 'h-[200px] border inline-block border-slate-400 rounded flex-col mx-auto flex items-center justify-center gap-3 border-dashed' : 'w-full'} flex-col mb-2 lg:pr-4`}>
                           {/* {key.startsWith('image') ? <ImageUpload onInputChange={(e) => handleInputChange(e, key)} onImageChange={handleImageChange} index={index} /> : null} */}
                           {editedItem[key] && key.startsWith('image') && (
                             <img src={editedItem[key]} alt={`Uploaded ${key}`} className="mt-2" style={{ maxWidth: '100%', maxHeight: '100px' }} />
                           )}
+                          <span className="font-bold text-sm mb-2 inline-block ml-1">{placeholder}</span>
                           <input
                             type="text"
                             placeholder={placeholder}
