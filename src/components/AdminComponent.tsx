@@ -11,6 +11,7 @@ import Admin3DComponent from "./Admin3DComponent";
 import AdminAbout from "./AdminAbout";
 import AdminFaq from "./AdminFaq";
 import AdminSlides from "./AdminSlides";
+import AdminAnnouncement from "./AdminAnnouncement";
 
 const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -29,6 +30,7 @@ const AdminComponent = () => {
     { id: 4, label: "About", content: <AdminAbout /> },
     { id: 5, label: "Faq", content: <AdminFaq /> },
     { id: 6, label: "Slides", content: <AdminSlides /> },
+    { id: 7, label: "Announcement", content: <AdminAnnouncement /> },
     // Add more items as needed
   ];
 
