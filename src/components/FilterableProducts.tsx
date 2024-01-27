@@ -112,6 +112,12 @@ function FilterableProducts({ categories }) {
       <div className='relative mt-5 flex gap-4 m-auto '>
         <Categories setCategoryName={setCategoryName} categories={categories} />
         <div>
+        <div className="mt-5 flex flex-col gap-2 items-center">
+          <h2 className="text-3xl font-semibold">Choose a category</h2>
+          <p className="text-lg text-center">
+            Explore custom layouts designed for seamless electronic shopping.
+          </p>
+        </div>
           <div className="mt-2 md:mt-0 relative flex-1 md:mx-4 relative flex justify-center items-center">
             <Search className="text-zinc-500 absolute top-7 left-2 md:w-5 md:h-5" />
             <input
