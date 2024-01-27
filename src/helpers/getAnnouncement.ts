@@ -1,6 +1,6 @@
 export const getAnnouncementData = async () => {
     const res = await fetch(
-      "https://akram-44.github.io/api/robotech/pages/announcement.json",
+      `${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/announcement.json`,
       {
         cache: "no-cache",
       }

@@ -8,7 +8,6 @@ export async function getProduct(id: number, prefix: string) {
       const data = await getCourses()
       if (data) {
         let product = data.filter(item => item.id === id);
-        console.log(product)
         return product[0]
       }
     }
@@ -16,7 +15,6 @@ export async function getProduct(id: number, prefix: string) {
       const data = await getPrintServices()
       if (data) {
         let product = data.filter(item => item.id === id);
-        console.log(product)
         return product[0]
       }
     }
@@ -24,7 +22,6 @@ export async function getProduct(id: number, prefix: string) {
       const data = await getCategoryProducts(prefix)
       if (data) {
         let product = data.filter(item => item.id === id);
-        console.log(product)
         return product[0]
       }
     }
