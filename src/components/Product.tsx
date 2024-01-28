@@ -21,11 +21,27 @@ const Product = ({ products, prefix, categoryName }: Item) => {
     return favoriteData.some((favoriteItem) => favoriteItem.id === productId);
   };
   const dispatch = useDispatch();
+  const [perPage, setPerPage] = useState({
+    start: 0,
+    end: 12,
+  });
+
+  const handlePrev = () => {
+    const newStart = Math.max(0, perPage.start - 12);
+    const newEnd = newStart + 12;
+    setPerPage({ start: newStart, end: newEnd });
+  };
+
+  const handleNext = () => {
+    const newStart = perPage.start + 12;
+    const newEnd = Math.min(products.length, perPage.end + 12);
+    setPerPage({ start: newStart, end: newEnd });
+  };
   const handleStock = () => {};
   return (
     <div className="flex-1">
       <div className="container max-w-4xl m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-5 mx-auto">
-        {products?.map((item) => (
+        {products && products.slice(perPage.start,perPage.end)?.map((item) => (
           <div
             key={`${item.id}_${item.title}`}
             className="relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
@@ -148,6 +164,23 @@ const Product = ({ products, prefix, categoryName }: Item) => {
             </div>
           </div>
         ))}
+        
+      </div>
+      <div className="flex justify-between mt-4">
+        <button
+          className={`${perPage?.start === 0 ? 'cursor-not-allowed':''} bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
+          onClick={handlePrev}
+          disabled={perPage.start === 0}
+        >
+          Prev
+        </button>
+        <button
+          className={`${perPage?.end >= products?.length ? 'cursor-not-allowed':''} bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
+          onClick={handleNext}
+          disabled={perPage?.end >= products?.length}
+        >
+          Next
+        </button>
       </div>
       <Toaster
         position="bottom-right"
