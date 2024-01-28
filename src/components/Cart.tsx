@@ -154,10 +154,9 @@ const Cart = () => {
 
   }
   return (
-
     <>
       <div className="-mx-4 flex px-3 flex-col items-center border-b bg-white py-4 sm:flex-row">
-        <a href="#" className="text-2xl font-bold text-gray-800">Checkout</a>
+        <span className="text-2xl font-bold text-gray-800">Checkout</span>
         <div className="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base">
           <div className="relative ">
             <ul className="relative flex w-full items-center justify-between space-x-2 sm:space-x-4">
