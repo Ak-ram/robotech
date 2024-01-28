@@ -56,7 +56,7 @@ const Navbar = () => {
               >
                 {item?.title}
                 <span
-                  className={`absolute h-[1px] w-full bg-blue-700 left-0 bottom-0 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500 ${item.href === pathname && "translate-x-0 bg-designColor"
+                  className={`absolute h-[1px] w-full bg-white left-0 bottom-0 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500 ${item.href === pathname && "translate-x-0 bg-designColor"
                     }`}
                 />
               </li>
@@ -76,19 +76,19 @@ const Navbar = () => {
           </div>
           <Link
             href={"/wishlist"}
-            className="hover:text-black cursor-pointer duration-200 relative group"
+            className="hover:text-white cursor-pointer duration-200 relative group"
           >
             <Heart className="md:w-6 md:h-6" />
-            <span className="absolute top-0 -left-1 bg-zinc-800 text-zinc-200 w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-black font-semibold group-hover:text-white">
+            <span className="absolute top-0 -left-1 bg-slate-200 text-black w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-white font-semibold ">
               {favoriteData ? favoriteData.length : 0}
             </span>
           </Link>
           <Link
             href={"/cart"}
-            className="hover:text-black cursor-pointer duration-200 relative group"
+            className="hover:text-white cursor-pointer duration-200 relative group"
           >
             <ShoppingBasket className="md:w-6 md:h-6" />
-            <span className="absolute top-0 -left-1 bg-zinc-800 text-zinc-200 w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-black font-semibold group-hover:text-white">
+            <span className="absolute top-0 -left-1  bg-slate-200 text-black w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-white font-semibold ">
               {productData ? productData.length : 0}
             </span>
           </Link>

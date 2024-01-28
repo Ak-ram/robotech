@@ -13,9 +13,9 @@ const Banner: React.FC<BannerProps> = () => {
   const [slides, setSlides] = useState<any[]>([]);
 
   const settings: Settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
+    // dots: true,
+    // infinite: true,
+    // autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
@@ -105,7 +105,7 @@ const Banner: React.FC<BannerProps> = () => {
 
             >
               {/* <div className="w-full lg:w-1/3 flex items-center justify-center lg:inline-block h-[250px] lg:h-full bg-white lg:bg-designColor z-0 relative"> */}
-              <div className="w-full l flex items-center justify-center lg:inline-block h-[250px] lg:h-full bg-white z-0 relative">
+              <div className="w-full l flex items-center justify-center lg:inline-block h-[200px] lg:h-full bg-white z-0 relative">
                 <Link className='outline-none' href={slide?.link_url}>
                 <img
                   src={slide?.image}

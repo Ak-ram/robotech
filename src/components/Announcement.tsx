@@ -27,7 +27,7 @@ const Announcement = () => {
             fetchAnnouncement();
         }
     }, []);
-    let announcement = closed ? null : <div className="items-center bg-gray-900 text-white py-3 px-5 flex">
+    let announcement = closed ? null : <div className="items-center bg-blue-500 text-white py-3 px-5 flex">
         <div className="container w-[90%] mx-auto sm:gap-3 flex flex-col items-start sm:flex-row sm:items-center">
             <p className="whitespace-nowrap overflow-auto w-[99%] flex-1 text-xs sm:text-sm font-semibold">
                 {data.length > 0 && data[0].body}
