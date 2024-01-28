@@ -23,18 +23,18 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   const dispatch = useDispatch();
   const [perPage, setPerPage] = useState({
     start: 0,
-    end: 12,
+    end: 9,
   });
 
   const handlePrev = () => {
-    const newStart = Math.max(0, perPage.start - 12);
-    const newEnd = newStart + 12;
+    const newStart = Math.max(0, perPage.start - 9);
+    const newEnd = newStart + 9;
     setPerPage({ start: newStart, end: newEnd });
   };
 
   const handleNext = () => {
-    const newStart = perPage.start + 12;
-    const newEnd = Math.min(products.length, perPage.end + 12);
+    const newStart = perPage.start + 9;
+    const newEnd = Math.min(products.length, perPage.end + 9);
     setPerPage({ start: newStart, end: newEnd });
   };
   const handleStock = () => {};
