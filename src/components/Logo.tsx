@@ -16,7 +16,7 @@ const Logo = ({ className }: Props) => {
       className
     )}>
       <Image className="lg:hidden bg-white rounded-full" src={ShortLogo} alt="ShortLogo" width={50} height={50} />
-      <Image className="hidden lg:inline-block bg-white rounded-lg py-1 px-2" src={DetailedLogo} alt="DetailedLogo" width={150} height={50} />
+      <Image className="hidden lg:inline-block bg-white rounded py-1 px-2" src={DetailedLogo} alt="DetailedLogo" width={150} height={50} />
     </Link>
   );
 };

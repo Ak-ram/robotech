@@ -13,9 +13,9 @@ const Banner: React.FC<BannerProps> = () => {
   const [slides, setSlides] = useState<any[]>([]);
 
   const settings: Settings = {
-    // dots: true,
-    // infinite: true,
-    // autoplay: true,
+    dots: true,
+    infinite: true,
+    autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
