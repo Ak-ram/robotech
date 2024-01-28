@@ -156,7 +156,7 @@ const Cart = () => {
   return (
 
     <>
-      <div className="-mt-10 flex px-3 flex-col items-center border-b bg-white py-4 sm:flex-row">
+      <div className="-mx-4 flex px-3 flex-col items-center border-b bg-white py-4 sm:flex-row">
         <a href="#" className="text-2xl font-bold text-gray-800">Checkout</a>
         <div className="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base">
           <div className="relative ">
@@ -175,7 +175,7 @@ const Cart = () => {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
               </svg>
               <li className="flex items-center space-x-3 text-left sm:space-x-4">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-600 text-xs font-semibold text-white ring ring-gray-600 ring-offset-2">
+                <span className="animate-pulse flex h-6 w-6 items-center justify-center rounded-full bg-gray-600 text-xs font-semibold text-white ring ring-gray-600 ring-offset-2">
                   2
                 </span>
                 <Link href={'./cart'} >
@@ -188,23 +188,24 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      <div className="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
-        <div className="px-4 pt-8">
+      <div className="">
+      <div className="grid -mx-4  lg:grid-cols-2">
+        <div className="px-10 pt-8">
           <p className="text-xl font-medium">Order Summary</p>
           <p className="text-gray-400">Check your items. And select a suitable payment method.</p>
-          <div className="max-h-[300px] overflow-y-auto mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
+          <div className="max-h-[300px] overflow-y-auto mt-8 space-y-3 rounded-lg border bg-white px-2 sm:px-6">
             {productData?.map((item: ProductType, i) => (
-              <div key={item?.id} className={`flex flex-col items-center ${(i + 1) === productData.length ? "" : "border-b"} rounded-lg bg-white sm:flex-row`}>
+              <div key={item?.id} className={`flex  items-center ${(i + 1) === productData.length ? "" : "border-b"} rounded-lg bg-white sm:flex-row`}>
 
-                <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src={item.image1} alt="" />
+                <img className="m-2 w-12 h-12 sm:h-24 sm:w-28 rounded-md border object-cover object-center" src={item.image1} alt="" />
                 <div className="flex w-full flex-col px-4 py-4">
-                  <span className="font-semibold">{item.title}</span>
-                  <div className="flex items-center gap-1">
+                  <span className="text-xs sm:text-sm font-semibold">{item.title}</span>
+                  <div className="text-xs sm:text-sm flex items-center gap-1">
                     {
                       item.price !== item.previousPrice ? <del className="text-xs float-right text-gray-400"><FormattedPrice amount={item.previousPrice} /></del>
                         : null
                     }
-                    <p className="text-lg font-bold"><FormattedPrice amount={item.price} /></p>
+                    <p className="text-xs sm:text-sm md:text-lg font-bold"><FormattedPrice amount={item.price} /></p>
                   </div>
                   {
                     item.price !== item.previousPrice ? <span className="font-bold text-sm">Save: {calculatePercentage(item?.price, item?.previousPrice)}%</span>
@@ -212,7 +213,7 @@ const Cart = () => {
                       : null
                   }
 
-                  <span className={`mt-1 ${item.quantity > 1 ? 'visible text-sm font-bold text-blue-400' : 'invisible'}`}>{item.price}* {item.quantity} = <FormattedPrice amount={item.price * item.quantity} /></span>
+                  <span className={`text-xs sm:text-sm  mt-1 ${item.quantity > 1 ? 'visible text-sm font-bold text-blue-400' : 'invisible'}`}>{item.price}* {item.quantity} = <FormattedPrice amount={item.price * item.quantity} /></span>
 
 
                 </div>
@@ -313,7 +314,7 @@ const Cart = () => {
             </div>}
         {/* */}
       </div>
-
+</div>
     </>
   );
 };

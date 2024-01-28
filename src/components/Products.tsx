@@ -25,7 +25,7 @@ const Products = () => {
 
   return (
     <div className="md:mt-10">
-      <Container>
+      <Container className="md:py-10">
        
         <FilterableProducts categories={categories} />
       </Container>

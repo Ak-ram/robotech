@@ -76,7 +76,7 @@ const Navbar = () => {
           </div>
           <Link
             href={"/wishlist"}
-            className="hover:text-white cursor-pointer duration-200 relative group"
+            className="animate-bounce hover:text-white cursor-pointer duration-200 relative group"
           >
             <Heart className="md:w-6 md:h-6" />
             <span className="absolute top-0 -left-1 bg-slate-200 text-black w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-white font-semibold ">
