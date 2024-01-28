@@ -49,32 +49,36 @@ const Banner: React.FC<BannerProps> = () => {
     ),
     customPaging: (i: number) => (
       <div
-      className="bg-designColor"
+      className="text-sm font-bold border-b pb-1 mx-1 select-none"
         style={
           i === dotActive
             ? {
-              width: "20px",
-              height: "6px",
+              // width: "20px",
+              // height: "6px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "white",
+              color: "#000",
               cursor: "pointer",
-              borderRadius: "1rem",
+              // borderRadius: "1rem",
+              borderColor: '#000'
             }
             : {
-              width: "6px",
-              height: "6px",
+              // width: "6px",
+              // height: "6px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "white",
-              background: "#131921",
+              color: "#999",
+              // background: "#131921",
               cursor: "pointer",
-              borderRadius: "1rem",
+              // borderRadius: "1rem",
+              borderColor: '#999'
             }
         }
-      ></div>
+      ><Link href={slides[i]?.link_url}>
+        {slides[i]?.link_text}</Link>
+        </div>
     ),
   };
 
