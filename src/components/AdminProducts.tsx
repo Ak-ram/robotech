@@ -188,9 +188,17 @@ const AdminComponent = () => {
   };
 
   const handleDeleteCategory = async () => {
-    if (selectedCat !== null && selectedSectionIndex !== null) {
+    
+
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete this category?`
+    );
+   
+    
+
+
+    if (selectedCat !== null && selectedSectionIndex !== null && confirmDelete) {
       const updatedData = [...jsonData];
-      console.log(updatedData[selectedSectionIndex])
       delete updatedData[selectedSectionIndex][selectedCat];
 
       try {
@@ -224,7 +232,7 @@ const AdminComponent = () => {
               </label>
               <select
                 id="sectionDropdown"
-                className="p-2 border border-gray-300 rounded"
+                className="my-2 appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                 value={selectedCat !== null ? selectedCat : ""}
                 onChange={(e) => {
                   const selectedItem = e.target.value;
@@ -247,7 +255,7 @@ const AdminComponent = () => {
               </select>
               {selectedCat && (
                 <button
-                  className="text-xs rounded-md absolute top-0 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
+                  className="text-xs rounded-md absolute top-5 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
                   onClick={handleDeleteCategory}
                 >
                   Delete {selectedCat} Category

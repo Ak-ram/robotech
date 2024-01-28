@@ -1,4 +1,5 @@
 import { addUser } from '@/redux/proSlice';
+import { Key } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -46,7 +47,7 @@ const LoginComponent = () => {
         <div className="relative px-4 py-10 bg-white shadow-lg rounded-3xl sm:p-20">
           <div className="max-w-md mx-auto">
             <div>
-              <h1 className="text-2xl font-semibold">Login Form with Floating Labels</h1>
+              <h1 className="text-2xl font-semibold">Login as an Admin</h1>
             </div>
             <div className="divide-y divide-gray-200">
               <div className={`${isAuth ? 'hidden' : 'block'} py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7`}>
@@ -96,6 +97,7 @@ const LoginComponent = () => {
                 {!isAuth && message && <p className={`${message.includes('authorized') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
                 {isAuth && (
                   <div className='text-sm mt-2'>
+                    <span className='text-center w-full inline-block flex items-center justify-center py-10'><Key className='text-blue-600' size={100} /></span>
                     You are authorized now, visit
                     <Link className='underline hover:text-blue-600 mx-1' href={route}>Admin page</Link>
                     to manage your data

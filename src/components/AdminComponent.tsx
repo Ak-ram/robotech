@@ -90,10 +90,10 @@ const AdminComponent = () => {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 p-4 relative">
-        <header className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold">Robotech Panel</h2>
-        </header>
+      <div className="flex-1 py-10 p-4 relative">
+        {/* <header className="flex items-center justify-between mb-8"> */}
+          {/* <h2 className="text-2xl font-bold">Robotech Panel</h2>
+        </header> */}
 
         {selectedItem ? (
           <div className="">
