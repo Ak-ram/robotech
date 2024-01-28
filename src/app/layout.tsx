@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
 import Announcement from "@/components/Announcement";
+import WhatsApp from "@/components/WhatsApp";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
 
           <Navbar />
           {children}
+          <WhatsApp />
           <Footer />
         </Layout>
       </body>
