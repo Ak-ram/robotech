@@ -13,6 +13,7 @@ import MagnifierComponent from "@/components/Magnifier";
 import Product from "@/components/Product";
 import { getCategoryProducts } from "@/helpers/getCategoryProducts";
 import Related from "@/components/Related";
+import toast, { Toaster } from "react-hot-toast";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -144,7 +145,10 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
                 <span className="text-base">/piece</span>
               </div>
 
-              <button onClick={() => dispatch(addToCart(product))} type="button" className="mt-0 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-3 py-2 md:px-12 md:py-3 text-center  text-sm sm:text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
+              <button onClick={() => {
+                dispatch(addToCart(product));
+                toast.success(`${product?.title} successfully added to the basket`)
+                }} type="button" className="mt-0 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-3 py-2 md:px-12 md:py-3 text-center  text-sm sm:text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
                 <svg xmlns="http://www.w3.org/2000/svg" className="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
@@ -184,6 +188,15 @@ if(prefix === 'courses') return <CoursePage searchParams={{}}/>
         </div>
       </div>
       <Related prefix={prefix} products={products} product={product}/>
+      <Toaster
+                position="bottom-right"
+                toastOptions={{
+                    style: {
+                        background: "#000",
+                        color: "#fff",
+                    },
+                }}
+            />
     </section>
   );
 };

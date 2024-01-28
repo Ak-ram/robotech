@@ -241,7 +241,7 @@ const Cart = () => {
                   onClick={() => {
                     dispatch(deleteProduct(item)),
                       toast.success(
-                        `${item?.title} is removed from Wishlist!`
+                        `${item?.title} is removed from basket!`
                       );
                   }}
                   className="w-8 h-8 hover:text-red-600 cursor-pointer duration-200"
