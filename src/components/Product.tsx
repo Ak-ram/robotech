@@ -168,14 +168,14 @@ const Product = ({ products, prefix, categoryName }: Item) => {
       </div>
       <div className="flex justify-between mt-4">
         <button
-          className={`${perPage?.start === 0 ? 'cursor-not-allowed':''} bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
+          className={`${perPage?.start === 0 ? 'cursor-not-allowed':''} text-sm bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded`}
           onClick={handlePrev}
           disabled={perPage.start === 0}
         >
           Prev
         </button>
         <button
-          className={`${perPage?.end >= products?.length ? 'cursor-not-allowed':''} bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
+          className={`${perPage?.end >= products?.length ? 'cursor-not-allowed':''} text-sm bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded`}
           onClick={handleNext}
           disabled={perPage?.end >= products?.length}
         >
