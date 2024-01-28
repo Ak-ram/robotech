@@ -78,7 +78,7 @@ function AboutComponent() {
                     data.map((item) => (
                         <div key={item?.id} className="border p-2 rounded-lg flex flex-col sm:flex-row">
                             <div className="mr-4">
-                                <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-designColor">
+                                <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-orange-500">
                                     <ListTodo />
                                 </div>
                             </div>

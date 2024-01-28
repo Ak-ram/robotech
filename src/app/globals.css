@@ -7,7 +7,8 @@
 }
 *{
   /* user-select: none; */
-  /* transition: all .2s ease-in; */
+  outline: none;
+  transition: all .2s ease-in;
 }
 
 .overlay-circles{
