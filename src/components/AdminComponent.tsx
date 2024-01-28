@@ -51,24 +51,7 @@ const AdminComponent = () => {
   if (!isAuthorized) {
     return null; // Or render a login component, redirect, or some other behavior
   }
-  // useEffect(() => {
-  //   if (!userInfo) {
-  //     router.push("/login"); // Update the route to your login page
-  //   } else {
-  //     // Check if the user has the right authorization (you might need to customize this)
-  //     if (
-  //       userInfo.email === process.env.NEXT_PUBLIC_AUTH_USERNAME &&
-  //       userInfo.password === process.env.NEXT_PUBLIC_AUTH_PASSWORD
-  //     ) {
-  //       // The user is authorized, continue rendering the admin page
-  //     } else {
-  //       // If the user is not authorized, redirect to the login page
-  //       router.push("/login"); // Update the route to your login page
-  //     }
-  //   }
-  //   console.log(sidebarItems)
-  // }, [userInfo, router]);
-
+ 
   return (
     <>
       {/* Sidebar */}

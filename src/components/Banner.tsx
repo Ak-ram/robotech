@@ -49,6 +49,7 @@ const Banner: React.FC<BannerProps> = () => {
     ),
     customPaging: (i: number) => (
       <div
+      className="bg-designColor"
         style={
           i === dotActive
             ? {
@@ -58,7 +59,6 @@ const Banner: React.FC<BannerProps> = () => {
               alignItems: "center",
               justifyContent: "center",
               color: "white",
-              background: "#fe9a05",
               cursor: "pointer",
               borderRadius: "1rem",
             }
@@ -106,7 +106,7 @@ const Banner: React.FC<BannerProps> = () => {
             >
               {/* <div className="w-full lg:w-1/3 flex items-center justify-center lg:inline-block h-[250px] lg:h-full bg-white lg:bg-designColor z-0 relative"> */}
               <div className="w-full l flex items-center justify-center lg:inline-block h-[200px] lg:h-full bg-white z-0 relative">
-                <Link className='outline-none' href={slide?.link_url}>
+                {/* <Link className='outline-none' href={slide?.link_url}> */}
                 <img
                   src={slide?.image}
                   width={200}
@@ -116,7 +116,7 @@ const Banner: React.FC<BannerProps> = () => {
                   className={`rounded-3xl object-contain w-full h-full transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
                 // priority
                 />
-                </Link>
+                {/* </Link> */}
               </div>
               {/* <div className="p-5 lg:absolute lg:top-1/2 lg:left-2/3 transform lg:-translate-x-1/2 lg:-translate-y-1/2 flex flex-col items-center justify-center gap-5">
                 <p className="text-lg md:text-2xl font-bold uppercase text-center">{slide?.heading}</p>
