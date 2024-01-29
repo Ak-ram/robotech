@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { ProductType, StateProps } from "../../type";
 import FormattedPrice from './FormattedPrice';
 import WhatsApp from './WhatsApp';
+import SearchComponent from './SearchComponent';
 
 // Define the type for product items
 
@@ -101,6 +102,11 @@ const Navbar = () => {
 
 
         </div>
+
+      </div>
+      <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
+        <span className='md:block hidden mt-4 font-bold'>Look for specific Product ? </span>
+      <SearchComponent  />
 
       </div>
     </div>
