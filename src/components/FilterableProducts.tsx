@@ -19,7 +19,20 @@ function FilterableProducts({ categories }) {
   const [inputQuery, setInputQuery] = useState<string>("");
   const [totalAmt, setTotalAmt] = useState(0);
   const [rowPrice, setRowPrice] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const slideBottomClass = 'slide-bottom';
 
+  // Function to toggle the slide-bottom class on click
+  const toggleSlideBottom = (index) => {
+    const liElements = document.querySelectorAll('.slide-bottom-li');
+    liElements.forEach((li, i) => {
+      if (i === index) {
+        li.classList.toggle(slideBottomClass);
+      } else {
+        li.classList.remove(slideBottomClass);
+      }
+    });
+  };
   const searching = (query: string) => {
     setIsInput(true);
     setInputQuery(query);
@@ -133,13 +146,21 @@ function FilterableProducts({ categories }) {
                 } shadow-lg mx-0 top-11 w-full border shadow-md border-zinc-400 z-10 absolute bg-white mt-5 rounded-lg`}
             >
               {res.length > 0 ? (
-                res.map((item) => (
+                res.map((item, index)  => (
                   <li
-                    key={item.title}
-                    className={`${isInput ? "py-1 border-b" : "p-0 border-0"} hover:bg-zinc-100 cursor-pointer hover:bg-slate-200 rounded-sm my-1`}
-                  >
+                  key={item.title}
+                  className={`${
+                    isInput ? 'py-1 border-b' : 'p-0 border-0'
+                  } hover:bg-zinc-100 cursor-pointer hover:bg-slate-200 rounded-sm my-1 ${
+                    activeIndex === index ? slideBottomClass : ''
+                  } slide-bottom-li`}
+                  onClick={() => {
+                    setActiveIndex(index);
+                    toggleSlideBottom(index);
+                  }}
+                >
                     <Link
-                      className='flex items-center font-bold justify-between px-3'
+                      className='slide-bottom flex items-center font-bold justify-between px-3'
                       href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: item?.category } }}>
 
                       <span className='flex-col flex'>
