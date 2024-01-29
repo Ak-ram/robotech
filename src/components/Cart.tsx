@@ -291,8 +291,8 @@ const Cart = () => {
                 <label className="items-center peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_3">
                   <PackageOpen />
                   <div className="ml-5">
-                    <span className="mt-2 font-semibold">Cash On Delivery</span>
-                    <p className="text-slate-500 text-sm leading-6">Pay after receiving your order</p>
+                    <span className="mt-2 font-semibold">Cash In Store</span>
+                    <p className="text-slate-500 text-sm leading-6">Receive your order in-store and pay upon pickup.</p>
                   </div>
                 </label>
               </div>

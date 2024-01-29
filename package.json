@@ -14,6 +14,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@stripe/stripe-js": "^2.1.11",
     "@types/react-slick": "^0.23.11",
+    "apexcharts": "^3.45.2",
     "axios": "^1.6.5",
     "canvas-confetti": "^1.9.2",
     "clsx": "^2.0.0",
