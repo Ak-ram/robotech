@@ -29,7 +29,7 @@ const VodafoneCash = ({ totalAmt, isVodafoneCashOpened, setIsVodafoneCashOpened 
         toast.success("Phone number copied to clipboard!");
     };
     const openWhatsApp = () => {
-        const phoneNumber = "201066745733";
+        const phoneNumber = "201102071544";
         const message = "Hello, I want to inquire about Vodafone Cash payment.";
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappLink, '_blank');
