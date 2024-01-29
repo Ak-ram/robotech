@@ -136,11 +136,20 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   <h1 className="sm:text-2xl font-bold text-gray-900 sm:text-3xl">{product?.title}</h1>
 
                   <div className="mt-5 flex items-center">
-                    <div className="flex items-center">
 
-                      In Stock:
-                    </div>
-                    <p className="ml-2 text-sm font-medium text-gray-500">{product?.count} Piece(s)</p>
+                    {/* <p className="ml-2 text-sm font-medium text-gray-500">{product?.count} Piece(s)</p> */}
+
+                    {
+                      product?.count > 0 && prefix !== 'print' ? <p className="ml-2 text-sm font-medium text-gray-500">
+                        <span className="mr-2">In Stock:</span>
+                        {product?.count} Piece(s)</p>
+                        : <span className="hidden sm:flex flex-col items-center justify-center">
+                          <b className="text-designColor">Price : <FormattedPrice amount={product.count} /> Per Minute.</b>
+                        </span>
+                    }
+
+
+
                   </div>
 
                   <div className="mt-10 flex lg:flex-col lg:items-start gap-4 items-center justify-between border-t border-b py-4 sm:flex-row sm:space-y-0">
