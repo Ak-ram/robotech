@@ -158,7 +158,7 @@ const Admin3DComponent = () => {
                   Title
                 </th>
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  Price
+                  PPM
                 </th>
                 {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Previous Price
@@ -175,9 +175,9 @@ const Admin3DComponent = () => {
                 {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Description
                 </th> */}
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Per Minute
-                </th>
+                </th> */}
                 {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Brand
                 </th> */}
@@ -204,9 +204,9 @@ const Admin3DComponent = () => {
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     <img src={item.image1} width="70" />
                   </td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                  {/* <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     {item.count}
-                  </td>
+                  </td> */}
                   {/* <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     <img src={item.image2} width="70" />
                   </td>
