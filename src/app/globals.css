@@ -140,8 +140,8 @@
 @-webkit-keyframes slide-tr {
   0% {
 
-    -webkit-transform: translateY(100px) translateX(-100px);
-    transform: translateY(100px) translateX(-100px);
+    -webkit-transform: translateY(100px) translateX(-300px);
+    transform: translateY(100px) translateX(-300px);
   }
 
   100% {
@@ -153,8 +153,8 @@
 @keyframes slide-tr {
   0% {
 
-    -webkit-transform: translateY(100px) translateX(-100px);
-    transform: translateY(100px) translateX(-100px);
+    -webkit-transform: translateY(100px) translateX(-300px);
+    transform: translateY(100px) translateX(-300px);
   }
 
   100% {
