@@ -155,9 +155,9 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   item?.count > 0 && prefix !== 'print' ? <span className="hidden sm:flex text-xs flex-col items-center justify-center">
                     <b className="text-designColor">{item?.count}</b> Pieces in
                     stock.
-                  </span> :  <span className="hidden sm:flex text-xs flex-col items-center justify-center">
-                    <b className="text-designColor"><FormattedPrice amount={item.count}/></b> Per Minute.
-                  </span> 
+                  </span> : prefix === 'print' ? <span className="hidden sm:flex text-xs flex-col items-center justify-center">
+                    <b className="text-designColor"><FormattedPrice amount={item.count} /></b> Per Minute.
+                  </span> : null
                 }
 
               </div>
