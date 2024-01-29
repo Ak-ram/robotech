@@ -41,56 +41,39 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   };
 
   return (
-    <div className="flex-1 pt-5 flex items-center justify-end">
-      {/* <nav aria-label="Page navigation example">
-          <ul className="flex items-center -space-x-px h-10 text-base">
+    <div className="flex-1 pt-5">
+
+      <nav aria-label="Page navigation example" className=" flex items-center justify-end">
+        <ul className="flex items-center -space-x-px h-8 text-sm">
+          <li className="mr-2">
+
+            <span className="text-blue-500 font-semibold mr-1">
+              ({perPage?.start} - {perPage?.end})
+            </span>
+            items out of
+            <span className="text-blue-500 font-semibold ml-1">
+              {products?.length}</span> items
+          </li>
+          <li>
             <button
-              className={`${perPage?.start === 0 ? 'cursor-not-allowed' : ''}`}
+              className={`${perPage?.start === 0 ? 'opacity-60 cursor-not-allowed' : ''} flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700`}
               onClick={handlePrev}
               disabled={perPage.start === 0}
             >
-              <div className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                <span className="">Previous</span>
-                <svg className="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
-                </svg>
-              </div>
-            </button>
-
-            <button
-              className={`${perPage?.end >= products?.length ? 'cursor-not-allowed' : ''}`}
-              onClick={handleNext}
-              disabled={perPage?.end >= products?.length}>
-              <div className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                <span className="">Next</span>
-                <svg className="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                </svg>
-              </div>
-            </button>
-          </ul>
-        </nav> */}
-      <nav aria-label="Page navigation example">
-        <ul className="flex items-center -space-x-px h-8 text-sm">
-          <li>
-            <button  
-            className={`${perPage?.start === 0 ? 'cursor-not-allowed' : ''} flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
-              onClick={handlePrev}
-              disabled={perPage.start === 0}
-               >
-              <span className="sr-only">Previous</span>
               <svg className="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
               </svg>
+              <span className="text-xs ml-1">Previous</span>
+
             </button>
           </li>
           <li>
-            <button 
-             className={`${perPage?.end >= products?.length ? 'cursor-not-allowed' : ''} flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+            <button
+              className={`${perPage?.end >= products?.length ? 'opacity-60 cursor-not-allowed' : ''} flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700`}
               onClick={handleNext}
-              disabled={perPage?.end >= products?.length} 
-              >
-              <span className="sr-only">Next</span>
+              disabled={perPage?.end >= products?.length}
+            >
+              <span className="text-xs mr-1">Next</span>
               <svg className="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
               </svg>
@@ -241,7 +224,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
           },
         }}
       />
-    </div>
+    </div >
   );
 };
 
