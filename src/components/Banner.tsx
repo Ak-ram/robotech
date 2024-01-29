@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Slider, { Settings } from "react-slick";
 import Image from "next/image";
-import { Clock, Smartphone, Map, MailPlus } from "lucide-react";
+import { Clock, Smartphone, Map, MailPlus, RefreshCcw, ExternalLink } from "lucide-react";
 import { getSlidesData } from "@/helpers/getSlidesData";
 
 interface BannerProps { }
@@ -76,8 +76,8 @@ const Banner: React.FC<BannerProps> = () => {
               borderColor: '#999'
             }
         }
-      ><Link href={slides[i]?.link_url}>
-        {slides[i]?.link_text}</Link>
+      ><Link href={slides[i]?.link_url} className="flex items-center gap-1">
+        <ExternalLink size={15}/>{slides[i]?.link_text}</Link>
         </div>
     ),
   };
