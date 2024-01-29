@@ -147,8 +147,8 @@ const Admin3DComponent = () => {
         </button>
       </div>
       {jsonArray.length !== 0 ? (
-                <div className="overflow-x-auto max-w-4xl">
-                <table className="min-w-full border border-gray-300 text-sm">
+        <div className="overflow-x-auto max-w-4xl">
+          <table className="min-w-full border border-gray-300 text-sm">
             <thead>
               <tr className="bg-zinc-800 text-white ">
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
@@ -158,7 +158,7 @@ const Admin3DComponent = () => {
                   Title
                 </th>
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  Price
+                  PPM
                 </th>
                 {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Previous Price
@@ -175,9 +175,9 @@ const Admin3DComponent = () => {
                 {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Description
                 </th> */}
-                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Per Minute
-                </th> 
+                </th> */}
                 {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Brand
                 </th> */}
@@ -204,9 +204,9 @@ const Admin3DComponent = () => {
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     <img src={item.image1} width="70" />
                   </td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                  {/* <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     {item.count}
-                  </td>
+                  </td> */}
                   {/* <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     <img src={item.image2} width="70" />
                   </td>
@@ -247,35 +247,46 @@ const Admin3DComponent = () => {
           <h2 className="font-bold mb-2">
             {editIndex === -1 ? "Add New Item" : "Edit Item"}
           </h2>
-          <div className="flex flex-col lg:flex-row">
-            <div className=" mb-2 lg:pr-4">
+          <div className="flex flex-col">
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">ID</span>
+
               <input
                 type="text"
-                placeholder="ID"
+                placeholder="8547"
                 className="w-full p-2 border border-gray-300 rounded"
                 value={editedItem.id}
                 onChange={(e) => handleInputChange(e, "id")}
               />
             </div>
-            <div className=" mb-2 lg:pr-4">
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">Title</span>
+
               <input
                 type="text"
-                placeholder="Title"
+                placeholder="3d Print"
                 className="w-full p-2 border border-gray-300 rounded"
                 value={editedItem.title}
                 onChange={(e) => handleInputChange(e, "title")}
               />
             </div>
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">PPM</span>
+
               <input
                 type="text"
-                placeholder="Price"
+                placeholder="Price Per Minute"
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.price}
-                onChange={(e) => handleInputChange(e, "price")}
+                onChange={(e) => {
+                  handleInputChange(e, "price")
+                  handleInputChange(e, "count")
+                }
+
+                }
               />
             </div>
-            {/* <div className="lg:w-1/4 mb-2 lg:pr-4">
+            {/* <div className="w-full mb-2 lg:pr-4">
               <input
                 type="text"
                 placeholder="Previous Price"
@@ -284,55 +295,67 @@ const Admin3DComponent = () => {
                 onChange={(e) => handleInputChange(e, "previousPrice")}
               />
             </div> */}
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">Image 1</span>
+
               <input
                 type="text"
-                placeholder="Image 1"
+                placeholder="https://www.image-example.com"
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.image1}
                 onChange={(e) => handleInputChange(e, "image1")}
               />
             </div>
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">Image 2</span>
+
               <input
                 type="text"
-                placeholder="Image 2"
+                placeholder="https://www.image-example.com"
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.image2}
                 onChange={(e) => handleInputChange(e, "image2")}
               />
             </div>
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">Image 3</span>
+
               <input
                 type="text"
-                placeholder="Image 3"
+                placeholder="https://www.image-example.com"
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.image3}
                 onChange={(e) => handleInputChange(e, "image3")}
               />
             </div>
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">Description</span>
+
               <input
                 type="text"
-                placeholder="Description"
+                placeholder="Print 3d shapes with X material"
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.description}
                 onChange={(e) => handleInputChange(e, "description")}
               />
             </div>
-             <div className="lg:w-1/4 mb-2 lg:pr-4">
+            {/* <div className="w-full mb-2 lg:pr-4">
+             <span className="text-sm font-bold my-2 -ml-2">Count</span>
+
               <input
                 type="text"
-                placeholder="Per Minute"
+                placeholder="Price Per Minute"
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.count}
                 onChange={(e) => handleInputChange(e, "count")}
               />
-            </div> 
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+            </div>   */}
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">Printing Type</span>
+
               <input
                 type="text"
-                placeholder="Brand"
+                placeholder="Prototype 3d"
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.brand}
                 onChange={(e) => handleInputChange(e, "brand")}
