@@ -14,7 +14,7 @@ const WhatsApp = () => {
   return (
     <>
       <div
-        className="fixed right-4 bottom-14 z-50 cursor-pointer"
+        className="fixed right-4 bottom-14 wobble-hor-bottom z-50 cursor-pointer"
         onClick={openWhatsApp}
       >
         <Image
