@@ -20,6 +20,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import EmptyCard from "@/assets/empty.png"
 import VodafoneCash from "./VodafoneCash";
 import VodafoneIcon from '@/assets/vodafoneIcon.png';
+import emptyCardImg from '@/assets/OIP.jpeg';
 import { json } from "stream/consumers";
 import CashOnDelivery from "./CashOnDeliver";
 const Cart = () => {
@@ -188,132 +189,142 @@ const Cart = () => {
         </div>
       </div>
       <div className="">
-      <div className="grid -mx-4  lg:grid-cols-2">
-        <div className="px-10 pt-8">
-          <p className="text-xl font-medium">Order Summary</p>
-          <p className="text-gray-400">Check your items. And select a suitable payment method.</p>
-          <div className="max-h-[300px] overflow-y-auto mt-8 space-y-3 rounded-lg border bg-white px-2 sm:px-6">
-            {productData?.map((item: ProductType, i) => (
-              <div key={item?.id} className={`flex  items-center ${(i + 1) === productData.length ? "" : "border-b"} rounded-lg bg-white sm:flex-row`}>
+        <div className="grid -mx-4  lg:grid-cols-2">
+          <div className="px-10 pt-8">
+            <p className="text-xl font-medium">Order Summary</p>
+            <p className="text-gray-400">Check your items. And select a suitable payment method.</p>
+            <div className="max-h-[300px] overflow-y-auto mt-8 space-y-3 rounded-lg border bg-white px-2 sm:px-6">
+              
+              {productData.length ? productData?.map((item: ProductType, i) => (
+                <div key={item?.id} className={`flex  items-center ${(i + 1) === productData.length ? "" : "border-b"} rounded-lg bg-white sm:flex-row`}>
 
-                <img className="m-2 w-12 h-12 sm:h-24 sm:w-28 rounded-md border object-cover object-center" src={item.image1} alt="" />
-                <div className="flex w-full flex-col px-4 py-4">
-                  <span className="text-xs sm:text-sm font-semibold">{item.title}</span>
-                  <div className="text-xs sm:text-sm flex items-center gap-1">
+                  <img className="m-2 w-12 h-12 sm:h-24 sm:w-28 rounded-md border object-cover object-center" src={item.image1} alt="" />
+                  <div className="flex w-full flex-col px-4 py-4">
+                    <span className="text-xs sm:text-sm font-semibold">{item.title}</span>
+                    <div className="text-xs sm:text-sm flex items-center gap-1">
+                      {
+                        item.price !== item.previousPrice ? <del className="text-xs float-right text-gray-400"><FormattedPrice amount={item.previousPrice} /></del>
+                          : null
+                      }
+                      <p className="text-xs sm:text-sm md:text-lg font-bold"><FormattedPrice amount={item.price} /></p>
+                    </div>
                     {
-                      item.price !== item.previousPrice ? <del className="text-xs float-right text-gray-400"><FormattedPrice amount={item.previousPrice} /></del>
+                      item.price > item.previousPrice ? <span className="font-bold text-sm">Save: {calculatePercentage(item?.price, item?.previousPrice)}%</span>
+
                         : null
                     }
-                    <p className="text-xs sm:text-sm md:text-lg font-bold"><FormattedPrice amount={item.price} /></p>
+
+                    <span className={`text-xs sm:text-sm  mt-1 ${item.quantity > 1 ? 'visible text-sm font-bold text-blue-400' : 'invisible'}`}>{item.price}* {item.quantity} = <FormattedPrice amount={item.price * item.quantity} /></span>
+
+
                   </div>
-                  {
-                    item.price !== item.previousPrice ? <span className="font-bold text-sm">Save: {calculatePercentage(item?.price, item?.previousPrice)}%</span>
-
-                      : null
-                  }
-
-                  <span className={`text-xs sm:text-sm  mt-1 ${item.quantity > 1 ? 'visible text-sm font-bold text-blue-400' : 'invisible'}`}>{item.price}* {item.quantity} = <FormattedPrice amount={item.price * item.quantity} /></span>
-
-
+                  <div className="flex flex-col items-center mx-2">
+                    <span className=" rounded-md hover:border-zinc-800 cursor-pointer duration-200 inline-flex items-center justify-center">
+                      <ChevronUp
+                        onClick={() => {
+                          dispatch(increaseQuantity(item)),
+                            toast.success(`${item?.title} quantity added`);
+                        }}
+                        className="w-4 h-4"
+                      />
+                    </span>
+                    <span className="text-sm font-semibold">{item?.quantity}</span>
+                    {/* <span className="font-semibold">{productQuantity}</span> */}
+                    <span className=" rounded-md hover:border-zinc-800 cursor-pointer duration-200 inline-flex items-center justify-center">
+                      <ChevronDown
+                        onClick={() => handleDecreasement(item)
+                        }
+                        className="w-4 h-4"
+                      />
+                    </span>
+                  </div>
+                  <X
+                    onClick={() => {
+                      dispatch(deleteProduct(item)),
+                        toast.success(
+                          `${item?.title} is removed from basket!`
+                        );
+                    }}
+                    className="w-8 h-8 hover:text-red-600 cursor-pointer duration-200"
+                  />
                 </div>
-                <div className="flex flex-col items-center mx-2">
-                  <span className=" rounded-md hover:border-zinc-800 cursor-pointer duration-200 inline-flex items-center justify-center">
-                    <ChevronUp
-                      onClick={() => {
-                        dispatch(increaseQuantity(item)),
-                          toast.success(`${item?.title} quantity added`);
-                      }}
-                      className="w-4 h-4"
-                    />
-                  </span>
-                  <span className="text-sm font-semibold">{item?.quantity}</span>
-                  {/* <span className="font-semibold">{productQuantity}</span> */}
-                  <span className=" rounded-md hover:border-zinc-800 cursor-pointer duration-200 inline-flex items-center justify-center">
-                    <ChevronDown
-                      onClick={() => handleDecreasement(item)
-                      }
-                      className="w-4 h-4"
-                    />
-                  </span>
-                </div>
-                <X
-                  onClick={() => {
-                    dispatch(deleteProduct(item)),
-                      toast.success(
-                        `${item?.title} is removed from basket!`
-                      );
-                  }}
-                  className="w-8 h-8 hover:text-red-600 cursor-pointer duration-200"
-                />
+
+              ))
+            : <div className="text-xs sm:text-base flex flex-col py-5 font-bold items-center justify-center">
+              <Image src={emptyCardImg}
+              width={150}
+              height={150} 
+              alt="empty card img"/>
+              Your Cart is Empty</div>}
+
+            </div>
+            <div className="flex items-center justify-between my-4">
+              <span className="text-gray-400">Total items: {productData.length}</span>
+              {
+                productData.length &&
+                <button
+                  onClick={handleReset}
+                  className="bg-zinc-950 text-zinc-200 w-24 py-2 rounded-md uppercase text-xs font-semibold hover:bg-red-700 hover:text-white duration-200"
+                >
+                  Reset Cart
+                </button>
+              }
+            </div>
+
+            <p className="mt-8 text-lg font-medium">Payment Methods</p>
+            <form className="mt-5 grid gap-6">
+
+              <div className="relative" onClick={() => setCurrentMethod('vodafoneCash')} >
+                <input className="peer hidden" id="radio_2" type="radio" name="radio" />
+                <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+                <label className="items-center peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_2">
+                  <Image className="h-[25px] w-[25px]" alt="vodafone cash" src={VodafoneIcon} width={25} height={25} />
+                  <div className="ml-5">
+                    <span className="mt-2 font-semibold">Vodafone Cash</span>
+                    <p className="text-slate-500 text-sm leading-6">Pay after receiving your order</p>
+                  </div>
+                </label>
               </div>
-
-            ))}
-
+              <div className="relative" onClick={() => setCurrentMethod('cashOnDelivery')} >
+                <input className="peer hidden" id="radio_3" type="radio" name="radio" />
+                <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+                <label className="items-center peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_3">
+                  <PackageOpen />
+                  <div className="ml-5">
+                    <span className="mt-2 font-semibold">Cash On Delivery</span>
+                    <p className="text-slate-500 text-sm leading-6">Pay after receiving your order</p>
+                  </div>
+                </label>
+              </div>
+              <div className="relative"
+                onClick={handleCheckout}
+              >
+                <input className="peer hidden" id="radio_1" type="radio" name="radio" />
+                <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+                <label className="items-center peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_1">
+                  <CreditCard className="" />
+                  <div className="ml-5">
+                    <span className="mt-2 font-semibold">Cards</span>
+                    <p className="text-slate-500 text-sm leading-6">Debit & Credit Cards</p>
+                  </div>
+                </label>
+              </div>
+            </form>
           </div>
-          <div className="flex items-center justify-between my-4">
-            <span className="text-gray-400">Total items: {productData.length}</span>
-            <button
-              onClick={handleReset}
-              className="bg-zinc-950 text-zinc-200 w-24 py-2 rounded-md uppercase text-xs font-semibold hover:bg-red-700 hover:text-white duration-200"
-            >
-              Reset Cart
-            </button>
-          </div>
+          {currentMethod === 'vodafoneCash' ?
+            <VodafoneCash totalAmt={totalAmt} isVodafoneCashOpened={isVodafoneCashOpened} setIsVodafoneCashOpened={setIsVodafoneCashOpened} />
+            : currentMethod === 'cashOnDelivery' ?
+              <CashOnDelivery rowPrice={rowPrice} totalAmt={totalAmt} isCashOnDeliveryOpened={isCashOnDeliveryOpened} setCashOnDeliveryOpened={setIsCashOnDeliveryOpened} />
+              : <div
+                className="flex gap-2 bg-white items-center justify-center flex-col pt-8 mt-8 bg-gray-50 lg:mt-0"
 
-          <p className="mt-8 text-lg font-medium">Payment Methods</p>
-          <form className="mt-5 grid gap-6">
-
-            <div className="relative" onClick={() => setCurrentMethod('vodafoneCash')} >
-              <input className="peer hidden" id="radio_2" type="radio" name="radio" />
-              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-              <label className="items-center peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_2">
-                <Image className="h-[25px] w-[25px]" alt="vodafone cash" src={VodafoneIcon} width={25} height={25} />
-                <div className="ml-5">
-                  <span className="mt-2 font-semibold">Vodafone Cash</span>
-                  <p className="text-slate-500 text-sm leading-6">Pay after receiving your order</p>
-                </div>
-              </label>
-            </div>
-            <div className="relative" onClick={() => setCurrentMethod('cashOnDelivery')} >
-              <input className="peer hidden" id="radio_3" type="radio" name="radio" />
-              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-              <label className="items-center peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_3">
-                <PackageOpen />
-                <div className="ml-5">
-                  <span className="mt-2 font-semibold">Cash On Delivery</span>
-                  <p className="text-slate-500 text-sm leading-6">Pay after receiving your order</p>
-                </div>
-              </label>
-            </div>
-            <div className="relative"
-              onClick={handleCheckout}
-            >
-              <input className="peer hidden" id="radio_1" type="radio" name="radio" />
-              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-              <label className="items-center peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_1">
-                <CreditCard className="" />
-                <div className="ml-5">
-                  <span className="mt-2 font-semibold">Cards</span>
-                  <p className="text-slate-500 text-sm leading-6">Debit & Credit Cards</p>
-                </div>
-              </label>
-            </div>
-          </form>
+              >
+                <span className={`animate-spin`}><RefreshCw size={25} /></span>
+                <p>Wait, You will be redirected to payment page</p>
+              </div>}
+          {/* */}
         </div>
-        {currentMethod === 'vodafoneCash' ?
-          <VodafoneCash totalAmt={totalAmt} isVodafoneCashOpened={isVodafoneCashOpened} setIsVodafoneCashOpened={setIsVodafoneCashOpened} />
-          : currentMethod === 'cashOnDelivery' ?
-            <CashOnDelivery rowPrice={rowPrice} totalAmt={totalAmt} isCashOnDeliveryOpened={isCashOnDeliveryOpened} setCashOnDeliveryOpened={setIsCashOnDeliveryOpened} />
-            : <div
-              className="flex gap-2 bg-white items-center justify-center flex-col pt-8 mt-8 bg-gray-50 lg:mt-0"
-
-            >
-              <span className={`animate-spin`}><RefreshCw size={25} /></span>
-              <p>Wait, You will be redirected to payment page</p>
-            </div>}
-        {/* */}
       </div>
-</div>
     </>
   );
 };
