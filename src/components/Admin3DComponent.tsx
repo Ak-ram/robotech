@@ -80,7 +80,7 @@ const Admin3DComponent = () => {
       !editedItem.id ||
       !editedItem.title ||
       !editedItem.price ||
-      !editedItem.previousPrice ||
+      // !editedItem.previousPrice ||
       !editedItem.description ||
       !editedItem.count ||
       !editedItem.image1 ||
@@ -275,7 +275,7 @@ const Admin3DComponent = () => {
                 onChange={(e) => handleInputChange(e, "price")}
               />
             </div>
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+            {/* <div className="lg:w-1/4 mb-2 lg:pr-4">
               <input
                 type="text"
                 placeholder="Previous Price"
@@ -283,7 +283,7 @@ const Admin3DComponent = () => {
                 value={editedItem.previousPrice}
                 onChange={(e) => handleInputChange(e, "previousPrice")}
               />
-            </div>
+            </div> */}
             <div className="lg:w-1/4 mb-2 lg:pr-4">
               <input
                 type="text"
