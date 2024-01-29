@@ -43,7 +43,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   return (
     <div className="flex-1">
       <div className="container max-w-4xl m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-5 mx-auto">
-        {products && products.slice(perPage.start,perPage.end)?.map((item) => (
+        {products ? products.slice(perPage.start, perPage.end)?.map((item) => (
 
           <div
             key={`${item.id}_${item.title}`}
@@ -89,7 +89,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 />
               </svg>
               {
-                item.price > item.previousPrice && calculatePercentage(item?.price, item?.previousPrice)?
+                item.price > item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
                   <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-xs md:text-sm font-medium text-white">
                     {calculatePercentage(item?.price, item?.previousPrice)}% OFF
                   </span>
@@ -130,7 +130,6 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       onClick={() => {
                         dispatch(addToCart(item));
                         toast.success(`${item?.title} is added to Cart!`);
-                        handleStock();
                       }}
                       className="w-full sm:w-fit justify-center flex items-center gap-1 md:text-base uppercase font-semibold text-white bg-designColor py-1 sm:py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
                     >
@@ -160,28 +159,27 @@ const Product = ({ products, prefix, categoryName }: Item) => {
             </div>
           </div>
 
-        )):<Loading/>}
+        )) : <Loading />}
       </div>
-      <div className={`${products?.length > 9 ?'block':'hidden'} flex justify-between mt-4`}>
 
-        ))}
-        
-      </div>
-      <div className="flex justify-between mt-4">
-        <button
-          className={`${perPage?.start === 0 ? 'cursor-not-allowed':''} text-sm bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded`}
-          onClick={handlePrev}
-          disabled={perPage.start === 0}
-        >
-          Prev
-        </button>
-        <button
-          className={`${perPage?.end >= products?.length ? 'cursor-not-allowed':''} text-sm bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded`}
-          onClick={handleNext}
-          disabled={perPage?.end >= products?.length}
-        >
-          Next
-        </button>
+      <div className={`${products?.length > 9 ? 'flex' : 'hidden'}  justify-between mt-4`}>
+
+        <div className="flex justify-between mt-4">
+          <button
+            className={`${perPage?.start === 0 ? 'cursor-not-allowed' : ''} text-sm bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded`}
+            onClick={handlePrev}
+            disabled={perPage.start === 0}
+          >
+            Prev
+          </button>
+          <button
+            className={`${perPage?.end >= products?.length ? 'cursor-not-allowed' : ''} text-sm bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded`}
+            onClick={handleNext}
+            disabled={perPage?.end >= products?.length}
+          >
+            Next
+          </button>
+        </div>
       </div>
       <Toaster
         position="bottom-right"
