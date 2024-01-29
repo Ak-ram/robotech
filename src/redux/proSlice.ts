@@ -24,8 +24,8 @@ export const proSlice = createSlice({
         (item: ProductType) => item?.id === action.payload.id && item?.title === action.payload.title
       );
 
+      console.log('exist',action.payload)
       if (existingProduct) {
-        console.log('exist',existingProduct)
         existingProduct.quantity += action.payload.quantity;
       } else {
         state.productData.push(action.payload);
