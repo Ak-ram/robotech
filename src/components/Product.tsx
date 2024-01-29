@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToFavorite } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { calculatePercentage } from "@/helpers";
+import Loading from "./Loading";
 
 interface Item {
   products: ProductType[];
@@ -41,7 +42,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   return (
     <div className="flex-1">
       <div className="container max-w-4xl m-auto flex flex-wrap items-start justify-start grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-5 mx-auto">
-        {products && products.slice(perPage.start,perPage.end)?.map((item) => (
+        {products ? products.slice(perPage.start,perPage.end)?.map((item) => (
           <div
             key={`${item.id}_${item.title}`}
             className="relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
@@ -156,9 +157,9 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               </div>
             </div>
           </div>
-        ))}
+        )):<Loading/>}
       </div>
-      <div className="flex justify-between mt-4">
+      <div className={`${products?.length > 9 ?'block':'hidden'} flex justify-between mt-4`}>
         <button
           className={`${perPage?.start === 0 ? 'cursor-not-allowed':''} text-sm bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded`}
           onClick={handlePrev}
