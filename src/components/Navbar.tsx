@@ -9,6 +9,7 @@ import { navigation } from "@/constants/data";
 import { useSelector } from "react-redux";
 import { ProductType, StateProps } from "../../type";
 import FormattedPrice from './FormattedPrice';
+import WhatsApp from './WhatsApp';
 
 // Define the type for product items
 
@@ -69,7 +70,7 @@ const Navbar = () => {
           <div className='border-l border-r px-3 hidden md:flex items-center text-xs gap-2 text-white/80'>
             <PhoneCall className='text-white/80 md:w-6 md:h-6' />
             <div className='flex flex-col gap-1'>
-              <span><span className='font-bold  text-white'>Support </span>(+20) 11 0207 1544</span>
+              <span><span className='font-bold  text-white'>Support </span>(+20) 11 0207 1544 </span>
               <span>robotechspace8@gmail.com</span>
             </div>
           </div>
