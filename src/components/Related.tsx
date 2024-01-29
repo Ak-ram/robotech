@@ -7,7 +7,7 @@ const Related = ({ prefix, products, product }) => {
 
     useEffect(() => {
         // Use filter to create a new array of products excluding the current product
-        const filteredProducts = products.filter((item:ProductType) => item?.id !== product?.id);
+        const filteredProducts = products && products?.filter((item:ProductType) => item?.id !== product?.id);
         setFilteration(filteredProducts);
     }, [product, products]);
 

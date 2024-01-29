@@ -19,6 +19,7 @@ const Admin3DComponent = () => {
     image2: "",
     image3: "",
     brand: "",
+    quantity: 1,
   });
 
   useEffect(() => {
@@ -42,11 +43,12 @@ const Admin3DComponent = () => {
       price: "",
       previousPrice: 0,
       description: "",
-      count: 0,
+      // count: 0,
       image1: "",
       image2: "",
       image3: "",
       brand: "",
+      quantity: 1,
     });
   };
 
@@ -173,9 +175,9 @@ const Admin3DComponent = () => {
                 {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Description
                 </th> */}
-                {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  Count
-                </th> */}
+                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Per Minute
+                </th> 
                 {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Brand
                 </th> */}
@@ -202,6 +204,9 @@ const Admin3DComponent = () => {
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     <img src={item.image1} width="70" />
                   </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    {item.count}
+                  </td>
                   {/* <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     <img src={item.image2} width="70" />
                   </td>
@@ -210,9 +215,6 @@ const Admin3DComponent = () => {
                   </td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     {item.description}
-                  </td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                    {item.count}
                   </td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     {item.brand}
@@ -318,15 +320,15 @@ const Admin3DComponent = () => {
                 onChange={(e) => handleInputChange(e, "description")}
               />
             </div>
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
+             <div className="lg:w-1/4 mb-2 lg:pr-4">
               <input
                 type="text"
-                placeholder="Count"
+                placeholder="Per Minute"
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.count}
                 onChange={(e) => handleInputChange(e, "count")}
               />
-            </div>
+            </div> 
             <div className="lg:w-1/4 mb-2 lg:pr-4">
               <input
                 type="text"

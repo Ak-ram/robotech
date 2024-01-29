@@ -89,7 +89,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 />
               </svg>
               {
-                item.price > item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
+                item.price < item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
                   <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-xs md:text-sm font-medium text-white">
                     {calculatePercentage(item?.price, item?.previousPrice)}% OFF
                   </span>
@@ -124,7 +124,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 <FormattedPrice amount={item?.price} />
               </p>
               <div className="text-xs md:text-base flex items-center justify-between mt-2">
-                {item?.count > 0 ? (
+                {item?.count > 0 || prefix === 'print' ? (
                   <>
                     <button
                       onClick={() => {
@@ -151,10 +151,15 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                     Out of stock
                   </span>
                 )}
-                <span className="hidden sm:flex text-xs flex-col items-center justify-center">
-                  <b className="text-designColor">{item?.count}</b> Pieces in
-                  stock.
-                </span>
+                {
+                  item?.count > 0 && prefix !== 'print' ? <span className="hidden sm:flex text-xs flex-col items-center justify-center">
+                    <b className="text-designColor">{item?.count}</b> Pieces in
+                    stock.
+                  </span> :  <span className="hidden sm:flex text-xs flex-col items-center justify-center">
+                    <b className="text-designColor"><FormattedPrice amount={item.count}/></b> Per Minute.
+                  </span> 
+                }
+
               </div>
             </div>
           </div>

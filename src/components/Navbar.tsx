@@ -35,7 +35,6 @@ const Navbar = () => {
     });
     setTotalAmt(amt);
     setRowPrice(rowAmt);
-    console.log(productData)
   }, [productData]);
 
 
