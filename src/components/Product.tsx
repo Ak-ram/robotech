@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
@@ -27,7 +27,9 @@ const Product = ({ products, prefix, categoryName }: Item) => {
     return favoriteData.some((favoriteItem) => favoriteItem.id === productId);
   };
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    setPerPage({ start: 0, end: 9 });
+  }, [categoryName])
   const handlePrev = () => {
     const newStart = Math.max(0, perPage.start - 9);
     const newEnd = newStart + 9;

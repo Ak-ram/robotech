@@ -83,6 +83,7 @@ function FilterableProducts({ categories }) {
       } catch (error) {
         console.error('Error fetching products:', error);
       }
+      
     };
 
     if (typeof window !== 'undefined') {
