@@ -27,7 +27,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
     return favoriteData.some((favoriteItem) => favoriteItem.id === productId);
   };
   const dispatch = useDispatch();
-  const handleStock = () => { };
+
   const handlePrev = () => {
     const newStart = Math.max(0, perPage.start - 9);
     const newEnd = newStart + 9;
@@ -39,10 +39,12 @@ const Product = ({ products, prefix, categoryName }: Item) => {
     const newEnd = Math.min(products.length, perPage.end + 9);
     setPerPage({ start: newStart, end: newEnd });
   };
+
   return (
     <div className="flex-1">
-      <div className="container max-w-4xl m-auto flex flex-wrap items-start justify-start grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-5 mx-auto">
-        {products ? products.slice(perPage.start,perPage.end)?.map((item) => (
+      <div className="container max-w-4xl m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-5 mx-auto">
+        {products && products.slice(perPage.start,perPage.end)?.map((item) => (
+
           <div
             key={`${item.id}_${item.title}`}
             className="relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
@@ -157,9 +159,15 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               </div>
             </div>
           </div>
+
         )):<Loading/>}
       </div>
       <div className={`${products?.length > 9 ?'block':'hidden'} flex justify-between mt-4`}>
+
+        ))}
+        
+      </div>
+      <div className="flex justify-between mt-4">
         <button
           className={`${perPage?.start === 0 ? 'cursor-not-allowed':''} text-sm bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded`}
           onClick={handlePrev}
