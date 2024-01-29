@@ -6,7 +6,7 @@ const page = async () => {
   return (
     <Container className="py-10">
       <div className="border-b-[1px] border-b-zinc-400 pb-4 flex items-center justify-between">
-        <h2 className="text-2xl font-bold">3D print</h2>
+        <h2 className="text-2xl font-bold">Printing</h2>
         <p>Bring your ideas to life.</p>
       </div>
       <PrintServices/>

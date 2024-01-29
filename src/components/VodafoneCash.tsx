@@ -61,7 +61,7 @@ const VodafoneCash = ({ totalAmt, isVodafoneCashOpened, setIsVodafoneCashOpened 
                                 <p className="text-sm sm:text-base">
                                     Send Screenshot & &quot;<FormattedPrice amount={totalAmt} />&quot; to the following Vodafone Cash number:{" "}
                                     <span className="items-center justify-start gap-2">
-                                        <span>01066745733</span>
+                                        <strong>01066745733</strong>
                                         <span className="cursor-pointer" onClick={() => {
                                             copyToClipboard("01066745733");
                                         }}><Copy className="m-0 inline-block ml-2" size={16} /></span>
