@@ -253,192 +253,229 @@ const AdminCourses = () => {
                         {editIndex === -1 ? "Add New Item" : "Edit Item"}
                     </h2>
                     <div className="flex flex-col lg:flex-row mb-2 lg:pr-4 flex-wrap">
-                        <div className="lg:w-1/4  mb-2 lg:pr-4">
+                        <div className="w-full  mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">ID</span>
+
                             <input
                                 type="text"
-                                placeholder="ID"
+                                placeholder="5723"
                                 className="w-full p-2 border border-gray-300 rounded"
                                 value={editedItem.id}
                                 onChange={(e) => handleInputChange(e, "id")}
                                 required
                             />
                         </div>
-                        <div className="lg:w-1/4  mb-2 lg:pr-4">
+                        <div className="w-full  mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Title</span>
+
                             <input
                                 required
                                 type="text"
-                                placeholder="Title"
+                                placeholder="Arduino Workshop"
                                 className="w-full p-2 border border-gray-300 rounded"
                                 value={editedItem.title}
                                 onChange={(e) => handleInputChange(e, "title")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                            <span className="text-sm font-bold my-2 -ml-2">Price</span>
                             <input
                                 required
                                 type="text"
-                                placeholder="Price"
+                                placeholder="1000"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.price}
                                 onChange={(e) => handleInputChange(e, "price")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Previous Price</span>
+
                             <input
                                 required
                                 type="text"
-                                placeholder="Previous Price"
+                                placeholder="1400"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.previousPrice}
                                 onChange={(e) => handleInputChange(e, "previousPrice")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Image Poster</span>
+
                             <input
                                 required
                                 type="text"
-                                placeholder="Poster"
+                                placeholder="https://www.image-example.com"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.image1}
                                 onChange={(e) => handleInputChange(e, "image1")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Description</span>
+
                             <input
                                 required
                                 type="text"
-                                placeholder="Description"
+                                placeholder="Learn what is arduino and how to develop it..."
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.description}
                                 onChange={(e) => handleInputChange(e, "description")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Video Sample</span>
+
                             <input
 
                                 type="text"
-                                placeholder="Video"
+                                placeholder="https://www.your-video.com"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.video}
                                 onChange={(e) => handleInputChange(e, "video")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Rate</span>
+
                             <input
                                 type="string"
-                                placeholder="Rate"
+                                placeholder="NO. from 1 to 5"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.rate}
                                 onChange={(e) => handleInputChange(e, "rate")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Students Enrolled</span>
+
                             <input
                                 type="text"
-                                placeholder="Students Enrolled"
+                                placeholder="NO. of Enrolled Students; ex: 210 "
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.studentsEnrolled}
                                 onChange={(e) => handleInputChange(e, "studentsEnrolled")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Is Enrollment Open ?</span>
+
                             <input
                                 required
                                 type="text"
-                                placeholder="Enrollment Open"
+                                placeholder="open or close"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.enrollmentOpen}
                                 onChange={(e) => handleInputChange(e, "enrollmentOpen")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Enrollment Link</span>
+
                             <input
                                 required
                                 type="text"
-                                placeholder="Enrollment Link"
+                                placeholder="Link to you registeration form"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.enrollmentLink}
                                 onChange={(e) => handleInputChange(e, "enrollmentLink")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Instructor Name</span>
                             <input
                                 required
                                 type="text"
-                                placeholder="Instructor"
+                                placeholder="JOE DOE M."
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.instructor}
                                 onChange={(e) => handleInputChange(e, "instructor")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Instructor Info</span>
+
                             <input
                                 type="text"
-                                placeholder="Instructor Info"
+                                placeholder="More about the Instructor"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.instructor_info}
                                 onChange={(e) => handleInputChange(e, "instructor_info")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Course Duration in weeks</span>
+
                             <input
                                 type="text"
-                                placeholder="Duration"
+                                placeholder="5"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.duration}
                                 onChange={(e) => handleInputChange(e, "duration")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Expected Start Date</span>
+
                             <input
                                 type="text"
-                                placeholder="Start Date"
+                                placeholder="1-3-2026"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.startDate}
                                 onChange={(e) => handleInputChange(e, "startDate")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Category</span>
                             <input
                                 type="text"
-                                placeholder="Categorye"
+                                placeholder="Design"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.category}
                                 onChange={(e) => handleInputChange(e, "category")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Course Level</span>
+
                             <input
                                 type="text"
-                                placeholder="Level"
+                                placeholder="Beginner or Intermediate or Advanced"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.level}
                                 onChange={(e) => handleInputChange(e, "level")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Course Map</span>
+
                             <input
                                 type="text"
-                                placeholder="Index"
+                                placeholder="Indices separated by |, ex; topic 1 | topic 2 | ..."
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.index}
                                 onChange={(e) => handleInputChange(e, "index")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">Last Updated</span>
+
                             <input
                                 type="text"
-                                placeholder="last updated"
+                                placeholder="2024"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.last_updated}
                                 onChange={(e) => handleInputChange(e, "last_updated")}
                             />
                         </div>
 
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className="w-full mb-2 lg:pr-4">
+                        <span className="text-sm font-bold my-2 -ml-2">More Details</span>
+
                             <input
                                 type="text"
-                                placeholder="More Details"
+                                placeholder="All rights reserved..."
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.more_details}
                                 onChange={(e) => handleInputChange(e, "more_details")}
