@@ -7,7 +7,7 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
-import { Gift } from "lucide-react";
+import { Check, Gift } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import Product from "@/components/Product";
@@ -144,7 +144,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                         <span className="mr-2">In Stock:</span>
                         {product?.count} Piece(s)</p>
                         : <span className="hidden sm:flex flex-col items-center justify-center">
-                          <b className="text-designColor">Price : <FormattedPrice amount={product.count} /> Per Minute.</b>
+                          <span className="text-slate-600 flex items-center"><Check size={18} /> Availability :  avilable</span>
                         </span>
                     }
 
@@ -154,8 +154,18 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
 
                   <div className="mt-10 flex lg:flex-col lg:items-start gap-4 items-center justify-between border-t border-b py-4 sm:flex-row sm:space-y-0">
                     <div className="flex items-end">
-                      <h1 className="sm:text-lg md:text-3xl font-bold"><FormattedPrice amount={(product?.price!)} /></h1>
-                      <span className="text-base">/piece</span>
+
+                      {
+                        product?.price > 0 && prefix !== 'print' ? <><h1 className="sm:text-lg md:text-3xl font-bold"><FormattedPrice amount={(product?.price!)} /></h1>
+                          <span className="text-base">/piece</span></>
+                          : <><h1 className="sm:text-lg md:text-3xl font-bold"><FormattedPrice amount={(product?.count!)} /></h1>
+                            <span className="text-base">/Minute</span></>
+                      }
+
+
+
+
+
                     </div>
 
                     <button onClick={() => {
@@ -169,13 +179,29 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                     </button>
                   </div>
 
+
+
+
                   <ul className="mt-8 space-y-2">
-                    <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                      <svg className="mr-2 block h-5 w-5 align-middle text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" className=""></path>
-                      </svg>
-                      You saved:<span className="mr-1"></span> <FormattedPrice amount={(product?.previousPrice! - product?.price!)} /> <span className="ml-1"></span> from this product.
-                    </li>
+                    {
+                      product?.price < product?.previousPrice ?
+                      <>
+                        <li className="flex items-center text-left text-sm font-medium text-gray-600">
+                          <svg className="mr-2 block h-5 w-5 align-middle text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" className=""></path>
+                          </svg>
+                          Previous Price:<span className="mr-1"></span> <FormattedPrice amount={(product?.previousPrice!)} /> <span className="ml-1"></span> from this product.
+                        </li>
+                        <li className="flex items-center text-left text-sm font-medium text-gray-600">
+                          <svg className="mr-2 block h-5 w-5 align-middle text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" className=""></path>
+                          </svg>
+                          You saved:<span className="mr-1"></span> <FormattedPrice amount={(product?.previousPrice! - product?.price!)} /> <span className="ml-1"></span> from this product.
+                        </li>
+                        
+</>
+                        : null}
+
 
                     {product?.isNew ? <li className="flex items-center text-left text-sm font-medium text-gray-600">
                       <Gift size={18} className="mr-2" />

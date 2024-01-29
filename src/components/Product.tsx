@@ -89,7 +89,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 />
               </svg>
               {
-                item.price > item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
+                item.price < item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
                   <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-xs md:text-sm font-medium text-white">
                     {calculatePercentage(item?.price, item?.previousPrice)}% OFF
                   </span>
