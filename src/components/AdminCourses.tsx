@@ -10,7 +10,7 @@ const AdminCourses = () => {
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [editedItem, setEditedItem] = useState<any>({
         id: 0,
-        poster: "",
+        image1: "",
         rate: 0,
         title: "",
         price: 0,
@@ -27,7 +27,8 @@ const AdminCourses = () => {
         level: "",
         index: [],
         last_updated: "",
-        more_details: ""
+        more_details: "",
+        quantity: 1,
     });
 
     useEffect(() => {
@@ -47,7 +48,7 @@ const AdminCourses = () => {
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
             id: 0,
-            poster: "",
+            image1: "",
             video: "",
             rate: 0,
             title: "",
@@ -65,7 +66,8 @@ const AdminCourses = () => {
             level: "",
             index: [],
             last_updated: "",
-            more_details: ""
+            more_details: "",
+            quantity: 1
         });
     };
 
@@ -97,7 +99,7 @@ const AdminCourses = () => {
         // Check for empty fields
         if (
             !editedItem.id ||
-            !editedItem.poster ||
+            !editedItem.image1 ||
             !editedItem.video ||
             !editedItem.rate ||
             !editedItem.title ||
@@ -183,7 +185,7 @@ const AdminCourses = () => {
                                 <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Title</th>
                                 <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Price</th>
                                 {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Previous Price</th> */}
-                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Poster</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">image1</th>
                                 {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Description</th> */}
                                 {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Video</th> */}
                                 {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Rate</th> */}
@@ -209,7 +211,7 @@ const AdminCourses = () => {
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.title}</td>
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.price}</td>
                                     {/* <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.previousPrice}</td> */}
-                                    <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2"><img src={item.poster} width="70" /></td>
+                                    <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2"><img src={item.image1} width="70" /></td>
                                     {/* <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.description}</td> */}
                                     {/* <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2"><video src={item.video} width={70} /></td> */}
                                     {/* <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.rate}</td>
@@ -297,8 +299,8 @@ const AdminCourses = () => {
                                 type="text"
                                 placeholder="Poster"
                                 className="p-2 w-full border border-gray-300 rounded"
-                                value={editedItem.poster}
-                                onChange={(e) => handleInputChange(e, "poster")}
+                                value={editedItem.image1}
+                                onChange={(e) => handleInputChange(e, "image1")}
                             />
                         </div>
                         <div className="lg:w-1/4 mb-2 lg:pr-4">

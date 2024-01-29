@@ -68,7 +68,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                   {course?.rate}{" "}
                 </span>
                 <div className="flex items-center justify-center">
-                  {(course?.rate ? Array(course.rate).fill(null) : []).map(
+                  {(course?.rate ? Array(+course.rate).fill(null) : []).map(
                     (_, index) => (
                       <svg
                         key={index}
@@ -131,13 +131,13 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
           </div>
           <div className="mt-10 bg-white py-2">
             <nav className="flex flex-wrap gap-4">
-              <a
-                href="#"
-                className="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out border-b-purple-600 text-purple-600"
+              <span
+                
+                className="text-bold inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out border-b-purple-600 text-purple-600"
               >
                 {" "}
                 Announcements{" "}
-              </a>
+              </span>
             </nav>
           </div>
 
