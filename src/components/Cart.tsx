@@ -261,13 +261,13 @@ const Cart = () => {
             <div className="flex items-center justify-between my-4">
               <span className="text-gray-400">Total items: {productData.length}</span>
               {
-                productData.length &&
+                productData.length ?
                 <button
                   onClick={handleReset}
                   className="bg-zinc-950 text-zinc-200 w-24 py-2 rounded-md uppercase text-xs font-semibold hover:bg-red-700 hover:text-white duration-200"
                 >
                   Reset Cart
-                </button>
+                </button>:null
               }
             </div>
 

@@ -8,6 +8,7 @@ import FormattedPrice from "./FormattedPrice";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToFavorite } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
+import { calculatePercentage } from "@/helpers";
 
 interface Item {
   products: ProductType[];
@@ -30,7 +31,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
             key={`${item.id}_${item.title}`}
             className="relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
           >
-       
+
             <Link
               href={{
                 pathname: `/id_${item?.id}`,
@@ -69,9 +70,12 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
                 />
               </svg>
-              <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-xs md:text-sm font-medium text-white">
-                39% OFF
-              </span>
+              {
+                item.price > item.previousPrice && calculatePercentage(item?.price, item?.previousPrice)?
+                  <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-xs md:text-sm font-medium text-white">
+                    {calculatePercentage(item?.price, item?.previousPrice)}% OFF
+                  </span>
+                  : null}
             </Link>
             <div className="absolute top-2 right-2 flex items-center space-x-2">
               <Heart
@@ -119,11 +123,11 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                         }}
                         className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
                       />
-                        <span className="hidden sm:inline-block text-sm">Add to Cart</span>
-                        <span className="text-xs inline-block sm:hidden">Buy</span>
+                      <span className="hidden sm:inline-block text-sm">Add to Cart</span>
+                      <span className="text-xs inline-block sm:hidden">Buy</span>
 
                     </button>
-                    
+
                   </>
                 ) : (
                   <span className="text-[10px] md:text-base uppercase font-semibold py-1 sm:px-2 rounded-sm hover:bg-opacity-80 duration-300 text-red-500 bg-red-200">
