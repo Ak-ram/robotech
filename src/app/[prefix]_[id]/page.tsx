@@ -7,7 +7,7 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
-import { Check, Gift } from "lucide-react";
+import { Banknote, Check, Gift, Wallet2 } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import Product from "@/components/Product";
@@ -187,9 +187,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                       product?.price < product?.previousPrice ?
                       <>
                         <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                          <svg className="mr-2 block h-5 w-5 align-middle text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" className=""></path>
-                          </svg>
+                          <Wallet2 size={18} className="mr-1"/>
                           Previous Price:<span className="mr-1"></span> <FormattedPrice amount={(product?.previousPrice!)} /> <span className="ml-1"></span> from this product.
                         </li>
                         <li className="flex items-center text-left text-sm font-medium text-gray-600">
