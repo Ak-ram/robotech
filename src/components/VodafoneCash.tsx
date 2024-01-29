@@ -60,7 +60,14 @@ const VodafoneCash = ({ totalAmt, isVodafoneCashOpened, setIsVodafoneCashOpened 
                                 <span className="mb-2 font-bold">Step 2</span>
                                 <p className="text-sm sm:text-base">
                                     Send Screenshot & &quot;<FormattedPrice amount={totalAmt} />&quot; to the following Vodafone Cash number:{" "}
-                                    {showNumber ? (
+                                    <span className="items-center justify-start gap-2">
+                                        <span>01066745733</span>
+                                        <span className="cursor-pointer" onClick={() => {
+                                            copyToClipboard("01066745733");
+                                        }}><Copy className="m-0 inline-block ml-2" size={16} /></span>
+
+                                    </span>
+                                    {/* {showNumber ? (
                                         <span className="items-center justify-start gap-2">
                                             <span>01066745733</span>
                                             <span className="cursor-pointer" onClick={() => {
@@ -77,7 +84,7 @@ const VodafoneCash = ({ totalAmt, isVodafoneCashOpened, setIsVodafoneCashOpened 
                                         >
                                             Show Number
                                         </button>
-                                    )}
+                                    )} */}
                                 </p>
                             </label>
                         </div>
