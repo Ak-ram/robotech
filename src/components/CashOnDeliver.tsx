@@ -84,14 +84,14 @@ const CashOnDelivery = ({ rowPrice, totalAmt, isCashOnDeliveryOpened, setCashOnD
                     </div>
 
                     <div className="mt-6 border-t border-b py-2">
-                        <div className="flex items-center justify-between">
-                            <p className="text-sm font-medium text-gray-900">Subtotal</p>
+                        {/* <div className="flex items-center justify-between">
+                            <p className="text-sm font-medium text-gray-900">Discount</p>
                             <p className="font-semibold text-gray-900"><FormattedPrice amount={rowPrice} /></p>
-                        </div>
-                        <div className="flex items-center justify-between">
+                        </div> */}
+                        {/* <div className="flex items-center justify-between">
                             <p className="text-sm font-medium text-gray-900">Discount</p>
                             <p className="font-semibold text-gray-900"><FormattedPrice amount={rowPrice - totalAmt} /></p>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="mt-6 flex items-center justify-between">
                         <p className="text-sm font-medium text-gray-900">Total</p>

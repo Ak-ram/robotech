@@ -14,14 +14,15 @@ const WhatsApp = () => {
   return (
     <>
       <div
-        className="fixed right-4 bottom-10 z-50 cursor-pointer"
+        className="fixed right-4 bottom-14 z-50 cursor-pointer"
         onClick={openWhatsApp}
       >
         <Image
-          className="animate-pulse md:w-14"
+        style={{filter: 'drop-shadow(0px 0px 6px black)'}}
+          className="md:w-14"
           src={whatsappImg}
-          width={40}
-          height={40}
+          width={50}
+          height={50}
           alt="whatsapp"
         />
       </div>

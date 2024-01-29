@@ -113,8 +113,8 @@ function FilterableProducts({ categories }) {
         <Categories setCategoryName={setCategoryName} categories={categories} />
         <div>
         <div className="mt-5 flex flex-col gap-2 items-center">
-          <h2 className="text-3xl font-semibold">Choose a category</h2>
-          <p className="text-lg text-center">
+          <h2 className="text-2xl font-bold lg:text-3xl ">Choose a Category</h2>
+          <p className="text-sm lg:text-lg text-center">
             Explore custom layouts designed for seamless electronic shopping.
           </p>
         </div>

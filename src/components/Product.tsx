@@ -3,11 +3,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
-import { Heart, ShoppingBasket, ShoppingCart } from "lucide-react";
+import { Heart, ShoppingBasket, ShoppingBasketIcon, ShoppingCart } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToFavorite } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
+import { calculatePercentage } from "@/helpers";
+import Loading from "./Loading";
 
 interface Item {
   products: ProductType[];
@@ -16,15 +18,15 @@ interface Item {
 }
 
 const Product = ({ products, prefix, categoryName }: Item) => {
+  const [perPage, setPerPage] = useState({
+    start: 0,
+    end: 9,
+  });
   const { favoriteData } = useSelector((state: StateProps) => state.pro);
   const isFavorite = (productId: any) => {
     return favoriteData.some((favoriteItem) => favoriteItem.id === productId);
   };
   const dispatch = useDispatch();
-  const [perPage, setPerPage] = useState({
-    start: 0,
-    end: 9,
-  });
 
   const handlePrev = () => {
     const newStart = Math.max(0, perPage.start - 9);
@@ -37,38 +39,17 @@ const Product = ({ products, prefix, categoryName }: Item) => {
     const newEnd = Math.min(products.length, perPage.end + 9);
     setPerPage({ start: newStart, end: newEnd });
   };
-  const handleStock = () => {};
+
   return (
     <div className="flex-1">
       <div className="container max-w-4xl m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-5 mx-auto">
         {products && products.slice(perPage.start,perPage.end)?.map((item) => (
+
           <div
             key={`${item.id}_${item.title}`}
             className="relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
           >
-            {/* <Link href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: categoryName } }}>
-            <div className="block h-[200px] bg-gray-200 aspect-w-2 aspect-h-3">
-              <img
-                src={item?.image1}
-                alt="Product image"
-                className="object-cover object-center w-full h-full group-hover:scale-105 duration-300"
-              />
-            </div>
-            <div className="block h-[200px] bg-gray-200 aspect-w-2 aspect-h-3">
-              <img
-                src={item?.image2}
-                alt="Product image"
-                className="object-cover object-center w-full h-full group-hover:scale-105 duration-300"
-              />
-            </div>
-            <div className="block h-[200px] bg-gray-200 aspect-w-2 aspect-h-3">
-              <img
-                src={item?.image}
-                alt="Product image"
-                className="object-cover object-center w-full h-full group-hover:scale-105 duration-300"
-              />
-            </div>
-          </Link> */}
+
             <Link
               href={{
                 pathname: `/id_${item?.id}`,
@@ -77,7 +58,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
+              className="relative mx-3 mt-3 flex h-20 md:h-60 overflow-hidden rounded-xl"
             >
               <img
                 className="peer  absolute top-0 right-0 h-full w-full object-contain"
@@ -93,7 +74,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               ) : null}
 
               <svg
-                className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
+                className="hidden sm:block pointer-events-none absolute inset-x-0 bottom-1 md:bottom-5 mx-auto md:text-3xl text-zinc-600  transition-opacity group-hover:animate-ping group-hover:opacity-30 "
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
                 role="img"
@@ -107,9 +88,12 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
                 />
               </svg>
-              <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-                39% OFF
-              </span>
+              {
+                item.price > item.previousPrice && calculatePercentage(item?.price, item?.previousPrice)?
+                  <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-xs md:text-sm font-medium text-white">
+                    {calculatePercentage(item?.price, item?.previousPrice)}% OFF
+                  </span>
+                  : null}
             </Link>
             <div className="absolute top-2 right-2 flex items-center space-x-2">
               <Heart
@@ -129,40 +113,57 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   dispatch(addToCart(item));
                   toast.success(`${item?.title} is added to Cart!`);
                 }}
-                className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
+                className="hidden sm:inline-block text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
               />
             </div>
             <div className="p-4">
-              <p className="whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
+              <p className="text-xs md:text-base whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
                 {item?.title}
               </p>
-              <p className="text-designColor font-semibold">
+              <p className="text-xs md:text-base text-designColor font-semibold">
                 <FormattedPrice amount={item?.price} />
               </p>
-              <div className="flex items-center justify-between mt-2">
+              <div className="text-xs md:text-base flex items-center justify-between mt-2">
                 {item?.count > 0 ? (
-                  <button
-                    onClick={() => {
-                      dispatch(addToCart(item));
-                      toast.success(`${item?.title} is added to Cart!`);
-                      handleStock();
-                    }}
-                    className="uppercase text-xs font-semibold text-white bg-designColor py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
-                  >
-                    Add to Cart
-                  </button>
+                  <>
+                    <button
+                      onClick={() => {
+                        dispatch(addToCart(item));
+                        toast.success(`${item?.title} is added to Cart!`);
+                        handleStock();
+                      }}
+                      className="w-full sm:w-fit justify-center flex items-center gap-1 md:text-base uppercase font-semibold text-white bg-designColor py-1 sm:py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
+                    >
+                      <ShoppingBasketIcon
+                        onClick={() => {
+                          dispatch(addToCart(item));
+                          toast.success(`${item?.title} is added to Cart!`);
+                        }}
+                        className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
+                      />
+                      <span className="hidden sm:inline-block text-sm">Add to Cart</span>
+                      <span className="text-xs inline-block sm:hidden">Buy</span>
+
+                    </button>
+
+                  </>
                 ) : (
-                  <span className="uppercase text-xs font-semibold py-1 px-2 rounded-sm hover:bg-opacity-80 duration-300 text-red-500 bg-red-200">
+                  <span className="text-[10px] md:text-base uppercase font-semibold py-1 sm:px-2 rounded-sm hover:bg-opacity-80 duration-300 text-red-500 bg-red-200">
                     Out of stock
                   </span>
                 )}
-                <span className="text-xs flex flex-col items-center justify-center">
+                <span className="hidden sm:flex text-xs flex-col items-center justify-center">
                   <b className="text-designColor">{item?.count}</b> Pieces in
                   stock.
                 </span>
               </div>
             </div>
           </div>
+
+        )):<Loading/>}
+      </div>
+      <div className={`${products?.length > 9 ?'block':'hidden'} flex justify-between mt-4`}>
+
         ))}
         
       </div>
