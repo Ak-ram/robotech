@@ -169,7 +169,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
       <div className={`${products?.length > 9 ? 'flex' : 'hidden'}  justify-between mt-4`}>
 
-        <div className="flex justify-between mt-4">
+        <div className="flex w-full justify-between mt-4">
           <button
             className={`${perPage?.start === 0 ? 'cursor-not-allowed' : ''} text-sm bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded`}
             onClick={handlePrev}
