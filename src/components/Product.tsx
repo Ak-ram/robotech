@@ -162,7 +162,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
         )) : <Loading />}
       </div>
 
-      <div className={`${products?.length > 9 ? 'block' : 'hidden'} flex justify-between mt-4`}>
+      <div className={`${products?.length > 9 ? 'flex' : 'hidden'}  justify-between mt-4`}>
 
         <div className="flex justify-between mt-4">
           <button
