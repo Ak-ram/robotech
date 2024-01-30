@@ -131,11 +131,15 @@ const Stats = () => {
                                                     <span className="ml-2 font-medium">{categoryInfo.categoryName.slice(0,1).toUpperCase() + categoryInfo.categoryName.slice(1,)}</span>
                                                 </td>
                                                 <td className="text-center px-6 py-4 whitespace-nowrap">{categoryInfo.quantity}</td>
-                                                <td className="text-center px-6 py-4 whitespace-nowrap">{categoryInfo.inStockLength}</td>
+                                                <td className={`${
+  categoryInfo.inStockLength >= 10 ? "text-green-500" :
+  categoryInfo.inStockLength > 5 ? 'text-orange-400' :
+  'text-yellow-500'
+} text-center px-6 py-4 whitespace-nowrap`}>{categoryInfo.inStockLength}</td>
                                                 <td className="text-center px-6 py-4 whitespace-nowrap">
                                                     <FormattedPrice amount={categoryInfo.inStockTotalPrice} />
                                                 </td>
-                                                <td className="text-center px-6 py-4 whitespace-nowrap">{categoryInfo.outStockLength}</td>
+                                                <td className={`${categoryInfo.outStockLength ? "text-red-500":""} text-center px-6 py-4 whitespace-nowrap`}>{categoryInfo.outStockLength}</td>
                                                 <td className="text-center px-6 py-4 whitespace-nowrap">
                                                     <FormattedPrice amount={categoryInfo.outStockTotalPrice} /></td>
                                             </tr>
