@@ -12,7 +12,6 @@ import AdminAbout from "./AdminAbout";
 import AdminFaq from "./AdminFaq";
 import AdminSlides from "./AdminSlides";
 import AdminAnnouncement from "./AdminAnnouncement";
-import Sidebar from "./dashboard/shared/Sidebar";
 import { BarChart, GraduationCap, HelpCircle, Key, LayoutList, Menu, Printer, SlidersHorizontal, Smile, StickyNote, X } from "lucide-react";
 import Stats from "./Stats";
 
