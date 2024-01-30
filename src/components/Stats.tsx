@@ -26,6 +26,7 @@ interface CategoryStats {
     products: any;
     outStockProducts: any;
     outStockLength: number;
+    outStockTotalPrice: number;
     //   "In Stock Price": number;
     //   "Out Stock": number;
     //   "Out Stock Price": number;
@@ -55,6 +56,8 @@ const Stats = () => {
                         products: categoryProducts,
                         outStockProducts: outStock,
                         outStockLength: outStock.length,
+                        outStockTotalPrice: outStock.map((product: ProductType) => +product?.price
+                        ).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
                     };
                 });
 
