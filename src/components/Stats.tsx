@@ -1,134 +1,99 @@
-const Stats = () => {
-    return (<>
-        <div className="flex flex-col items-center w-full max-w-screen-md p-6 pb-6 mt-10 bg-white rounded-lg shadow-xl sm:p-8">
-            <h2 className="text-xl font-bold">Monthly Revenue</h2>
-            <span className="text-sm font-semibold text-gray-500">2020</span>
-            <div className="flex items-end flex-grow w-full mt-2 space-x-2 sm:space-x-3">
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$37,500</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-8 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-6 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-16 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Jan</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$45,000</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-10 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-6 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-20 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Feb</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$47,500</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-10 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-8 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-20 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Mar</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$50,000</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-10 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-6 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-24 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Apr</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$47,500</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-10 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-8 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-20 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">May</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$55,000</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-12 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-8 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-24 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Jun</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$60,000</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-12 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-16 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-20 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Jul</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$57,500</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-12 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-10 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-24 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Aug</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$67,500</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-12 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-10 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-32 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Sep</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$65,000</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-12 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-12 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow bg-indigo-400 h-28"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Oct</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$70,000</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-8 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-8 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-40 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Nov</span>
-                </div>
-                <div className="relative flex flex-col items-center flex-grow pb-5 group">
-                    <span className="absolute top-0 hidden -mt-6 text-xs font-bold group-hover:block">$75,000</span>
-                    <div className="flex items-end w-full">
-                        <div className="relative flex justify-center flex-grow h-12 bg-indigo-200"></div>
-                        <div className="relative flex justify-center flex-grow h-8 bg-indigo-300"></div>
-                        <div className="relative flex justify-center flex-grow h-40 bg-indigo-400"></div>
-                    </div>
-                    <span className="absolute bottom-0 text-xs font-bold">Dec</span>
-                </div>
+import { Key } from "lucide-react";
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+
+const Stats=()=> {
+    const graphData = [
+        'Nov',
+        'Dec',
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'June',
+        'July',
+    ].map((i) => {
+        const revenue = 500 + Math.random() * 2000;
+        const expectedRevenue = Math.max(revenue + (Math.random() - 0.5) * 2000, 0);
+        return {
+            name: i,
+            revenue,
+            expectedRevenue,
+            sales: Math.floor(Math.random() * 500),
+        };
+    });
+    const CustomTooltip = () => (
+        <div className="rounded-xl bg-zinc-800 text-slate-400 overflow-hidden tooltip-head">
+            <div className="flex items-center justify-between p-2">
+                <div className="">Revenue</div>
+                <Key path="res-react-dash-options" className="w-2 h-2" />
             </div>
-            <div className="flex w-full mt-3">
-                <div className="flex items-center ml-auto">
-                    <span className="block w-4 h-4 bg-indigo-400"></span>
-                    <span className="ml-1 text-xs font-medium">Existing</span>
-                </div>
-                <div className="flex items-center ml-4">
-                    <span className="block w-4  h-4 bg-indigo-300"></span>
-                    <span className="ml-1 text-xs font-medium">Upgrades</span>
-                </div>
-                <div className="flex items-center ml-4">
-                    <span className="block w-4  h-4 bg-indigo-200"></span>
-                    <span className="ml-1 text-xs font-medium">New</span>
-                </div>
+            <div className="tooltip-body text-center p-3">
+                <div className="text-white font-bold">$1300.50</div>
+                <div className="">Revenue from 230 sales</div>
             </div>
         </div>
-    </>)
+    );
+    return (
+        <div className="flex p-4 h-full flex-col rounded bg-zinc-950">
+            <div className="">
+                <div className="flex items-center">
+                    <div className="font-bold text-white">Products Analysis</div>
+                    <div className="flex-grow" />
+
+                    <Key path="res-react-dash-graph-range" className="w-4 h-4" />
+                    <div className="ml-2">Last 9 Months</div>
+                    <div className="ml-6 w-5 h-5 flex justify-center items-center rounded-full icon-background">
+                        ?
+                    </div>
+                </div>
+                <div className="font-bold ml-5">Nov - July</div>
+            </div>
+
+            <div className="flex-grow">
+                {/* <ResponsiveContainer width="100%" height="100%"> */}
+                <LineChart className="mx-auto w-full" width={800} height={300} data={graphData}>
+                    <defs>
+                        <linearGradient id="paint0_linear" x1="0" y1="0" x2="1" y2="0">
+                            <stop stopColor="#6B8DE3" />
+                            <stop offset="1" stopColor="#7D1C8D" />
+                        </linearGradient>
+                    </defs>
+                    <CartesianGrid
+                        horizontal={false}
+                        strokeWidth="6"
+                        stroke="#252525"
+                    />
+                    <XAxis
+                        dataKey="name"
+                        axisLine={false}
+                        tickLine={false}
+                        tickMargin={10}
+                    />
+                    <YAxis axisLine={false} tickLine={false} tickMargin={10} />
+                    <Tooltip content={<CustomTooltip />} cursor={false} />
+                    <Line
+                        activeDot={false}
+                        type="monotone"
+                        dataKey="expectedRevenue"
+                        stroke="#242424"
+                        strokeWidth="3"
+                        dot={false}
+                        strokeDasharray="8 8"
+                    />
+                    <Line
+                        type="monotone"
+                        dataKey="revenue"
+                        stroke="url(#paint0_linear)"
+                        strokeWidth="4"
+                        dot={false}
+                    />
+                </LineChart>
+                {/* </ResponsiveContainer> */}
+            </div>
+        </div>
+    );
 }
 
-export default Stats
+
+export default Stats;

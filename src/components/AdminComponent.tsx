@@ -13,7 +13,8 @@ import AdminFaq from "./AdminFaq";
 import AdminSlides from "./AdminSlides";
 import AdminAnnouncement from "./AdminAnnouncement";
 import Sidebar from "./dashboard/shared/Sidebar";
-import { GraduationCap, HelpCircle, Key, LayoutList, Menu, Printer, SlidersHorizontal, Smile, StickyNote, X } from "lucide-react";
+import { BarChart, GraduationCap, HelpCircle, Key, LayoutList, Menu, Printer, SlidersHorizontal, Smile, StickyNote, X } from "lucide-react";
+import Stats from "./Stats";
 
 const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -35,6 +36,7 @@ const AdminComponent = () => {
     { id: 5,icon:<HelpCircle/>, label: "Faq", content: <AdminFaq /> },
     { id: 6,icon:<SlidersHorizontal/>, label: "Slides", content: <AdminSlides /> },
     { id: 7,icon:<StickyNote/>, label: "Announcement", content: <AdminAnnouncement /> },
+    { id: 8,icon:<BarChart/>, label: "Stats", content: <Stats /> },
     // Add more items as needed
   ];
 
