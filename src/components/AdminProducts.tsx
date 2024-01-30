@@ -294,13 +294,13 @@ const AdminComponent = () => {
                     onChange={handleCategoryChange}
                   />
                   <button
-                    className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                     onClick={handleAddCategory}
                   >
                     Add
                   </button>
                   <button
-                    className="ml-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                    className="ml-2 border border-red-400 text-red-500 font-bold py-2 px-4 rounded"
                     onClick={() => setToggleNewCat(true)}
                   >
                     Cancel
