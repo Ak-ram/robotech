@@ -88,8 +88,12 @@ const Stats = () => {
 
     return (
         <>
-            <div className="flex flex-col items-center min-h-screen bg-gray-900 py-10">
-                <h1 className="text-lg text-gray-400 font-medium">2020-21 Season</h1>
+            <div className="flex flex-col items-center min-h-screen py-10">
+                <h1 className="text-lg text-gray-950 font-medium">Stats For {
+
+                    new Date().toLocaleDateString('en-US', { dateStyle: 'long' })
+
+                }</h1>
                 <div className="flex w-[90%] mx-auto flex-col mt-6">
                     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -124,7 +128,7 @@ const Stats = () => {
                                                 <td className="text-center pl-4">{index + 1}</td>
                                                 <td className="text-center flex px-6 py-4 whitespace-nowrap">
                                                     <img className="w-6 h-6 rounded" src={categoryInfo.inStockProducts[0].image1} alt="" />
-                                                    <span className="ml-2 font-medium">{categoryInfo.categoryName}</span>
+                                                    <span className="ml-2 font-medium">{categoryInfo.categoryName.slice(0,1).toUpperCase() + categoryInfo.categoryName.slice(1,)}</span>
                                                 </td>
                                                 <td className="text-center px-6 py-4 whitespace-nowrap">{categoryInfo.quantity}</td>
                                                 <td className="text-center px-6 py-4 whitespace-nowrap">{categoryInfo.inStockLength}</td>
