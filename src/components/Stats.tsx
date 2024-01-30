@@ -27,9 +27,10 @@ interface CategoryStats {
     outStockProducts: any;
     outStockLength: number;
     outStockTotalPrice: number;
-    //   "In Stock Price": number;
-    //   "Out Stock": number;
-    //   "Out Stock Price": number;
+    inStockProducts: any;
+    inStockLength: number;
+    inStockTotalPrice: number;
+
 }
 
 const Stats = () => {
@@ -49,6 +50,7 @@ const Stats = () => {
                 const uniqueCategoryStats = Array.from(uniqueCategories).map(categoryName => {
                     const categoryProducts = productsList.filter((product: ProductType) => product?.category === categoryName);
                     const outStock = categoryProducts.filter((product: ProductType) => +product?.count === 0);
+                    const inStock = categoryProducts.filter((product: ProductType) => +product?.count !== 0);
 
                     return {
                         categoryName,
@@ -57,6 +59,10 @@ const Stats = () => {
                         outStockProducts: outStock,
                         outStockLength: outStock.length,
                         outStockTotalPrice: outStock.map((product: ProductType) => +product?.price
+                        ).reduce((accumulator, currentValue) => accumulator + currentValue, 0),
+                        inStockProducts: inStock,
+                        inStockLength: inStock.length,
+                        inStockTotalPrice: inStock.map((product: ProductType) => +product?.price
                         ).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
                     };
                 });
