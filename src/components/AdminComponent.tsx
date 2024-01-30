@@ -84,16 +84,15 @@ const AdminComponent = () => {
 
         {selectedItem ? (
           <div className="">
-            <span className="cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
+           
+            <div className="border-b-zinc-300 pb-2 border-b mb-2 flex items-center gap-2">
+            <span className="hover:bg-slate-300 bg-white  py-1 px-1 rounded cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
               {
                 isOpen ? <X /> : <Menu />
               }
-
-
             </span>
-            <h3 className="text-xl font-bold mb-2">
-              {selectedItem.label} Page
-            </h3>
+              <span className="bg-white hover:bg-slate-300 font-bold px-1.5 py-1 rounded">{selectedItem.label} Page</span>
+            </div>
             <div>{selectedItem.content}</div>
           </div>
         ) : (
