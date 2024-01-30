@@ -136,7 +136,7 @@ const Admin3DComponent = () => {
     <div
       className={`lg:p-3 min-h-[400px] w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}
     >
-      {!jsonArray && <h2 className="font-bold mb-4">Current 3D Print data:</h2>}
+      {!jsonArray && <h2 className="font-bold mb-4">Current Printing data:</h2>}
       <div className="mb-5 flex items-center justify-end">
         <button
           className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"

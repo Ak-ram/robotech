@@ -4,6 +4,8 @@ import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Plus, Upload } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import ImageUpload from "./ImageUpload";
+import Stats from "./Stats";
+import Loading from "./Loading";
 
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
@@ -21,7 +23,7 @@ const AdminComponent = () => {
     image1: "",
     image2: "",
     image3: "",
-    brand: "",
+    // brand: "",
     isNew: false,
     quantity: 1,
     category: selectedCat,
@@ -66,7 +68,7 @@ const AdminComponent = () => {
       image1: "",
       image2: "",
       image3: "",
-      brand: "",
+      // brand: "",
       isNew: false,
       quantity: 1,
       category: selectedCat,
@@ -104,7 +106,7 @@ const AdminComponent = () => {
       "description",
       "count",
       "image1",
-      "brand",
+      // "brand",
     ];
 
     if (requiredFields.some((field) => !editedItem[field])) {
@@ -224,6 +226,7 @@ const AdminComponent = () => {
   return (
     <>
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
+        {/* <Stats /> */}
         <div className="overflow-x-auto">
           {jsonData.length > 0 && (
             <div className="mb-5">
@@ -298,11 +301,13 @@ const AdminComponent = () => {
           )}
           {selectedSectionIndex !== null &&
             jsonData[selectedSectionIndex] &&
-            selectedCat && (
+            selectedCat ?(
               <div key={selectedSectionIndex} className="mt-5 max-w-4xl">
-                <span className="font-bold mb-4">
-                  list of {selectedCat} products
+                <span className="mb-4 text-sm">
+                 Total {selectedCat} Products: {" "}
+                  <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length}</span>
                 </span>
+               
                 <table className="min-w-full border border-gray-300 text-sm">
                   <thead>
                     <tr className="bg-zinc-800 text-white ">
@@ -426,7 +431,7 @@ const AdminComponent = () => {
                         price: 'Price',
                         previousPrice: 'Previous Price',
                         count: 'Count',
-                        brand: 'Brand',
+                        // brand: 'Brand',
                         image1: 'Image1',
                         image2: 'Image2',
                         image3: 'Image3',
@@ -466,9 +471,11 @@ const AdminComponent = () => {
                   </div>
                 )}
               </div>
-            )}
+            ):<Loading/>}
         </div>
-        {selectedCat && (
+        {selectedSectionIndex !== null &&
+            jsonData[selectedSectionIndex] &&
+            selectedCat && (
           <div className="mt-5">
             <button
               className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"

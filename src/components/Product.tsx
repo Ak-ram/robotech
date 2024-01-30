@@ -91,7 +91,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
           <div
             key={`${item.id}_${item.title}`}
-            className="relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
+            className="max-w-[300px] w-full mx-auto relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
           >
 
             <Link
@@ -102,7 +102,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="relative mx-3 mt-3 flex h-20 md:h-60 overflow-hidden rounded-xl"
+              className="relative mx-3 mt-3 flex h-52 md:h-60 overflow-hidden rounded-xl"
             >
               <img
                 className="peer  absolute top-0 right-0 h-full w-full object-contain"
