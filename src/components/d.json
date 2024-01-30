@@ -1,0 +1,115 @@
+[
+    {
+        "cnc & 3d printer parts": [
+            {
+                "id": "1",
+                "title": "NANO CNC Shield V4",
+                "price": "120",
+                "previousPrice": "150",
+                "description": "NANO CNC Shield V4",
+                "count": "2",
+                "image1": "https://3dsmart-shop.com/wp-content/uploads/2022/07/Arduino-CNC-Sheild-v3-Nano.jpg",
+                "image2": "",
+                "image3": "",
+                "brand": "cnc",
+                "isNew": false,
+                "quantity": 1,
+                "category": "cnc & 3d printer parts"
+            },
+            {
+                "id": "9",
+                "title": "UNO CNC Shield V3 Engraving Machine",
+                "price": "150",
+                "previousPrice": "0",
+                "description": "UNO CNC Shield V3 Engraving Machine",
+                "count": "01",
+                "image1": "https://free-electronic.com/wp-content/uploads/2022/02/CNC-Shield-V3-Engraving-Machine.png",
+                "image2": "",
+                "image3": "",
+                "brand": "UNO CNC Shield V3 Engraving Machine",
+                "isNew": false,
+                "quantity": 1,
+                "category": "arduino boards"
+            },
+            {
+                "id": "10",
+                "title": "RAMPS 1.4 Reprap 3D Printer Arduino Mega Shield",
+                "price": "160",
+                "previousPrice": "0",
+                "description": "RAMPS 1.4 Reprap 3D Printer Arduino Mega Shield",
+                "count": "01",
+                "image1": "https://free-electronic.com/wp-content/uploads/2022/02/RAMPS-1.4-Reprap-3D-Printer-Arduino-Mega-Shield.jpg",
+                "image2": "",
+                "image3": "",
+                "brand": "RAMPS 1.4 Reprap 3D Printer Arduino Mega Shield",
+                "isNew": false,
+                "quantity": 1,
+                "category": "cnc & 3d printer parts"
+            }
+        ],
+        "arduino boards": [
+            {
+                "id": "2",
+                "title": "Arduino Uno R3",
+                "price": "375",
+                "previousPrice": "0",
+                "description": "Arduino Uno R3",
+                "count": "0",
+                "image1": "https://free-electronic.com/wp-content/uploads/2022/11/Arduino-Uno-R3.jpg",
+                "image2": "",
+                "image3": "",
+                "brand": "Arduino",
+                "isNew": false,
+                "quantity": 1,
+                "category": "arduino boards"
+            },
+            {
+                "id": "3",
+                "title": "Arduino MEGA 2560 R3",
+                "price": "900",
+                "previousPrice": "0",
+                "description": "Arduino MEGA 2560 R3",
+                "count": "3",
+                "image1": "https://free-electronic.com/wp-content/uploads/2022/11/Arduino-MEGA-2560-R3.jpg",
+                "image2": "",
+                "image3": "",
+                "brand": "Arduino MEGA ",
+                "isNew": false,
+                "quantity": 1,
+                "category": "arduino boards"
+            }
+        ],
+        "motors & drives": [
+            {
+                "id": "26",
+                "title": "3.7V Low Noise Miniature Diaphragm Pump",
+                "price": "220",
+                "previousPrice": "0",
+                "description": "3.7V Low Noise Miniature Diaphragm Pump",
+                "count": "0",
+                "image1": "https://free-electronic.com/wp-content/uploads/2022/02/3.7V20Low20Noise20Miniature20Diaphragm20Pump.jpg",
+                "image2": "",
+                "image3": "",
+                "brand": "3.7V Low Noise Miniature Diaphragm Pump",
+                "isNew": false,
+                "quantity": 1,
+                "category": "motors & drives"
+            },
+            {
+                "id": "27",
+                "title": "Robot Car Wheel Tyre (65mm)",
+                "price": "30",
+                "previousPrice": "0",
+                "description": "Robot Car Wheel Tyre (65mm)",
+                "count": "20",
+                "image1": "https://free-electronic.com/wp-content/uploads/2022/02/Robot-Smart-Car-Wheel-Tyre-65mm.jpg",
+                "image2": "",
+                "image3": "",
+                "brand": "Robot Car Wheel Tyre (65mm)",
+                "isNew": false,
+                "quantity": 1,
+                "category": "motors & drives"
+            }
+        ]
+    }
+]

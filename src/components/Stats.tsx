@@ -1,99 +1,134 @@
-import { Key } from "lucide-react";
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import { getCategories } from "@/helpers/getCategories";
+import { getCategoryProducts } from "@/helpers/getCategoryProducts";
+import { getProducts } from "@/helpers/getProducts";
+import { useEffect, useState } from "react";
+import { ProductType } from "../../type";
 
-const Stats=()=> {
-    const graphData = [
-        'Nov',
-        'Dec',
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'June',
-        'July',
-    ].map((i) => {
-        const revenue = 500 + Math.random() * 2000;
-        const expectedRevenue = Math.max(revenue + (Math.random() - 0.5) * 2000, 0);
-        return {
-            name: i,
-            revenue,
-            expectedRevenue,
-            sales: Math.floor(Math.random() * 500),
-        };
-    });
-    const CustomTooltip = () => (
-        <div className="rounded-xl bg-zinc-800 text-slate-400 overflow-hidden tooltip-head">
-            <div className="flex items-center justify-between p-2">
-                <div className="">Revenue</div>
-                <Key path="res-react-dash-options" className="w-2 h-2" />
-            </div>
-            <div className="tooltip-body text-center p-3">
-                <div className="text-white font-bold">$1300.50</div>
-                <div className="">Revenue from 230 sales</div>
-            </div>
-        </div>
-    );
-    return (
-        <div className="flex p-4 h-full flex-col rounded bg-zinc-950">
-            <div className="">
-                <div className="flex items-center">
-                    <div className="font-bold text-white">Products Analysis</div>
-                    <div className="flex-grow" />
-
-                    <Key path="res-react-dash-graph-range" className="w-4 h-4" />
-                    <div className="ml-2">Last 9 Months</div>
-                    <div className="ml-6 w-5 h-5 flex justify-center items-center rounded-full icon-background">
-                        ?
-                    </div>
-                </div>
-                <div className="font-bold ml-5">Nov - July</div>
-            </div>
-
-            <div className="flex-grow">
-                {/* <ResponsiveContainer width="100%" height="100%"> */}
-                <LineChart className="mx-auto w-full" width={800} height={300} data={graphData}>
-                    <defs>
-                        <linearGradient id="paint0_linear" x1="0" y1="0" x2="1" y2="0">
-                            <stop stopColor="#6B8DE3" />
-                            <stop offset="1" stopColor="#7D1C8D" />
-                        </linearGradient>
-                    </defs>
-                    <CartesianGrid
-                        horizontal={false}
-                        strokeWidth="6"
-                        stroke="#252525"
-                    />
-                    <XAxis
-                        dataKey="name"
-                        axisLine={false}
-                        tickLine={false}
-                        tickMargin={10}
-                    />
-                    <YAxis axisLine={false} tickLine={false} tickMargin={10} />
-                    <Tooltip content={<CustomTooltip />} cursor={false} />
-                    <Line
-                        activeDot={false}
-                        type="monotone"
-                        dataKey="expectedRevenue"
-                        stroke="#242424"
-                        strokeWidth="3"
-                        dot={false}
-                        strokeDasharray="8 8"
-                    />
-                    <Line
-                        type="monotone"
-                        dataKey="revenue"
-                        stroke="url(#paint0_linear)"
-                        strokeWidth="4"
-                        dot={false}
-                    />
-                </LineChart>
-                {/* </ResponsiveContainer> */}
-            </div>
-        </div>
-    );
+interface Product {
+    id: string;
+    title: string;
+    price: string;
+    previousPrice: string;
+    description: string;
+    count: string;
+    image1: string;
+    image2: string;
+    image3: string;
+    brand: string;
+    isNew: boolean;
+    quantity: number;
+    category: string;
 }
 
+interface CategoryStats {
+    categoryName: string;
+    quantity: number;
+    products: any;
+    outStockProducts: any;
+    outStockLength: number;
+    //   "In Stock Price": number;
+    //   "Out Stock": number;
+    //   "Out Stock Price": number;
+}
+
+const Stats = () => {
+    const [categoryStats, setCategoryStats] = useState<CategoryStats[]>([]);
+    const [categories, setCategories] = useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const categoriesList = await getCategories();
+                setCategories(categoriesList);
+
+                const productsList = await getProducts();
+                // Assuming getProducts returns all products, not specific to a category
+                const uniqueCategories = new Set(categoriesList);
+
+                const uniqueCategoryStats = Array.from(uniqueCategories).map(categoryName => {
+                    const categoryProducts = productsList.filter((product: ProductType) => product?.category === categoryName);
+                    const outStock = categoryProducts.filter((product: ProductType) => +product?.count !== 0);
+
+                    return {
+                        categoryName,
+                        quantity: categoryProducts.length,
+                        products: categoryProducts,
+                        outStockProducts: outStock,
+                        outStockLength: outStock.length,
+                    };
+                });
+
+                setCategoryStats(uniqueCategoryStats);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        if (typeof window !== "undefined") {
+            fetchData();
+        }
+    }, []);
+
+    useEffect(() => {
+        console.log(categoryStats);
+    }, [categoryStats]);
+
+    return (
+        <>
+            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 py-10">
+                <h1 className="text-lg text-gray-400 font-medium">2020-21 Season</h1>
+                <div className="flex flex-col mt-6">
+                    <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                            <div className="shadow overflow-hidden sm:rounded-lg">
+                                <table className="min-w-full text-sm text-gray-400">
+                                    <thead className="bg-gray-800 text-xs uppercase font-medium">
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                                Category
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                                Quantity
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                                In Stock
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                                IS Price
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                                Out Stock
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                                OS Price
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    {/* <tbody className="bg-gray-800">
+                    {categoryStats.map((categoryInfo, index) => (
+                      <tr key={index} className="bg-black bg-opacity-20">
+                        <td className="pl-4">{index + 1}</td>
+                        <td className="flex px-6 py-4 whitespace-nowrap">
+                          <img className="w-6 h-6" src="https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_48x48.png" alt="" />
+                          <span className="ml-2 font-medium">{categoryInfo.categoryName}</span>
+                        </td>
+                         <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.Quantity}</td>
+                         <td className="px-6 py-4 whitespace-nowrap">{categoryInfo["In Stock"]}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo["In Stock Price"]}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo["Out Stock"]}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo["Out Stock Price"]}</td>  
+                      </tr>
+                    ))}
+                  </tbody> */}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
 
 export default Stats;
