@@ -306,26 +306,24 @@ const AdminComponent = () => {
             jsonData[selectedSectionIndex] &&
             selectedCat ? (
             <div key={selectedSectionIndex} className="mt-5">
-             
-              {selectedSectionIndex !== null &&
-                jsonData[selectedSectionIndex] &&
-                selectedCat && (
-                  <div className="mt-5">
-                    <button
-                      className="flex text-sm items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                      onClick={handleAddItemClick}
-                    >
-                      <Plus size={18} className="mr-1" />
-                      Add Item
-                    </button>
-                  </div>
-                )}
-                <span className="mt-4 block text-end text-sm">
-                Count: {" "}
+
+              <span className="my-4 block flex items-center justify-end text-end text-sm">
+              Count: {" "}
                 <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length} Product(s)</span>
+
+                {selectedSectionIndex !== null &&
+                  jsonData[selectedSectionIndex] &&
+                  selectedCat && (
+                    <span className="inline-flex items-center justify-end w-fit mr-2 ml-3 py-2 px-3 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded"> 
+                      <Plus className="inline-block w-5 h-5"
+                        onClick={handleAddItemClick} size={20} />
+                        New
+                     </span>
+
+                  )}
               </span>
               <div className="flex w-full  flex-col gap-3 border-2 rounded border-zinc-400">
-              
+
                 <div
                   className="flex items-center text-white bg-zinc-900 px-5 py-3 rounded "
                 >
