@@ -303,10 +303,11 @@ const AdminComponent = () => {
             jsonData[selectedSectionIndex] &&
             selectedCat ?(
               <div key={selectedSectionIndex} className="mt-5 max-w-4xl">
-                <span className="font-bold mb-4">
-                  Total:
-                  <span>{jsonData[selectedSectionIndex][selectedCat!]?.length}</span>
+                <span className="mb-4 text-sm">
+                 Total {selectedCat} Products: {" "}
+                  <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length}</span>
                 </span>
+               
                 <table className="min-w-full border border-gray-300 text-sm">
                   <thead>
                     <tr className="bg-zinc-800 text-white ">
