@@ -13,7 +13,7 @@ import AdminFaq from "./AdminFaq";
 import AdminSlides from "./AdminSlides";
 import AdminAnnouncement from "./AdminAnnouncement";
 import Sidebar from "./dashboard/shared/Sidebar";
-import { Key, Menu, X } from "lucide-react";
+import { GraduationCap, HelpCircle, Key, LayoutList, Menu, Printer, SlidersHorizontal, Smile, StickyNote, X } from "lucide-react";
 
 const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -22,18 +22,19 @@ const AdminComponent = () => {
     id: number;
     label: string;
     content: any;
+    icon: any;
   }
   const [selectedItem, setSelectedItem] = useState<SidebarItem | null>(null);
   const [isOpen, setOpen] = useState<Boolean>(true);
 
   const sidebarItems: SidebarItem[] = [
-    { id: 1, label: "Products", content: <AdminProducts /> },
-    { id: 2, label: "3D", content: <Admin3DComponent /> },
-    { id: 3, label: "Courses", content: <AdminCourses /> },
-    { id: 4, label: "About", content: <AdminAbout /> },
-    { id: 5, label: "Faq", content: <AdminFaq /> },
-    { id: 6, label: "Slides", content: <AdminSlides /> },
-    { id: 7, label: "Announcement", content: <AdminAnnouncement /> },
+    { id: 1,icon:<LayoutList/>, label: "Products", content: <AdminProducts /> },
+    { id: 2,icon:<Printer/>, label: "3D", content: <Admin3DComponent /> },
+    { id: 3,icon:<GraduationCap />, label: "Courses", content: <AdminCourses /> },
+    { id: 4,icon:<Smile/>, label: "About", content: <AdminAbout /> },
+    { id: 5,icon:<HelpCircle/>, label: "Faq", content: <AdminFaq /> },
+    { id: 6,icon:<SlidersHorizontal/>, label: "Slides", content: <AdminSlides /> },
+    { id: 7,icon:<StickyNote/>, label: "Announcement", content: <AdminAnnouncement /> },
     // Add more items as needed
   ];
 
@@ -54,51 +55,61 @@ const AdminComponent = () => {
   if (!isAuthorized) {
     return null; // Or render a login component, redirect, or some other behavior
   }
- 
+
   return (
     <>
       {/* Sidebar */}
-      <div className={`select-none bg-zinc-900 text-white ${isOpen ? 'min-w-[250px] py-4 px-2' : 'w-0' }  lg:border-r lg:border-gray-200 `}>
+      <div className={`select-none bg-white text-black transition-all ${isOpen ? 'w-[250px] py-4 px-2' : 'w-0'}  lg:border-r lg:border-gray-200 `}>
         {/* <h2 className="text-2xl font-bold mb-4">Pages</h2> */}
 
         <ul className="flex items-center bg-white py-2 px-2 font-bold justify-between overflow-x-auto gap-x-3 lg:flex-col lg:bg-transparent lg:items-start">
           {sidebarItems.map((item) => (
             <li
               key={item.id}
-              className={`flex items-center gap-1 my-2 w-full hover:bg-neutral-700 p-1.5 rounded-md cursor-pointer ${selectedItem === item ? "text-blue-400" : ""
+              className={`flex items-center gap-2 my-2 w-full hover:bg-slate-300 p-1.5 rounded-md cursor-pointer ${selectedItem === item ? "bg-slate-300" : ""
                 } my-0`}
               onClick={() => handleItemClick(item)}
             >
-              <Key/>
+              {item.icon}
               {item.label}
             </li>
           ))}
         </ul>
       </div>
       {/* Main content */}
-      <div className="flex-1 py-10 p-4 relative">
+      <div className="flex-1 py-5 p-4 relative">
         {/* <header className="flex items-center justify-between mb-8"> */}
-          {/* <h2 className="text-2xl font-bold">Robotech Panel</h2>
+        {/* <h2 className="text-2xl font-bold">Robotech Panel</h2>
         </header> */}
 
         {selectedItem ? (
           <div className="">
-            <span onClick={()=> setOpen(!isOpen)}>
+            <span className="cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
               {
-                isOpen ? <X />:<Menu/>
+                isOpen ? <X /> : <Menu />
               }
-              
-              
-              </span>
+
+
+            </span>
             <h3 className="text-xl font-bold mb-2">
               {selectedItem.label} Page
             </h3>
             <div>{selectedItem.content}</div>
           </div>
         ) : (
-          <p className="font-bold text-lg flex items-center justify-center bg-white lg:h-[500px] mb-5 text-gray-600">
-            Select Page from the sidebar.
-          </p>
+          <div>
+            <span  className="cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
+              {
+                isOpen ? <X /> : <Menu />
+              }
+
+
+            </span>
+            <p className="font-bold text-lg flex items-center justify-center lg:h-[500px] mb-5 text-gray-600">
+
+              Select Page from the sidebar.
+            </p>
+          </div>
         )}
       </div>
     </>
