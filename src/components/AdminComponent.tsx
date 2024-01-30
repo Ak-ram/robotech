@@ -12,6 +12,8 @@ import AdminAbout from "./AdminAbout";
 import AdminFaq from "./AdminFaq";
 import AdminSlides from "./AdminSlides";
 import AdminAnnouncement from "./AdminAnnouncement";
+import Sidebar from "./dashboard/shared/Sidebar";
+import { Key, Menu, X } from "lucide-react";
 
 const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -22,6 +24,7 @@ const AdminComponent = () => {
     content: any;
   }
   const [selectedItem, setSelectedItem] = useState<SidebarItem | null>(null);
+  const [isOpen, setOpen] = useState<Boolean>(true);
 
   const sidebarItems: SidebarItem[] = [
     { id: 1, label: "Products", content: <AdminProducts /> },
@@ -55,23 +58,23 @@ const AdminComponent = () => {
   return (
     <>
       {/* Sidebar */}
-      <div className="lg:w-1/4 min-w-[250px] lg:border-r lg:border-gray-200 p-4">
-        <h2 className="text-2xl font-bold mb-4">Pages</h2>
+      <div className={`select-none bg-zinc-900 text-white ${isOpen ? 'min-w-[250px] py-4 px-2' : 'w-0' }  lg:border-r lg:border-gray-200 `}>
+        {/* <h2 className="text-2xl font-bold mb-4">Pages</h2> */}
 
-        <ul className="flex items-center bg-white py-2 px-5 font-bold justify-between overflow-x-auto gap-x-3 lg:flex-col lg:bg-transparent lg:items-start">
+        <ul className="flex items-center bg-white py-2 px-2 font-bold justify-between overflow-x-auto gap-x-3 lg:flex-col lg:bg-transparent lg:items-start">
           {sidebarItems.map((item) => (
             <li
               key={item.id}
-              className={`cursor-pointer ${selectedItem === item ? "text-blue-400" : ""
+              className={`flex items-center gap-1 my-2 w-full hover:bg-neutral-700 p-1.5 rounded-md cursor-pointer ${selectedItem === item ? "text-blue-400" : ""
                 } my-0`}
               onClick={() => handleItemClick(item)}
             >
+              <Key/>
               {item.label}
             </li>
           ))}
         </ul>
       </div>
-
       {/* Main content */}
       <div className="flex-1 py-10 p-4 relative">
         {/* <header className="flex items-center justify-between mb-8"> */}
@@ -80,6 +83,13 @@ const AdminComponent = () => {
 
         {selectedItem ? (
           <div className="">
+            <span onClick={()=> setOpen(!isOpen)}>
+              {
+                isOpen ? <X />:<Menu/>
+              }
+              
+              
+              </span>
             <h3 className="text-xl font-bold mb-2">
               {selectedItem.label} Page
             </h3>

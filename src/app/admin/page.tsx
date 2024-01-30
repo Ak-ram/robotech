@@ -12,14 +12,21 @@ import AdminAbout from "@/components/AdminAbout";
 import AdminFaq from "@/components/AdminFaq";
 import AdminSlides from "@/components/AdminSlides";
 import AdminComponent from "@/components/AdminComponent";
+import DashboardStatsGrid from "@/components/dashboard/DashboardStatsGrid";
+import TransactionChart from "@/components/dashboard/TransactionChart";
+import BuyerProfilePieChart from "@/components/dashboard/BuyerProfilePieChart";
+import RecentOrders from "@/components/dashboard/RecentOrders";
+import PopularProducts from "@/components/dashboard/PopularProducts";
 
 const page = () => {
   return (
-    <Container>
+    // <Container>
       <div className="flex flex-col lg:flex-row">
         <AdminComponent />
+        
       </div>
-    </Container>
+    // </Container>
+   
   );
 };
 
