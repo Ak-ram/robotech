@@ -3,6 +3,8 @@ import { getCategoryProducts } from "@/helpers/getCategoryProducts";
 import { getProducts } from "@/helpers/getProducts";
 import { useEffect, useState } from "react";
 import { ProductType } from "../../type";
+import FormattedPrice from "./FormattedPrice";
+import Products from "./Products";
 
 interface Product {
     id: string;
@@ -35,6 +37,7 @@ interface CategoryStats {
 
 const Stats = () => {
     const [categoryStats, setCategoryStats] = useState<CategoryStats[]>([]);
+    const [products, setProducts] = useState<string[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
 
     useEffect(() => {
@@ -44,6 +47,7 @@ const Stats = () => {
                 setCategories(categoriesList);
 
                 const productsList = await getProducts();
+                setProducts(productsList)
                 // Assuming getProducts returns all products, not specific to a category
                 const uniqueCategories = new Set(categoriesList);
 
@@ -84,9 +88,9 @@ const Stats = () => {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 py-10">
+            <div className="flex flex-col items-center min-h-screen bg-gray-900 py-10">
                 <h1 className="text-lg text-gray-400 font-medium">2020-21 Season</h1>
-                <div className="flex flex-col mt-6">
+                <div className="flex w-[90%] mx-auto flex-col mt-6">
                     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <div className="shadow overflow-hidden sm:rounded-lg">
@@ -94,43 +98,86 @@ const Stats = () => {
                                     <thead className="bg-gray-800 text-xs uppercase font-medium">
                                         <tr>
                                             <th></th>
-                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                            <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
                                                 Category
                                             </th>
-                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                            <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
                                                 Quantity
                                             </th>
-                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                            <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
                                                 In Stock
                                             </th>
-                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                            <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
                                                 IS Price
                                             </th>
-                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                            <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
                                                 Out Stock
                                             </th>
-                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                            <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
                                                 OS Price
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-gray-800">
-                    {categoryStats.map((categoryInfo, index) => (
-                      <tr key={index} className="bg-black bg-opacity-20">
-                        <td className="pl-4">{index + 1}</td>
-                        <td className="flex px-6 py-4 whitespace-nowrap">
-                          <img className="w-6 h-6" src="https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_48x48.png" alt="" />
-                          <span className="ml-2 font-medium">{categoryInfo.categoryName}</span>
-                        </td>
-                         <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.quantity}</td>
-                         <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.inStockLength}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.inStockTotalPrice}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.outStockLength}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.outStockTotalPrice}</td>  
-                      </tr>
-                    ))}
-                  </tbody>
+                                        {categoryStats.map((categoryInfo, index) => (
+                                            <tr key={index} className="bg-black bg-opacity-20 ">
+                                                <td className="text-center pl-4">{index + 1}</td>
+                                                <td className="text-center flex px-6 py-4 whitespace-nowrap">
+                                                    <img className="w-6 h-6 rounded" src={categoryInfo.inStockProducts[0].image1} alt="" />
+                                                    <span className="ml-2 font-medium">{categoryInfo.categoryName}</span>
+                                                </td>
+                                                <td className="text-center px-6 py-4 whitespace-nowrap">{categoryInfo.quantity}</td>
+                                                <td className="text-center px-6 py-4 whitespace-nowrap">{categoryInfo.inStockLength}</td>
+                                                <td className="text-center px-6 py-4 whitespace-nowrap">
+                                                    <FormattedPrice amount={categoryInfo.inStockTotalPrice} />
+                                                </td>
+                                                <td className="text-center px-6 py-4 whitespace-nowrap">{categoryInfo.outStockLength}</td>
+                                                <td className="text-center px-6 py-4 whitespace-nowrap">
+                                                    <FormattedPrice amount={categoryInfo.outStockTotalPrice} /></td>
+                                            </tr>
+                                        ))}
+                                        <tr>
+                                            <th></th>
+
+                                            <th scope="col" className="opacity-0 text-center px-6 py-3 text-left tracking-wider">
+                                                Quantity
+                                            </th>
+                                            <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
+                                                {products?.length}
+                                            </th>
+                                            <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
+                                                {
+                                                    categoryStats
+                                                        .map(item => item.inStockProducts.map((product: ProductType) => +product?.count !== 0))
+                                                        .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
+                                                }                                            </th>
+                                            <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
+                                                <FormattedPrice amount=
+                                                    {
+                                                        categoryStats
+                                                            .map(item => item.inStockProducts.map((product: ProductType) => +product?.price))
+                                                            .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
+                                                    } />
+                                            </th>
+                                            <th scope="col" className="text-center  px-6 py-3 text-left tracking-wider">
+                                                {
+                                                    categoryStats
+                                                        .map(item => item.outStockProducts.map((product: ProductType) => +product?.count === 0))
+                                                        .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
+                                                }
+                                            </th>
+                                            <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
+                                                <FormattedPrice amount=
+                                                    {
+                                                        categoryStats
+                                                            .map(item => item.outStockProducts.map((product: ProductType) => +product?.price))
+                                                            .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
+                                                    } />
+                                            </th>
+                                        </tr>
+                                    </tbody>
                                 </table>
+
                             </div>
                         </div>
                     </div>
