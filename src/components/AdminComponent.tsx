@@ -77,7 +77,7 @@ const AdminComponent = () => {
         </ul>
       </div>
       {/* Main content */}
-      <div className="flex-1 py-5 p-4 relative">
+      <div className="flex-1 py-5 p-4 ">
         {/* <header className="flex items-center justify-between mb-8"> */}
         {/* <h2 className="text-2xl font-bold">Robotech Panel</h2>
         </header> */}

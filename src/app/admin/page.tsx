@@ -21,7 +21,7 @@ import PopularProducts from "@/components/dashboard/PopularProducts";
 const page = () => {
   return (
     // <Container>
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex relative flex-col lg:flex-row">
         <AdminComponent />
         
       </div>

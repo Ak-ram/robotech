@@ -306,11 +306,26 @@ const AdminComponent = () => {
             jsonData[selectedSectionIndex] &&
             selectedCat ? (
             <div key={selectedSectionIndex} className="mt-5">
-              <span className="mb-4 text-sm">
-                Total {selectedCat} Products: {" "}
-                <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length}</span>
+             
+              {selectedSectionIndex !== null &&
+                jsonData[selectedSectionIndex] &&
+                selectedCat && (
+                  <div className="mt-5">
+                    <button
+                      className="flex text-sm items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                      onClick={handleAddItemClick}
+                    >
+                      <Plus size={18} className="mr-1" />
+                      Add Item
+                    </button>
+                  </div>
+                )}
+                <span className="mt-4 block text-end text-sm">
+                Count: {" "}
+                <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length} Product(s)</span>
               </span>
-              <div className="mt-4 flex w-full  flex-col gap-3 border-2 rounded border-zinc-400">
+              <div className="flex w-full  flex-col gap-3 border-2 rounded border-zinc-400">
+              
                 <div
                   className="flex items-center text-white bg-zinc-900 px-5 py-3 rounded "
                 >
@@ -319,66 +334,68 @@ const AdminComponent = () => {
                   </div>
                   <div className="ml-4 flex-1">
                     <p className="text-sm">Product Name</p>
-                    
+
                   </div>
                   <div className="text-xs sm:text-sm">Price</div>
                   <div className="text-xs sm:text-sm ml-8">Actions</div>
                 </div>
-                {jsonData[selectedSectionIndex][selectedCat!]?.map(
-                      (product: any, itemIndex: number) => (
-                  <div
-                    key={product.id}
-                    // href={`/product/${product.id}`}
-                    className="flex items-start hover:no-underline bg-gray-200 p-2 rounded hover:bg-white"
-                  >
-                    <div className="w-10 h-10 min-w-[2.5rem]  rounded-sm">
-                      <img
-                        className="w-full h-full object-cover rounded-sm"
-                        src={product.image1}
-                        alt={product.image1}
-                      />
-                    </div>
-                    <div className="ml-4 flex-1">
-                      <p className="text-sm text-gray-800 font-bold">{product.title}</p>
-                      <span
-                        className={cn(
-                          product.count === 0
-                            ? 'text-red-500'
-                            : product.count > 10
-                              ? 'text-green-500'
-                              : 'text-orange-500',
-                          'text-xs font-medium'
-                        )}
+                <div className="max-h-[500px] p-3 overflow-auto ">
+                  {jsonData[selectedSectionIndex][selectedCat!]?.map(
+                    (product: any, itemIndex: number) => (
+                      <div
+                        key={product.id}
+                        // href={`/product/${product.id}`}
+                        className="flex items-start hover:no-underline bg-gray-200 p-2 rounded hover:bg-white"
                       >
-                        {product.count === 0 ? 'Out of Stock' : product.count + ' in Stock'}
-                      </span>
-                    </div>
-                    <div className="font-bold text-xs sm:text-sm text-zinc-700 pl-1.5">
-                      <FormattedPrice amount={product.price}/>
+                        <div className="w-10 h-10 min-w-[2.5rem]  rounded-sm">
+                          <img
+                            className="w-full h-full object-cover rounded-sm"
+                            src={product.image1}
+                            alt={product.image1}
+                          />
+                        </div>
+                        <div className="ml-4 flex-1">
+                          <p className="text-sm text-gray-800 font-bold">{product.title}</p>
+                          <span
+                            className={cn(
+                              product.count === 0
+                                ? 'text-red-500'
+                                : product.count > 10
+                                  ? 'text-green-500'
+                                  : 'text-orange-500',
+                              'text-xs font-medium'
+                            )}
+                          >
+                            {product.count === 0 ? 'Out of Stock' : product.count + ' in Stock'}
+                          </span>
+                        </div>
+                        <div className="font-bold text-xs sm:text-sm text-zinc-700 pl-1.5">
+                          <FormattedPrice amount={product.price} />
+                        </div>
+                        <div className="ml-8">
+                          <button
+                            className="mr-1"
+                            onClick={() =>
+                              handleEditClick(selectedSectionIndex, itemIndex)
+                            }
+                          >
+                            <Edit size={16} />
+                          </button>
+                          <button
+                            className="mr-1"
+                            onClick={() =>
+                              handleRemoveItem(
+                                selectedSectionIndex,
+                                itemIndex
+                              )
+                            }
+                          >
+                            <Trash size={16} />
+                          </button>
+                        </div>
                       </div>
-                      <div className="ml-8">
-                      <button
-                              className="mr-1"
-                              onClick={() =>
-                                handleEditClick(selectedSectionIndex, itemIndex)
-                              }
-                            >
-                              <Edit size={16} />
-                            </button>
-                            <button
-                              className="mr-1"
-                              onClick={() =>
-                                handleRemoveItem(
-                                  selectedSectionIndex,
-                                  itemIndex
-                                )
-                              }
-                            >
-                              <Trash size={16} />
-                            </button>
-                      </div>
-                  </div>
-                ))}
+                    ))}
+                </div>
               </div>
               {/* <table className="min-w-full border border-gray-300 text-sm">
                   <thead>
@@ -491,73 +508,63 @@ const AdminComponent = () => {
                   </tbody>
                 </table> */}
               {editIndex !== null && (
-                <div className="mt-5">
-                  <h2 className="font-bold mb-2">
-                    {editIndex === -1 ? "Add New Item" : "Edit Item"}
-                  </h2>
-                  <div className="flex flex-col lg:flex-row flex-wrap">
-                    {Object.entries({
-                      id: 'ID',
-                      title: 'Title',
-                      description: 'Description',
-                      price: 'Price',
-                      previousPrice: 'Previous Price',
-                      count: 'Count',
-                      // brand: 'Brand',
-                      image1: 'Image1',
-                      image2: 'Image2',
-                      image3: 'Image3',
-                    }).map(([key, placeholder], index) => (
-                      <div key={key} className={`${key.startsWith('image') ? 'h-[200px] border inline-block border-slate-400 rounded flex-col mx-auto flex items-center justify-center gap-3 border-dashed' : 'w-full'} flex-col mb-2 lg:pr-4`}>
-                        {/* {key.startsWith('image') ? <ImageUpload onInputChange={(e) => handleInputChange(e, key)} onImageChange={handleImageChange} index={index} /> : null} */}
-                        {editedItem[key] && key.startsWith('image') && (
-                          <img src={editedItem[key]} alt={`Uploaded ${key}`} className="mt-2" style={{ maxWidth: '100%', maxHeight: '100px' }} />
-                        )}
-                        <span className="font-bold text-sm mb-2 inline-block ml-1">{placeholder}</span>
-                        <input
-                          type="text"
-                          placeholder={placeholder}
-                          className={`outline-none w-full p-2 border-0 rounded`}
-                          value={editedItem[key]}
-                          onChange={(e) => handleInputChange(e, key)}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex">
-                    <button
-                      className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
-                      onClick={() => handleEditSubmit(selectedSectionIndex)}
-                    >
-                      <Check size={18} className="mr-1" />
-                      Save
-                    </button>
-                    <button
-                      className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-                      onClick={handleEditCancel}
-                    >
-                      <X size={18} className="mr-1" />
-                      Cancel
-                    </button>
+                <div className="absolute top-0 left-0 py-10 h-full overflow-auto bg-slate-200 w-full">
+                  <div className="mt-5 w-[60%] mx-auto">
+                    <h2 className="font-bold mb-2">
+                      {editIndex === -1 ? "Add New Item" : "Edit Item"}
+                    </h2>
+                    <div className="flex flex-col lg:flex-row flex-wrap">
+                      {Object.entries({
+                        id: 'ID',
+                        title: 'Title',
+                        description: 'Description',
+                        price: 'Price',
+                        previousPrice: 'Previous Price',
+                        count: 'Count',
+                        // brand: 'Brand',
+                        image1: 'Image1',
+                        image2: 'Image2',
+                        image3: 'Image3',
+                      }).map(([key, placeholder], index) => (
+                        <div key={key} className={`${key.startsWith('image') ? 'h-[200px] border inline-block border-slate-400 rounded flex-col mx-auto flex items-center justify-center gap-3 border-dashed' : 'w-full'} flex-col mb-2 lg:pr-4`}>
+                          {/* {key.startsWith('image') ? <ImageUpload onInputChange={(e) => handleInputChange(e, key)} onImageChange={handleImageChange} index={index} /> : null} */}
+                          {editedItem[key] && key.startsWith('image') && (
+                            <img src={editedItem[key]} alt={`Uploaded ${key}`} className="mt-2" style={{ maxWidth: '100%', maxHeight: '100px' }} />
+                          )}
+                          <span className="font-bold text-sm mb-2 inline-block ml-1">{placeholder}</span>
+                          <input
+                            type="text"
+                            placeholder={placeholder}
+                            className={`outline-none w-full p-2 border-0 rounded`}
+                            value={editedItem[key]}
+                            onChange={(e) => handleInputChange(e, key)}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex">
+                      <button
+                        className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+                        onClick={() => handleEditSubmit(selectedSectionIndex)}
+                      >
+                        <Check size={18} className="mr-1" />
+                        Save
+                      </button>
+                      <button
+                        className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                        onClick={handleEditCancel}
+                      >
+                        <X size={18} className="mr-1" />
+                        Cancel
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
             </div>
           ) : <Loading />}
         </div>
-        {selectedSectionIndex !== null &&
-          jsonData[selectedSectionIndex] &&
-          selectedCat && (
-            <div className="mt-5">
-              <button
-                className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                onClick={handleAddItemClick}
-              >
-                <Plus size={18} className="mr-1" />
-                Add Item
-              </button>
-            </div>
-          )}
+
       </div>
       <Toaster
         position="bottom-right"
