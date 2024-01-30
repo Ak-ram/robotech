@@ -114,7 +114,7 @@ const Stats = () => {
                                             </th>
                                         </tr>
                                     </thead>
-                                    {/* <tbody className="bg-gray-800">
+                                    <tbody className="bg-gray-800">
                     {categoryStats.map((categoryInfo, index) => (
                       <tr key={index} className="bg-black bg-opacity-20">
                         <td className="pl-4">{index + 1}</td>
@@ -122,14 +122,14 @@ const Stats = () => {
                           <img className="w-6 h-6" src="https://ssl.gstatic.com/onebox/media/sports/logos/udQ6ns69PctCv143h-GeYw_48x48.png" alt="" />
                           <span className="ml-2 font-medium">{categoryInfo.categoryName}</span>
                         </td>
-                         <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.Quantity}</td>
-                         <td className="px-6 py-4 whitespace-nowrap">{categoryInfo["In Stock"]}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo["In Stock Price"]}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo["Out Stock"]}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo["Out Stock Price"]}</td>  
+                         <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.quantity}</td>
+                         <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.inStockLength}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.inStockTotalPrice}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.outStockLength}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{categoryInfo.outStockTotalPrice}</td>  
                       </tr>
                     ))}
-                  </tbody> */}
+                  </tbody>
                                 </table>
                             </div>
                         </div>
