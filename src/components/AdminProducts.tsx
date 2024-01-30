@@ -312,17 +312,14 @@ const AdminComponent = () => {
               </span>
               <div className="mt-4 flex w-full  flex-col gap-3 border-2 rounded border-zinc-400">
                 <div
-                  className="flex items-start text-white bg-zinc-900 px-5 py-2 rounded "
+                  className="flex items-center text-white bg-zinc-900 px-5 py-3 rounded "
                 >
-                  <div className="w-10 h-10 min-w-[2.5rem]  rounded-sm">
+                  <div className="  rounded-sm">
                     Image
                   </div>
                   <div className="ml-4 flex-1">
                     <p className="text-sm">Product Name</p>
-                    <span
-                    >
-                      Quantity
-                    </span>
+                    
                   </div>
                   <div className="text-xs sm:text-sm">Price</div>
                   <div className="text-xs sm:text-sm ml-8">Actions</div>
