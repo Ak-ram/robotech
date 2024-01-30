@@ -23,7 +23,7 @@ const AdminComponent = () => {
     image1: "",
     image2: "",
     image3: "",
-    brand: "",
+    // brand: "",
     isNew: false,
     quantity: 1,
     category: selectedCat,
@@ -68,7 +68,7 @@ const AdminComponent = () => {
       image1: "",
       image2: "",
       image3: "",
-      brand: "",
+      // brand: "",
       isNew: false,
       quantity: 1,
       category: selectedCat,
@@ -106,7 +106,7 @@ const AdminComponent = () => {
       "description",
       "count",
       "image1",
-      "brand",
+      // "brand",
     ];
 
     if (requiredFields.some((field) => !editedItem[field])) {
@@ -431,7 +431,7 @@ const AdminComponent = () => {
                         price: 'Price',
                         previousPrice: 'Previous Price',
                         count: 'Count',
-                        brand: 'Brand',
+                        // brand: 'Brand',
                         image1: 'Image1',
                         image2: 'Image2',
                         image3: 'Image3',
