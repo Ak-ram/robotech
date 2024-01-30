@@ -48,7 +48,7 @@ const Stats = () => {
 
                 const uniqueCategoryStats = Array.from(uniqueCategories).map(categoryName => {
                     const categoryProducts = productsList.filter((product: ProductType) => product?.category === categoryName);
-                    const outStock = categoryProducts.filter((product: ProductType) => +product?.count !== 0);
+                    const outStock = categoryProducts.filter((product: ProductType) => +product?.count === 0);
 
                     return {
                         categoryName,
