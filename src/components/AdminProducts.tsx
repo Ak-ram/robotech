@@ -307,7 +307,7 @@ const AdminComponent = () => {
             selectedCat ? (
             <div key={selectedSectionIndex} className="mt-5">
 
-              <span className="my-4 block flex items-center justify-end text-end text-sm">
+              <span className="my-3 block flex items-center justify-end text-end text-sm">
               Count: {" "}
                 <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length} Product(s)</span>
 
