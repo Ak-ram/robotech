@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ProductType } from "../../type";
 import FormattedPrice from "./FormattedPrice";
 import Products from "./Products";
+import ApexChartComp from "./ApexChart";
 
 interface Product {
     id: string;
@@ -94,6 +95,12 @@ const Stats = () => {
                     new Date().toLocaleDateString('en-US', { dateStyle: 'long' })
 
                 }</h1>
+
+
+                <ApexChartComp categoryStats={categoryStats}/>
+                {/* <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={380} /> */}
+
+
                 <div className="flex w-[90%] mx-auto flex-col mt-6">
                     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -128,18 +135,17 @@ const Stats = () => {
                                                 <td className="text-center pl-4">{index + 1}</td>
                                                 <td className="text-center flex px-6 py-4 whitespace-nowrap">
                                                     <img className="w-6 h-6 rounded" src={categoryInfo.inStockProducts[0].image1} alt="" />
-                                                    <span className="ml-2 font-medium">{categoryInfo.categoryName.slice(0,1).toUpperCase() + categoryInfo.categoryName.slice(1,)}</span>
+                                                    <span className="ml-2 font-medium">{categoryInfo.categoryName.slice(0, 1).toUpperCase() + categoryInfo.categoryName.slice(1,)}</span>
                                                 </td>
                                                 <td className="text-center px-6 py-4 whitespace-nowrap">{categoryInfo.quantity}</td>
-                                                <td className={`${
-  categoryInfo.inStockLength >= 10 ? "text-green-500" :
-  categoryInfo.inStockLength > 5 ? 'text-orange-400' :
-  'text-yellow-500'
-} text-center px-6 py-4 whitespace-nowrap`}>{categoryInfo.inStockLength}</td>
+                                                <td className={`${categoryInfo.inStockLength >= 10 ? "text-green-500" :
+                                                    categoryInfo.inStockLength > 5 ? 'text-orange-400' :
+                                                        'text-yellow-500'
+                                                    } text-center px-6 py-4 whitespace-nowrap`}>{categoryInfo.inStockLength}</td>
                                                 <td className="text-center px-6 py-4 whitespace-nowrap">
                                                     <FormattedPrice amount={categoryInfo.inStockTotalPrice} />
                                                 </td>
-                                                <td className={`${categoryInfo.outStockLength ? "text-red-500":""} text-center px-6 py-4 whitespace-nowrap`}>{categoryInfo.outStockLength}</td>
+                                                <td className={`${categoryInfo.outStockLength ? "text-red-500" : ""} text-center px-6 py-4 whitespace-nowrap`}>{categoryInfo.outStockLength}</td>
                                                 <td className="text-center px-6 py-4 whitespace-nowrap">
                                                     <FormattedPrice amount={categoryInfo.outStockTotalPrice} /></td>
                                             </tr>
