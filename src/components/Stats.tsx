@@ -139,8 +139,8 @@ const Stats = () => {
                                         <tr>
                                             <th></th>
 
-                                            <th scope="col" className="opacity-0 text-center px-6 py-3 text-left tracking-wider">
-                                                Quantity
+                                            <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                                                Total
                                             </th>
                                             <th scope="col" className="text-center px-6 py-3 text-left tracking-wider">
                                                 {products?.length}
