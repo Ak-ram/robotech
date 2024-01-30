@@ -231,14 +231,21 @@ const AdminComponent = () => {
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
         {/* <Stats /> */}
         <div className="overflow-x-auto">
-          {jsonData.length > 0 && (
-            <div className="mb-5">
-              <label htmlFor="sectionDropdown" className="font-bold mb-2">
+         
+          {selectedSectionIndex !== null &&
+            jsonData[selectedSectionIndex] &&
+            selectedCat ? (
+            <div key={selectedSectionIndex} className="mt-5">
+
+              <span className="my-3 block flex items-center justify-end text-end text-sm">
+              {jsonData.length > 0 && (
+            <div className="flex-1 flex items-center gap-2">
+              {/* <label htmlFor="sectionDropdown" className="font-bold mb-2">
                 Select Category:
-              </label>
+              </label> */}
               <select
                 id="sectionDropdown"
-                className="my-2 appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                className="my-2 appearance-none block bg-white border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                 value={selectedCat !== null ? selectedCat : ""}
                 onChange={(e) => {
                   const selectedItem = e.target.value;
@@ -271,18 +278,18 @@ const AdminComponent = () => {
               <div>
                 <span
 
-                  className={`${toggleNewCat ? "block" : "hidden"} mt-2`}
+                  className={`${toggleNewCat ? "flex items-center" : "hidden"} mt-2`}
                 >
                   Category not exist ?{" "}
                   <span onClick={() => setToggleNewCat(false)} className="cursor-pointer text-blue-400">
                     add category
                   </span>
                 </span>
-                <div className={`${toggleNewCat ? "hidden" : "block"}`}>
+                <div className={`${toggleNewCat ? "hidden" : "flex items-center"}`}>
                   <input
                     type="text"
                     placeholder="New Category"
-                    className="w-full p-2 border mt-3 border-gray-300 rounded"
+                    className="p-2 h-9 border mr-3 border-gray-300 rounded"
                     value={newCategory}
                     onChange={handleCategoryChange}
                   />
@@ -290,10 +297,10 @@ const AdminComponent = () => {
                     className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                     onClick={handleAddCategory}
                   >
-                    Add Category
+                    Add
                   </button>
                   <button
-                    className="mt-2 ml-3 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                    className="ml-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
                     onClick={() => setToggleNewCat(true)}
                   >
                     Cancel
@@ -302,12 +309,6 @@ const AdminComponent = () => {
               </div>
             </div>
           )}
-          {selectedSectionIndex !== null &&
-            jsonData[selectedSectionIndex] &&
-            selectedCat ? (
-            <div key={selectedSectionIndex} className="mt-5">
-
-              <span className="my-3 block flex items-center justify-end text-end text-sm">
               Count: {" "}
                 <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length} Product(s)</span>
 
