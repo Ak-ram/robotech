@@ -6,6 +6,9 @@ import toast, { Toaster } from "react-hot-toast";
 import ImageUpload from "./ImageUpload";
 import Stats from "./Stats";
 import Loading from "./Loading";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import FormattedPrice from "./FormattedPrice";
 
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
@@ -190,13 +193,13 @@ const AdminComponent = () => {
   };
 
   const handleDeleteCategory = async () => {
-    
+
 
     const confirmDelete = window.confirm(
       `Are you sure you want to delete this category?`
     );
-   
-    
+
+
 
 
     if (selectedCat !== null && selectedSectionIndex !== null && confirmDelete) {
@@ -228,14 +231,21 @@ const AdminComponent = () => {
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
         {/* <Stats /> */}
         <div className="overflow-x-auto">
-          {jsonData.length > 0 && (
-            <div className="mb-5">
-              <label htmlFor="sectionDropdown" className="font-bold mb-2">
+         
+          {selectedSectionIndex !== null &&
+            jsonData[selectedSectionIndex] &&
+            selectedCat ? (
+            <div key={selectedSectionIndex} className="mt-5">
+
+              <span className="my-3 block flex items-center justify-end text-end text-sm">
+              {jsonData.length > 0 && (
+            <div className="flex-1 flex items-center gap-2">
+              {/* <label htmlFor="sectionDropdown" className="font-bold mb-2">
                 Select Category:
-              </label>
+              </label> */}
               <select
                 id="sectionDropdown"
-                className="my-2 appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                className="my-2 appearance-none block bg-white border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                 value={selectedCat !== null ? selectedCat : ""}
                 onChange={(e) => {
                   const selectedItem = e.target.value;
@@ -268,29 +278,29 @@ const AdminComponent = () => {
               <div>
                 <span
 
-                  className={`${toggleNewCat ? "block" : "hidden"} mt-2`}
+                  className={`${toggleNewCat ? "flex items-center" : "hidden"} mt-2`}
                 >
                   Category not exist ?{" "}
                   <span onClick={() => setToggleNewCat(false)} className="cursor-pointer text-blue-400">
                     add category
                   </span>
                 </span>
-                <div className={`${toggleNewCat ? "hidden" : "block"}`}>
+                <div className={`${toggleNewCat ? "hidden" : "flex items-center"}`}>
                   <input
                     type="text"
                     placeholder="New Category"
-                    className="w-full p-2 border mt-3 border-gray-300 rounded"
+                    className="p-2 h-9 border mr-3 border-gray-300 rounded"
                     value={newCategory}
                     onChange={handleCategoryChange}
                   />
                   <button
-                    className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                     onClick={handleAddCategory}
                   >
-                    Add Category
+                    Add
                   </button>
                   <button
-                    className="mt-2 ml-3 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                    className="ml-2 border border-red-400 text-red-500 font-bold py-2 px-4 rounded"
                     onClick={() => setToggleNewCat(true)}
                   >
                     Cancel
@@ -299,16 +309,94 @@ const AdminComponent = () => {
               </div>
             </div>
           )}
-          {selectedSectionIndex !== null &&
-            jsonData[selectedSectionIndex] &&
-            selectedCat ?(
-              <div key={selectedSectionIndex} className="mt-5 max-w-4xl">
-                <span className="mb-4 text-sm">
-                 Total {selectedCat} Products: {" "}
-                  <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length}</span>
-                </span>
-               
-                <table className="min-w-full border border-gray-300 text-sm">
+              Count: {" "}
+                <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length} Product(s)</span>
+
+                {selectedSectionIndex !== null &&
+                  jsonData[selectedSectionIndex] &&
+                  selectedCat && (
+                    <span className="inline-flex items-center justify-end w-fit mr-2 ml-3 py-2 px-3 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded"> 
+                      <Plus className="inline-block w-5 h-5"
+                        onClick={handleAddItemClick} size={20} />
+                        New
+                     </span>
+
+                  )}
+              </span>
+              <div className="flex w-full  flex-col gap-3 border-2 rounded border-zinc-400">
+
+                <div
+                  className="flex items-center text-white bg-zinc-900 px-5 py-3 rounded "
+                >
+                  <div className="  rounded-sm">
+                    Image
+                  </div>
+                  <div className="ml-4 flex-1">
+                    <p className="text-sm">Product Name</p>
+
+                  </div>
+                  <div className="text-xs sm:text-sm">Price</div>
+                  <div className="text-xs sm:text-sm ml-8">Actions</div>
+                </div>
+                <div className="max-h-[500px] p-3 overflow-auto ">
+                  {jsonData[selectedSectionIndex][selectedCat!]?.map(
+                    (product: any, itemIndex: number) => (
+                      <div
+                        key={product.id}
+                        // href={`/product/${product.id}`}
+                        className="flex items-start hover:no-underline bg-gray-200 p-2 rounded hover:bg-white"
+                      >
+                        <div className="w-10 h-10 min-w-[2.5rem]  rounded-sm">
+                          <img
+                            className="w-full h-full object-cover rounded-sm"
+                            src={product.image1}
+                            alt={product.image1}
+                          />
+                        </div>
+                        <div className="ml-4 flex-1">
+                          <p className="text-sm text-gray-800 font-bold">{product.title}</p>
+                          <span
+                            className={cn(
+                              product.count === 0
+                                ? 'text-red-500'
+                                : product.count > 10
+                                  ? 'text-green-500'
+                                  : 'text-orange-500',
+                              'text-xs font-medium'
+                            )}
+                          >
+                            {product.count === 0 ? 'Out of Stock' : product.count + ' in Stock'}
+                          </span>
+                        </div>
+                        <div className="font-bold text-xs sm:text-sm text-zinc-700 pl-1.5">
+                          <FormattedPrice amount={product.price} />
+                        </div>
+                        <div className="ml-8">
+                          <button
+                            className="mr-1"
+                            onClick={() =>
+                              handleEditClick(selectedSectionIndex, itemIndex)
+                            }
+                          >
+                            <Edit size={16} />
+                          </button>
+                          <button
+                            className="mr-1"
+                            onClick={() =>
+                              handleRemoveItem(
+                                selectedSectionIndex,
+                                itemIndex
+                              )
+                            }
+                          >
+                            <Trash size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              {/* <table className="min-w-full border border-gray-300 text-sm">
                   <thead>
                     <tr className="bg-zinc-800 text-white ">
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
@@ -322,7 +410,7 @@ const AdminComponent = () => {
                       </th>
                       {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Previous Price
-                      </th> */}
+                      </th> 
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Image1
                       </th>
@@ -340,7 +428,7 @@ const AdminComponent = () => {
                       </th>
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Brand
-                      </th> */}
+                      </th> *
                       <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
                         Actions
                       </th>
@@ -361,7 +449,7 @@ const AdminComponent = () => {
                           </td>
                           {/* <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.previousPrice}
-                          </td> */}
+                          </td> 
                           <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             <img
                               src={item.image1}
@@ -391,7 +479,7 @@ const AdminComponent = () => {
                           </td>
                           <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                             {item.brand}
-                          </td> */}
+                          </td>
                           <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
                             <button
                               className="mr-1"
@@ -417,9 +505,10 @@ const AdminComponent = () => {
                       )
                     )}
                   </tbody>
-                </table>
-                {editIndex !== null && (
-                  <div className="mt-5">
+                </table> */}
+              {editIndex !== null && (
+                <div className="absolute top-0 left-0 py-10 h-full overflow-auto bg-slate-200 w-full">
+                  <div className="mt-5 w-[60%] mx-auto">
                     <h2 className="font-bold mb-2">
                       {editIndex === -1 ? "Add New Item" : "Edit Item"}
                     </h2>
@@ -469,23 +558,12 @@ const AdminComponent = () => {
                       </button>
                     </div>
                   </div>
-                )}
-              </div>
-            ):<Loading/>}
+                </div>
+              )}
+            </div>
+          ) : <Loading />}
         </div>
-        {selectedSectionIndex !== null &&
-            jsonData[selectedSectionIndex] &&
-            selectedCat && (
-          <div className="mt-5">
-            <button
-              className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-              onClick={handleAddItemClick}
-            >
-              <Plus size={18} className="mr-1" />
-              Add Item
-            </button>
-          </div>
-        )}
+
       </div>
       <Toaster
         position="bottom-right"

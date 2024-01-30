@@ -59,7 +59,7 @@ const SearchComponent = () => {
                 type="search"
                 placeholder="Search..."
             />
-            <span className='text-xs font-semibold sm:text-sm text-zinc-500 absolute top-7 right-4'>Result: {res?.length}</span>
+            <span className='text-xs font-semibold sm:text-sm text-zinc-500 absolute top-7 right-4'>Products:: {res?.length}</span>
             <ul
                 className={`max-h-[50vh] overflow-auto ${isInput ? "block py-1 lg:py-3 " : "hidden p-0 "
                     } shadow-lg mx-0 top-11 w-full border shadow-md border-zinc-400 z-10 absolute bg-white mt-5 rounded-lg`}
