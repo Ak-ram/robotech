@@ -5,14 +5,10 @@ import { useState } from "react"; // Import useState from React
 const Categories = ({ categories, setCategoryName }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   return (
-   
     <div className="min-w-[300px] lg:w-[300px] lg:p-3 w-full z-10 fixed border-t lg:border-t-0 border-gray-300 bottom-0 left-0 lg:relative overflow-hidden w-64">
       <div className="flex h-full flex-grow flex-col overflow-y-auto lg:rounded-br-lg lg:rounded-tr-lg bg-white shadow-md">
-
         <div className="flex flex-col">
-
           <span className="hidden lg:block ml-3 mt-5 lg:mt-10 mb-2 block text-base font-semibold text-gray-500">Product Mangement</span>
-
           <nav className="text-zinc-600 flex lg:block overflow-x-auto">
             {categories?.map((cat_title: string, i: number) => (
               <button
