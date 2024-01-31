@@ -62,7 +62,7 @@ const Navbar = () => {
         {/* Logo */}
         <Logo />
         {/* Navigation */}
-        <ul className="order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center w-full md:w-fit flex py-2 items-center gap-5 text-sm uppercase font-semibold">
+        <ul className="order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center w-full md:w-fit flex py-2 items-center gap-5 text-sm uppercase">
           {navigation.map((item) => (
             <Link href={item?.href} key={item.title}>
               <li
