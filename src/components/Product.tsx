@@ -162,7 +162,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
               />
             </div>
-              <p className="w-[150px] whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
+              <p className="w-[150px] md:w-[200px] whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
                 {item?.title}
               </p>
               <p className="flex items-center justify-start w-full text-designColor font-semibold">
