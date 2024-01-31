@@ -77,11 +77,11 @@ function FilterableProducts({ categories }) {
 
 
   return (
-    <div className='mt-5'>
-      <div className='relative mt-5 flex gap-4 m-auto '>
+    <div className=''>
+      <div className='relative flex gap-4 m-auto '>
         <Categories setCategoryName={setCategoryName} categories={categories} />
         <div className='flex-1'>
-          <div className="mt-5 flex flex-col gap-2 items-center">
+          <div className="flex flex-col gap-2 items-center">
             <h2 className="text-2xl font-bold lg:text-3xl ">Choose a Category</h2>
             <p className="text-sm lg:text-lg text-center">
               Explore custom layouts designed for seamless electronic shopping.
