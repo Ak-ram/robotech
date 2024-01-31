@@ -10,6 +10,7 @@ import { addToCart, addToFavorite } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { calculatePercentage } from "@/helpers";
 import Loading from "./Loading";
+import AddToCardBtn from "./AddToCardBtn";
 
 interface Item {
   products: ProductType[];
@@ -189,7 +190,6 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       <span className="sm:hidden text-sm ">Buy</span>
 
                     </button>
-
                   </>
                 ) : (
                   <span className="text-[10px] md:text-base uppercase font-semibold py-1 sm:px-2 rounded-sm hover:bg-opacity-80 duration-300 text-red-500 bg-red-200">
