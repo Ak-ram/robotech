@@ -8,7 +8,7 @@ import AdminComponent from "@/components/AdminComponent";
 const page = () => {
   return (
     // <Container>
-    <div className="flex relative flex-col lg:flex-row">
+    <div className="flex relative">
       <AdminComponent />
 
     </div>

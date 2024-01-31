@@ -63,7 +63,7 @@ const AdminComponent = () => {
       <div className={`select-none bg-white text-black transition-all ${isOpen ? 'w-[250px] py-4 px-2' : 'w-0'}  lg:border-r lg:border-gray-200 `}>
         {/* <h2 className="text-2xl font-bold mb-4">Pages</h2> */}
 
-        <ul className="flex items-center bg-white py-2 px-2 font-bold justify-between overflow-x-auto gap-x-3 lg:flex-col lg:bg-transparent lg:items-start">
+        <ul className="bg-white py-2  font-bold justify-between overflow-x-auto  lg:bg-transparent lg:items-start">
           {sidebarItems.map((item) => (
             <li
               key={item.id}
