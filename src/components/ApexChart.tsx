@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const ApexChart = ({ categoryStats }) => {
   const [chartData, setChartData] = useState([]);
@@ -7,7 +7,8 @@ const ApexChart = ({ categoryStats }) => {
   useEffect(() => {
     if (categoryStats) {
       const data = categoryStats.map((category) => ({
-        name: category.categoryName,
+        name: abbreviateName(category.categoryName),
+        fullName: category.categoryName, // Full name for tooltip
         value: category.inStockLength,
       }));
 
@@ -15,36 +16,32 @@ const ApexChart = ({ categoryStats }) => {
     }
   }, [categoryStats]);
 
+  // Function to abbreviate the category name
+  const abbreviateName = (fullName) => {
+    // Your abbreviation logic goes here
+    // For simplicity, let's just use the first two characters
+    return fullName.substring(0, 2).toUpperCase();
+  };
+
   return (
     <div>
-      <ResponsiveContainer width={600} height={400}>
-        <PieChart>
-          <Pie
-            data={chartData}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={150}
-            fill="#8884d8"
-            labelLine={true}
-            label={({ name, value }) => `${name}: ${value}`}
-          >
-            {chartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={generateRandomColor()} />
-            ))}
-          </Pie>
-          <Legend />
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
+      <BarChart width={600} height={400} data={chartData}>
+        <CartesianGrid strokeDasharray="1 1" />
+        <XAxis dataKey="name" angle={-60} textAnchor="end" interval={0} />
+        <YAxis />
+        <Tooltip formatter={(value, name, props) => [value, props.payload.fullName]} />
+        <Legend
+          formatter={(value, entry, index) => (
+            <span style={{ color: entry.color }}>In Stock Qunatity</span>
+          )}
+          align="right"
+          verticalAlign="top"
+          height={36}
+        />
+        <Bar dataKey="value" fill="#1a73e8" label={{ position: 'top', fill: '#1a73e8' }} />
+      </BarChart>
     </div>
   );
-};
-
-// Function to generate random colors for chart slices
-const generateRandomColor = () => {
-  return '#' + Math.floor(Math.random() * 16777215).toString(16);
 };
 
 export default ApexChart;
