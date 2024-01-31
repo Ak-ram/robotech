@@ -70,23 +70,23 @@ const SearchComponent = () => {
     return (
         <>
             <div className="mt-2 border-t md:border-none border-gray-700 md:mt-0 relative flex-1 relative flex justify-center items-center">
-                <Search className="text-zinc-500 absolute top-7 left-2 md:w-5 md:h-5" />
+                <Search className="text-zinc-500 absolute top-8 left-2 md:w-6 md:h-6" />
                 <input
                     onInput={(e: ChangeEvent<HTMLInputElement>) => {
                         searching(e.target.value);
                     }}
-                    className={`!text-black outline-none h-10 pl-10 border rounded-md pr-20 py-2 md:py-3 mr-auto mt-4 w-full ${inputError ? "border-red-500" : ""
+                    className={`shadow-lg text-lg !text-black outline-none h-14 pl-10 border rounded-md pr-20 py-2 md:py-3 mr-auto mt-4 w-full ${inputError ? "border-red-500" : ""
                         }`}
                     type="text"
                     placeholder="Search..."
                 />
                 {inputError && (
-                    <span className="text-xs font-semibold text-red-500 absolute top-7 right-4">
+                    <span className="text-xs sm:text-base font-semibold text-red-500 absolute top-8 right-4">
                         {inputError}
                     </span>
                 )}
                 {
-                    !inputError ? <span className='text-xs font-semibold sm:text-sm text-zinc-500 absolute top-7 right-4'>
+                    !inputError ? <span className='text-xs font-semibold sm:text-base text-zinc-500 absolute top-8 right-4'>
                         Result: {res?.length !== products?.length ? res?.length : 0}
                     </span> : null
                 }
