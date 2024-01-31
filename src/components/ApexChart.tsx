@@ -27,7 +27,7 @@ const ApexChart = ({ categoryStats }) => {
             cy="50%"
             outerRadius={150}
             fill="#8884d8"
-            labelLine={false}
+            labelLine={true}
             label={({ name, value }) => `${name}: ${value}`}
           >
             {chartData.map((entry, index) => (
