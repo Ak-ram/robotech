@@ -85,13 +85,13 @@ const Product = ({ products, prefix, categoryName }: Item) => {
       </nav>
 
 
-      <div className="container max-w-4xl m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-2 mx-auto">
+      <div className="m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-2">
 
         {products ? products.slice(perPage.start, perPage.end)?.map((item) => (
 
           <div
             key={`${item.id}_${item.title}`}
-            className="flex  sm:block sm:max-w-[300px] w-full mx-auto relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
+            className="flex  sm:block  w-full mx-auto relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
           >
 
             <Link
