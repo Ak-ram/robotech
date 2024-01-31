@@ -1,55 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import ReactApexChart from 'react-apexcharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 const ApexChart = ({ categoryStats }) => {
-  const [chartState, setChartState] = useState({
-    series: [],
-    options: {
-      chart: {
-        width: 600,
-        type: 'pie',
-      },
-      labels: [],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200,
-            },
-            legend: {
-              position: 'bottom',
-            },
-          },
-        },
-      ],
-    },
-  });
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     if (categoryStats) {
-      const seriesData = categoryStats.map((category) => category.inStockLength);
-      const labelsData = categoryStats.map((category) => category.categoryName);
+      const data = categoryStats.map((category) => ({
+        name: category.categoryName,
+        value: category.inStockLength,
+      }));
 
-      setChartState({
-        ...chartState,
-        series: seriesData,
-        options: {
-          ...chartState.options,
-          labels: labelsData,
-        },
-      });
+      setChartData(data);
     }
   }, [categoryStats]);
 
   return (
     <div>
-      <div id="chart">
-        <ReactApexChart options={chartState.options} series={chartState.series} type="pie" width={600} />
-      </div>
-      <div id="html-dist"></div>
+      <ResponsiveContainer width={600} height={400}>
+        <PieChart>
+          <Pie
+            data={chartData}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={150}
+            fill="#8884d8"
+            labelLine={false}
+            label={({ name, value }) => `${name}: ${value}`}
+          >
+            {chartData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={generateRandomColor()} />
+            ))}
+          </Pie>
+          <Legend />
+          <Tooltip />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
+};
+
+// Function to generate random colors for chart slices
+const generateRandomColor = () => {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16);
 };
 
 export default ApexChart;
