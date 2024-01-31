@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Alegreya_Sans_SC} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { cn } from "@/lib/utils";
@@ -9,7 +9,8 @@ import Layout from "@/components/Layout";
 import Announcement from "@/components/Announcement";
 import WhatsApp from "@/components/WhatsApp";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Alegreya_Sans_SC({weight:"700",subsets: ["latin"]});
+// Available subsets: `cyrillic`, `cyrillic-ext`, `greek`, `greek-ext`, `latin`, `latin-ext`, `vietnamese`
 
 export const metadata: Metadata = {
   title: "Robotech space",
