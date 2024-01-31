@@ -91,7 +91,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
           <div
             key={`${item.id}_${item.title}`}
-            className="max-w-[300px] w-full mx-auto relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
+            className="flex  sm:block sm:max-w-[300px] w-full mx-auto relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
           >
 
             <Link
@@ -102,7 +102,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="relative mx-3 mt-3 flex h-52 md:h-60 overflow-hidden rounded-xl"
+              className="min-w-[150px] w-full relative sm:mx-3 sm:mt-3 flex h-48 md:h-60 overflow-hidden rounded-xl"
             >
               <img
                 className="peer  absolute top-0 right-0 h-full w-full object-contain"
@@ -139,6 +139,8 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   </span>
                   : null}
             </Link>
+            
+            <div className="sm:p-4 flex justify-center w-full items-start gap-3 flex-col px-2">
             <div className="absolute top-2 right-2 flex items-center space-x-2">
               <Heart
                 fill={isFavorite(item.id) ? "red" : "black"}
@@ -157,17 +159,16 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   dispatch(addToCart(item));
                   toast.success(`${item?.title} is added to Cart!`);
                 }}
-                className="hidden sm:inline-block text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
+                className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
               />
             </div>
-            <div className="p-4">
-              <p className="text-xs md:text-base whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
+              <p className="w-[150px] whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
                 {item?.title}
               </p>
-              <p className="text-xs md:text-base text-designColor font-semibold">
+              <p className="flex items-center justify-start w-full text-designColor font-semibold">
                 <FormattedPrice amount={item?.price} />
               </p>
-              <div className="text-xs md:text-base flex items-center justify-between mt-2">
+              <div className="flex flex-col gap-2 sm:flex-row w-full items-start sm:items-center justify-between mt-2">
                 {item?.count > 0 || prefix === 'print' ? (
                   <>
                     <button
@@ -175,7 +176,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                         dispatch(addToCart(item));
                         toast.success(`${item?.title} is added to Cart!`);
                       }}
-                      className="w-full sm:w-fit justify-center flex items-center gap-1 md:text-base uppercase font-semibold text-white bg-designColor py-1 sm:py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
+                      className=" w-[70%] sm:w-fit justify-center flex items-center gap-1 md:text-base uppercase font-semibold text-white bg-designColor py-1 sm:py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
                     >
                       <ShoppingBasketIcon
                         onClick={() => {
@@ -185,7 +186,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                         className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
                       />
                       <span className="hidden sm:inline-block text-sm">Add to Cart</span>
-                      <span className="text-xs inline-block sm:hidden">Buy</span>
+                      <span className="sm:hidden text-sm ">Buy</span>
 
                     </button>
 
@@ -196,10 +197,10 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   </span>
                 )}
                 {
-                  item?.count > 0 && prefix !== 'print' ? <span className="hidden sm:flex text-xs flex-col items-center justify-center">
+                  item?.count > 0 && prefix !== 'print' ? <span className="text-xs flex-col items-center justify-center">
                     <b className="text-designColor">{item?.count}</b> Pieces in
                     stock.
-                  </span> : prefix === 'print' ? <span className="hidden sm:flex text-xs flex-col items-center justify-center">
+                  </span> : prefix === 'print' ? <span className="text-xs flex-col items-center justify-center">
                     <b className="text-designColor"><FormattedPrice amount={item.count} /></b> Per Minute.
                   </span> : null
                 }
