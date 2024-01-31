@@ -3,7 +3,7 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import Link from "next/link";
 import Logo from "./Logo";
-import { Heart, PhoneCall, Search, ShoppingBagIcon, ShoppingBasket } from "lucide-react";
+import { Heart, List, PhoneCall, Search, ShoppingBagIcon, ShoppingBasket, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/constants/data";
 import { useSelector } from "react-redux";
@@ -23,6 +23,7 @@ const Navbar = () => {
 
   const [totalAmt, setTotalAmt] = useState(0);
   const [rowPrice, setRowPrice] = useState(0);
+  const [openSidebar, setOpenSidebar] = useState(false);
 
 
   useEffect(() => {
@@ -60,9 +61,14 @@ const Navbar = () => {
     <div className=" py-2 border-b-[1px] border-b-zinc-500 bg-white/80 text-zinc-800 sticky top-0 z-50  backdrop-blur-2xl">
       <div className="w-[98%] mx-auto order-first flex-wrap max-w-screen-xl mx-auto h-full flex items-center px-4 xl:px-0">
         {/* Logo */}
+
+
+        <List onClick={() => setOpenSidebar(true)} className='md:hidden' />
+
         <Logo />
         {/* Navigation */}
-        <ul className="order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center w-full md:w-fit flex py-2 items-center gap-5 text-sm uppercase">
+        <ul className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"} flex px-2 -ml-6 absolute md:relative top-0 w-[200px] border-gray-400 border-r md:border-0 z-50 transition transform bgDesign md:bg-transprot md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}>
+          <X className='ml-auto text-black m-2 md:hidden' onClick={() => setOpenSidebar(false)} />
           {navigation.map((item) => (
             <Link href={item?.href} key={item.title}>
               <li
@@ -71,7 +77,7 @@ const Navbar = () => {
               >
                 {item?.title}
                 <span
-                  className={`absolute h-[2px] w-full bg-designColor left-0 bottom-0 -translate-x-[100%] z-10 translate-y-[1px] group-hover:translate-x-0 transition-transform duration-500 ${item.href === pathname && "translate-x-0 bg-designColor"
+                  className={`hidden md:block absolute h-[2px] w-full bg-designColor left-0 bottom-0 -translate-x-[100%] z-10 translate-y-[1px] group-hover:translate-x-0 transition-transform duration-500 ${item.href === pathname && "translate-x-0 bg-designColor"
                     }`}
                 />
               </li>
@@ -82,10 +88,10 @@ const Navbar = () => {
         {/* icons */}
         <div className="w-[70%] justify-end md:w-fit md:justify-start ml-auto flex items-center gap-x-5">
 
-          <div className='border-l border-r px-3 hidden md:flex items-center text-xs gap-2 text-gray/80'>
+          <div className='border-l border-r px-3 hidden lg:flex items-center text-xs gap-2 text-gray/80'>
             <PhoneCall className='text-gray/80 md:w-6 md:h-6' />
             <div className='flex flex-col gap-2'>
-              <span><span className='font-bold  '>Support </span>(+20) 11 0207 1544 </span>
+              <span><span className='font-bold '>Support </span>(+20) 11 0207 1544 </span>
               <span>robotechspace8@gmail.com</span>
             </div>
           </div>
@@ -118,7 +124,7 @@ const Navbar = () => {
         </div>
 
       </div>
-      <div className='mt-3 h-[1px] w-full bg-gray-900 opacity-20'></div>
+      <div className='mt-3 md:h-[1px] w-full bg-gray-900 opacity-20'></div>
       {/* <hr className='bg-black text-black shadow'/> */}
       <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
         <span className='md:block hidden mt-4 font-bold'>Look for specific Product ? </span>
