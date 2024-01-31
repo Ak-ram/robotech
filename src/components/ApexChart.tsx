@@ -1,53 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import ReactApexChart from 'react-apexcharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const ApexChart = ({ categoryStats }) => {
-  const [chartState, setChartState] = useState({
-    series: [],
-    options: {
-      chart: {
-        width: 600,
-        type: 'pie',
-      },
-      labels: [],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200,
-            },
-            legend: {
-              position: 'bottom',
-            },
-          },
-        },
-      ],
-    },
-  });
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     if (categoryStats) {
-      const seriesData = categoryStats.map((category) => category.inStockLength);
-      const labelsData = categoryStats.map((category) => category.categoryName);
+      const data = categoryStats.map((category) => ({
+        name: abbreviateName(category.categoryName),
+        fullName: category.categoryName, // Full name for tooltip
+        value: category.inStockLength,
+      }));
 
-      setChartState({
-        ...chartState,
-        series: seriesData,
-        options: {
-          ...chartState.options,
-          labels: labelsData,
-        },
-      });
+      setChartData(data);
     }
   }, [categoryStats]);
 
+  // Function to abbreviate the category name
+  const abbreviateName = (fullName) => {
+    // Your abbreviation logic goes here
+    // For simplicity, let's just use the first two characters
+    return fullName.substring(0, 2).toUpperCase();
+  };
+
   return (
     <div>
-      <div id="chart">
-        <ReactApexChart options={chartState.options} series={chartState.series} type="pie" width={600} />
-      </div>
-      <div id="html-dist"></div>
+      <BarChart width={600} height={400} data={chartData}>
+        <CartesianGrid strokeDasharray="1 1" />
+        <XAxis dataKey="name" angle={-60} textAnchor="end" interval={0} />
+        <YAxis />
+        <Tooltip formatter={(value, name, props) => [value, props.payload.fullName]} />
+        <Legend
+          formatter={(value, entry, index) => (
+            <span style={{ color: entry.color }}>In Stock Qunatity</span>
+          )}
+          align="right"
+          verticalAlign="top"
+          height={36}
+        />
+        <Bar dataKey="value" fill="#1a73e8" label={{ position: 'top', fill: '#1a73e8' }} />
+      </BarChart>
     </div>
   );
 };
