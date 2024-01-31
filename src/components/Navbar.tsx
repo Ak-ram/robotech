@@ -40,6 +40,20 @@ const Navbar = () => {
   }, [productData]);
 
 
+  const [flashAnimation, setFlashAnimation] = useState(false);
+
+  useEffect(() => {
+    // Trigger flash animation when totalAmt changes
+    setFlashAnimation(true);
+
+    // Reset flash animation after a short delay (adjust as needed)
+    const timeoutId = setTimeout(() => {
+      setFlashAnimation(false);
+    }, 500); // 500 milliseconds
+
+    return () => clearTimeout(timeoutId);
+  }, [totalAmt]);
+
 
 
   return (
@@ -86,9 +100,9 @@ const Navbar = () => {
           </Link>
           <Link
             href={"/cart"}
-            className="hover:text-white cursor-pointer duration-200 relative group"
-          >
-            <ShoppingBasket className="md:w-6 md:h-6" />
+            className={`${flashAnimation ? "animate-ping" : ""
+              } hover:text-white cursor-pointer duration-200 relative group`}
+          >            <ShoppingBasket className="md:w-6 md:h-6" />
             <span className="absolute top-0 -left-1  bg-slate-200 text-black w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-white font-semibold ">
               {productData ? productData.length : 0}
             </span>
@@ -106,7 +120,7 @@ const Navbar = () => {
       </div>
       <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
         <span className='md:block hidden mt-4 font-bold'>Look for specific Product ? </span>
-      <SearchComponent  />
+        <SearchComponent />
 
       </div>
     </div>
