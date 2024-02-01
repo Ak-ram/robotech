@@ -30,7 +30,8 @@
     "recharts": "^2.11.0",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
-    "tailwind-merge": "^1.14.0"
+    "tailwind-merge": "^1.14.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/canvas-confetti": "^1.6.4",

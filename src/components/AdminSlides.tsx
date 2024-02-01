@@ -5,6 +5,8 @@ import { Check, X, Trash, Edit, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
 import Link from 'next/link'
+import { v4 as uuidv4 } from 'uuid';
+
 const AdminSlides = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -30,7 +32,7 @@ const AdminSlides = () => {
     const handleAddItemClick = () => {
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
-            id: "",
+            id: uuidv4(),
             image: "",
             link_url: ""
         });

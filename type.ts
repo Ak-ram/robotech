@@ -4,7 +4,7 @@ export interface ProductType {
   image3: string | undefined;
   categoryName: string | number | boolean | readonly string[] | readonly number[] | readonly boolean[] | null | undefined;
   count: number;
-  id: number | null | undefined;
+  id: string;
   title: string;
   description: string;
   price: number;
@@ -16,7 +16,7 @@ export interface ProductType {
 
 export interface CourseType {
   enrollmentLink: string;
-  id: number;
+  id: string;
   poster: string;
   video: string;
   rate: number;

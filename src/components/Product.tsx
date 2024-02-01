@@ -10,7 +10,6 @@ import { addToCart, addToFavorite } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { calculatePercentage } from "@/helpers";
 import Loading from "./Loading";
-import AddToCardBtn from "./AddToCardBtn";
 
 interface Item {
   products: ProductType[];

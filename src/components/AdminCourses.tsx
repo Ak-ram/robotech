@@ -4,6 +4,7 @@ import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
+import { v4 as uuidv4 } from 'uuid';
 
 const AdminCourses = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -47,7 +48,7 @@ const AdminCourses = () => {
     const handleAddItemClick = () => {
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
-            id: 0,
+            id: uuidv4(),
             image1: "",
             video: "",
             rate: 0,
@@ -253,18 +254,7 @@ const AdminCourses = () => {
                         {editIndex === -1 ? "Add New Item" : "Edit Item"}
                     </h2>
                     <div className="flex flex-col lg:flex-row mb-2 lg:pr-4 flex-wrap">
-                        <div className="w-full  mb-2 lg:pr-4">
-                        <span className="text-sm font-bold my-2 -ml-2">ID</span>
-
-                            <input
-                                type="text"
-                                placeholder="5723"
-                                className="w-full p-2 border border-gray-300 rounded"
-                                value={editedItem.id}
-                                onChange={(e) => handleInputChange(e, "id")}
-                                required
-                            />
-                        </div>
+                       
                         <div className="w-full  mb-2 lg:pr-4">
                         <span className="text-sm font-bold my-2 -ml-2">Title</span>
 

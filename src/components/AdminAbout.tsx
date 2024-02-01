@@ -4,6 +4,7 @@ import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
+import { v4 as uuidv4 } from 'uuid';
 
 const AdminAbout = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -32,7 +33,7 @@ const AdminAbout = () => {
   const handleAddItemClick = () => {
     setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
-      id: "",
+      id: uuidv4(),
       title: "",
       description: "",
       link_text: "",
