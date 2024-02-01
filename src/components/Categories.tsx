@@ -43,7 +43,13 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
                 <ol className="">
                   { selectedCategory === cat_title &&
                     products.map(product => 
-                      <Link href={""} className="hover:bg-zinc-100 hover:text-zinc-950 py-2 flex pl-3 mb-1 ml-8 items-center gap-1 w-full justify-start">
+                      <Link  href={{
+                        pathname: `/id_${product?.id}`,
+                        query: {
+                          id: product?.id,
+                          prefix: product?.category,
+                        },
+                      }} className="hover:bg-zinc-100 hover:text-zinc-950 py-2 flex pl-3 mb-1 ml-8 items-center gap-1 w-full justify-start">
                       <ChevronRight size={15}/>
                     <li className="w-[200px] text-ellipsis whitespace-nowrap overflow-hidden font-semibold">{product.title}</li>
                   </Link>)
