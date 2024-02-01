@@ -135,7 +135,6 @@ const AdminAbout = () => {
         <table className="min-w-full border border-gray-300 text-sm">
           <thead>
             <tr className="bg-zinc-800 text-white ">
-              <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Id</th>
               <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Title</th>
               <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Description</th>
               <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Link text</th>
@@ -146,7 +145,6 @@ const AdminAbout = () => {
           <tbody>
             {jsonArray.map((item, index) => (
               <tr key={index} className="hover:bg-slate-100">
-                <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.id}</td>
                 <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.title}</td>
                 <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.description}</td>
                 <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.link_text}</td>

@@ -182,7 +182,6 @@ const AdminCourses = () => {
                     <table className="min-w-full border border-gray-300 text-sm">
                         <thead>
                             <tr className="bg-zinc-800 text-white ">
-                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Id</th>
                                 <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Title</th>
                                 <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Price</th>
                                 {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Previous Price</th> */}
@@ -208,7 +207,6 @@ const AdminCourses = () => {
                         <tbody>
                             {jsonArray.map((item, index) => (
                                 <tr key={index} className="hover:bg-slate-100">
-                                    <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.id}</td>
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.title}</td>
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.price}</td>
                                     {/* <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.previousPrice}</td> */}
