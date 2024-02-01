@@ -105,10 +105,10 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="min-w-[150px] w-full relative sm:mx-3 sm:mt-3 flex h-48 md:h-60 overflow-hidden rounded-xl"
+              className="min-w-[130px] w-full relative sm:mx-3 sm:mt-3 flex h-40 md:h-60 overflow-hidden rounded-xl"
             >
               <img
-                className="peer  absolute top-0 right-0 h-full w-full object-contain"
+                className="peer absolute top-0 right-0 h-full w-full object-contain"
                 src={item.image1}
                 alt="product image"
               />
@@ -143,7 +143,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   : null}
             </Link>
 
-            <div className="sm:p-4 flex justify-center w-full items-start gap-3 flex-col px-2">
+            <div className="sm:p-4 mt-5 w-[60%] flex justify-center w-full items-start flex-col px-2">
               <div className="absolute top-2 right-2 flex items-center space-x-2">
                 <Heart
                   fill={isFavorite(item.id) ? "red" : "black"}
@@ -165,7 +165,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
                 />
               </div>
-              <p className="w-[150px] md:w-[200px] whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
+              <p className="pr-2  text-sm whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
                 {item?.title}
               </p>
               <p className="flex items-center justify-start w-full text-designColor font-semibold">
@@ -179,17 +179,17 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                         dispatch(addToCart(item));
                         toast.success(`${item?.title} is added to Cart!`);
                       }}
-                      className=" w-[70%] sm:w-fit justify-center flex items-center gap-1 md:text-base uppercase font-semibold text-white bg-designColor py-1 sm:py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
+                      className="sm:w-fit justify-center flex items-center gap-1 md:text-base uppercase font-semibold text-white bg-black py-1 sm:py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
                     >
                       <ShoppingBasketIcon
                         onClick={() => {
                           dispatch(addToCart(item));
                           toast.success(`${item?.title} is added to Cart!`);
                         }}
-                        className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
+                        className="text-designColor w-4 h-4 cursor-pointer duration-200 hover:text-black"
                       />
                       <span className="hidden sm:inline-block text-sm">Add to Cart</span>
-                      <span className="sm:hidden text-sm ">Buy</span>
+                      <span className="sm:hidden text-xs sm:text-sm ">Buy</span>
 
                     </button>
                   </>
