@@ -80,7 +80,7 @@ function FilterableProducts({ categories }) {
   return (
     <div className='mt-3 md:mt-0'>
       <div className='relative flex gap-4 m-auto'>
-        <Categories setOpenSidebar={setOpenSidebar} openSidebar={openSidebar} setCategoryName={setCategoryName} categories={categories} />
+        <Categories products={products} setOpenSidebar={setOpenSidebar} openSidebar={openSidebar} setCategoryName={setCategoryName} categories={categories} />
         <div className='flex-1'>
           {openSidebar ? null :
             <AlignJustify size={18} className='z-10 lg:hidden cursor-pointer text-slate-700 absolute top-7 mr-3 ml-auto' onClick={() => setOpenSidebar(true)} />
