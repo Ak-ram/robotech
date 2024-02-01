@@ -45,7 +45,7 @@ function FilterableProducts({ categories }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const p = await getCategoryProducts(categoryName);
+        const p = categoryName ? await getCategoryProducts(categoryName) : await getProducts();
         setProducts(p);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -59,22 +59,22 @@ function FilterableProducts({ categories }) {
     }
   }, [categoryName]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const p = await getProducts();
-        setProducts(p);
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const p = await getProducts();
+  //       setProducts(p);
 
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
+  //     } catch (error) {
+  //       console.error('Error fetching products:', error);
+  //     }
+  //   };
 
-    if (typeof window !== 'undefined') {
-      // Run the effect only in the browser environment
-      fetchProducts();
-    }
-  }, []);
+  //   if (typeof window !== 'undefined') {
+  //     // Run the effect only in the browser environment
+  //     fetchProducts();
+  //   }
+  // }, []);
 
 
   return (
