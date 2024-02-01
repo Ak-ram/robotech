@@ -5,10 +5,10 @@ import { useState } from "react"; // Import useState from React
 const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   return (
-    <div className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"} h-fit transition -left-7 top-5 absolute md:relative min-w-[300px] w-[300px] p-3 z-10 border-t-0 bottom-0 left-0 overflow-hidden w-64`}>
+    <div className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"} h-fit transition -left-7 top-5 absolute lg:relative lg:min-w-[350px] lg:w-[350px] min-w-[300px] w-[300px] p-3 z-10 border-t-0 bottom-0 left-0 overflow-hidden w-64`}>
       <div className="flex h-full flex-grow flex-col p-3 overflow-y-auto bg-white shadow-md">
         <div className="flex flex-col">
-      <X size={20} className="md:hidden cursor-pointer text-slate-700 self-end " onClick={()=>setOpenSidebar(false)}/>
+      <X size={20} className="lg:hidden cursor-pointer text-slate-700 self-end " onClick={()=>setOpenSidebar(false)}/>
           <span className="ml-3 mt-5 mb-2 block text-base font-semibold text-gray-500">Product Mangement</span>
           <nav className="text-zinc-600 block overflow-x-auto">
             {categories?.map((cat_title: string, i: number) => (

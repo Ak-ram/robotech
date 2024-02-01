@@ -82,15 +82,15 @@ function FilterableProducts({ categories }) {
       <div className='relative flex gap-4 m-auto'>
         <Categories setOpenSidebar={setOpenSidebar} openSidebar={openSidebar} setCategoryName={setCategoryName} categories={categories} />
         <div className='flex-1'>
-            <AlignJustify size={18} className='md:hidden cursor-pointer text-slate-700 absolute top-7 mr-3 ml-auto' onClick={()=>setOpenSidebar(true)} />
-          <div className="hidden md:flex flex-col gap-2 items-center">
+            <AlignJustify size={18} className='lg:hidden cursor-pointer text-slate-700 absolute top-7 mr-3 ml-auto' onClick={()=>setOpenSidebar(true)} />
+          <div className="hidden lg:flex flex-col gap-2 items-center">
             <h2 className="text-2xl font-bold lg:text-3xl ">Choose a Category</h2>
             <p className="text-sm lg:text-lg text-center">
               Explore custom layouts designed for seamless electronic shopping.
             </p>
           </div>
           {/* <SearchComponent /> */}
-          <div className={`${openSidebar ? "blur-md md:blur-none":"blur-none"} `}>
+          <div className={`${openSidebar ? "blur-md lg:blur-none":"blur-none"} `}>
 
           <Product categoryName={categoryName} prefix={'pr'} products={products} />
           </div>
