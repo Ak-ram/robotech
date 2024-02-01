@@ -48,6 +48,9 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
         const p = await getOneProduct(prefix!, idString!);
         console.log('single product', p)
         setProduct(p);
+        if (typeof window !== 'undefined' && window.scrollTo) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       } catch (error) {
         console.error("Error fetching products:", error);
       }
