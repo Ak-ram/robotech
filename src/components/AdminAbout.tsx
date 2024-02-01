@@ -184,15 +184,6 @@ const AdminAbout = () => {
             <div className=" mb-2 lg:pr-4">
               <input
                 type="text"
-                placeholder="ID"
-                className="w-full p-2 border border-gray-300 rounded"
-                value={editedItem.id}
-                onChange={(e) => handleInputChange(e, "id")}
-              />
-            </div>
-            <div className=" mb-2 lg:pr-4">
-              <input
-                type="text"
                 placeholder="Title"
                 className="w-full p-2 border border-gray-300 rounded"
                 value={editedItem.title}
