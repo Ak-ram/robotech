@@ -40,7 +40,7 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
                   {cat_title?.charAt(0).toUpperCase() + cat_title?.slice(1)}
 
                 </button>
-                <ol className="">
+                <ol className="w-[250px]">
                   { selectedCategory === cat_title &&
                     products.map(product => 
                       <Link  href={{
@@ -49,7 +49,7 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
                           id: product?.id,
                           prefix: product?.category,
                         },
-                      }} className="hover:bg-zinc-100 hover:text-zinc-950 py-2 flex pl-3 mb-1 ml-8 items-center gap-1 w-full justify-start">
+                      }} className="hover:bg-zinc-100 hover:text-zinc-950 py-2 flex pl-3 mb-1 ml-6 items-center gap-1 w-full justify-start">
                       <ChevronRight size={15}/>
                     <li className="w-[200px] text-ellipsis whitespace-nowrap overflow-hidden font-semibold">{product.title}</li>
                   </Link>)
