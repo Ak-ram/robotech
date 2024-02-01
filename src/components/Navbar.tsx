@@ -3,7 +3,7 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import Link from "next/link";
 import Logo from "./Logo";
-import { Heart, List, PhoneCall, Search, ShoppingBagIcon, ShoppingBasket, X } from "lucide-react";
+import { AlignJustify, Heart, PhoneCall, Search, ShoppingBagIcon, ShoppingBasket, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/constants/data";
 import { useSelector } from "react-redux";
@@ -58,12 +58,15 @@ const Navbar = () => {
 
 
   return (
-    <div className=" py-2 border-b-[1px] border-b-zinc-500 bg-white/80 text-zinc-800 sticky top-0 z-50  backdrop-blur-2xl">
-      <div className="w-[98%] mx-auto order-first flex-wrap max-w-screen-xl mx-auto h-full flex items-center px-4 xl:px-0">
+    <div className="py-2 sm:py-4 border-b-[1px] border-b-zinc-500 bg-white/80 text-zinc-800 sticky top-0 z-50  backdrop-blur-2xl">
+      <div className="w-[98%] relative mx-auto order-first flex-wrap max-w-screen-xl mx-auto h-full flex items-center px-4 xl:px-0">
         {/* Logo */}
 
+        <span onTouchEnd={() => setOpenSidebar(true)}
+          onClick={() => setOpenSidebar(true)} className='md:hidden absolute h-full z-50 w-3 animate-pulse rounded -left-1 bg-designColor'>
 
-        <List onClick={() => setOpenSidebar(true)} className='md:hidden' />
+          {/* <AlignJustify /> */}
+        </span>
 
         <Logo />
         {/* Navigation */}
@@ -99,8 +102,8 @@ const Navbar = () => {
             href={"/wishlist"}
             className="text-designColor cursor-pointer duration-200 relative group"
           >
-            <Heart className="md:w-8 md:h-8" />
-            <span className="absolute top-0 -left-1 bg-black text-white w-5 h-5 rounded-full text-sm flex items-center justify-center group-hover: font-bold ">
+            <Heart className="sm:w-8 sm:h-8" />
+            <span className="absolute top-0 -left-1 bg-black text-white w-4 h-4 sm:w-5 sm:h-5  rounded-full text-xs sm:text-sm flex items-center justify-center group-hover: sm:font-bold ">
               {favoriteData ? favoriteData.length : 0}
             </span>
           </Link>
@@ -108,16 +111,16 @@ const Navbar = () => {
             href={"/cart"}
             className={`${flashAnimation ? "animate-ping" : ""
               } text-designColor cursor-pointer duration-200 relative group`}
-          >            <ShoppingBasket className="md:w-8 md:h-8" />
-            <span className="absolute top-0 -left-1  bg-black text-white w-5 h-5 rounded-full text-sm flex items-center justify-center group-hover: font-bold ">
+          >            <ShoppingBasket className="sm:w-8 sm:h-8" />
+            <span className="absolute top-0 -left-1  bg-black text-white w-4 h-4 sm:w-5 sm:h-5 rounded-full text-xs sm:text-sm flex items-center justify-center group-hover: sm:font-bold ">
               {productData ? productData.length : 0}
             </span>
           </Link>
           <span
-            className="-ml-3 text-sm font-bold flex flex-col justify-center items-center -gap-2"
+            className="-ml-3  font-bold flex flex-col justify-center items-center -gap-2"
           >
-            <span>({productData ? productData.length.toLocaleString('ar') : 0}) items</span>
-            <FormattedPrice amount={totalAmt} />
+            <span className='text-xs sm:text-sm'>({productData ? productData.length.toLocaleString('ar') : 0}) items</span>
+            <FormattedPrice className='text-xs sm:text-sm' amount={totalAmt} />
           </span>
 
 
@@ -125,7 +128,6 @@ const Navbar = () => {
 
       </div>
       <div className='mt-3 md:h-[1px] w-full bg-gray-900 opacity-20'></div>
-      {/* <hr className='bg-black text-black shadow'/> */}
       <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
         <span className='md:block hidden mt-4 font-bold'>Look for specific Product ? </span>
         <SearchComponent />
