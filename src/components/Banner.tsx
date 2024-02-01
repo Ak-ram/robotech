@@ -49,10 +49,10 @@ const Banner: React.FC<BannerProps> = () => {
     ),
     customPaging: (i: number) => (
       <div
-      className={`${i === dotActive ? 'items-center justify-center text-designColor border-designColor' :"text-slate-500 border-slate-500"}  cursor-pointer flex text-sm font-bold border-b pb-1 mx-1 select-none`}
+      className={`${i === dotActive ? 'items-center justify-center text-designColor border-designColor md:bg-transparent bg-designColor w-[18px] h-[6px] md:w-fit md:h-fit' :"text-slate-500 border-slate-500 w-[6px] h-[6px] bg-black md:bg-transparent  md:w-fit md:h-fit"} rounded-full md:rounded-none cursor-pointer flex text-sm font-bold border-b pb-1 md:mx-1 select-none`}
        
         
-      ><Link href={slides[i]?.link_url} className="flex items-center gap-1">
+      ><Link href={slides[i]?.link_url} className="hidden md:flex items-center gap-1">
         <ExternalLink size={15}/>{slides[i]?.link_text}</Link>
         </div>
     ),
