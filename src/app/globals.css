@@ -9,6 +9,9 @@
 * {
   /* user-select: none; */
   outline: none;
+  font-size: 16px;
+  scroll-behavior: smooth;
+
   /* transition: all .2s ease-in; */
 }
 

@@ -4,7 +4,7 @@ import Categories from './Categories';
 import Product from './Product';
 import { getCategoryProducts } from '@/helpers/getCategoryProducts';
 import { getProducts } from '@/helpers/getProducts';
-import { Search } from 'lucide-react';
+import { AlignJustify, LibraryBig, Search, X } from 'lucide-react';
 import FormattedPrice from './FormattedPrice';
 import { ProductType, StateProps } from '../../type';
 import { useSelector } from 'react-redux';
@@ -17,6 +17,7 @@ function FilterableProducts({ categories }) {
   const [products, setProducts] = useState<any[]>([]);
   const [totalAmt, setTotalAmt] = useState(0);
   const [rowPrice, setRowPrice] = useState(0);
+  const [openSidebar, setOpenSidebar] = useState(false);
 
   // Function to toggle the slide-bottom class on click
 
@@ -44,7 +45,7 @@ function FilterableProducts({ categories }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const p = await getCategoryProducts(categoryName);
+        const p = categoryName ? await getCategoryProducts(categoryName) : await getProducts();
         setProducts(p);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -58,37 +59,43 @@ function FilterableProducts({ categories }) {
     }
   }, [categoryName]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const p = await getProducts();
-        setProducts(p);
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const p = await getProducts();
+  //       setProducts(p);
 
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
+  //     } catch (error) {
+  //       console.error('Error fetching products:', error);
+  //     }
+  //   };
 
-    if (typeof window !== 'undefined') {
-      // Run the effect only in the browser environment
-      fetchProducts();
-    }
-  }, []);
+  //   if (typeof window !== 'undefined') {
+  //     // Run the effect only in the browser environment
+  //     fetchProducts();
+  //   }
+  // }, []);
 
 
   return (
-    <div className='mt-5'>
-      <div className='relative mt-5 flex gap-4 m-auto '>
-        <Categories setCategoryName={setCategoryName} categories={categories} />
+    <div className='mt-3 md:mt-0'>
+      <div className='relative flex gap-4 m-auto'>
+        <Categories products={products} setOpenSidebar={setOpenSidebar} openSidebar={openSidebar} setCategoryName={setCategoryName} categories={categories} />
         <div className='flex-1'>
-          <div className="mt-5 flex flex-col gap-2 items-center">
+          {openSidebar ? null :
+            <AlignJustify size={18} className='z-10 lg:hidden cursor-pointer text-slate-700 absolute top-7 mr-3 ml-auto' onClick={() => setOpenSidebar(true)} />
+          }
+          <div className="hidden lg:flex flex-col gap-2 items-center">
             <h2 className="text-2xl font-bold lg:text-3xl ">Choose a Category</h2>
             <p className="text-sm lg:text-lg text-center">
               Explore custom layouts designed for seamless electronic shopping.
             </p>
           </div>
           <SearchComponent />
-          <Product categoryName={categoryName} prefix={'pr'} products={products} />
+          <div className={`${openSidebar ? "blur-md lg:blur-none" : "blur-none"} `}>
+
+            <Product categoryName={categoryName} prefix={'pr'} products={products} />
+          </div>
         </div>
       </div>
     </div>

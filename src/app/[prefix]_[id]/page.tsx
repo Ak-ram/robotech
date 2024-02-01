@@ -24,9 +24,9 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   const [products, setProducts] = useState<any[]>([]);
   const [mainImg, setMainImg] = useState<1 | 2 | 3>(1);
   const searchPar = useSearchParams();
-  const idString = searchPar.get("id");
-  const id = Number(idString);
-  const prefix = searchPar.get("prefix");
+  const idString = searchPar?.get("id");
+  // const id = Number(idString);
+  const prefix = searchPar?.get("prefix");
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -45,9 +45,12 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const p = await getOneProduct(prefix, id);
+        const p = await getOneProduct(prefix!, idString!);
         console.log('single product', p)
         setProduct(p);
+        if (typeof window !== 'undefined' && window.scrollTo) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -56,7 +59,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
     if (typeof window !== "undefined") {
       fetchProduct();
     }
-  }, [id, prefix]);
+  }, [idString, prefix]);
 
   const dispatch = useDispatch();
   if (prefix === 'courses') return <CoursePage searchParams={{}} />

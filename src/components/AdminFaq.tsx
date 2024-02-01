@@ -4,6 +4,7 @@ import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
+import { v4 as uuidv4 } from 'uuid';
 
 const AdminFaq = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -31,7 +32,7 @@ const AdminFaq = () => {
   const handleAddItemClick = () => {
     setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
-      id: "",
+      id: uuidv4(),
       question: "",
       answer: "",
     });
@@ -132,7 +133,6 @@ const AdminFaq = () => {
           <table className="min-w-full border border-gray-300 text-sm">
             <thead>
               <tr className="bg-zinc-800 text-white ">
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Id</th>
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Question</th>
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Answer</th>
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">Actions</th>
@@ -141,7 +141,6 @@ const AdminFaq = () => {
             <tbody>
               {jsonArray.map((item, index) => (
                 <tr key={index} className="hover:bg-slate-100">
-                  <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.id}</td>
                   <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.question}</td>
                   <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.answer}</td>
                   <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
@@ -171,15 +170,6 @@ const AdminFaq = () => {
           </h2>
           {error && <p className="text-red-500 mb-2">{error}</p>}
           <div className="flex flex-col lg:flex-row">
-            <div className=" mb-2 lg:pr-4">
-              <input
-                type="text"
-                placeholder="ID"
-                className="w-full p-2 border border-gray-300 rounded"
-                value={editedItem.id}
-                onChange={(e) => handleInputChange(e, "id")}
-              />
-            </div>
             <div className=" mb-2 lg:pr-4">
               <input
                 type="text"
@@ -228,7 +218,7 @@ const AdminFaq = () => {
           Add Item
         </button>
       </div> */}
-        <Toaster
+      <Toaster
         position="bottom-right"
         toastOptions={{
           style: {

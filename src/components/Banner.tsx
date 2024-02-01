@@ -49,34 +49,10 @@ const Banner: React.FC<BannerProps> = () => {
     ),
     customPaging: (i: number) => (
       <div
-      className="text-sm font-bold border-b pb-1 mx-1 select-none"
-        style={
-          i === dotActive
-            ? {
-              // width: "20px",
-              // height: "6px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#000",
-              cursor: "pointer",
-              // borderRadius: "1rem",
-              borderColor: '#000'
-            }
-            : {
-              // width: "6px",
-              // height: "6px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#999",
-              // background: "#131921",
-              cursor: "pointer",
-              // borderRadius: "1rem",
-              borderColor: '#999'
-            }
-        }
-      ><Link href={slides[i]?.link_url} className="flex items-center gap-1">
+      className={`${i === dotActive ? 'items-center justify-center text-designColor border-designColor md:bg-transparent bg-designColor w-[18px] h-[6px] md:w-fit md:h-fit' :"text-slate-500 border-slate-500 w-[6px] h-[6px] bg-black md:bg-transparent  md:w-fit md:h-fit"} rounded-full md:rounded-none cursor-pointer flex text-sm font-bold border-b pb-1 md:mx-1 select-none`}
+       
+        
+      ><Link href={slides[i]?.link_url} className="hidden md:flex items-center gap-1">
         <ExternalLink size={15}/>{slides[i]?.link_text}</Link>
         </div>
     ),
@@ -132,8 +108,8 @@ const Banner: React.FC<BannerProps> = () => {
             </div>
           ))}
       </Slider>
-      <div className="mb-10 rounded-sm h-20 absolute left-1/2  transform -translate-x-1/2 hidden lg:inline-flex items-center gap-x-12 p-10">
-        <div className="border border-b-designColor rounded-sm h-20 bg-white absolute left-1/2 -bottom-10 transform -translate-x-1/2 hidden lg:inline-flex items-center gap-x-12 p-10">
+      <div className="mt-10 rounded-sm h-20 px-10 w-full hidden lg:inline-flex items-center gap-x-12 ">
+        <div className="border border-b-designColor rounded-sm h-20 bg-white mx-auto lg:inline-flex items-center gap-x-12 p-10">
           <div className="flex items-center gap-5 w-60">
             <Clock className="text-designColor w-8 h-8" />
             <div>

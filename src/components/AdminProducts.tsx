@@ -9,7 +9,7 @@ import Loading from "./Loading";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import FormattedPrice from "./FormattedPrice";
-
+import { v4 as uuidv4 } from 'uuid';
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
   const [toggleNewCat, setToggleNewCat] = useState<boolean>(true);
@@ -62,7 +62,7 @@ const AdminComponent = () => {
   const handleAddItemClick = () => {
     setEditIndex(-1);
     setEditedItem({
-      id: "",
+      id: uuidv4(),
       title: "",
       price: "",
       previousPrice: '',
@@ -344,7 +344,7 @@ const AdminComponent = () => {
                       <div
                         key={product.id}
                         // href={`/product/${product.id}`}
-                        className="flex items-start hover:no-underline bg-gray-200 p-2 rounded hover:bg-white"
+                        className="flex group items-start hover:no-underline bg-gray-200 p-2 rounded hover:bg-white"
                       >
                         <div className="w-10 h-10 min-w-[2.5rem]  rounded-sm">
                           <img
@@ -354,7 +354,9 @@ const AdminComponent = () => {
                           />
                         </div>
                         <div className="ml-4 flex-1">
-                          <p className="text-sm text-gray-800 font-bold">{product.title}</p>
+                          <p className="text-sm text-gray-800 font-bold">{product.title}
+                          
+                          </p>
                           <span
                             className={cn(
                               product.count === 0
@@ -367,6 +369,7 @@ const AdminComponent = () => {
                           >
                             {product.count === 0 ? 'Out of Stock' : product.count + ' in Stock'}
                           </span>
+                        <span className="opacity-0 transition text-sm font-semibold group-hover:opacity-100 ml-2 italic">#{product?.id}</span>
                         </div>
                         <div className="font-bold text-xs sm:text-sm text-zinc-700 pl-1.5">
                           <FormattedPrice amount={product.price} />
@@ -514,7 +517,7 @@ const AdminComponent = () => {
                     </h2>
                     <div className="flex flex-col lg:flex-row flex-wrap">
                       {Object.entries({
-                        id: 'ID',
+                        // id: 'ID',
                         title: 'Title',
                         description: 'Description',
                         price: 'Price',

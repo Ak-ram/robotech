@@ -4,6 +4,7 @@ import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
+import { v4 as uuidv4 } from 'uuid';
 
 const AdminAbout = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -32,7 +33,7 @@ const AdminAbout = () => {
   const handleAddItemClick = () => {
     setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
-      id: "",
+      id: uuidv4(),
       title: "",
       description: "",
       link_text: "",
@@ -134,7 +135,6 @@ const AdminAbout = () => {
         <table className="min-w-full border border-gray-300 text-sm">
           <thead>
             <tr className="bg-zinc-800 text-white ">
-              <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Id</th>
               <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Title</th>
               <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Description</th>
               <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Link text</th>
@@ -145,7 +145,6 @@ const AdminAbout = () => {
           <tbody>
             {jsonArray.map((item, index) => (
               <tr key={index} className="hover:bg-slate-100">
-                <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.id}</td>
                 <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.title}</td>
                 <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.description}</td>
                 <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.link_text}</td>
@@ -180,15 +179,6 @@ const AdminAbout = () => {
             {editIndex === -1 ? "Add New Item" : "Edit Item"}
           </h2>
           <div className="flex flex-col lg:flex-row">
-            <div className=" mb-2 lg:pr-4">
-              <input
-                type="text"
-                placeholder="ID"
-                className="w-full p-2 border border-gray-300 rounded"
-                value={editedItem.id}
-                onChange={(e) => handleInputChange(e, "id")}
-              />
-            </div>
             <div className=" mb-2 lg:pr-4">
               <input
                 type="text"

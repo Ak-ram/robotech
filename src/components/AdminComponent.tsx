@@ -15,9 +15,8 @@ import AdminAnnouncement from "./AdminAnnouncement";
 import { BarChart, GraduationCap, HelpCircle, Key, LayoutList, Menu, Printer, SlidersHorizontal, Smile, StickyNote, X } from "lucide-react";
 import Stats from "./Stats";
 
-const AdminComponent = () => {
+const AdminComponent = (router) => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
-  const router = useRouter();
   interface SidebarItem {
     id: number;
     label: string;
@@ -63,7 +62,7 @@ const AdminComponent = () => {
       <div className={`select-none bg-white text-black transition-all ${isOpen ? 'w-[250px] py-4 px-2' : 'w-0'}  lg:border-r lg:border-gray-200 `}>
         {/* <h2 className="text-2xl font-bold mb-4">Pages</h2> */}
 
-        <ul className="flex items-center bg-white py-2 px-2 font-bold justify-between overflow-x-auto gap-x-3 lg:flex-col lg:bg-transparent lg:items-start">
+        <ul className="bg-white py-2  font-bold justify-between overflow-x-auto  lg:bg-transparent lg:items-start">
           {sidebarItems.map((item) => (
             <li
               key={item.id}

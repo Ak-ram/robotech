@@ -3,7 +3,7 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import Link from "next/link";
 import Logo from "./Logo";
-import { Heart, PhoneCall, Search, ShoppingBagIcon, ShoppingBasket } from "lucide-react";
+import { AlignJustify, Heart, PhoneCall, Search, ShoppingBagIcon, ShoppingBasket, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/constants/data";
 import { useSelector } from "react-redux";
@@ -23,6 +23,7 @@ const Navbar = () => {
 
   const [totalAmt, setTotalAmt] = useState(0);
   const [rowPrice, setRowPrice] = useState(0);
+  const [openSidebar, setOpenSidebar] = useState(false);
 
 
   useEffect(() => {
@@ -40,24 +41,46 @@ const Navbar = () => {
   }, [productData]);
 
 
+  const [flashAnimation, setFlashAnimation] = useState(false);
+
+  useEffect(() => {
+    // Trigger flash animation when totalAmt changes
+    setFlashAnimation(true);
+
+    // Reset flash animation after a short delay (adjust as needed)
+    const timeoutId = setTimeout(() => {
+      setFlashAnimation(false);
+    }, 500); // 500 milliseconds
+
+    return () => clearTimeout(timeoutId);
+  }, [totalAmt]);
+
 
 
   return (
-    <div className=" py-2 border-b-[1px] border-b-zinc-500 bg-zinc-900 text-white/80 sticky top-0 z-50  backdrop-blur-2xl">
-      <div className="w-[98%] mx-auto order-first flex-wrap max-w-screen-xl mx-auto h-full flex items-center px-4 xl:px-0">
+    <div className="py-2 sm:py-4 bg-white/80 text-zinc-800 sticky top-0 z-50  backdrop-blur-2xl">
+      <div className="w-[98%] relative mx-auto order-first flex-wrap max-w-screen-xl mx-auto h-full flex items-center px-4 xl:px-0">
         {/* Logo */}
+
+        <span onTouchEnd={() => setOpenSidebar(true)}
+          onClick={() => setOpenSidebar(true)} className='md:hidden absolute h-full z-50 w-3 animate-pulse rounded -left-1 bg-designColor'>
+
+          {/* <AlignJustify /> */}
+        </span>
+
         <Logo />
         {/* Navigation */}
-        <ul className="order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center w-full md:w-fit flex py-2 items-center gap-5 text-sm uppercase font-semibold">
+        <ul className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"} flex px-2 -ml-6 absolute md:relative top-0 w-[200px] border-gray-400 border-r md:border-0 z-50 transition transform bgDesign md:bg-transprot md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}>
+          <X className='ml-auto text-black m-2 md:hidden' onClick={() => setOpenSidebar(false)} />
           {navigation.map((item) => (
             <Link href={item?.href} key={item.title}>
               <li
-                className={`mt-2 hover:text-white cursor-pointer duration-200 relative overflow-hidden group ${item.href === pathname && "text-white"
+                className={`mt-2 hover:text-designColor cursor-pointer duration-200 relative overflow-hidden group ${item.href === pathname && "text-designColor font-bold"
                   }`}
               >
                 {item?.title}
                 <span
-                  className={`absolute h-[1px] w-full bg-white left-0 bottom-0 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500 ${item.href === pathname && "translate-x-0 bg-designColor"
+                  className={`hidden md:block absolute h-[2px] w-full bg-designColor left-0 bottom-0 -translate-x-[100%] z-10 translate-y-[1px] group-hover:translate-x-0 transition-transform duration-500 ${item.href === pathname && "translate-x-0 bg-designColor"
                     }`}
                 />
               </li>
@@ -68,47 +91,49 @@ const Navbar = () => {
         {/* icons */}
         <div className="w-[70%] justify-end md:w-fit md:justify-start ml-auto flex items-center gap-x-5">
 
-          <div className='border-l border-r px-3 hidden md:flex items-center text-xs gap-2 text-white/80'>
-            <PhoneCall className='text-white/80 md:w-6 md:h-6' />
-            <div className='flex flex-col gap-1'>
-              <span><span className='font-bold  text-white'>Support </span>(+20) 11 0207 1544 </span>
+          <div className='border-l border-r px-3 hidden lg:flex items-center text-xs gap-2 text-gray/80'>
+            <PhoneCall className='text-gray/80 md:w-6 md:h-6' />
+            <div className='flex flex-col gap-2'>
+              <span><span className='font-bold '>Support </span>(+20) 11 0207 1544 </span>
               <span>robotechspace8@gmail.com</span>
             </div>
           </div>
           <Link
             href={"/wishlist"}
-            className="animate-bounce hover:text-white cursor-pointer duration-200 relative group"
+            className="text-designColor cursor-pointer duration-200 relative group"
           >
-            <Heart className="md:w-6 md:h-6" />
-            <span className="absolute top-0 -left-1 bg-slate-200 text-black w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-white font-semibold ">
+            <Heart className="sm:w-8 sm:h-8" />
+            <span className="absolute top-0 -left-1 bg-black text-white w-4 h-4 sm:w-5 sm:h-5  rounded-full text-xs sm:text-sm flex items-center justify-center group-hover: sm:font-bold ">
               {favoriteData ? favoriteData.length : 0}
             </span>
           </Link>
           <Link
             href={"/cart"}
-            className="hover:text-white cursor-pointer duration-200 relative group"
-          >
-            <ShoppingBasket className="md:w-6 md:h-6" />
-            <span className="absolute top-0 -left-1  bg-slate-200 text-black w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-white font-semibold ">
+            className={`${flashAnimation ? "animate-ping" : ""
+              } text-designColor cursor-pointer duration-200 relative group`}
+          >            <ShoppingBasket className="sm:w-8 sm:h-8" />
+            <span className="absolute top-0 -left-1  bg-black text-white w-4 h-4 sm:w-5 sm:h-5 rounded-full text-xs sm:text-sm flex items-center justify-center group-hover: sm:font-bold ">
               {productData ? productData.length : 0}
             </span>
           </Link>
           <span
-            className="-ml-3 text-sm font-bold flex flex-col justify-center items-center -gap-2"
+            className="-ml-3  font-bold flex flex-col justify-center items-center -gap-2"
           >
-            <span>({productData ? productData.length.toLocaleString('ar') : 0}) items</span>
-            <FormattedPrice amount={totalAmt} />
+            <span className='text-xs sm:text-sm'>({productData ? productData.length.toLocaleString('ar') : 0}) items</span>
+            <FormattedPrice className='text-xs sm:text-sm' amount={totalAmt} />
           </span>
 
 
         </div>
 
       </div>
-      <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
+      <div className='mt-3 md:h-[1px] w-full bg-gray-900 opacity-20'></div>
+     {/* 
+       <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
         <span className='md:block hidden mt-4 font-bold'>Look for specific Product ? </span>
-      <SearchComponent  />
+         <SearchComponent /> 
 
-      </div>
+      </div> */}
     </div>
 
   );

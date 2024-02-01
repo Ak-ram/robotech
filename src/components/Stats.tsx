@@ -97,7 +97,7 @@ const Stats = () => {
                 }</h1>
 
 
-                <ApexChartComp categoryStats={categoryStats}/>
+                <ApexChartComp categoryStats={categoryStats} />
                 {/* <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={380} /> */}
 
 
