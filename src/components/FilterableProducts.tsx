@@ -90,7 +90,10 @@ function FilterableProducts({ categories }) {
             </p>
           </div>
           {/* <SearchComponent /> */}
+          <div className={`${openSidebar ? "blur-md":"blur-none"} `}>
+
           <Product categoryName={categoryName} prefix={'pr'} products={products} />
+          </div>
         </div>
       </div>
     </div>

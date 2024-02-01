@@ -5,7 +5,7 @@ import { useState } from "react"; // Import useState from React
 const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   return (
-    <div className={`${openSidebar ? "translate-x-0" : "-translate-x-full"} transition -left-7 top-5 absolute min-w-[250px] w-[250px] p-3 z-10 border-t-0 bottom-0 left-0 overflow-hidden w-64`}>
+    <div className={`${openSidebar ? "translate-x-0" : "-translate-x-full"} h-fit transition -left-7 top-5 absolute min-w-[250px] w-[250px] p-3 z-10 border-t-0 bottom-0 left-0 overflow-hidden w-64`}>
       <div className="flex h-full flex-grow flex-col p-3 overflow-y-auto bg-white shadow-md">
         <div className="flex flex-col">
       <X size={20} className="text-slate-700 self-end " onClick={()=>setOpenSidebar(false)}/>

@@ -16,6 +16,7 @@ interface Item {
   products: ProductType[];
   prefix: string;
   categoryName: string;
+
 }
 
 const Product = ({ products, prefix, categoryName }: Item) => {
@@ -45,7 +46,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   };
 
   return (
-    <div className="flex-1 pt-5">
+    <div className={`flex-1 pt-5`}>
 
       <nav aria-label="Page navigation example" className=" flex items-center justify-end">
         <ul className="flex items-center -space-x-px h-8 text-sm">
