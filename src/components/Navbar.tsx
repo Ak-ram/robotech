@@ -58,7 +58,7 @@ const Navbar = () => {
 
 
   return (
-    <div className="py-2 sm:py-4 border-b-[1px] border-b-zinc-500 bg-white/80 text-zinc-800 sticky top-0 z-50  backdrop-blur-2xl">
+    <div className="py-2 sm:py-4 bg-white/80 text-zinc-800 sticky top-0 z-50  backdrop-blur-2xl">
       <div className="w-[98%] relative mx-auto order-first flex-wrap max-w-screen-xl mx-auto h-full flex items-center px-4 xl:px-0">
         {/* Logo */}
 
@@ -128,11 +128,12 @@ const Navbar = () => {
 
       </div>
       <div className='mt-3 md:h-[1px] w-full bg-gray-900 opacity-20'></div>
-      <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
+     {/* 
+       <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
         <span className='md:block hidden mt-4 font-bold'>Look for specific Product ? </span>
-        <SearchComponent />
+         <SearchComponent /> 
 
-      </div>
+      </div> */}
     </div>
 
   );

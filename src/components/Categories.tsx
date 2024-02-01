@@ -10,6 +10,8 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
       <div className="flex h-full flex-grow flex-col p-3 overflow-y-auto bg-white shadow-md">
         <div className="flex flex-col">
           <X size={20} className="lg:hidden cursor-pointer text-slate-700 self-end " onClick={() => setOpenSidebar(false)} />
+
+         
           <span className="ml-3 mt-5 mb-2 block text-sm md:text-base font-semibold text-gray-500">Categories</span>
           <nav className="text-zinc-600 block overflow-x-auto">
             <button
@@ -65,6 +67,7 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
                 </ol></>
             ))}
           </nav>
+          <span className="ml-3 mt-5 mb-2 block text-sm md:text-base font-semibold text-gray-500">Price</span>
 
           <span className="ml-3 mt-10 mb-2 block  text-sm md:text-base font-semibold text-gray-500">Pages</span>
 

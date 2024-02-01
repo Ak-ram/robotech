@@ -5,7 +5,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { ProductType } from "../../type";
 import { getProducts } from "@/helpers/getProducts";
 
-const SearchComponent = () => {
+const SearchComponent = (className) => {
   const [res, setRes] = useState<ProductType[]>([]);
   const [products, setProducts] = useState<ProductType[]>([]);
   const [isInput, setIsInput] = useState(false);

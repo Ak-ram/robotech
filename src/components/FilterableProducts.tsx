@@ -91,7 +91,7 @@ function FilterableProducts({ categories }) {
               Explore custom layouts designed for seamless electronic shopping.
             </p>
           </div>
-          {/* <SearchComponent /> */}
+          <SearchComponent />
           <div className={`${openSidebar ? "blur-md lg:blur-none" : "blur-none"} `}>
 
             <Product categoryName={categoryName} prefix={'pr'} products={products} />
