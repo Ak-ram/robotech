@@ -218,7 +218,7 @@ const AdminFaq = () => {
           Add Item
         </button>
       </div> */}
-        <Toaster
+      <Toaster
         position="bottom-right"
         toastOptions={{
           style: {
