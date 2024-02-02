@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderModel from "./orderModel"
 import { updateJsonFile } from "@/helpers/updateJSONData";
+import { getProducts } from "@/helpers/getProducts";
+import { ProductType } from "../../type";
 
 const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
+    const [list, setList] = useState<ProductType[]>([]);
     const [newOrder, setNewOrder] = useState({
         productName: '',
         quantity: 1,
     });
+ useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const p = await getProducts();
+        setList(p);
 
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      // Run the effect only in the browser environment
+      fetchProducts();
+    }
+  }, []);
     const handleAddOrder = () => {
         // Validate order details if needed
 
@@ -81,7 +99,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
         {/* Modal for adding orders */}
         {showAddOrderModal && (
-            <OrderModel newOrder={newOrder} setNewOrder={setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal} />
+            <OrderModel list={list} newOrder={newOrder} setNewOrder={setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal} />
         )}
     </>)
 }

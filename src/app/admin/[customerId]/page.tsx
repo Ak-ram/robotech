@@ -49,12 +49,12 @@ const CustomerPage = () => {
             <h2 className="text-xl font-semibold mb-4">Transactions</h2>
             <div className='flex items-center justify-between'>
               {tabs.map((tab, index) => <button
-              key={index}
+                key={index}
                 onClick={() => setCurrentTab(index)}
                 className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
               // onClick={() => setShowAddOrderModal(true)}
               >
-                Buy {tab.label}
+                Sell {tab.label}
               </button>)}
             </div>
             <section>

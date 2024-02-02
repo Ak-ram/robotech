@@ -4,8 +4,9 @@ import { useState } from "react";
 
 const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
+    const [list, setList] = useState([]);
     const [newOrder, setNewOrder] = useState({
-        courseName: '',
+        productName: '',
         quantity: 1,
     });
     const handleAddOrder = () => {
@@ -15,7 +16,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
         const existingTransactions = customerData.transactions || [];
 
         // Create a new order
-        const newCourseObject = { productName: newOrder.courseName, quantity: newOrder.quantity };
+        const newCourseObject = { productName: newOrder.productName, quantity: newOrder.quantity };
 
         // Check if there are any transactions
         if (existingTransactions.length > 0) {
@@ -24,7 +25,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
 
             // Add the new order to the latest transaction's orders array
             const latestTransaction = updatedTransactions[0];
-            latestTransaction.courses = [latestTransaction.courses, newCourseObject];
+            latestTransaction.courses = [...latestTransaction.courses, newCourseObject];
         } else {
             // If there are no existing transactions, create a new transaction with the new order
             const newTransaction = {
@@ -43,7 +44,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
 
         // Update the state
         setNewOrder({
-            courseName: '',
+            productName: '',
             quantity: 1,
         });
         setShowAddOrderModal(false);
@@ -60,11 +61,12 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                 <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
 
                 <ul>
-                    {transaction.courses?.map((course, orderIndex) => (
-                        <li key={orderIndex}>
-                            Product: {course!.courseName}, Quantity: {course!.quantity}
+                    {transaction.courses?.map((course, orderIndex) => {
+                        if (course === null || course === undefined) return;
+                        return <li key={orderIndex}>
+                            Product: {course?.productName!}, Quantity: {course?.quantity!}
                         </li>
-                    ))}
+                    })}
                 </ul>
 
                 <p className="mt-2 text-gray-600">Amount: ${transaction.amount.toFixed(2)}</p>
@@ -80,7 +82,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
 
         {/* Modal for adding orders */}
         {showAddOrderModal && (
-            <OrderModel newOrder={newOrder} setNewOrder={setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal} />
+            <OrderModel list={list} newOrder={newOrder} setNewOrder={setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal} />
         )}
     </>)
 }
