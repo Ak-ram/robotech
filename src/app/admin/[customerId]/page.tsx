@@ -14,11 +14,17 @@ const CustomerPage = () => {
   const initialCustomerData = typeof data === 'string' ? JSON.parse(data) : null;
   const [customerData, setCustomerData] = useState(initialCustomerData);
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
+  const [currentTab, setCurrentTab] = useState(0);
   const [newOrder, setNewOrder] = useState({
     productName: '',
     quantity: 1,
   });
-
+  const tabs = [
+    { content: 'tab 1', label: "Product" },
+    { content: 'tab 2', label: "Workshop" },
+    { content: 'tab 3', label: "Course" },
+    { content: 'tab 4', label: "Drink" },
+  ]
   const handleAddOrder = () => {
     // Validate order details if needed
 
@@ -90,14 +96,18 @@ const CustomerPage = () => {
           <div className="mt-6">
             <h2 className="text-xl font-semibold mb-4">Transactions</h2>
             <div className='flex items-center justify-between'>
-              {["Product","Workshop","Course","Drink"].map(button=> <button
-              className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-              onClick={() => setShowAddOrderModal(true)}
-            >
-             Buy {button}
-            </button>)}
+              {tabs.map((tab, index) => <button
+                onClick={() => setCurrentTab(index)}
+                className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+              // onClick={() => setShowAddOrderModal(true)}
+              >
+                Buy {tab.label}
+              </button>)}
             </div>
-            {customerData.transactions.map((transaction, index) => (
+            <section>
+              {tabs[currentTab].content}
+            </section>
+            {/* {customerData.transactions.map((transaction, index) => (
               <div key={index} className="mb-4">
                 <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
 
@@ -118,11 +128,11 @@ const CustomerPage = () => {
               onClick={() => setShowAddOrderModal(true)}
             >
               Add Order
-            </button>
+            </button> */}
 
             {/* Modal for adding orders */}
             {showAddOrderModal && (
-             <OrderModel newOrder={newOrder} setNewOrder= {setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal}/>
+              <OrderModel newOrder={newOrder} setNewOrder={setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal} />
             )}
           </div>
         </div>
