@@ -10,6 +10,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
     const [newOrder, setNewOrder] = useState({
         productName: '',
         quantity: 1,
+        date:''
     });
  useEffect(() => {
     const fetchProducts = async () => {
@@ -43,11 +44,11 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
             // Add the new order to the latest transaction's orders array
             const latestTransaction = updatedTransactions[0];
-            latestTransaction.orders = [...latestTransaction?.orders || [], newOrderObject];
+            latestTransaction.orders = [...latestTransaction?.orders, newOrderObject];
         } else {
             // If there are no existing transactions, create a new transaction with the new order
             const newTransaction = {
-                date: new Date().toISOString(),
+                
                 orders: [newOrderObject],
                 amount: 0, // You may update the amount based on the actual logic
             };
@@ -64,6 +65,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         setNewOrder({
             productName: '',
             quantity: 1,
+            date:''
         });
         setShowAddOrderModal(false);
         updateJsonFile("robotech/pages/customers.json", [updatedCustomerData]);
@@ -81,7 +83,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 <ul>
                     {transaction.orders.map((order, orderIndex) => (
                         <li key={orderIndex}>
-                            Product: {order.productName}, Quantity: {order.quantity}
+                            Product: {order.productName}, Quantity: {order.quantity}, Date: {order.date}
                         </li>
                     ))}
                 </ul>

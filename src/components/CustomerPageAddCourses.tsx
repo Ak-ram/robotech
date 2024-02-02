@@ -10,6 +10,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     const [newOrder, setNewOrder] = useState({
         productName: '',
         quantity: 1,
+        date: ''
     });
     const handleAddOrder = () => {
         // Validate order details if needed
@@ -26,12 +27,12 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
             const updatedTransactions = [...existingTransactions];
 
             // Add the new order to the latest transaction's orders array
-            const latestTransaction = updatedTransactions[0];
+            const latestTransaction = updatedTransactions[updatedTransactions.length - 1];
             latestTransaction.courses = [...latestTransaction?.courses || [], newCourseObject];
         } else {
             // If there are no existing transactions, create a new transaction with the new order
             const newTransaction = {
-                date: new Date().toISOString(),
+                
                 courses: [newCourseObject],
                 amount: 0, // You may update the amount based on the actual logic
             };
@@ -48,6 +49,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
         setNewOrder({
             productName: '',
             quantity: 1,
+            date: ''
         });
         setShowAddOrderModal(false);
         updateJsonFile("robotech/pages/customers.json", [updatedCustomerData]);
@@ -83,7 +85,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                     {transaction.courses?.map((course, orderIndex) => {
                         if (course === null || course === undefined) return;
                         return <li key={orderIndex}>
-                            Product: {course?.productName!}, Quantity: {course?.quantity!}
+                            Product: {course?.productName!}, Quantity: {course?.quantity!} ,Date: {course?.date!}
                         </li>
                     })}
                 </ul>

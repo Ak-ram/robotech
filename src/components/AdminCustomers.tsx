@@ -12,7 +12,6 @@ const AdminCustomers = () => {
     const [error, setError] = useState<string | null>(null);
     const [editIndex, setEditIndex] = useState<number | null>(null);
     interface CustomerServicesType {
-        date: string,
         orders: ProductType[],
         courses: CourseType[],
         amount: number

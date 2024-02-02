@@ -1,6 +1,6 @@
 import { ProductType } from "../../type"
 
-const OrderModel = ({newOrder,setNewOrder,handleAddOrder,setShowAddOrderModal,list}) => {
+const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModal, list }) => {
     return (<> <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Add Order</h2>
@@ -12,13 +12,15 @@ const OrderModel = ({newOrder,setNewOrder,handleAddOrder,setShowAddOrderModal,li
                     <select
                         className="w-full p-2 border border-gray-300 rounded"
                         value={newOrder.productName}
-                        onChange={(e) => setNewOrder({ ...newOrder, productName: e.target.value })}
+                        onChange={(e) => setNewOrder({
+                            ...newOrder, productName: e.target.value, date: new Date().toISOString()
+                        })}
                     >
                         <option value="">Select a product</option>
                         {/* {list?.map(product:ProductType=><option value="Product 1">Product 1</option>)} */}
-                        {list?.map((product:ProductType)=><option value={product?.title!}>{product?.title!}</option>)}
-                      
-                     
+                        {list?.map((product: ProductType) => <option key={product?.id} value={product?.title!}>{product?.title!}</option>)}
+
+
                     </select>
                 </div>
                 <div className="mb-4">
