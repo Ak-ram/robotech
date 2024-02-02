@@ -20,6 +20,8 @@ const CustomerPage = () => {
   return (
     <div>
       <h1>Customer ID: {idString}</h1>
+      <h1>Customer ID: {customerData.fullName}</h1>
+      <h1>Customer ID: {customerData.phone}</h1>
       {/* Render customerData in your component */}
     </div>
   );
