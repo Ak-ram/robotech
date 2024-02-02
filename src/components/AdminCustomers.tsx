@@ -159,7 +159,13 @@ const AdminCustomers = () => {
                             {jsonArray.map((item, index) => (
                                 <tr key={index} className="hover:bg-slate-100">
                                     <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                                        <Link href={`/admin/${item.id}`}>{item.fullName}</Link></td>
+                                        <Link href={{
+                                            pathname: `admin/id_${item?.id}`,
+                                            query: {
+                                                id: item?.id,
+                                            },
+                                        }} >{item.fullName}</Link>
+                                    </td>
                                     <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.phone}</td>
                                     <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
                                         <button
