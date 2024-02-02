@@ -14,6 +14,7 @@ const AdminCustomers = () => {
     interface CustomerServicesType {
         date: string,
         orders: ProductType[],
+        courses: any[],
         amount: number
     }
     interface CustomerType {

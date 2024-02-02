@@ -1,14 +1,13 @@
-import { useState } from "react";
-import OrderModel from "./orderModel"
 import { updateJsonFile } from "@/helpers/updateJSONData";
+import OrderModel from "./orderModel"
+import { useState } from "react";
 
-const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
+const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
     const [newOrder, setNewOrder] = useState({
-        productName: '',
+        courseName: '',
         quantity: 1,
     });
-
     const handleAddOrder = () => {
         // Validate order details if needed
 
@@ -16,7 +15,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         const existingTransactions = customerData.transactions || [];
 
         // Create a new order
-        const newOrderObject = { productName: newOrder.productName, quantity: newOrder.quantity };
+        const newCourseObject = { productName: newOrder.courseName, quantity: newOrder.quantity };
 
         // Check if there are any transactions
         if (existingTransactions.length > 0) {
@@ -25,12 +24,12 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
             // Add the new order to the latest transaction's orders array
             const latestTransaction = updatedTransactions[0];
-            latestTransaction.orders = [...latestTransaction.orders, newOrderObject];
+            latestTransaction.courses = [latestTransaction.courses, newCourseObject];
         } else {
             // If there are no existing transactions, create a new transaction with the new order
             const newTransaction = {
                 date: new Date().toISOString(),
-                orders: [newOrderObject],
+                courses: [newCourseObject],
                 amount: 0, // You may update the amount based on the actual logic
             };
 
@@ -44,7 +43,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
         // Update the state
         setNewOrder({
-            productName: '',
+            courseName: '',
             quantity: 1,
         });
         setShowAddOrderModal(false);
@@ -61,9 +60,9 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
 
                 <ul>
-                    {transaction.orders.map((order, orderIndex) => (
+                    {transaction.courses?.map((course, orderIndex) => (
                         <li key={orderIndex}>
-                            Product: {order.productName}, Quantity: {order.quantity}
+                            Product: {course!.courseName}, Quantity: {course!.quantity}
                         </li>
                     ))}
                 </ul>
@@ -76,7 +75,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
             className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
             onClick={() => setShowAddOrderModal(true)}
         >
-            Add Product
+            Add Course
         </button>
 
         {/* Modal for adding orders */}
@@ -86,4 +85,4 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
     </>)
 }
 
-export default CustomerPageAddProducts
+export default CustomerPageAddCourses
