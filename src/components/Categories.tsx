@@ -53,7 +53,7 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
                 <ol className="w-[250px]">
                   {selectedCategory === cat_title && isOpen &&
                     products.map(product =>
-                      <Link href={{
+                      <Link key={product?.id} href={{
                         pathname: `/id_${product?.id}`,
                         query: {
                           id: product?.id,
