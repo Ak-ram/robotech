@@ -58,7 +58,7 @@ const CustomerPage = () => {
       quantity: 1,
     });
     setShowAddOrderModal(false);
-    updateJsonFile("robotech/pages/customers.json", updatedCustomerData);
+    updateJsonFile("robotech/pages/customers.json", [updatedCustomerData]);
             
     // You might want to update your JSON file or API with the updatedCustomerData
     // updateJsonFile(updatedCustomerData); // Assuming there is a function to update JSON data
