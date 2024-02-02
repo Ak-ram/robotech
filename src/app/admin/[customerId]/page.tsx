@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { updateJsonFile } from '@/helpers/updateJSONData';
 import OrderModel from '@/components/orderModel';
+import CustomerPageAddProducts from '@/components/CustomerPageAddProducts';
 
 const CustomerPage = () => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const CustomerPage = () => {
     quantity: 1,
   });
   const tabs = [
-    { content: 'tab 1', label: "Product" },
+    { content: <CustomerPageAddProducts customerData={customerData} setShowAddOrderModal={setShowAddOrderModal} />, label: "Product" },
     { content: 'tab 2', label: "Workshop" },
     { content: 'tab 3', label: "Course" },
     { content: 'tab 4', label: "Drink" },
@@ -107,28 +108,7 @@ const CustomerPage = () => {
             <section>
               {tabs[currentTab].content}
             </section>
-            {/* {customerData.transactions.map((transaction, index) => (
-              <div key={index} className="mb-4">
-                <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
 
-                <ul>
-                  {transaction.orders.map((order, orderIndex) => (
-                    <li key={orderIndex}>
-                      Product: {order.productName}, Quantity: {order.quantity}
-                    </li>
-                  ))}
-                </ul>
-
-                <p className="mt-2 text-gray-600">Amount: ${transaction.amount.toFixed(2)}</p>
-              </div>
-            ))}
-
-            <button
-              className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-              onClick={() => setShowAddOrderModal(true)}
-            >
-              Add Order
-            </button> */}
 
             {/* Modal for adding orders */}
             {showAddOrderModal && (
