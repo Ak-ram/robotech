@@ -16,13 +16,12 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
   const [course, setCourse] = useState<CourseType | undefined>();
   const searchPar = useSearchParams();
   const idString = searchPar.get("id");
-  const id = Number(idString);
   const prefix = searchPar.get("prefix");
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const p = await getOneProduct(prefix, id);
+        const p = await getOneProduct(prefix!, idString!);
         console.log(p);
         setCourse(p);
       } catch (error) {
@@ -33,7 +32,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
     if (typeof window !== "undefined") {
       fetchProduct();
     }
-  }, [id, prefix]);
+  }, [idString, prefix]);
 
   const dispatch = useDispatch();
 
