@@ -12,39 +12,38 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
         quantity: 1,
         date: ''
     });
-    const handleAddOrder = () => {
+    const handleAddOrder = async () => {
         // Validate order details if needed
-
+    
         // Copy the existing transactions
         const existingTransactions = customerData.transactions || [];
-
+    
         // Create a new order
         const newCourseObject = { productName: newOrder.productName, quantity: newOrder.quantity };
-
+    
         // Check if there are any transactions
         if (existingTransactions.length > 0) {
             // Copy the existing transactions
             const updatedTransactions = [...existingTransactions];
-
-            // Add the new order to the latest transaction's orders array
+    
+            // Add the new order to the latest transaction's courses array
             const latestTransaction = updatedTransactions[updatedTransactions.length - 1];
-            latestTransaction.courses = [...latestTransaction?.courses || [], newCourseObject];
+            latestTransaction.courses = [...(latestTransaction.courses || []), newCourseObject];
         } else {
             // If there are no existing transactions, create a new transaction with the new order
             const newTransaction = {
-                
                 courses: [newCourseObject],
                 amount: 0, // You may update the amount based on the actual logic
             };
-
+    
             // Update the transactions array with the new transaction
-            const updatedTransactions = [newTransaction];
+            const updatedTransactions = [...existingTransactions, newTransaction];
             customerData.transactions = updatedTransactions;
         }
-
+    
         // Update the customerData with the new transactions array
-        const updatedCustomerData = { ...customerData };
-
+        const updatedCustomerData = { ...customerData, transactions: customerData.transactions };
+    
         // Update the state
         setNewOrder({
             productName: '',
@@ -52,13 +51,22 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
             date: ''
         });
         setShowAddOrderModal(false);
-        updateJsonFile("robotech/pages/customers.json", [updatedCustomerData]);
-        setCustomerData(updatedCustomerData);
-        console.log(customerData);
-
-        // You might want to update your JSON file or API with the updatedCustomerData
-        // updateJsonFile(updatedCustomerData); // Assuming there is a function to update JSON data
+    
+        try {
+            // Update the JSON file with the updated data
+            await updateJsonFile("robotech/pages/customers.json", [updatedCustomerData]);
+    
+            // You might also want to update your API or other storage mechanisms if applicable
+    
+            // Update the state with the new data
+            setCustomerData(updatedCustomerData);
+            console.log(customerData);
+        } catch (error) {
+            console.error("Error updating JSON file:", error);
+            // Handle error appropriately
+        }
     };
+    
 
     useEffect(() => {
         const fetchProducts = async () => {
