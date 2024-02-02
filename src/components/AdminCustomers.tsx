@@ -5,7 +5,7 @@ import { Check, X, Trash, Edit, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from 'uuid';
-import { ProductType } from "../../type";
+import { CourseType, ProductType } from "../../type";
 import Link from 'next/link'
 const AdminCustomers = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -14,7 +14,7 @@ const AdminCustomers = () => {
     interface CustomerServicesType {
         date: string,
         orders: ProductType[],
-        courses: any[],
+        courses: CourseType[],
         amount: number
     }
     interface CustomerType {

@@ -21,7 +21,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         console.error('Error fetching products:', error);
       }
     };
-
+<option value="Product 1">Product 1</option>
     if (typeof window !== 'undefined') {
       // Run the effect only in the browser environment
       fetchProducts();

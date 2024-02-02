@@ -1,8 +1,10 @@
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import OrderModel from "./orderModel"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCourses } from "@/helpers/getCourses";
 
 const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
+
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
     const [list, setList] = useState([]);
     const [newOrder, setNewOrder] = useState({
@@ -25,7 +27,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
 
             // Add the new order to the latest transaction's orders array
             const latestTransaction = updatedTransactions[0];
-            latestTransaction.courses = [...latestTransaction.courses, newCourseObject];
+            latestTransaction.courses = [...latestTransaction?.courses || [], newCourseObject];
         } else {
             // If there are no existing transactions, create a new transaction with the new order
             const newTransaction = {
@@ -55,6 +57,23 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
         // You might want to update your JSON file or API with the updatedCustomerData
         // updateJsonFile(updatedCustomerData); // Assuming there is a function to update JSON data
     };
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const p = await getCourses();
+                setList(p);
+
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        if (typeof window !== 'undefined') {
+            // Run the effect only in the browser environment
+            fetchProducts();
+        }
+    }, []);
     return (<>
         {customerData.transactions.map((transaction, index) => (
             <div key={index} className="mb-4">
