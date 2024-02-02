@@ -9,15 +9,19 @@ const CustomerPage = () => {
   const searchPar = useSearchParams();
   const customerId = searchPar?.get("id");
   const data = searchPar?.get("data");
+
   // Parse data based on its type
   const customerData = typeof data === 'string' ? JSON.parse(data) : null;
 console.log(customerData)
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
+  const [lastCustomerData, setLastCustomerData] = useState(customerData);
   const [newOrder, setNewOrder] = useState({
     productName: '',
     quantity: 1,
   });
+  useEffect(()=>{
 
+  },[customerData])
   const handleAddOrder = () => {
     // Validate order details if needed
   
@@ -59,7 +63,7 @@ console.log(customerData)
     });
     setShowAddOrderModal(false);
     updateJsonFile("robotech/pages/customers.json", [updatedCustomerData]);
-            
+    setLastCustomerData(updatedCustomerData)
     // You might want to update your JSON file or API with the updatedCustomerData
     // updateJsonFile(updatedCustomerData); // Assuming there is a function to update JSON data
   };
@@ -78,18 +82,18 @@ console.log(customerData)
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-gray-600 mb-2">Full Name:</p>
-              <p className="font-semibold">{customerData.fullName}</p>
+              <p className="font-semibold">{lastCustomerData.fullName}</p>
             </div>
 
             <div>
               <p className="text-gray-600 mb-2">Phone No.:</p>
-              <p className="font-semibold">{customerData.phone}</p>
+              <p className="font-semibold">{lastCustomerData.phone}</p>
             </div>
           </div>
           <div className="mt-6">
             <h2 className="text-xl font-semibold mb-4">Transactions</h2>
 
-            {customerData.transactions.map((transaction, index) => (
+            {lastCustomerData.transactions.map((transaction, index) => (
               <div key={index} className="mb-4">
                 <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
 
