@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
-import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
+import { Check, X, Trash, Edit, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from 'uuid';
 import { ProductType } from "../../type";
-
+import Link from 'next/link'
 const AdminCustomers = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -158,7 +158,8 @@ const AdminCustomers = () => {
                         <tbody>
                             {jsonArray.map((item, index) => (
                                 <tr key={index} className="hover:bg-slate-100">
-                                    <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.fullName}</td>
+                                    <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                                        <Link href={`/admin/${item.id}`}>{item.fullName}</Link></td>
                                     <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.phone}</td>
                                     <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
                                         <button
