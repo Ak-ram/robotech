@@ -11,7 +11,7 @@ const CustomerPage = () => {
   const data = searchPar?.get("data");
   // Parse data based on its type
   const customerData = typeof data === 'string' ? JSON.parse(data) : null;
-
+console.log(customerData)
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [newOrder, setNewOrder] = useState({
     productName: '',
@@ -91,7 +91,7 @@ const CustomerPage = () => {
 
             {customerData.transactions.map((transaction, index) => (
               <div key={index} className="mb-4">
-                <p className="text-gray-600 mb-2">Date: {transaction.date}</p>
+                <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
 
                 <ul>
                   {transaction.orders.map((order, orderIndex) => (
