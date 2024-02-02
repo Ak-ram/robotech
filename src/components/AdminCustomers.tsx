@@ -87,36 +87,36 @@ const AdminCustomers = () => {
             setError("All fields are required");
             return;
         }
-
+    
         if (editIndex !== null) {
-            let updatedArray;
-
-            if (editIndex === -1) {
-                // Add a new item
-                updatedArray = [...jsonArray, editedItem];
-            } else {
-                // Update an existing item
-                updatedArray = jsonArray.map((item, index) =>
-                    index === editIndex ? editedItem : item
-                );
-            }
-
             try {
+                let updatedArray;
+    
+                if (editIndex === -1) {
+                    // Add a new item without overwriting existing ones
+                    updatedArray = [...jsonArray, editedItem];
+                } else {
+                    // Update an existing item without overwriting existing ones
+                    updatedArray = jsonArray.map((item, index) =>
+                        index === editIndex ? editedItem : item
+                    );
+                }
+    
                 await updateJsonFile("robotech/pages/customers.json", updatedArray);
                 setJsonArray(updatedArray);
                 setEditIndex(null);
                 setError(null); // Reset error state
-                toast.success('Question added successfully')
-                toast.loading(`Be patient, changes takes a few moments to be reflected`);
+                toast.success(editIndex === -1 ? 'Customer added successfully' : 'Customer updated successfully');
+                toast.loading(`Be patient, changes take a few moments to be reflected`);
                 setTimeout(() => {
                     toast.dismiss();
-
                 }, 5000);
             } catch (error) {
                 setError((error as Error).message);
             }
         }
     };
+    
 
     const handleEditCancel = () => {
         setEditIndex(null);
