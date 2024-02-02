@@ -15,8 +15,6 @@ import FormattedPrice from "./FormattedPrice";
 import { calculatePercentage } from "@/helpers";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { loadStripe } from "@stripe/stripe-js";
-// import { useSession } from "next-auth/react";
 import EmptyCard from "@/assets/empty.png"
 import VodafoneCash from "./VodafoneCash";
 import VodafoneIcon from '@/assets/vodafoneIcon.png';
