@@ -12,8 +12,8 @@ const AdminCustomers = () => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState<any>({
     id: "",
-    question: "",
-    answer: "",
+    fullName: "",
+    phone: "",
   });
 
   useEffect(() => {
@@ -33,8 +33,8 @@ const AdminCustomers = () => {
     setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
       id: uuidv4(),
-      question: "",
-      answer: "",
+      fullName: "",
+      phone: "",
     });
     setError(null); // Reset error state
   };
@@ -66,8 +66,8 @@ const AdminCustomers = () => {
     // Check for empty fields
     if (
       !editedItem.id ||
-      !editedItem.question ||
-      !editedItem.answer
+      !editedItem.fullName ||
+      !editedItem.phone
     ) {
       setError("All fields are required");
       return;
