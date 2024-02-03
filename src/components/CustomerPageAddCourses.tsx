@@ -5,10 +5,12 @@ import { getCourses } from "@/helpers/getCourses";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
+import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
 
 const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
 
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
+    const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
     const [list, setList] = useState([]);
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [newOrder, setNewOrder] = useState({
@@ -16,6 +18,11 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
         quantity: 1,
         date: ''
     });
+
+
+    useEffect(() => {
+        setUpdatedCustomerData(customerData)
+    }, [customerData])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,11 +51,11 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                 existingCustomer.transactions = {
                     courses: [],
                 };
-            } else if (!existingCustomer.transactions.courses) {
-                existingCustomer.transactions.courses = [];
+            } else if (!existingCustomer.transactions.course) {
+                existingCustomer.transactions.course = [];
             }
 
-            existingCustomer.transactions.courses.push(newOrder);
+            existingCustomer.transactions.course.push(newOrder);
 
             jsonArray[existingCustomerIndex] = existingCustomer;
 
@@ -102,16 +109,27 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                 >
                     Add Course
                 </button>
-                {customerData?.transactions?.courses?.map((course, index) => (
-                    <div
-                        key={index}
-                        className="bg-white p-6 rounded-lg shadow-md mb-4"
-                    >
-                        <p className="text-gray-600 mb-2">Transaction date: {course["date"]}</p>
-                        <p className="text-gray-600 mb-2">Course name: {course["productName"]}</p>
-                        <p className="text-gray-600 mb-2">Course price: <FormattedPrice amount={course["piecePrice"]} /></p>
-                        <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={course["discount"]!} /></p>
-                        <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={course["subtotal"]!} /></p>
+                {updatedCustomerData?.transactions?.courses?.map((course, index) => (
+                    <div className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
+
+                        <div
+                            key={index}
+                            className="flex-1"
+                        >
+                            <p className="text-gray-600 mb-2">Transaction date: {course["date"]}</p>
+                            <p className="text-gray-600 mb-2">Course name: {course["courseName"]}</p>
+                            <p className="text-gray-600 mb-2">Course price: <FormattedPrice amount={course["piecePrice"]} /></p>
+                            <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={course["discount"]!} /></p>
+                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={course["subtotal"]!} /></p>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <div className="flex-1">
+                                <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
+                                <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
+
+                            </div>
+                            <Trash className="ml-auto mr-2 cursor-not-allowed text-red-600" size={20} />
+                        </div>
                     </div>
                 ))}
 

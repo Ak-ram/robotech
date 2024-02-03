@@ -10,6 +10,7 @@ import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
 const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
+    const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
     const [list, setList] = useState([]);
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [newOrder, setNewOrder] = useState({
@@ -17,6 +18,11 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         quantity: 1,
         date: ''
     });
+
+
+    useEffect(()=>{
+        setUpdatedCustomerData(customerData)
+    },[customerData])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -103,7 +109,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 >
                     Add Product
                 </button>
-                {customerData?.transactions?.products?.map((product, index) => (
+                {updatedCustomerData?.transactions?.products?.map((product, index) => (
                     <div className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
                        
                         <div

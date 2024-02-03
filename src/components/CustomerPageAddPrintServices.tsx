@@ -5,10 +5,12 @@ import { getPrintServices } from "@/helpers/getPrintServices";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
+import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
 
 const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
 
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
+    const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
     const [list, setList] = useState([]);
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [newOrder, setNewOrder] = useState({
@@ -16,6 +18,11 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
         quantity: 1,
         date: ''
     });
+
+
+    useEffect(()=>{
+        setUpdatedCustomerData(customerData)
+    },[customerData])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -95,49 +102,61 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
     }, []);
     return (
         <>
-        <div className="max-w-3xl mx-auto my-8">
-            <button
-                className="mb-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
-                onClick={() => setShowAddOrderModal(true)}
-            >
-                Add PrintService
-            </button>
-            {customerData?.transactions?.printServices?.map((printService, index) => (
-                <div
-                    key={index}
-                    className="bg-white p-6 rounded-lg shadow-md mb-4"
+            <div className="max-w-3xl mx-auto my-8">
+                <button
+                    className="mb-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+                    onClick={() => setShowAddOrderModal(true)}
                 >
-                    <p className="text-gray-600 mb-2">Transaction date: {printService["date"]}</p>
-                    <p className="text-gray-600 mb-2">printService name: {printService["productName"]}</p>
-                    <p className="text-gray-600 mb-2">printService price: <FormattedPrice amount={printService["piecePrice"]} /></p>
-                    <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={printService["discount"]!} /></p>
-                    <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={printService["subtotal"]!} /></p>
-                </div>
-            ))}
+                    Add PrintServices
+                </button>
+                {updatedCustomerData?.transactions?.printServices?.map((service, index) => (
+                    <div className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
+                       
+                        <div
+                            key={index}
+                            className="flex-1"
+                        >
+                            <p className="text-gray-600 mb-2">Transaction date: {service["date"]}</p>
+                            <p className="text-gray-600 mb-2">Service name: {service["serviceName"]}</p>
+                            <p className="text-gray-600 mb-2">Service price: <FormattedPrice amount={service["piecePrice"]} /></p>
+                            <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={service["discount"]!} /></p>
+                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={service["subtotal"]!} /></p>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <div className="flex-1">
+                            <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
+                            <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
+
+                            </div>
+                            <Trash className="ml-auto mr-2 cursor-not-allowed text-red-600" size={20} />
+                        </div>
+                    </div>
+                ))}
 
 
-        </div>
+            </div>
 
-        {showAddOrderModal && (
-            <OrderModel
-                list={list}
-                newOrder={newOrder}
-                setNewOrder={setNewOrder}
-                handleAddOrder={handleAddOrder}
-                setShowAddOrderModal={setShowAddOrderModal}
+            {showAddOrderModal && (
+                <OrderModel
+                    list={list}
+                    newOrder={newOrder}
+                    setNewOrder={setNewOrder}
+                    handleAddOrder={handleAddOrder}
+                    setShowAddOrderModal={setShowAddOrderModal}
+                />
+            )}
+
+            <Toaster
+                position="bottom-right"
+                toastOptions={{
+                    style: {
+                        background: "#000",
+                        color: "#fff",
+                    },
+                }}
             />
-        )}
+        </>
 
-        <Toaster
-            position="bottom-right"
-            toastOptions={{
-                style: {
-                    background: "#000",
-                    color: "#fff",
-                },
-            }}
-        />
-    </>
     )
 }
 
