@@ -11,6 +11,8 @@ const AdminCustomers = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [editIndex, setEditIndex] = useState<number | null>(null);
+    const [isLinkDisabled, setLinkDisabled] = useState(false);
+
     interface CustomerServicesType {
         orders: ProductType[],
         courses: CourseType[],
@@ -44,6 +46,7 @@ const AdminCustomers = () => {
     }, []);
 
     const handleAddItemClick = () => {
+        setLinkDisabled(true); // Disable the link
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
             id: uuidv4(),
@@ -52,7 +55,13 @@ const AdminCustomers = () => {
             transactions: {}
         });
         setError(null); // Reset error state
+
+        // Enable the link after 10 seconds
+        setTimeout(() => {
+            setLinkDisabled(false);
+        }, 10000);
     };
+
 
     const handleRemoveItem = async (index: number) => {
         const updatedArray = [...jsonArray];
@@ -171,13 +180,18 @@ const AdminCustomers = () => {
                             {jsonArray.map((item, index) => (
                                 <tr key={index} className="hover:bg-slate-100">
                                     <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                                        <Link href={{
-                                            pathname: `admin/id_${item?.id}`,
-                                            query: {
-                                                id: item?.id,
-                                                data: JSON.stringify(item)
-                                            },
-                                        }} >{item.fullName}</Link>
+                                        <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                                            <Link href={{
+                                                pathname: `admin/id_${item?.id}`,
+                                                query: {
+                                                    id: item?.id,
+                                                    data: JSON.stringify(item)
+                                                },
+                                            }}  className={isLinkDisabled ? 'cursor-not-allowed text-gray-500' : ''}>
+                                                    {item.fullName}
+                                              
+                                            </Link>
+                                        </td>
                                     </td>
                                     <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.phone}</td>
                                     <td className="max-w-[150px] text-center font-semibold whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
@@ -202,54 +216,54 @@ const AdminCustomers = () => {
 
             {editIndex !== null && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                <div className="bg-white w-[500px] p-8 rounded-lg shadow-md">
-                
-                    <h2 className="font-bold mb-2 text-center text-lg">
-                        {editIndex === -1 ? "Add New Customer" : "Edit Customer"}
-                    </h2>
-                    {error && <p className="text-red-500 mb-2">{error}</p>}
-                    <div className="">
-                        <div className=" mb-2 lg:pr-4">
-                            <span className="font-bold mb-1">Full Name</span>
-                            <input
-                                type="text"
-                                placeholder="Akram Ashraf"
-                                className="w-full p-2 border border-gray-300 rounded"
-                                value={editedItem.fullName}
-                                onChange={(e) => handleInputChange(e, "fullName")}
-                            />
-                        </div>
-                        <div className=" mb-2 lg:pr-4">
-                        <span className="font-bold mb-1">Phone No.</span>
+                    <div className="bg-white w-[500px] p-8 rounded-lg shadow-md">
 
-                            <input
-                                type="text"
-                                placeholder="01XXXXXXXXX"
-                                className="p-2 w-full border border-gray-300 rounded"
-                                value={editedItem.phone}
-                                onChange={(e) => handleInputChange(e, "phone")}
-                            />
-                        </div>
+                        <h2 className="font-bold mb-2 text-center text-lg">
+                            {editIndex === -1 ? "Add New Customer" : "Edit Customer"}
+                        </h2>
+                        {error && <p className="text-red-500 mb-2">{error}</p>}
+                        <div className="">
+                            <div className=" mb-2 lg:pr-4">
+                                <span className="font-bold mb-1">Full Name</span>
+                                <input
+                                    type="text"
+                                    placeholder="Akram Ashraf"
+                                    className="w-full p-2 border border-gray-300 rounded"
+                                    value={editedItem.fullName}
+                                    onChange={(e) => handleInputChange(e, "fullName")}
+                                />
+                            </div>
+                            <div className=" mb-2 lg:pr-4">
+                                <span className="font-bold mb-1">Phone No.</span>
 
+                                <input
+                                    type="text"
+                                    placeholder="01XXXXXXXXX"
+                                    className="p-2 w-full border border-gray-300 rounded"
+                                    value={editedItem.phone}
+                                    onChange={(e) => handleInputChange(e, "phone")}
+                                />
+                            </div>
+
+                        </div>
+                        <div className="flex mt-5">
+                            <button
+                                className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+                                onClick={handleEditSubmit}
+                            >
+                                <Check size={18} className="mr-1" />
+                                Save
+                            </button>
+                            <button
+                                className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                                onClick={handleEditCancel}
+                            >
+                                <X size={18} className="mr-1" />
+                                Cancel
+                            </button>
+                        </div>
                     </div>
-                    <div className="flex mt-5">
-                        <button
-                            className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
-                            onClick={handleEditSubmit}
-                        >
-                            <Check size={18} className="mr-1" />
-                            Save
-                        </button>
-                        <button
-                            className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-                            onClick={handleEditCancel}
-                        >
-                            <X size={18} className="mr-1" />
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-              
+
                 </div>
             )}
 

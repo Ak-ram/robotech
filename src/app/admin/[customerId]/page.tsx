@@ -7,6 +7,8 @@ import OrderModel from '@/components/orderModel';
 import CustomerPageAddProducts from '@/components/CustomerPageAddProducts';
 import CustomerPageAddCourses from '@/components/CustomerPageAddCourses';
 import CustomerPageAddPrintServices from '@/components/CustomerPageAddPrintServices';
+import Loading from '@/components/Loading';
+import LoadingScreen from '@/components/LoadingScreen';
 
 const CustomerPage = () => {
   const router = useRouter();
@@ -17,14 +19,23 @@ const CustomerPage = () => {
   const initialCustomerData = typeof data === 'string' ? JSON.parse(data) : null;
   const [customerData, setCustomerData] = useState(initialCustomerData);
   const [currentTab, setCurrentTab] = useState(0);
-
-
+  const [isWait, setWait] = useState(true);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setWait(false);
+    }, 10000);
+  
+    // Clear the timeout when the component unmounts
+    return () => clearTimeout(timeoutId);
+  }, []); // Empty dependency array to run the effect once on mount
+  
 
   const tabs = [
     { content: <CustomerPageAddProducts setCustomerData={setCustomerData} customerData={customerData} />, label: "Product" },
     { content: <CustomerPageAddCourses setCustomerData={setCustomerData} customerData={customerData} />, label: "Course" },
     { content: <CustomerPageAddPrintServices setCustomerData={setCustomerData} customerData={customerData} />, label: "Print Service" },
   ]
+  if(isWait) return <LoadingScreen/> 
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-4xl font-semibold mb-6 text-center">Customer ID: {customerId}</h1>
