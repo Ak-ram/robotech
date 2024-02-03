@@ -4,8 +4,8 @@ import DetailedLogo from '@/assets/DetailedLogo.png';
 import Image from "next/image";
 
 const Bill = ({ transactionData, setShowBill }) => {
-    const { date, productName, quantity, subtotal, piecePrice } = transactionData;
-
+    const { date, productName, quantity, subtotal, piecePrice,discount } = transactionData;
+console.log(transactionData)
     // Add your company data
     const companyData = {
         name: "Electronic Store",
@@ -50,6 +50,9 @@ const Bill = ({ transactionData, setShowBill }) => {
                             </p>
                             <p className="font-bold text-zinc-800">
                                 Piece Price:  <span className="font-semibold">{piecePrice}</span>
+                            </p>
+                            <p className="font-bold text-zinc-800">
+                                Discount:  <span className="font-semibold">{discount}</span>
                             </p>
                         </div>
 

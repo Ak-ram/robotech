@@ -13,6 +13,8 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     const [showBill, setShowBill] = useState(false);
     const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
     const [list, setList] = useState([]);
+    const [selectedCourse, setSelectedCourse] = useState(null);
+
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [newOrder, setNewOrder] = useState({
         productName: '',
@@ -111,14 +113,14 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                     Add Course
                 </button>
                 {updatedCustomerData?.transactions?.courses?.slice().reverse().map((course, index) => (
-                    <div className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
+                    <div key={index} className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
 
                         <div
-                            key={index}
+                            
                             className="flex-1"
                         >
                             <p className="text-gray-600 mb-2">Transaction date: {course["date"]}</p>
-                            <p className="text-gray-600 mb-2">Course name: {course["CourseName"]}</p>
+                            <p className="text-gray-600 mb-2">Course name: {course["productName"]}</p>
                             <p className="text-gray-600 mb-2">Course price: <FormattedPrice amount={course["piecePrice"]} /></p>
                             <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={course["discount"]!} /></p>
                             <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={course["subtotal"]!} /></p>
@@ -127,12 +129,21 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                             <div className="flex-1">
                                 <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
                                 {/* ADD BILL HERE */}
-                                <ScrollText onClick={() => setShowBill(true)} className="my-2 cursor-pointer text-blue-600" size={20} />
+                                <ScrollText
+                                    onClick={() => {
+                                        setShowBill(true);
+                                        setSelectedCourse(course);
+                                    }}
+                                    className="my-2 cursor-pointer text-blue-600"
+                                    size={20}
+                                />
 
                             </div>
                             <Trash className="ml-auto mr-2 cursor-not-allowed text-red-600" size={20} />
                         </div>
-                        {showBill && <Bill transactionData={course} setShowBill={setShowBill} />}
+                        {showBill && selectedCourse && (
+                            <Bill transactionData={selectedCourse} setShowBill={setShowBill} />
+                        )}
                     </div>
                 ))}
 
