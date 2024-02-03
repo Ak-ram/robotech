@@ -45,7 +45,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   };
 
   return (
-    <div className={`flex-1 pt-5 min-w-full`}>
+    <div className={`flex-1 pt-5`}>
 
       <nav aria-label="Page navigation example" className=" flex items-center justify-end">
         <ul className="flex items-center -space-x-px h-8 ">
@@ -104,7 +104,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="min-w-[130px] w-full relative sm:mx-3 sm:mt-3 flex h-40 md:h-60 overflow-hidden rounded-xl"
+              className="min-w-[130px] w-full relative sm:mx-3 sm:mt-3 flex h-40 md:h-60 lg:h-68 overflow-hidden rounded-xl"
             >
               <img
                 className="peer absolute top-0 right-0 h-full w-full object-contain"
@@ -119,21 +119,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 />
               ) : null}
 
-              <svg
-                className="hidden sm:block pointer-events-none absolute inset-x-0 bottom-1 md:bottom-5 mx-auto md:text-3xl text-zinc-600  transition-opacity group-hover:animate-ping group-hover:opacity-30 "
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                role="img"
-                width="1em"
-                height="1em"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 32 32"
-              >
-                <path
-                  fill="currentColor"
-                  d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
-                />
-              </svg>
+           
               {
                 item.price < item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
                   <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center  md: font-medium text-white">
@@ -154,14 +140,14 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       toast.success(`${item?.title} added to favorites!`);
                     }
                   }}
-                  className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
+                  className="text-zinc-500  cursor-pointer duration-200 hover:text-black"
                 />
                 <ShoppingCart
                   onClick={() => {
                     dispatch(addToCart(item));
                     toast.success(`${item?.title} is added to Cart!`);
                   }}
-                  className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
+                  className="text-zinc-500  cursor-pointer duration-200 hover:text-black"
                 />
               </div>
               <p className="pr-2 w-[210px] text-xl whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">

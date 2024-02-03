@@ -15,10 +15,10 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
   };
 
   return (
-    <div className={`flex ${openSidebar ? "" : "hidden"}  min-w-[350px] w-[350px] p-3 z-10 border-t-0 overflow-hidden`}>
+    <div className={`flex ${openSidebar ? " w-[350px] p-3" : "w-0"} transition-all border-t-0 overflow-hidden`}>
       <div className="flex-grow lg:flex-grow-0 lg:w-[350px] bg-white shadow-md">
         <div className="flex flex-col h-full p-3 overflow-y-auto">
-          <X size={20} className="lg:hidden cursor-pointer text-slate-700 self-end" onClick={closeSidebar} />
+          <X className="cursor-pointer text-slate-700 self-end" onClick={closeSidebar} />
 
           <span className="ml-3 mt-5 mb-2 block text-sm md:text-base font-semibold text-gray-500">Categories</span>
 
@@ -41,7 +41,7 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
                     setCategoryName(cat_title);
                     setSelectedCategory((prev) => (prev === cat_title ? '' : cat_title)); // Toggle the selected category
                     setIsOpen(true);
-                    closeSidebar();
+                    // closeSidebar();
                   }}
                 >
                   {selectedCategory === cat_title && isOpen ? (

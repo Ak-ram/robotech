@@ -63,14 +63,14 @@ const Navbar = () => {
         {/* Logo */}
 
         <span onTouchEnd={() => setOpenSidebar(true)}
-          onClick={() => setOpenSidebar(true)} className='md:hidden absolute h-full z-50 w-3 animate-pulse rounded -left-1 bg-designColor'>
+          onClick={() => setOpenSidebar(true)} className='md:hidden h-full w-12 '>
 
-          {/* <AlignJustify /> */}
+          <AlignJustify />
         </span>
 
         <Logo />
         {/* Navigation */}
-        <ul className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"} flex px-2 -ml-6 absolute md:relative top-0 w-[200px] border-gray-400 border-r md:border-0 z-50 transition transform bgDesign md:bg-transprot md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}>
+        <ul className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"} flex px-2 -ml-6 absolute md:relative top-0 w-[250px] border-gray-400 border-r md:border-0 z-50 transition transform bgDesign md:bg-transprot md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}>
           <X className='ml-auto text-black m-2 md:hidden' onClick={() => setOpenSidebar(false)} />
           {navigation.map((item) => (
             <Link href={item?.href} key={item.title}>
@@ -102,8 +102,8 @@ const Navbar = () => {
             href={"/wishlist"}
             className="text-designColor cursor-pointer duration-200 relative group"
           >
-            <Heart className="sm:w-8 sm:h-8" />
-            <span className="absolute top-0 -left-1 bg-black text-white w-4 h-4 sm:w-5 sm:h-5  rounded-full text-xs sm:text-sm flex items-center justify-center group-hover: sm:font-bold ">
+            <Heart className="w-8 h-8" />
+            <span className="absolute top-0 -left-1 bg-black text-white  w-5 h-5  rounded-full  flex items-center justify-center group-hover: sm:font-bold ">
               {favoriteData ? favoriteData.length : 0}
             </span>
           </Link>
@@ -111,16 +111,16 @@ const Navbar = () => {
             href={"/cart"}
             className={`${flashAnimation ? "animate-ping" : ""
               } text-designColor cursor-pointer duration-200 relative group`}
-          >            <ShoppingBasket className="sm:w-8 sm:h-8" />
-            <span className="absolute top-0 -left-1  bg-black text-white w-4 h-4 sm:w-5 sm:h-5 rounded-full text-xs sm:text-sm flex items-center justify-center group-hover: sm:font-bold ">
+          >            <ShoppingBasket className="w-8 h-8" />
+            <span className="absolute top-0 -left-1  bg-black text-white w-5 h-5 rounded-full  flex items-center justify-center group-hover: sm:font-bold ">
               {productData ? productData.length : 0}
             </span>
           </Link>
           <span
             className="-ml-3  font-bold flex flex-col justify-center items-center -gap-2"
           >
-            <span className='text-xs sm:text-sm'>({productData ? productData.length.toLocaleString('ar') : 0}) items</span>
-            <FormattedPrice className='text-xs sm:text-sm' amount={totalAmt} />
+            <span className=''>({productData ? productData.length.toLocaleString('ar') : 0}) items</span>
+            <FormattedPrice className='text-sm' amount={totalAmt} />
           </span>
 
 
