@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 const LoadingScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const textArray = ["Please, wait", "We are making setup for you", "All things done"];
+  const textArray = ["Loading...", "Setting up for you", "Almost there"];
 
   useEffect(() => {
     const intervalId = setInterval(() => {
