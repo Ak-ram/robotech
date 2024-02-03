@@ -20,9 +20,9 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     });
 
 
-    useEffect(() => {
+    useEffect(()=>{
         setUpdatedCustomerData(customerData)
-    }, [customerData])
+    },[customerData])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -51,11 +51,11 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                 existingCustomer.transactions = {
                     courses: [],
                 };
-            } else if (!existingCustomer.transactions.course) {
-                existingCustomer.transactions.course = [];
+            } else if (!existingCustomer.transactions.courses) {
+                existingCustomer.transactions.courses = [];
             }
 
-            existingCustomer.transactions.course.push(newOrder);
+            existingCustomer.transactions.courses.push(newOrder);
 
             jsonArray[existingCustomerIndex] = existingCustomer;
 
@@ -85,19 +85,19 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
 
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchCourses = async () => {
             try {
                 const p = await getCourses();
                 setList(p);
 
             } catch (error) {
-                console.error('Error fetching products:', error);
+                console.error('Error fetching Courses:', error);
             }
         };
 
         if (typeof window !== 'undefined') {
             // Run the effect only in the browser environment
-            fetchProducts();
+            fetchCourses();
         }
     }, []);
     return (
@@ -111,21 +111,21 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                 </button>
                 {updatedCustomerData?.transactions?.courses?.map((course, index) => (
                     <div className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
-
+                       
                         <div
                             key={index}
                             className="flex-1"
                         >
                             <p className="text-gray-600 mb-2">Transaction date: {course["date"]}</p>
-                            <p className="text-gray-600 mb-2">Course name: {course["courseName"]}</p>
+                            <p className="text-gray-600 mb-2">Course name: {course["CourseName"]}</p>
                             <p className="text-gray-600 mb-2">Course price: <FormattedPrice amount={course["piecePrice"]} /></p>
                             <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={course["discount"]!} /></p>
                             <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={course["subtotal"]!} /></p>
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex-1">
-                                <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
-                                <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
+                            <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
+                            <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
 
                             </div>
                             <Trash className="ml-auto mr-2 cursor-not-allowed text-red-600" size={20} />

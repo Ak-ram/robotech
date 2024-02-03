@@ -7,7 +7,7 @@ const LoadingScreen = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % textArray.length);
-    }, 3333); // Change text every 2 seconds (adjust as needed)
+    }, 3000); // Change text every 2 seconds (adjust as needed)
 
     return () => clearInterval(intervalId);
   }, []);

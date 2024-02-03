@@ -19,25 +19,15 @@ const CustomerPage = () => {
   const initialCustomerData = typeof data === 'string' ? JSON.parse(data) : null;
   const [customerData, setCustomerData] = useState(initialCustomerData);
   const [currentTab, setCurrentTab] = useState(0);
-  const [isWait, setWait] = useState(true);
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setWait(false);
-    }, 10000);
-  
-    // Clear the timeout when the component unmounts
-    return () => clearTimeout(timeoutId);
-  }, []); // Empty dependency array to run the effect once on mount
-  
+
 
   const tabs = [
     { content: <CustomerPageAddProducts setCustomerData={setCustomerData} customerData={customerData} />, label: "Product" },
     { content: <CustomerPageAddCourses setCustomerData={setCustomerData} customerData={customerData} />, label: "Course" },
     { content: <CustomerPageAddPrintServices setCustomerData={setCustomerData} customerData={customerData} />, label: "Print Service" },
   ]
-  if(isWait) return <LoadingScreen/> 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="mx-auto mt-8">
       <h1 className="text-4xl font-semibold mb-6 text-center">Customer ID: {customerId}</h1>
 
       {customerData && (
@@ -64,12 +54,12 @@ const CustomerPage = () => {
                 {tabs[currentTab].content}
               </div>
 
-              <div className="flex flex-col space-y-4 lg:w-1/4">
+              <div className="flex flex-col  space-y-4 lg:w-1/4">
                 {tabs.map((tab, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentTab(index)}
-                    className={`py-3 px-6 rounded focus:outline-none ${currentTab === index ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300'}`}
+                    className={`py-3 px-5 rounded focus:outline-none ${currentTab === index ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300'}`}
                   >
                     Sell {tab.label}
                   </button>

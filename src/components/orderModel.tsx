@@ -9,7 +9,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
 
     useEffect(() => {
         // Update subtotal whenever quantity or discount changes
-        const subtotal = (selectedItem?.price || 0) * newOrder.quantity - newOrder.discount;
+        const subtotal = newOrder.discount > 0 ? (selectedItem?.price || 0) * (newOrder.quantity) - newOrder.discount : (selectedItem?.price || 0) * (newOrder.quantity);
         setNewOrder((prevOrder) => ({ ...prevOrder, subtotal }));
     }, [newOrder.quantity, newOrder.discount, selectedItem]);
 
@@ -25,7 +25,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
             toast.error("Discount should be non-negative");
             return;
         }
-   
+
         // Validate selected product
         if (!selectedItem) {
             toast.error("Please select a product");
