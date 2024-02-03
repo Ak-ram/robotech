@@ -166,7 +166,9 @@ const AdminFaq = () => {
       {editIndex !== null && (
         <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white max-h-[700px] overflow-auto min-w-[500px] p-8 rounded-lg shadow-md">
-
+          <h2 className="font-bold mb-2 text-center text-lg">
+              {editIndex === -1 ? "Add Faq" : "Edit Faq"}
+            </h2>
             {error && <p className="text-red-500 mb-2">{error}</p>}
             <div className="">
               <div className=" mb-2 lg:pr-4">

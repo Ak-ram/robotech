@@ -58,7 +58,7 @@ const Navbar = () => {
 
 
   return (
-    <div className="py-2 sm:py-4 bg-white/80 text-zinc-800 sticky top-0 z-0  backdrop-blur-2xl">
+    <div className="py-2 sm:py-4 bg-white/80 text-zinc-800 sticky top-0 z-10  backdrop-blur-2xl">
       <div className="w-[98%] relative mx-auto order-first flex-wrap max-w-screen-xl mx-auto h-full flex items-center px-4 xl:px-0">
         {/* Logo */}
 

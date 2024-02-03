@@ -243,9 +243,9 @@ const Admin3DComponent = () => {
            <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
            <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
         
-          <h2 className="font-bold mb-2">
-            {editIndex === -1 ? "Add New Item" : "Edit Item"}
-          </h2>
+           <h2 className="font-bold mb-2 text-center text-lg">
+                        {editIndex === -1 ? "Add Print Service" : "Edit Print Service"}
+                    </h2>
           <div className="flex flex-col">
          
             <div className="w-full mb-2 lg:pr-4">

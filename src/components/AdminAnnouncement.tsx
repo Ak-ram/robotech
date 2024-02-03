@@ -174,13 +174,13 @@ const AdminAnnouncement = () => {
                     <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
 
 
-                        <h2 className="font-bold mb-2">
-                            {editIndex === -1 ? "Add New Item" : "Edit Item"}
+                        <h2 className="font-bold mb-2 text-center text-lg">
+                            {editIndex === -1 ? "Add Announcement" : "Edit Announcement"}
                         </h2>
                         <div className="">
 
                             <div className=" mb-2 lg:pr-4">
-                            <span className="text-sm font-bold my-2 -ml-2">Body</span>
+                                <span className="text-sm font-bold my-2 -ml-2">Body</span>
 
                                 <input
                                     type="text"
@@ -192,7 +192,7 @@ const AdminAnnouncement = () => {
                             </div>
 
                             <div className="mb-2 lg:pr-4">
-                            <span className="text-sm font-bold my-2 -ml-2">Link Text</span>
+                                <span className="text-sm font-bold my-2 -ml-2">Link Text</span>
 
                                 <input
                                     type="text"
@@ -203,7 +203,7 @@ const AdminAnnouncement = () => {
                                 />
                             </div>
                             <div className=" mb-2 lg:pr-4">
-                            <span className="text-sm font-bold my-2 -ml-2">URL</span>
+                                <span className="text-sm font-bold my-2 -ml-2">URL</span>
 
                                 <input
                                     type="text"

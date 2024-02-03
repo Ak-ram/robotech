@@ -162,57 +162,65 @@ const AdminSlides = () => {
                 </div> : <NoContent />}
 
             {editIndex !== null && (
-                <div className="mt-5">
-                    <h2 className="font-bold mb-2">
-                        {editIndex === -1 ? "Add New Item" : "Edit Item"}
-                    </h2>
-                    <div className="flex flex-col lg:flex-row">
-                        <div className=" mb-2 lg:pr-4">
-                            <input
-                                type="text"
-                                placeholder="ID"
-                                className="w-full p-2 border border-gray-300 rounded"
-                                value={editedItem.id}
-                                onChange={(e) => handleInputChange(e, "id")}
-                            />
+                <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
+                        <div className="">
+                            <h2 className="font-bold text-center text-lg mb-2">
+                                {editIndex === -1 ? "Add New Slide " : "Edit Item"}
+                            </h2>
+                            <div className=" mb-2 lg:pr-4">
+                                <span className="text-sm font-bold my-2 -ml-2">ID</span>
+
+                                <input
+                                    type="text"
+                                    placeholder="ID"
+                                    className="w-full p-2 border border-gray-300 rounded"
+                                    value={editedItem.id}
+                                    onChange={(e) => handleInputChange(e, "id")}
+                                />
+                            </div>
+
+
+                            <div className="mb-2 lg:pr-4">
+                                <span className="text-sm font-bold my-2 -ml-2">Image</span>
+
+                                <input
+                                    type="text"
+                                    placeholder="image"
+                                    className="p-2 w-full border border-gray-300 rounded"
+                                    value={editedItem.image}
+                                    onChange={(e) => handleInputChange(e, "image")}
+                                />
+                            </div>
+
+                            <div className="mb-2 lg:pr-4">
+                                <span className="text-sm font-bold my-2 -ml-2">Link</span>
+
+                                <input
+                                    type="text"
+                                    placeholder="Link URL: /3d"
+                                    className="p-2 w-full border border-gray-300 rounded"
+                                    value={editedItem.link_url}
+                                    onChange={(e) => handleInputChange(e, "link_url")}
+                                />
+                            </div>
                         </div>
-                      
-                       
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
-                            <input
-                                type="text"
-                                placeholder="image"
-                                className="p-2 w-full border border-gray-300 rounded"
-                                value={editedItem.image}
-                                onChange={(e) => handleInputChange(e, "image")}
-                            />
+                        <div className="flex  justify-center">
+                            <button
+                                className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+                                onClick={handleEditSubmit}
+                            >
+                                <Check size={18} className="mr-1" />
+                                Save
+                            </button>
+                            <button
+                                className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                                onClick={handleEditCancel}
+                            >
+                                <X size={18} className="mr-1" />
+                                Cancel
+                            </button>
                         </div>
-                      
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
-                            <input
-                                type="text"
-                                placeholder="Link URL: /3d"
-                                className="p-2 w-full border border-gray-300 rounded"
-                                value={editedItem.link_url}
-                                onChange={(e) => handleInputChange(e, "link_url")}
-                            />
-                        </div>
-                    </div>
-                    <div className="flex  justify-center">
-                        <button
-                            className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
-                            onClick={handleEditSubmit}
-                        >
-                            <Check size={18} className="mr-1" />
-                            Save
-                        </button>
-                        <button
-                            className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-                            onClick={handleEditCancel}
-                        >
-                            <X size={18} className="mr-1" />
-                            Cancel
-                        </button>
                     </div>
                 </div>
             )}

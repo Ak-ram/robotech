@@ -204,7 +204,7 @@ const AdminCustomers = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="bg-white w-[500px] p-8 rounded-lg shadow-md">
                 
-                    <h2 className="font-bold mb-2">
+                    <h2 className="font-bold mb-2 text-center text-lg">
                         {editIndex === -1 ? "Add New Customer" : "Edit Customer"}
                     </h2>
                     {error && <p className="text-red-500 mb-2">{error}</p>}
