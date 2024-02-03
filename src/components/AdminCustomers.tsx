@@ -55,11 +55,6 @@ const AdminCustomers = () => {
             transactions: {}
         });
         setError(null); // Reset error state
-
-        // Enable the link after 10 seconds
-        setTimeout(() => {
-            setLinkDisabled(false);
-        }, 10000);
     };
 
 
@@ -137,6 +132,11 @@ const AdminCustomers = () => {
                 toast.error((error as Error).message);
             }
         }
+        
+        // Enable the link after 10 seconds
+        setTimeout(() => {
+            setLinkDisabled(false);
+        }, 10000);
     };
 
     const handleEditCancel = () => {
@@ -187,9 +187,9 @@ const AdminCustomers = () => {
                                                     id: item?.id,
                                                     data: JSON.stringify(item)
                                                 },
-                                            }}  className={isLinkDisabled ? 'cursor-not-allowed text-gray-500' : ''}>
-                                                    {item.fullName}
-                                              
+                                            }} className={isLinkDisabled ? 'cursor-wait text-gray-500' : ''}>
+                                                {item.fullName}
+
                                             </Link>
                                         </td>
                                     </td>
