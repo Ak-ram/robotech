@@ -76,7 +76,6 @@ const AdminCustomers = () => {
         setEditIndex(index);
         setEditedItem({ ...jsonArray[index] });
     };
-
     const handleEditSubmit = async () => {
         // Check for empty fields
         if (
@@ -84,14 +83,29 @@ const AdminCustomers = () => {
             !editedItem.fullName ||
             !editedItem.phone
         ) {
-            setError("All fields are required");
+            toast.error("All fields are required");
             return;
         }
-    
+
+        // Validate full name (each word should have at least 3 characters)
+        const fullNameWords = editedItem.fullName.trim().split(' ');
+        if (fullNameWords.length < 2 || fullNameWords.some(word => word.trim().length < 3)) {
+            toast.error("Each word in the full name should have at least 3 characters");
+            return;
+        }
+
+
+        // Validate phone number format
+        const phoneRegex = /^(01[0-9]{9})$/;
+        if (!phoneRegex.test(editedItem.phone)) {
+            toast.error("Invalid phone number format. It should start with '01' and have 11 digits.");
+            return;
+        }
+
         if (editIndex !== null) {
             try {
                 let updatedArray;
-    
+
                 if (editIndex === -1) {
                     // Add a new item without overwriting existing ones
                     updatedArray = [...jsonArray, editedItem];
@@ -101,22 +115,61 @@ const AdminCustomers = () => {
                         index === editIndex ? editedItem : item
                     );
                 }
-    
+
                 await updateJsonFile("robotech/pages/customers.json", updatedArray);
                 setJsonArray(updatedArray);
                 setEditIndex(null);
-                setError(null); // Reset error state
                 toast.success(editIndex === -1 ? 'Customer added successfully' : 'Customer updated successfully');
                 toast.loading(`Be patient, changes take a few moments to be reflected`);
                 setTimeout(() => {
                     toast.dismiss();
                 }, 5000);
             } catch (error) {
-                setError((error as Error).message);
+                toast.error((error as Error).message);
             }
         }
     };
-    
+
+    // const handleEditSubmit = async () => {
+    //     // Check for empty fields
+    //     if (
+    //         !editedItem.id ||
+    //         !editedItem.fullName ||
+    //         !editedItem.phone
+    //     ) {
+    //         setError("All fields are required");
+    //         return;
+    //     }
+
+    //     if (editIndex !== null) {
+    //         try {
+    //             let updatedArray;
+
+    //             if (editIndex === -1) {
+    //                 // Add a new item without overwriting existing ones
+    //                 updatedArray = [...jsonArray, editedItem];
+    //             } else {
+    //                 // Update an existing item without overwriting existing ones
+    //                 updatedArray = jsonArray.map((item, index) =>
+    //                     index === editIndex ? editedItem : item
+    //                 );
+    //             }
+
+    //             await updateJsonFile("robotech/pages/customers.json", updatedArray);
+    //             setJsonArray(updatedArray);
+    //             setEditIndex(null);
+    //             setError(null); // Reset error state
+    //             toast.success(editIndex === -1 ? 'Customer added successfully' : 'Customer updated successfully');
+    //             toast.loading(`Be patient, changes take a few moments to be reflected`);
+    //             setTimeout(() => {
+    //                 toast.dismiss();
+    //             }, 5000);
+    //         } catch (error) {
+    //             setError((error as Error).message);
+    //         }
+    //     }
+    // };
+
 
     const handleEditCancel = () => {
         setEditIndex(null);
