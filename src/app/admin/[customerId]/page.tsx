@@ -24,18 +24,16 @@ const CustomerPage = () => {
     { content: <CustomerPageAddProducts setCustomerData={setCustomerData} customerData={customerData} />, label: "Product" },
     { content: <CustomerPageAddCourses setCustomerData={setCustomerData} customerData={customerData} />, label: "Course" },
     { content: <CustomerPageAddPrintServices setCustomerData={setCustomerData} customerData={customerData} />, label: "Print Service" },
-    { content: 'tab 4', label: "Drink" },
   ]
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-semibold mb-4">Customer ID: {customerId}</h1>
+      <h1 className="text-4xl font-semibold mb-6 text-center">Customer ID: {customerId}</h1>
 
       {customerData && (
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          {/* ... (Your existing code) */}
-          <h2 className="text-xl font-semibold mb-4">Customer Information</h2>
+        <div className="bg-white p-8 rounded-lg shadow-md">
+          <h2 className="text-3xl font-semibold mb-8">Customer Information</h2>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
             <div>
               <p className="text-gray-600 mb-2">Full Name:</p>
               <p className="font-semibold">{customerData.fullName}</p>
@@ -46,24 +44,27 @@ const CustomerPage = () => {
               <p className="font-semibold">{customerData.phone}</p>
             </div>
           </div>
-          <div className="mt-6">
-            <h2 className="text-xl font-semibold mb-4">Transactions</h2>
-            <div className='flex items-center justify-between'>
-              {tabs.map((tab, index) => <button
-                key={index}
-                onClick={() => setCurrentTab(index)}
-                className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-              // onClick={() => setShowAddOrderModal(true)}
-              >
-                Sell {tab.label}
-              </button>)}
-            </div>
-            <section>
-              {tabs[currentTab].content}
+
+          <div className="mt-8">
+            <h2 className="text-3xl font-semibold mb-8">Transactions</h2>
+
+            <section className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
+              <div className="flex-1 bg-slate-200 h-[400px] overflow-auto mb-4 lg:mr-8">
+                {tabs[currentTab].content}
+              </div>
+
+              <div className="flex flex-col space-y-4 lg:w-1/4">
+                {tabs.map((tab, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentTab(index)}
+                    className={`py-3 px-6 rounded focus:outline-none ${currentTab === index ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300'}`}
+                  >
+                    Sell {tab.label}
+                  </button>
+                ))}
+              </div>
             </section>
-
-
-
           </div>
         </div>
       )}

@@ -93,6 +93,13 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
         }
     }, []);
     return (<>
+     <button
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+            onClick={() => setShowAddOrderModal(true)}
+        >
+            Add Print Service
+        </button>
+
         {customerData?.transactions?.printServices?.map((service, index) => (
             <div key={index} className="mb-4">
                 <p className="text-gray-600 mb-2">Date: {service["date"]}</p>
@@ -101,13 +108,7 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
             </div>
         ))}
 
-        <button
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-            onClick={() => setShowAddOrderModal(true)}
-        >
-            Add Print Service
-        </button>
-
+       
         {/* Modal for adding orders */}
         {showAddOrderModal && (
             <OrderModel list={list} newOrder={newOrder} setNewOrder={setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal} />

@@ -34,6 +34,17 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
                         onChange={(e) => setNewOrder({ ...newOrder, quantity: parseInt(e.target.value, 10) })}
                     />
                 </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Discount
+                    </label>
+                    <input
+                        type="number"
+                        className="w-full p-2 border border-gray-300 rounded"
+                        value={newOrder.discount}
+                        onChange={(e) => setNewOrder({ ...newOrder, discount: parseInt(e.target.value, 10) })}
+                    />
+                </div>
                 <button
                     type="button"
                     className="bg-green-500 text-white font-bold py-2 px-4 rounded"

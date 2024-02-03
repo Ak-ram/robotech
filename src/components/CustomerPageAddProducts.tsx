@@ -92,7 +92,15 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
             fetchProducts();
         }
     }, []);
-    return (<>
+    return (
+    <>
+      <button
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+            onClick={() => setShowAddOrderModal(true)}
+        >
+            Add Product
+        </button>
+
         {customerData?.transactions?.products?.map((product, index) => (
             <div key={index} className="mb-4">
                 <p className="text-gray-600 mb-2">Date: {product["date"]}</p>
@@ -101,13 +109,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
             </div>
         ))}
 
-        <button
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-            onClick={() => setShowAddOrderModal(true)}
-        >
-            Add Course
-        </button>
-
+      
         {/* Modal for adding orders */}
         {showAddOrderModal && (
             <OrderModel list={list} newOrder={newOrder} setNewOrder={setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal} />
@@ -121,7 +123,9 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 },
             }}
         />
-    </>)
+    </>
+    
+    )
 }
 
 export default CustomerPageAddProducts
