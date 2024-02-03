@@ -13,15 +13,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
         setNewOrder((prevOrder) => ({ ...prevOrder, subtotal }));
     }, [newOrder.quantity, newOrder.discount, selectedItem]);
 
-    // Initialize the newOrder state with a default discount value
-    const initialNewOrderState = {
-        productName: "",
-        piecePrice: 0,
-        quantity: 0,
-        discount: 0, // Set a default discount value
-        date: new Date().toISOString(),
-        subtotal: 0,
-    };
+
 
     const handleAddOrderClick = () => {
         // Validate quantity
@@ -65,7 +57,14 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
                                         ...newOrder,
                                         productName: e.target.value,
                                         piecePrice: selectedProduct?.price!,
-                                        date: new Date().toISOString()
+                                        date: new Date().toLocaleDateString('en-US', {
+                                            weekday: 'short',
+                                            year: 'numeric',
+                                            month: 'short',
+                                            day: '2-digit',
+                                            hour: '2-digit',
+                                            minute: '2-digit',
+                                        })
                                     });
                                 }}
                             >
