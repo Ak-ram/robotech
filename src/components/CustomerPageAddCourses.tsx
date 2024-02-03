@@ -2,71 +2,76 @@ import { updateJsonFile } from "@/helpers/updateJSONData";
 import OrderModel from "./orderModel"
 import { useEffect, useState } from "react";
 import { getCourses } from "@/helpers/getCourses";
+import { fetchJsonData } from "@/helpers/getJSONData";
+import toast from "react-hot-toast";
 
 const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
 
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
     const [list, setList] = useState([]);
+    const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [newOrder, setNewOrder] = useState({
         productName: '',
         quantity: 1,
         date: ''
     });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetchJsonData("robotech/pages/customers.json");
+                setJsonArray(data);
+            } catch (error) {
+                new Error((error as Error).message);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+
+
+
     const handleAddOrder = async () => {
         // Validate order details if needed
-    
-        // Copy the existing transactions
-        const existingTransactions = customerData.transactions || [];
-    
-        // Create a new order
-        const newCourseObject = { productName: newOrder.productName, quantity: newOrder.quantity };
-    
-        // Check if there are any transactions
-        if (existingTransactions.length > 0) {
-            // Copy the existing transactions
-            const updatedTransactions = [...existingTransactions];
-    
-            // Add the new order to the latest transaction's courses array
-            const latestTransaction = updatedTransactions[updatedTransactions.length - 1];
-            latestTransaction.courses = [...(latestTransaction.courses || []), newCourseObject];
-        } else {
-            // If there are no existing transactions, create a new transaction with the new order
-            const newTransaction = {
-                courses: [newCourseObject],
-                amount: 0, // You may update the amount based on the actual logic
+        const existingCustomerIndex = jsonArray.findIndex(customer => customer.id === customerData.id);
+
+        if (existingCustomerIndex !== -1) {
+            const existingCustomer = jsonArray[existingCustomerIndex];
+
+            const newCourseObject = {
+                productName: newOrder.productName,
+                quantity: newOrder.quantity,
+                date: newOrder.date,
             };
-    
-            // Update the transactions array with the new transaction
-            const updatedTransactions = [...existingTransactions, newTransaction];
-            customerData.transactions = updatedTransactions;
+            if (existingCustomer.transactions.courses) {
+                existingCustomer.transactions.courses = [...existingCustomer.transactions.courses, newCourseObject];
+            } else {
+                existingCustomer.transactions.courses = [newCourseObject];
+            }
+            jsonArray[existingCustomerIndex] = existingCustomer;
+            console.log(jsonArray)
+            // Update the JSON file with the modified JSON array
+            try {
+                await updateJsonFile("robotech/pages/customers.json", jsonArray);
+                setJsonArray(jsonArray);
+                toast.success(`Item Added/Updated successfully`);
+                toast.loading(`Be patient, changes takes a few moments to be reflected`);
+                setTimeout(() => {
+                    toast.dismiss();
+
+                }, 5000);
+            } catch (error) {
+                toast.error((error as Error).message);
+            }
+        } else {
+            // Handle the case where the customer doesn't exist or show an error message
+            console.error("Customer not found for ID:", customerData.id);
         }
-    
-        // Update the customerData with the new transactions array
-        const updatedCustomerData = { ...customerData, transactions: customerData.transactions };
-    
-        // Update the state
-        setNewOrder({
-            productName: '',
-            quantity: 1,
-            date: ''
-        });
-        setShowAddOrderModal(false);
-    
-        try {
-            // Update the JSON file with the updated data
-            await updateJsonFile("robotech/pages/customers.json", [updatedCustomerData]);
-    
-            // You might also want to update your API or other storage mechanisms if applicable
-    
-            // Update the state with the new data
-            setCustomerData(updatedCustomerData);
-            console.log(customerData);
-        } catch (error) {
-            console.error("Error updating JSON file:", error);
-            // Handle error appropriately
-        }
-    };
-    
+    }
+
+
 
     useEffect(() => {
         const fetchProducts = async () => {

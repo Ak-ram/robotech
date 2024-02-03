@@ -81,7 +81,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
 
                 <ul>
-                    {transaction.orders.map((order, orderIndex) => (
+                    {transaction?.orders?.map((order, orderIndex) => (
                         <li key={orderIndex}>
                             Product: {order.productName}, Quantity: {order.quantity}, Date: {order.date}
                         </li>

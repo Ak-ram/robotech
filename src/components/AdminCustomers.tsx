@@ -163,7 +163,7 @@ const AdminCustomers = () => {
                                             pathname: `admin/id_${item?.id}`,
                                             query: {
                                                 id: item?.id,
-                                                data: JSON.stringify(item),
+                                                data: JSON.stringify(item)
                                             },
                                         }} >{item.fullName}</Link>
                                     </td>
