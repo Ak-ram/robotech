@@ -22,6 +22,9 @@ const AdminCustomers = () => {
         id: string;
         fullName: string;
         phone: string;
+        address: string;
+        faculty: string;
+        age: number;
         transactions: {};
     }
 
@@ -29,6 +32,9 @@ const AdminCustomers = () => {
         id: "",
         fullName: "",
         phone: "",
+        address: "",
+        faculty: "",
+        age: 0,
         transactions: {}
     });
 
@@ -52,6 +58,9 @@ const AdminCustomers = () => {
             id: uuidv4(),
             fullName: "",
             phone: "",
+            age: 0,
+            address: "",
+            faculty: "",
             transactions: {}
         });
         setError(null); // Reset error state
@@ -132,7 +141,7 @@ const AdminCustomers = () => {
                 toast.error((error as Error).message);
             }
         }
-        
+
         // Enable the link after 10 seconds
         setTimeout(() => {
             setLinkDisabled(false);
@@ -244,7 +253,38 @@ const AdminCustomers = () => {
                                     onChange={(e) => handleInputChange(e, "phone")}
                                 />
                             </div>
+                            <div className=" mb-2 lg:pr-4">
+                                <span className="font-bold mb-1">Age</span>
 
+                                <input
+                                    type="number"
+                                    placeholder="20"
+                                    className="p-2 w-full border border-gray-300 rounded"
+                                    value={editedItem.age}
+                                    onChange={(e) => handleInputChange(e, "age")}
+                                />
+                            </div>
+                            <div className=" mb-2 lg:pr-4">
+                                <span className="font-bold mb-1">Address</span>
+
+                                <input
+                                    type="text"
+                                    placeholder="شرق النيل, بني سويف, مصر"
+                                    className="p-2 w-full border border-gray-300 rounded"
+                                    value={editedItem.address}
+                                    onChange={(e) => handleInputChange(e, "address")}
+                                />
+                            </div>
+                            <div className=" mb-2 lg:pr-4">
+                                <span className="font-bold mb-1">Faculty</span>
+                                <input
+                                    type="text"
+                                    placeholder="BS, Beni-Suef University"
+                                    className="p-2 w-full border border-gray-300 rounded"
+                                    value={editedItem.faculty}
+                                    onChange={(e) => handleInputChange(e, "faculty")}
+                                />
+                            </div>
                         </div>
                         <div className="flex mt-5">
                             <button
@@ -263,7 +303,6 @@ const AdminCustomers = () => {
                             </button>
                         </div>
                     </div>
-
                 </div>
             )}
 
