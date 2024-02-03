@@ -6,6 +6,7 @@ import { updateJsonFile } from '@/helpers/updateJSONData';
 import OrderModel from '@/components/orderModel';
 import CustomerPageAddProducts from '@/components/CustomerPageAddProducts';
 import CustomerPageAddCourses from '@/components/CustomerPageAddCourses';
+import CustomerPageAddPrintServices from '@/components/CustomerPageAddPrintServices';
 
 const CustomerPage = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const CustomerPage = () => {
   const tabs = [
     { content: <CustomerPageAddProducts setCustomerData={setCustomerData} customerData={customerData} />, label: "Product" },
     { content: <CustomerPageAddCourses setCustomerData={setCustomerData} customerData={customerData} />, label: "Course" },
-    { content: 'tab 3', label: "Workshop" },
+    { content: <CustomerPageAddPrintServices setCustomerData={setCustomerData} customerData={customerData} />, label: "Print Service" },
     { content: 'tab 4', label: "Drink" },
   ]
   return (
