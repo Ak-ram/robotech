@@ -45,17 +45,17 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   };
 
   return (
-    <div className={`flex-1 pt-5`}>
+    <div className={`flex-1 pt-5 min-w-full`}>
 
       <nav aria-label="Page navigation example" className=" flex items-center justify-end">
-        <ul className="flex items-center -space-x-px h-8 text-sm">
-          <li className="text-xs sm:text-sm  mr-2">
-            {perPage.pageNo} / {Math.ceil(products?.length / 9)} 
-            {/* <span className="text-xs sm:text-sm text-blue-500 sm:font-semibold mr-1">
+        <ul className="flex items-center -space-x-px h-8 ">
+          <li className="  mr-2">
+            {perPage.pageNo} / {Math.ceil(products?.length / 9)}
+            {/* <span className=" text-blue-500 sm:font-semibold mr-1">
               ({perPage?.start} - {perPage?.end})
             </span>
             items out of
-            <span className="text-xs sm:text-sm text-blue-500 sm:font-semibold ml-1">
+            <span className=" text-blue-500 sm:font-semibold ml-1">
               {products?.length}</span> items */}
           </li>
           <li>
@@ -67,7 +67,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               <svg className="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
               </svg>
-              <span className="hidden sm:block  text-xs ml-1">Previous</span>
+              <span className="hidden sm:block   ml-1">Previous</span>
 
             </button>
           </li>
@@ -77,7 +77,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               onClick={handleNext}
               disabled={perPage?.end >= products?.length}
             >
-              <span className="hidden sm:block text-xs mr-1">Next</span>
+              <span className="hidden sm:block  mr-1">Next</span>
               <svg className="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
               </svg>
@@ -136,7 +136,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               </svg>
               {
                 item.price < item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
-                  <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-xs md:text-sm font-medium text-white">
+                  <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center  md: font-medium text-white">
                     {calculatePercentage(item?.price, item?.previousPrice)}% OFF
                   </span>
                   : null}
@@ -164,11 +164,11 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   className="text-zinc-500 w-5 h-5 cursor-pointer duration-200 hover:text-black"
                 />
               </div>
-              <p className="pr-2 w-[210px] text-sm whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
+              <p className="pr-2 w-[210px] text-xl whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
                 {item?.title}
               </p>
-              <p className="flex items-center justify-start w-full text-designColor font-semibold">
-                <FormattedPrice amount={item?.price} />
+              <p className="flex  items-center justify-start w-full text-designColor font-semibold">
+                <FormattedPrice className = {'text-xl'} amount={item?.price} />
               </p>
               <div className="flex flex-col gap-2 sm:flex-row w-full items-start sm:items-center justify-between mt-2">
                 {item?.count > 0 || prefix === 'print' ? (
@@ -185,10 +185,10 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                           dispatch(addToCart(item));
                           toast.success(`${item?.title} is added to Cart!`);
                         }}
-                        className="text-designColor w-4 h-4 cursor-pointer duration-200 hover:text-black"
+                        className="text-designColor w-6 h-6 cursor-pointer duration-200 hover:text-black"
                       />
-                      <span className="hidden sm:inline-block text-sm">Add to Cart</span>
-                      <span className="sm:hidden text-xs sm:text-sm ">Buy</span>
+                      <span className="hidden sm:inline-block ">Add to Cart</span>
+                      <span className="sm:hidden  ">Buy</span>
 
                     </button>
                   </>
@@ -198,10 +198,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   </span>
                 )}
                 {
-                  item?.count > 0 && prefix !== 'print' ? <span className="text-xs flex-col items-center justify-center">
-                    <b className="text-designColor">{item?.count}</b> Pieces in
-                    stock.
-                  </span> : prefix === 'print' ? <span className="text-xs flex-col items-center justify-center">
+                  prefix === 'print' ? <span className="flex-col items-center justify-center">
                     <b className="text-designColor"><FormattedPrice amount={item.count} /></b> Per Minute.
                   </span> : null
                 }
