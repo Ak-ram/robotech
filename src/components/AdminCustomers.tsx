@@ -130,47 +130,6 @@ const AdminCustomers = () => {
         }
     };
 
-    // const handleEditSubmit = async () => {
-    //     // Check for empty fields
-    //     if (
-    //         !editedItem.id ||
-    //         !editedItem.fullName ||
-    //         !editedItem.phone
-    //     ) {
-    //         setError("All fields are required");
-    //         return;
-    //     }
-
-    //     if (editIndex !== null) {
-    //         try {
-    //             let updatedArray;
-
-    //             if (editIndex === -1) {
-    //                 // Add a new item without overwriting existing ones
-    //                 updatedArray = [...jsonArray, editedItem];
-    //             } else {
-    //                 // Update an existing item without overwriting existing ones
-    //                 updatedArray = jsonArray.map((item, index) =>
-    //                     index === editIndex ? editedItem : item
-    //                 );
-    //             }
-
-    //             await updateJsonFile("robotech/pages/customers.json", updatedArray);
-    //             setJsonArray(updatedArray);
-    //             setEditIndex(null);
-    //             setError(null); // Reset error state
-    //             toast.success(editIndex === -1 ? 'Customer added successfully' : 'Customer updated successfully');
-    //             toast.loading(`Be patient, changes take a few moments to be reflected`);
-    //             setTimeout(() => {
-    //                 toast.dismiss();
-    //             }, 5000);
-    //         } catch (error) {
-    //             setError((error as Error).message);
-    //         }
-    //     }
-    // };
-
-
     const handleEditCancel = () => {
         setEditIndex(null);
         setEditedItem({} as CustomerType); // Cast to CustomerType
@@ -242,25 +201,30 @@ const AdminCustomers = () => {
                 </div> : <NoContent />}
 
             {editIndex !== null && (
-                <div className="mt-5">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div className="bg-white w-[500px] p-8 rounded-lg shadow-md">
+                
                     <h2 className="font-bold mb-2">
-                        {editIndex === -1 ? "Add New Item" : "Edit Item"}
+                        {editIndex === -1 ? "Add New Customer" : "Edit Customer"}
                     </h2>
                     {error && <p className="text-red-500 mb-2">{error}</p>}
-                    <div className="flex flex-col lg:flex-row">
+                    <div className="">
                         <div className=" mb-2 lg:pr-4">
+                            <span className="font-bold mb-1">Full Name</span>
                             <input
                                 type="text"
-                                placeholder="Full Name"
+                                placeholder="Akram Ashraf"
                                 className="w-full p-2 border border-gray-300 rounded"
                                 value={editedItem.fullName}
                                 onChange={(e) => handleInputChange(e, "fullName")}
                             />
                         </div>
-                        <div className="lg:w-1/4 mb-2 lg:pr-4">
+                        <div className=" mb-2 lg:pr-4">
+                        <span className="font-bold mb-1">Phone No.</span>
+
                             <input
                                 type="text"
-                                placeholder="Phone No."
+                                placeholder="01XXXXXXXXX"
                                 className="p-2 w-full border border-gray-300 rounded"
                                 value={editedItem.phone}
                                 onChange={(e) => handleInputChange(e, "phone")}
@@ -268,7 +232,7 @@ const AdminCustomers = () => {
                         </div>
 
                     </div>
-                    <div className="flex">
+                    <div className="flex mt-5">
                         <button
                             className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
                             onClick={handleEditSubmit}
@@ -284,6 +248,8 @@ const AdminCustomers = () => {
                             Cancel
                         </button>
                     </div>
+                </div>
+              
                 </div>
             )}
 
