@@ -1,117 +1,94 @@
-[
+{
+  "0":{
+    "date": "",
+  "courses": [
     {
-      "id": "c2a81ee0-01c8-447d-a61c-a6e273df6a3b",
-      "fullName": "Ali Mohamed",
-      "phone": "1152684108",
-      "transactions": {
-        "courses": [
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 1,
-            "date": "2024-02-03T10:23:47.284Z"
-          },
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 4,
-            "date": "2024-02-03T10:23:47.284Z"
-          },
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 987,
-            "date": "2024-02-03T10:38:59.270Z"
-          },
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 1,
-            "date": "2024-02-03T11:16:31.160Z",
-            "discount": 50
-          }
-        ],
-        "products": [
-          {
-            "productName": "L293 Motor Driver Shield",
-            "quantity": 1,
-            "date": "2024-02-03T10:38:37.358Z"
-          },
-          {
-            "productName": "WEMOS® D1 R32 ESP32 WiFi & Bluetooth UNO R3 PINOUT",
-            "quantity": 1,
-            "date": "2024-02-03T10:39:22.213Z"
-          },
-          {
-            "productName": "Mechanical Endstop A with 70cm Cable and Retail Package",
-            "quantity": 2,
-            "date": "2024-02-03T11:54:42.784Z",
-            "subtotal": 80,
-            "discount": 20
-          },
-          {
-            "productName": "UNO CNC Shield V3 Engraving Machine",
-            "quantity": 2,
-            "date": "2024-02-03T11:56:48.771Z",
-            "subtotal": 280,
-            "discount": 20
-          },
-          {
-            "productName": "RAMPS 1.4 Reprap 3D Printer Arduino Mega Shield",
-            "quantity": 2,
-            "date": "2024-02-03T11:58:22.122Z",
-            "subtotal": 300,
-            "productPrice": "160",
-            "discount": 20
-          }
-        ],
-        "printServices": [
-          {
-            "productName": " i.materialise 3D Printing",
-            "quantity": 1,
-            "date": "2024-02-03T10:45:08.653Z"
-          }
-        ]
-      }
+      "productName": "JavaScript Monster",
+      "quantity": 4,
+      "date": "2024-02-03T21:30:42.604Z",
+      "subtotal": 4000,
+      "piecePrice": "1000"
     },
     {
-      "id": "2a2d28ee-c57a-4449-93ab-3598d543fed7",
-      "fullName": "af",
-      "phone": "01158541832",
-      "transactions": {
-        "courses": [
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 10000,
-            "date": "2024-02-03T10:24:27.031Z"
-          },
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 1,
-            "date": "2024-02-03T10:24:27.031Z"
-          },
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 1,
-            "date": "2024-02-03T10:33:07.281Z"
-          },
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 1,
-            "date": "2024-02-03T10:33:07.281Z"
-          },
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 1,
-            "date": "2024-02-03T10:33:07.281Z"
-          },
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 1,
-            "date": "2024-02-03T10:33:07.281Z"
-          },
-          {
-            "productName": "JavaScript Monster",
-            "quantity": 1,
-            "date": "2024-02-03T10:33:07.281Z"
-          }
-        ]
-      }
+      "productName": "JavaScript Monster",
+      "quantity": 7,
+      "date": "2024-02-03T21:32:56.974Z",
+      "subtotal": 7000,
+      "piecePrice": "1000"
     }
-  ]
+  ],
+  "products": [
+    {
+      "productName": "Optical Endstop with 50cm Cable and Retail Package",
+      "quantity": 1,
+      "date": "2024-02-03T21:46:20.043Z",
+      "discount": 0,
+      "subtotal": 30,
+      "piecePrice": "30"
+    },
+    {
+      "productName": "WIFI R3 ATMEGA2560 + ESP8266",
+      "quantity": 1,
+      "date": "Sat, Feb 03, 2024, 11:53 PM",
+      "discount": 0,
+      "subtotal": 1000,
+      "piecePrice": "1000"
+    }
+  ],
+  "printServices": [
+    {
+      "productName": "new",
+      "quantity": 1,
+      "date": "Sat, Feb 03, 2024, 11:54 PM",
+      "discount": 0,
+      "subtotal": 50,
+      "piecePrice": "50"
+    }
+  ]},
+  "1":{
+    "date": "",
+  "courses": [
+    {
+      "productName": "JavaScript Monster",
+      "quantity": 4,
+      "date": "2024-02-03T21:30:42.604Z",
+      "subtotal": 4000,
+      "piecePrice": "1000"
+    },
+    {
+      "productName": "JavaScript Monster",
+      "quantity": 7,
+      "date": "2024-02-03T21:32:56.974Z",
+      "subtotal": 7000,
+      "piecePrice": "1000"
+    }
+  ],
+  "products": [
+    {
+      "productName": "Optical Endstop with 50cm Cable and Retail Package",
+      "quantity": 1,
+      "date": "2024-02-03T21:46:20.043Z",
+      "discount": 0,
+      "subtotal": 30,
+      "piecePrice": "30"
+    },
+    {
+      "productName": "WIFI R3 ATMEGA2560 + ESP8266",
+      "quantity": 1,
+      "date": "Sat, Feb 03, 2024, 11:53 PM",
+      "discount": 0,
+      "subtotal": 1000,
+      "piecePrice": "1000"
+    }
+  ],
+  "printServices": [
+    {
+      "productName": "new",
+      "quantity": 1,
+      "date": "Sat, Feb 03, 2024, 11:54 PM",
+      "discount": 0,
+      "subtotal": 50,
+      "piecePrice": "50"
+    }
+  ]}
+}

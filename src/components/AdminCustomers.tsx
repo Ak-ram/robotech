@@ -234,6 +234,7 @@ const AdminCustomers = () => {
                         <div className="">
                             <div className=" mb-2 lg:pr-4">
                                 <span className="font-bold mb-1">Full Name</span>
+                                
                                 <input
                                     type="text"
                                     placeholder="Akram Ashraf"
