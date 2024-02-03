@@ -20,14 +20,14 @@ const AdminCustomers = () => {
         id: string;
         fullName: string;
         phone: string;
-        transactions: CustomerServicesType[];
+        transactions: {};
     }
 
     const [editedItem, setEditedItem] = useState<CustomerType>({
         id: "",
         fullName: "",
         phone: "",
-        transactions: []
+        transactions: {}
     });
 
     useEffect(() => {
@@ -49,7 +49,7 @@ const AdminCustomers = () => {
             id: uuidv4(),
             fullName: "",
             phone: "",
-            transactions: []
+            transactions: {}
         });
         setError(null); // Reset error state
     };

@@ -3,7 +3,7 @@ import OrderModel from "./orderModel"
 import { useEffect, useState } from "react";
 import { getCourses } from "@/helpers/getCourses";
 import { fetchJsonData } from "@/helpers/getJSONData";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
 
@@ -30,52 +30,91 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     }, []);
 
 
-
-
     const handleAddOrder = async () => {
         // Validate order details if needed
-        const existingCustomerIndex = jsonArray.findIndex(customer => customer.id === customerData.id);
-    
+        const existingCustomerIndex = jsonArray.findIndex(
+          (customer) => customer.id === customerData.id
+        );
+      
         if (existingCustomerIndex !== -1) {
-            const existingCustomer = jsonArray[existingCustomerIndex];
-    
-            const newCourseObject = {
-                productName: newOrder.productName,
-                quantity: newOrder.quantity,
-                date: newOrder.date,
+          const existingCustomer = jsonArray[existingCustomerIndex];
+      
+          if (!existingCustomer.transactions) {
+            existingCustomer.transactions = {
+              courses: [],
             };
-            
-            if (!existingCustomer.transactions) {
-                existingCustomer.transactions = [];
-            }
-            
-            existingCustomer.transactions.push(newCourseObject);
-    
-            jsonArray[existingCustomerIndex] = existingCustomer;
-            
-            // Update the JSON file with the modified JSON array
-            try {
-                console.log([...jsonArray]);
-    
-                await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
-                console.log('after', [...jsonArray]);
-                
-                setJsonArray([...jsonArray]);
-                
-                toast.success(`Item Added/Updated successfully`);
-                toast.loading(`Be patient, changes take a few moments to be reflected`);
-                
-                setTimeout(() => {
-                    toast.dismiss();
-                }, 5000);
-            } catch (error) {
-                toast.error((error as Error).message);
-            }
+          } else if (!existingCustomer.transactions.courses) {
+            existingCustomer.transactions.courses = [];
+          }
+      
+          existingCustomer.transactions.courses.push(newOrder);
+      
+          jsonArray[existingCustomerIndex] = existingCustomer;
+      
+          // Update the JSON file with the modified JSON array
+          try {
+            await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
+      
+            // Update the customerData state with the new transaction
+            setCustomerData(existingCustomer);
+      
+            toast.success(`Item Added/Updated successfully`);
+            toast.loading(`Be patient, changes take a few moments to be reflected`);
+      
+            setTimeout(() => {
+              toast.dismiss();
+            }, 5000);
+          } catch (error) {
+            toast.error((error as Error).message);
+          }
         } else {
-            // Handle the case where the customer doesn't exist or show an error message
-            console.error("Customer not found for ID:", customerData.id);
+          // Handle the case where the customer doesn't exist or show an error message
+          console.error("Customer not found for ID:", customerData.id);
         }
-    }
+      };
+
+    // const handleAddOrder = async () => {
+    //     // Validate order details if needed
+    //     const existingCustomerIndex = jsonArray.findIndex(customer => customer.id === customerData.id);
+    //     if (existingCustomerIndex !== -1) {
+    //         const existingCustomer = jsonArray[existingCustomerIndex];
+
+    //         const newCourseObject = {
+    //             productName: newOrder.productName,
+    //             quantity: newOrder.quantity,
+    //             date: newOrder.date,
+    //         };
+
+    //         if (!existingCustomer.transactions) {
+    //             existingCustomer.transactions = [];
+    //         }
+
+    //         existingCustomer.transactions.push(newCourseObject);
+
+    //         jsonArray[existingCustomerIndex] = existingCustomer;
+
+    //         // Update the JSON file with the modified JSON array
+    //         try {
+
+    //             await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
+    //             setShowAddOrderModal(false)
+
+    //             setJsonArray([...jsonArray]);
+
+    //             toast.success(`Item Added/Updated successfully`);
+    //             toast.loading(`Be patient, changes take a few moments to be reflected`);
+
+    //             setTimeout(() => {
+    //                 toast.dismiss();
+    //             }, 5000);
+    //         } catch (error) {
+    //             toast.error((error as Error).message);
+    //         }
+    //     } else {
+    //         // Handle the case where the customer doesn't exist or show an error message
+    //         console.error("Customer not found for ID:", customerData.id);
+    //     }
+    // }
 
 
     useEffect(() => {
@@ -95,12 +134,12 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
         }
     }, []);
     return (<>
-        {customerData?.transactions?.map((transaction, index) => (
+        {/* {customerData?.transactions?.map((transaction, index) => (
             <div key={index} className="mb-4">
                 <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
 
                 <ul>
-                    {transaction.courses?.map((course, orderIndex) => {
+                    {transaction && transaction.courses?.map((course, orderIndex) => {
                         if (course === null || course === undefined) return;
                         return <li key={orderIndex}>
                             Product: {course?.productName!}, Quantity: {course?.quantity!} ,Date: {course?.date!}
@@ -108,9 +147,9 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                     })}
                 </ul>
 
-                <p className="mt-2 text-gray-600">Amount: ${transaction.amount.toFixed(2)}</p>
+                {/* <p className="mt-2 text-gray-600">Amount: ${transaction.amount.toFixed(2)}</p> 
             </div>
-        ))}
+        ))} */}
 
         <button
             className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
@@ -123,6 +162,15 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
         {showAddOrderModal && (
             <OrderModel list={list} newOrder={newOrder} setNewOrder={setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal} />
         )}
+        <Toaster
+            position="bottom-right"
+            toastOptions={{
+                style: {
+                    background: "#000",
+                    color: "#fff",
+                },
+            }}
+        />
     </>)
 }
 
