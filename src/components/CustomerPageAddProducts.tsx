@@ -1,108 +1,126 @@
-import { useEffect, useState } from "react";
-import OrderModel from "./orderModel"
 import { updateJsonFile } from "@/helpers/updateJSONData";
+import OrderModel from "./orderModel"
+import { useEffect, useState } from "react";
 import { getProducts } from "@/helpers/getProducts";
-import { ProductType } from "../../type";
+import { fetchJsonData } from "@/helpers/getJSONData";
+import toast, { Toaster } from "react-hot-toast";
 
 const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
+
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
-    const [list, setList] = useState<ProductType[]>([]);
+    const [list, setList] = useState([]);
+    const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [newOrder, setNewOrder] = useState({
         productName: '',
         quantity: 1,
-        date:''
+        date: ''
     });
- useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const p = await getProducts();
-        setList(p);
 
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetchJsonData("robotech/pages/customers.json");
+                setJsonArray(data);
+            } catch (error) {
+                new Error((error as Error).message);
+            }
+        };
 
-    if (typeof window !== 'undefined') {
-      // Run the effect only in the browser environment
-      fetchProducts();
-    }
-  }, []);
-    const handleAddOrder = () => {
+        fetchData();
+    }, []);
+
+
+    const handleAddOrder = async () => {
         // Validate order details if needed
+        const existingCustomerIndex = jsonArray.findIndex(
+            (customer) => customer.id === customerData.id
+        );
 
-        // Copy the existing transactions
-        const existingTransactions = customerData.transactions || [];
+        if (existingCustomerIndex !== -1) {
+            const existingCustomer = jsonArray[existingCustomerIndex];
 
-        // Create a new order
-        const newOrderObject = { productName: newOrder.productName, quantity: newOrder.quantity };
+            if (!existingCustomer.transactions) {
+                existingCustomer.transactions = {
+                    products: [],
+                };
+            } else if (!existingCustomer.transactions.products) {
+                existingCustomer.transactions.products = [];
+            }
 
-        // Check if there are any transactions
-        if (existingTransactions.length > 0) {
-            // Copy the existing transactions
-            const updatedTransactions = [...existingTransactions];
+            existingCustomer.transactions.products.push(newOrder);
 
-            // Add the new order to the latest transaction's orders array
-            const latestTransaction = updatedTransactions[0];
-            latestTransaction.orders = [...latestTransaction?.orders, newOrderObject];
+            jsonArray[existingCustomerIndex] = existingCustomer;
+
+            // Update the JSON file with the modified JSON array
+            try {
+                setShowAddOrderModal(false)
+                await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
+
+                // Update the customerData state with the new transaction
+                setCustomerData(existingCustomer);
+
+                toast.success(`Item Added/Updated successfully`);
+                toast.loading(`Be patient, changes take a few moments to be reflected`);
+
+                setTimeout(() => {
+                    toast.dismiss();
+                }, 5000);
+            } catch (error) {
+                toast.error((error as Error).message);
+            }
         } else {
-            // If there are no existing transactions, create a new transaction with the new order
-            const newTransaction = {
-                
-                orders: [newOrderObject],
-                amount: 0, // You may update the amount based on the actual logic
-            };
-
-            // Update the transactions array with the new transaction
-            const updatedTransactions = [newTransaction];
-            customerData.transactions = updatedTransactions;
+            // Handle the case where the customer doesn't exist or show an error message
+            console.error("Customer not found for ID:", customerData.id);
         }
-
-        // Update the customerData with the new transactions array
-        const updatedCustomerData = { ...customerData };
-
-        // Update the state
-        setNewOrder({
-            productName: '',
-            quantity: 1,
-            date:''
-        });
-        setShowAddOrderModal(false);
-        updateJsonFile("robotech/pages/customers.json", [updatedCustomerData]);
-        setCustomerData(updatedCustomerData);
-        console.log(customerData);
-
-        // You might want to update your JSON file or API with the updatedCustomerData
-        // updateJsonFile(updatedCustomerData); // Assuming there is a function to update JSON data
     };
+
+
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const p = await getProducts();
+                setList(p);
+
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        if (typeof window !== 'undefined') {
+            // Run the effect only in the browser environment
+            fetchProducts();
+        }
+    }, []);
     return (<>
-        {/* {customerData.transactions.map((transaction, index) => (
+        {customerData?.transactions?.products?.map((product, index) => (
             <div key={index} className="mb-4">
-                <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
-
-                <ul>
-                    {transaction?.orders?.map((order, orderIndex) => (
-                        <li key={orderIndex}>
-                            Product: {order.productName}, Quantity: {order.quantity}, Date: {order.date}
-                        </li>
-                    ))}
-                </ul>
-
-                {/* <p className="mt-2 text-gray-600">Amount: ${transaction.amount.toFixed(2)}</p>
+                <p className="text-gray-600 mb-2">Date: {product["date"]}</p>
+                <p className="text-gray-600 mb-2">Name: {product["productName"]}</p>
+                <p className="text-gray-600 mb-2">Quantity: {product["quantity"]}</p>
             </div>
-        ))} */}
+        ))}
 
         <button
             className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
             onClick={() => setShowAddOrderModal(true)}
         >
-            Add Product
+            Add Course
         </button>
 
         {/* Modal for adding orders */}
         {showAddOrderModal && (
             <OrderModel list={list} newOrder={newOrder} setNewOrder={setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal} />
         )}
+        <Toaster
+            position="bottom-right"
+            toastOptions={{
+                style: {
+                    background: "#000",
+                    color: "#fff",
+                },
+            }}
+        />
     </>)
 }
 
