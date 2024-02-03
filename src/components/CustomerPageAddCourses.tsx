@@ -67,7 +67,13 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
 
                 // Update the customerData state with the new transaction
                 setCustomerData(existingCustomer);
-
+                // Reset newOrder fields
+                setNewOrder({
+                    productName: '',
+                    quantity: 1,
+                    date: '',
+                    discount: 0
+                });
                 toast.success(`Item Added/Updated successfully`);
                 toast.loading(`Be patient, changes take a few moments to be reflected`);
 
@@ -116,7 +122,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                     <div key={index} className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
 
                         <div
-                            
+
                             className="flex-1"
                         >
                             <p className="text-gray-600 mb-2">Transaction date: {course["date"]}</p>
