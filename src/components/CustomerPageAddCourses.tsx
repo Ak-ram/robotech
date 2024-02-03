@@ -6,9 +6,11 @@ import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
+import Bill from "./Bill";
 
 const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
+    const [showBill, setShowBill] = useState(false);
     const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
     const [list, setList] = useState([]);
     const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -97,6 +99,8 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
             fetchCourses();
         }
     }, []);
+
+
     return (
         <>
             <div className="max-w-3xl mx-auto my-8">
@@ -122,11 +126,13 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                         <div className="flex flex-col gap-2">
                             <div className="flex-1">
                                 <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
-                                <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
+                                {/* ADD BILL HERE */}
+                                <ScrollText onClick={() => setShowBill(true)} className="my-2 cursor-pointer text-blue-600" size={20} />
 
                             </div>
                             <Trash className="ml-auto mr-2 cursor-not-allowed text-red-600" size={20} />
                         </div>
+                        {showBill && <Bill transactionData={course} setShowBill={setShowBill} />}
                     </div>
                 ))}
 
