@@ -1,8 +1,7 @@
 import { navigation } from "@/constants/data";
-import { ChevronRight, ChevronsDownUp, ChevronsRight, ChevronsUpDown, FoldVertical, MinusSquare, PlusSquare, UnfoldVertical, X } from "lucide-react";
+import { ChevronRight, Loader, Loader2, MinusSquare, PlusSquare, UnfoldVertical, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react"; // Import useState from React
-// ... (existing imports)
 
 const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, products }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -15,7 +14,7 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
   };
 
   return (
-    <div className={`flex ${openSidebar ? " p-3" : "w-0 overflow-hidden"} transition-all border-t-0 `}>
+    <div className={`flex ${openSidebar ? "w-[320px] p-3" : "w-0 overflow-hidden"} transition-all border-t-0 `}>
       <div className="flex-grow lg:flex-grow-0 bg-white shadow-md">
         <div className="flex flex-col h-full p-3 overflow-y-auto">
           <X className="cursor-pointer text-slate-700 self-end" onClick={closeSidebar} />
@@ -45,7 +44,9 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
                   }}
                 >
                   {selectedCategory === cat_title && isOpen ? (
-                    <MinusSquare className="mr-3" size={18} onClick={() => setIsOpen(false)} />
+                    (products) ?
+                      <MinusSquare className="mr-3" size={18} onClick={() => setIsOpen(false)} /> :
+                      <Loader2 className="mr-3 animate-spin" size={18} />
                   ) : (
                     <PlusSquare className="mr-3" size={18} onClick={() => setIsOpen(true)} />
                   )}
