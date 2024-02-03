@@ -21,7 +21,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
         }
 
         // Validate discount
-        if (newOrder.discount < 0 || newOrder.discount > selectedItem?.price!) {
+        if (newOrder.discount === "" || newOrder.discount < 0 || newOrder.discount > selectedItem?.price!) {
             toast.error("Discount should be non-negative");
             return;
         }
@@ -96,7 +96,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
                             <input
                                 type="number"
                                 className="w-full p-2 border border-gray-300 rounded"
-                                value={newOrder.discount || 0}
+                                value={newOrder.discount}
                                 onChange={(e) => setNewOrder({ ...newOrder, discount: parseInt(e.target.value, 10) || 0 })}
                             />
                         </div>
