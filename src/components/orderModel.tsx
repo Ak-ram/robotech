@@ -138,6 +138,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
                                     setNewOrder({
                                         ...newOrder,
                                         productName: e.target.value,
+                                        piecePrice: selectedProduct?.price!,
                                         date: new Date().toISOString()
                                     });
                                 }}
@@ -162,14 +163,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
                                 onChange={(e) => setNewOrder({ ...newOrder, quantity: parseInt(e.target.value, 10) })}
                             />
                         </div>
-                        <div className="mb-4 w-full">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">
-                                Price
-                            </label>
-                            <div className="w-full p-2 border border-gray-300 rounded">
-                                <FormattedPrice amount={selectedItem?.price! * newOrder.quantity} />
-                            </div>
-                        </div>
+
                         <div className="mb-4 w-full">
                             <label className="block text-gray-700 text-sm font-bold mb-2">
                                 Price
@@ -201,6 +195,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
                                     ...newOrder,
                                     subtotal: (selectedItem?.price! * newOrder.quantity) - parseInt(e.target.value, 10)
                                 })}
+                                disabled
                             />
                         </div>
                         <button
