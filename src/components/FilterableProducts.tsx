@@ -81,7 +81,7 @@ function FilterableProducts({ categories }) {
     <div className='mt-3 md:mt-0'>
       <div className='relative flex gap-4 overflow-auto m-auto'>
         <Categories products={products} setOpenSidebar={setOpenSidebar} openSidebar={openSidebar} setCategoryName={setCategoryName} categories={categories} />
-        <div className='flex-1 min-w-full lg:min-w-fit'>
+        <div className='flex-1'>
           {openSidebar ? null :
             <AlignJustify className='cursor-pointer text-slate-700  ml-3 mr-auto' onClick={() => setOpenSidebar(true)} />
           }

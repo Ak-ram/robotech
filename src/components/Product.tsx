@@ -93,7 +93,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
           <div
             key={`${item.id}_${item.title}`}
-            className="flex  sm:block  w-full mx-auto relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
+            className="flex p-2 sm:block  w-full mx-auto relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
           >
 
             <Link
@@ -129,7 +129,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
             </Link>
 
             <div className="sm:p-4 mt-5 w-[60%] flex justify-center w-full items-start flex-col px-2">
-              <div className="absolute top-2 right-2 flex items-center space-x-2">
+              <div className="absolute top-4 right-2 flex items-center space-x-2">
                 <Heart
                   fill={isFavorite(item.id) ? "red" : "black"}
                   onClick={() => {
