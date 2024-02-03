@@ -5,6 +5,7 @@ import { getProducts } from "@/helpers/getProducts";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
+import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
 
 const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
@@ -103,15 +104,26 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                     Add Product
                 </button>
                 {customerData?.transactions?.products?.map((product, index) => (
-                    <div
-                        key={index}
-                        className="bg-white p-6 rounded-lg shadow-md mb-4"
-                    >
-                        <p className="text-gray-600 mb-2">Transaction date: {product["date"]}</p>
-                        <p className="text-gray-600 mb-2">Product name: {product["productName"]}</p>
-                        <p className="text-gray-600 mb-2">Product price: <FormattedPrice amount={product["piecePrice"]} /></p>
-                        <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={product["discount"]!} /></p>
-                        <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={product["subtotal"]!} /></p>
+                    <div className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
+                       
+                        <div
+                            key={index}
+                            className="flex-1"
+                        >
+                            <p className="text-gray-600 mb-2">Transaction date: {product["date"]}</p>
+                            <p className="text-gray-600 mb-2">Product name: {product["productName"]}</p>
+                            <p className="text-gray-600 mb-2">Product price: <FormattedPrice amount={product["piecePrice"]} /></p>
+                            <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={product["discount"]!} /></p>
+                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={product["subtotal"]!} /></p>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <div className="flex-1">
+                            <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
+                            <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
+
+                            </div>
+                            <Trash className="ml-auto mr-2 cursor-not-allowed text-red-600" size={20} />
+                        </div>
                     </div>
                 ))}
 
