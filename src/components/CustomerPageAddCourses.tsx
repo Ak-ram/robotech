@@ -33,88 +33,47 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     const handleAddOrder = async () => {
         // Validate order details if needed
         const existingCustomerIndex = jsonArray.findIndex(
-          (customer) => customer.id === customerData.id
+            (customer) => customer.id === customerData.id
         );
-      
+
         if (existingCustomerIndex !== -1) {
-          const existingCustomer = jsonArray[existingCustomerIndex];
-      
-          if (!existingCustomer.transactions) {
-            existingCustomer.transactions = {
-              courses: [],
-            };
-          } else if (!existingCustomer.transactions.courses) {
-            existingCustomer.transactions.courses = [];
-          }
-      
-          existingCustomer.transactions.courses.push(newOrder);
-      
-          jsonArray[existingCustomerIndex] = existingCustomer;
-      
-          // Update the JSON file with the modified JSON array
-          try {
-            await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
-      
-            // Update the customerData state with the new transaction
-            setCustomerData(existingCustomer);
-      
-            toast.success(`Item Added/Updated successfully`);
-            toast.loading(`Be patient, changes take a few moments to be reflected`);
-      
-            setTimeout(() => {
-              toast.dismiss();
-            }, 5000);
-          } catch (error) {
-            toast.error((error as Error).message);
-          }
+            const existingCustomer = jsonArray[existingCustomerIndex];
+
+            if (!existingCustomer.transactions) {
+                existingCustomer.transactions = {
+                    courses: [],
+                };
+            } else if (!existingCustomer.transactions.courses) {
+                existingCustomer.transactions.courses = [];
+            }
+
+            existingCustomer.transactions.courses.push(newOrder);
+
+            jsonArray[existingCustomerIndex] = existingCustomer;
+
+            // Update the JSON file with the modified JSON array
+            try {
+                setShowAddOrderModal(false)
+                await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
+
+                // Update the customerData state with the new transaction
+                setCustomerData(existingCustomer);
+
+                toast.success(`Item Added/Updated successfully`);
+                toast.loading(`Be patient, changes take a few moments to be reflected`);
+
+                setTimeout(() => {
+                    toast.dismiss();
+                }, 5000);
+            } catch (error) {
+                toast.error((error as Error).message);
+            }
         } else {
-          // Handle the case where the customer doesn't exist or show an error message
-          console.error("Customer not found for ID:", customerData.id);
+            // Handle the case where the customer doesn't exist or show an error message
+            console.error("Customer not found for ID:", customerData.id);
         }
-      };
+    };
 
-    // const handleAddOrder = async () => {
-    //     // Validate order details if needed
-    //     const existingCustomerIndex = jsonArray.findIndex(customer => customer.id === customerData.id);
-    //     if (existingCustomerIndex !== -1) {
-    //         const existingCustomer = jsonArray[existingCustomerIndex];
-
-    //         const newCourseObject = {
-    //             productName: newOrder.productName,
-    //             quantity: newOrder.quantity,
-    //             date: newOrder.date,
-    //         };
-
-    //         if (!existingCustomer.transactions) {
-    //             existingCustomer.transactions = [];
-    //         }
-
-    //         existingCustomer.transactions.push(newCourseObject);
-
-    //         jsonArray[existingCustomerIndex] = existingCustomer;
-
-    //         // Update the JSON file with the modified JSON array
-    //         try {
-
-    //             await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
-    //             setShowAddOrderModal(false)
-
-    //             setJsonArray([...jsonArray]);
-
-    //             toast.success(`Item Added/Updated successfully`);
-    //             toast.loading(`Be patient, changes take a few moments to be reflected`);
-
-    //             setTimeout(() => {
-    //                 toast.dismiss();
-    //             }, 5000);
-    //         } catch (error) {
-    //             toast.error((error as Error).message);
-    //         }
-    //     } else {
-    //         // Handle the case where the customer doesn't exist or show an error message
-    //         console.error("Customer not found for ID:", customerData.id);
-    //     }
-    // }
 
 
     useEffect(() => {
@@ -134,22 +93,13 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
         }
     }, []);
     return (<>
-        {/* {customerData?.transactions?.map((transaction, index) => (
+        {customerData?.transactions?.courses?.map((course, index) => (
             <div key={index} className="mb-4">
-                <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
-
-                <ul>
-                    {transaction && transaction.courses?.map((course, orderIndex) => {
-                        if (course === null || course === undefined) return;
-                        return <li key={orderIndex}>
-                            Product: {course?.productName!}, Quantity: {course?.quantity!} ,Date: {course?.date!}
-                        </li>
-                    })}
-                </ul>
-
-                {/* <p className="mt-2 text-gray-600">Amount: ${transaction.amount.toFixed(2)}</p> 
+                <p className="text-gray-600 mb-2">Date: {course["date"]}</p>
+                <p className="text-gray-600 mb-2">Name: {course["productName"]}</p>
+                <p className="text-gray-600 mb-2">Quantity: {course["quantity"]}</p>
             </div>
-        ))} */}
+        ))}
 
         <button
             className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
