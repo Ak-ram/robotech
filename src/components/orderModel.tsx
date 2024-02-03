@@ -13,6 +13,16 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
         setNewOrder((prevOrder) => ({ ...prevOrder, subtotal }));
     }, [newOrder.quantity, newOrder.discount, selectedItem]);
 
+    // Initialize the newOrder state with a default discount value
+    const initialNewOrderState = {
+        productName: "",
+        piecePrice: 0,
+        quantity: 0,
+        discount: 0, // Set a default discount value
+        date: new Date().toISOString(),
+        subtotal: 0,
+    };
+
     const handleAddOrderClick = () => {
         // Validate quantity
         if (newOrder.quantity <= 0) {
@@ -21,7 +31,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
         }
 
         // Validate discount
-        if (newOrder.discount === "" || newOrder.discount < 0 || newOrder.discount > selectedItem?.price!) {
+        if (newOrder.discount < 0 || newOrder.discount > selectedItem?.price!) {
             toast.error("Discount should be non-negative");
             return;
         }
@@ -35,7 +45,6 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
         // Proceed with adding order
         handleAddOrder();
     };
-
     return (
         <>
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -97,7 +106,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
                                 type="number"
                                 className="w-full p-2 border border-gray-300 rounded"
                                 value={newOrder.discount}
-                                onChange={(e) => setNewOrder({ ...newOrder, discount: parseInt(e.target.value, 10) || 0 })}
+                                onChange={(e) => setNewOrder({ ...newOrder, discount: isNaN(parseInt(e.target.value, 10)) ? 0 : parseInt(e.target.value, 10) })}
                             />
                         </div>
                         <div className="mb-4">

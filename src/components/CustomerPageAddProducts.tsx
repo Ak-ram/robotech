@@ -16,13 +16,14 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
     const [newOrder, setNewOrder] = useState({
         productName: '',
         quantity: 1,
-        date: ''
+        date: '',
+        discount: 0
     });
 
 
-    useEffect(()=>{
+    useEffect(() => {
         setUpdatedCustomerData(customerData)
-    },[customerData])
+    }, [customerData])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -109,9 +110,9 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 >
                     Add Product
                 </button>
-                {updatedCustomerData?.transactions?.products?.map((product, index) => (
+                {updatedCustomerData?.transactions?.products?.slice().reverse().map((product, index) => (
                     <div className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
-                       
+
                         <div
                             key={index}
                             className="flex-1"
@@ -124,8 +125,8 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex-1">
-                            <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
-                            <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
+                                <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
+                                <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
 
                             </div>
                             <Trash className="ml-auto mr-2 cursor-not-allowed text-red-600" size={20} />

@@ -8,7 +8,6 @@ import FormattedPrice from "./FormattedPrice";
 import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
 
 const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
-
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
     const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
     const [list, setList] = useState([]);
@@ -16,14 +15,12 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     const [newOrder, setNewOrder] = useState({
         productName: '',
         quantity: 1,
-        date: ''
+        date: '',
+        discount: 0
     });
-
-
-    useEffect(()=>{
+    useEffect(() => {
         setUpdatedCustomerData(customerData)
-    },[customerData])
-
+    }, [customerData])
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -109,9 +106,9 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                 >
                     Add Course
                 </button>
-                {updatedCustomerData?.transactions?.courses?.map((course, index) => (
+                {updatedCustomerData?.transactions?.courses?.slice().reverse().map((course, index) => (
                     <div className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
-                       
+
                         <div
                             key={index}
                             className="flex-1"
@@ -124,8 +121,8 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex-1">
-                            <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
-                            <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
+                                <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
+                                <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
 
                             </div>
                             <Trash className="ml-auto mr-2 cursor-not-allowed text-red-600" size={20} />

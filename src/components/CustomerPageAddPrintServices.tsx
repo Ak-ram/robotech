@@ -16,7 +16,8 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
     const [newOrder, setNewOrder] = useState({
         productName: '',
         quantity: 1,
-        date: ''
+        date: '',
+        discount: 0
     });
 
 
@@ -109,7 +110,8 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
                 >
                     Add PrintServices
                 </button>
-                {updatedCustomerData?.transactions?.printServices?.map((service, index) => (
+
+                {updatedCustomerData?.transactions?.printServices?.slice().reverse().map((service, index) => (
                     <div className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
                        
                         <div
