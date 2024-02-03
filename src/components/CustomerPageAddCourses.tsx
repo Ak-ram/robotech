@@ -32,35 +32,41 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
 
 
 
-
     const handleAddOrder = async () => {
         // Validate order details if needed
         const existingCustomerIndex = jsonArray.findIndex(customer => customer.id === customerData.id);
-
+    
         if (existingCustomerIndex !== -1) {
             const existingCustomer = jsonArray[existingCustomerIndex];
-
+    
             const newCourseObject = {
                 productName: newOrder.productName,
                 quantity: newOrder.quantity,
                 date: newOrder.date,
             };
-            if (existingCustomer.transactions.courses) {
-                existingCustomer.transactions.courses = [...existingCustomer.transactions.courses, newCourseObject];
-            } else {
-                existingCustomer.transactions.courses = [newCourseObject];
+            
+            if (!existingCustomer.transactions) {
+                existingCustomer.transactions = [];
             }
+            
+            existingCustomer.transactions.push(newCourseObject);
+    
             jsonArray[existingCustomerIndex] = existingCustomer;
-            console.log(jsonArray)
+            
             // Update the JSON file with the modified JSON array
             try {
-                await updateJsonFile("robotech/pages/customers.json", jsonArray);
-                setJsonArray(jsonArray);
+                console.log([...jsonArray]);
+    
+                await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
+                console.log('after', [...jsonArray]);
+                
+                setJsonArray([...jsonArray]);
+                
                 toast.success(`Item Added/Updated successfully`);
-                toast.loading(`Be patient, changes takes a few moments to be reflected`);
+                toast.loading(`Be patient, changes take a few moments to be reflected`);
+                
                 setTimeout(() => {
                     toast.dismiss();
-
                 }, 5000);
             } catch (error) {
                 toast.error((error as Error).message);
@@ -70,7 +76,6 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
             console.error("Customer not found for ID:", customerData.id);
         }
     }
-
 
 
     useEffect(() => {
@@ -90,7 +95,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
         }
     }, []);
     return (<>
-        {customerData.transactions.map((transaction, index) => (
+        {customerData?.transactions?.map((transaction, index) => (
             <div key={index} className="mb-4">
                 <p className="text-gray-600 mb-2">Date: {transaction["date"]}</p>
 
