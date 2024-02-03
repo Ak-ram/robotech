@@ -95,50 +95,50 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     }, []);
     return (
         <>
-        <div className="max-w-3xl mx-auto my-8">
-         <button
-            className="mb-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
-            onClick={() => setShowAddOrderModal(true)}
-          >
-            Add Course
-          </button>
-          {customerData?.transactions?.courses?.map((course, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-lg shadow-md mb-4"
-            >
-              <p className="text-gray-600 mb-2">Transaction date: {course["date"]}</p>
-              <p className="text-gray-600 mb-2">Course name: {course["productName"]}</p>
-              <p className="text-gray-600 mb-2">Course price: {course["productName"]}</p>
-              <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={course["discount"]!}/></p>
-              <p className="text-gray-600 mb-2">Total price: <FormattedPrice amount={100}/></p>
+            <div className="max-w-3xl mx-auto my-8">
+                <button
+                    className="mb-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+                    onClick={() => setShowAddOrderModal(true)}
+                >
+                    Add Course
+                </button>
+                {customerData?.transactions?.courses?.map((course, index) => (
+                    <div
+                        key={index}
+                        className="bg-white p-6 rounded-lg shadow-md mb-4"
+                    >
+                        <p className="text-gray-600 mb-2">Transaction date: {course["date"]}</p>
+                        <p className="text-gray-600 mb-2">Course name: {course["productName"]}</p>
+                        <p className="text-gray-600 mb-2">Course price: <FormattedPrice amount={course["piecePrice"]} /></p>
+                        <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={course["discount"]!} /></p>
+                        <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={course["subtotal"]!} /></p>
+                    </div>
+                ))}
+
+
             </div>
-          ))}
-  
-         
-        </div>
-  
-        {showAddOrderModal && (
-          <OrderModel
-            list={list}
-            newOrder={newOrder}
-            setNewOrder={setNewOrder}
-            handleAddOrder={handleAddOrder}
-            setShowAddOrderModal={setShowAddOrderModal}
-          />
-        )}
-  
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: "#000",
-              color: "#fff",
-            },
-          }}
-        />
-      </>
-    
+
+            {showAddOrderModal && (
+                <OrderModel
+                    list={list}
+                    newOrder={newOrder}
+                    setNewOrder={setNewOrder}
+                    handleAddOrder={handleAddOrder}
+                    setShowAddOrderModal={setShowAddOrderModal}
+                />
+            )}
+
+            <Toaster
+                position="bottom-right"
+                toastOptions={{
+                    style: {
+                        background: "#000",
+                        color: "#fff",
+                    },
+                }}
+            />
+        </>
+
     )
 }
 

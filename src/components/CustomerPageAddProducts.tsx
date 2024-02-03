@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getProducts } from "@/helpers/getProducts";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
+import FormattedPrice from "./FormattedPrice";
 
 const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
@@ -93,38 +94,51 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         }
     }, []);
     return (
-    <>
-      <button
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-            onClick={() => setShowAddOrderModal(true)}
-        >
-            Add Product
-        </button>
+        <>
+            <div className="max-w-3xl mx-auto my-8">
+                <button
+                    className="mb-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+                    onClick={() => setShowAddOrderModal(true)}
+                >
+                    Add Product
+                </button>
+                {customerData?.transactions?.products?.map((product, index) => (
+                    <div
+                        key={index}
+                        className="bg-white p-6 rounded-lg shadow-md mb-4"
+                    >
+                        <p className="text-gray-600 mb-2">Transaction date: {product["date"]}</p>
+                        <p className="text-gray-600 mb-2">Product name: {product["productName"]}</p>
+                        <p className="text-gray-600 mb-2">Product price: <FormattedPrice amount={product["piecePrice"]} /></p>
+                        <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={product["discount"]!} /></p>
+                        <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={product["subtotal"]!} /></p>
+                    </div>
+                ))}
 
-        {customerData?.transactions?.products?.map((product, index) => (
-            <div key={index} className="mb-4">
-                <p className="text-gray-600 mb-2">Date: {product["date"]}</p>
-                <p className="text-gray-600 mb-2">Name: {product["productName"]}</p>
-                <p className="text-gray-600 mb-2">Quantity: {product["quantity"]}</p>
+
             </div>
-        ))}
 
-      
-        {/* Modal for adding orders */}
-        {showAddOrderModal && (
-            <OrderModel list={list} newOrder={newOrder} setNewOrder={setNewOrder} handleAddOrder={handleAddOrder} setShowAddOrderModal={setShowAddOrderModal} />
-        )}
-        <Toaster
-            position="bottom-right"
-            toastOptions={{
-                style: {
-                    background: "#000",
-                    color: "#fff",
-                },
-            }}
-        />
-    </>
-    
+            {showAddOrderModal && (
+                <OrderModel
+                    list={list}
+                    newOrder={newOrder}
+                    setNewOrder={setNewOrder}
+                    handleAddOrder={handleAddOrder}
+                    setShowAddOrderModal={setShowAddOrderModal}
+                />
+            )}
+
+            <Toaster
+                position="bottom-right"
+                toastOptions={{
+                    style: {
+                        background: "#000",
+                        color: "#fff",
+                    },
+                }}
+            />
+        </>
+
     )
 }
 
