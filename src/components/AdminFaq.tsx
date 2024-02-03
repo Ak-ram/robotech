@@ -164,47 +164,51 @@ const AdminFaq = () => {
         </div> : <NoContent />}
 
       {editIndex !== null && (
-        <div className="mt-5">
-          <h2 className="font-bold mb-2">
-            {editIndex === -1 ? "Add New Item" : "Edit Item"}
-          </h2>
-          {error && <p className="text-red-500 mb-2">{error}</p>}
-          <div className="flex flex-col lg:flex-row">
-            <div className=" mb-2 lg:pr-4">
-              <input
-                type="text"
-                placeholder="Question"
-                className="w-full p-2 border border-gray-300 rounded"
-                value={editedItem.question}
-                onChange={(e) => handleInputChange(e, "question")}
-              />
-            </div>
-            <div className="lg:w-1/4 mb-2 lg:pr-4">
-              <input
-                type="text"
-                placeholder="Answer"
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.answer}
-                onChange={(e) => handleInputChange(e, "answer")}
-              />
-            </div>
+        <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white max-h-[700px] overflow-auto min-w-[500px] p-8 rounded-lg shadow-md">
 
-          </div>
-          <div className="flex">
-            <button
-              className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
-              onClick={handleEditSubmit}
-            >
-              <Check size={18} className="mr-1" />
-              Save
-            </button>
-            <button
-              className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-              onClick={handleEditCancel}
-            >
-              <X size={18} className="mr-1" />
-              Cancel
-            </button>
+            {error && <p className="text-red-500 mb-2">{error}</p>}
+            <div className="">
+              <div className=" mb-2 lg:pr-4">
+                <span className="font-bold my-2 -ml-2">Question</span>
+
+                <input
+                  type="text"
+                  placeholder="Question"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editedItem.question}
+                  onChange={(e) => handleInputChange(e, "question")}
+                />
+              </div>
+              <div className="mb-2 lg:pr-4">
+                <span className="font-bold my-2 -ml-2">Answer</span>
+
+                <input
+                  type="text"
+                  placeholder="Answer"
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.answer}
+                  onChange={(e) => handleInputChange(e, "answer")}
+                />
+              </div>
+
+            </div>
+            <div className="flex mt-3">
+              <button
+                className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+                onClick={handleEditSubmit}
+              >
+                <Check size={18} className="mr-1" />
+                Save
+              </button>
+              <button
+                className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                onClick={handleEditCancel}
+              >
+                <X size={18} className="mr-1" />
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}
