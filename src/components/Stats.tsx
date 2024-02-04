@@ -128,23 +128,23 @@ const Stats = () => {
                                     </div>
                                     <table className="text-sm text-gray-400">
                                         <thead className="bg-gray-800 text-xs uppercase ">
-                                            <tr>
-                                                <th scope="col" className="text-center text-xs  py-3 text-left tracking-wider">
+                                            <tr className="">
+                                                <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
                                                     Category
                                                 </th>
-                                                <th scope="col" className="text-center text-xs  py-3 text-left tracking-wider">
+                                                <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
                                                     Quantity
                                                 </th>
-                                                <th scope="col" className="text-center text-xs  py-3 text-left tracking-wider">
+                                                <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
                                                     In Stock
                                                 </th>
-                                                <th scope="col" className="text-center text-xs  py-3 text-left tracking-wider">
+                                                <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
                                                     IS Price
                                                 </th>
-                                                <th scope="col" className="text-center text-xs  py-3 text-left tracking-wider">
+                                                <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
                                                     Out Stock
                                                 </th>
-                                                <th scope="col" className="text-center text-xs  py-3 text-left tracking-wider">
+                                                <th scope="col" className="pr-5 text-center text-xs  p-3 text-left tracking-wider">
                                                     OS Price
                                                 </th>
                                             </tr>
@@ -152,24 +152,24 @@ const Stats = () => {
                                         <tbody className="bg-gray-800">
                                             {filteredCategoryStats.map((categoryInfo, index) => (
                                                 <tr key={index} className=" bg-black bg-opacity-20 ">
-                                                    <td className="text-center pl-3 text-xs  flex  py-2 whitespace-nowrap">
+                                                    <td className="text-center pl-3 text-xs  flex  py-2.5 whitespace-nowrap">
                                                         <img className="w-6 h-6 mr-2 rounded" src={categoryInfo.inStockProducts[0].image1} alt="" />
                                                         <span className="text-xs font-medium">{categoryInfo.categoryName.slice(0, 1).toUpperCase() + categoryInfo.categoryName.slice(1,)}</span>
                                                     </td>
-                                                    <td className="text-center text-xs   py-2 whitespace-nowrap">{categoryInfo.quantity}</td>
+                                                    <td className="text-center text-xs   py-2.5 whitespace-nowrap">{categoryInfo.quantity}</td>
                                                     <td className={`${categoryInfo.inStockLength >= 10 ? "text-green-500" :
                                                         categoryInfo.inStockLength > 5 ? 'text-orange-400' :
                                                             'text-yellow-500'
-                                                        } text-center text-xs   py-2 whitespace-nowrap`}>{categoryInfo.inStockLength}</td>
-                                                    <td className="text-center text-xs   py-2 whitespace-nowrap">
+                                                        } text-center text-xs   py-2.5 whitespace-nowrap`}>{categoryInfo.inStockLength}</td>
+                                                    <td className="text-center text-xs   py-2.5 whitespace-nowrap">
                                                         <FormattedPrice className="text-xs" amount={categoryInfo.inStockTotalPrice} />
                                                     </td>
-                                                    <td className={`${categoryInfo.outStockLength ? "text-red-500" : ""} text-center text-xs text-sm  py-2 whitespace-nowrap`}>{categoryInfo.outStockLength}</td>
-                                                    <td className="text-center text-xs  py-2 whitespace-nowrap">
+                                                    <td className={`${categoryInfo.outStockLength ? "text-red-500" : ""} text-center text-xs text-sm  py-2.5 whitespace-nowrap`}>{categoryInfo.outStockLength}</td>
+                                                    <td className="text-center text-xs  py-2.5 whitespace-nowrap">
                                                         <FormattedPrice className="text-xs" amount={categoryInfo.outStockTotalPrice} /></td>
                                                 </tr>
                                             ))}
-                                            <tr>
+                                            {/* <tr>
 
                                                 <th scope="col" className="text-xs pl-3 py-2 text-left tracking-wider">
                                                     Total
@@ -206,14 +206,14 @@ const Stats = () => {
                                                                 .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
                                                         } />
                                                 </th>
-                                            </tr>
+                                            </tr> */}
                                         </tbody>
                                     </table>
 
                                 </div>
                             </div>
                         </div></div>
-                    <section className="rounded-lg flex-1 gap-3 flex p-5 bg-gray-800">
+                    <section className="rounded-lg min-w-[40%] min-w-[40%]  gap-3 flex p-5 bg-gray-800">
                         <div className="flex justify-center flex-col gap-3 flex-1">
                             <div className="h-28 border border-blue-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
                                 <span className="text-2xl text-blue-400  font-bold">  {products?.length}</span>
@@ -236,7 +236,7 @@ const Stats = () => {
                                 <span className="text-center text-red-200">عدد المنتجات الغير المتاحة</span>
                             </div>
                         </div>
-                        <div className="flex py-3 justify-center flex-col gap-3 flex-1">
+                        <div className="flex py-2 justify-center flex-col gap-3 flex-1">
                             <div className="h-28 border border-green-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
                                 <span className="text-2xl text-green-400  font-bold">  <FormattedPrice className="text-xl" amount=
                                     {
