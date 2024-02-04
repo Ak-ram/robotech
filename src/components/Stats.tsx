@@ -89,6 +89,9 @@ const Stats = () => {
 
     return (
         <>
+
+
+
             <div className="flex flex-col items-center min-h-screen py-10">
                 <h1 className="text-lg text-gray-950 font-medium">Stats For {
 
@@ -98,7 +101,7 @@ const Stats = () => {
 
 
                 <ApexChartComp categoryStats={categoryStats} />
-                {/* <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={380} /> */}
+                {/* <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={380} />  */}
 
 
                 <div className="flex w-[90%] mx-auto flex-col mt-6">
