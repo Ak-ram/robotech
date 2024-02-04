@@ -6,7 +6,7 @@ import { ProductType } from "../../type";
 import FormattedPrice from "./FormattedPrice";
 import Products from "./Products";
 import ApexChartComp from "./ApexChart";
-import { BarChart, LineChart, X } from "lucide-react";
+import { BarChart, LineChart, Search, X } from "lucide-react";
 
 interface Product {
     id: string;
@@ -42,6 +42,7 @@ const Stats = () => {
     const [products, setProducts] = useState<string[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
     const [isShow, setIsShow] = useState<boolean>(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -88,12 +89,14 @@ const Stats = () => {
     useEffect(() => {
         console.log(categoryStats);
     }, [categoryStats]);
-
+    const filteredCategoryStats = categoryStats.filter((categoryInfo) =>
+        categoryInfo.categoryName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
     return (
         <>
 
             <section className='flex'>
-                <div className={`${isShow ? "block" : "hidden"} fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
+                <div className={`${isShow ? "block" : "hidden"} z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
                     <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
                         <div className="flex-1"> <X className="cursor-pointer" onClick={() => setIsShow(false)} /> <ApexChartComp categoryStats={categoryStats} /></div>
                     </div></div>
@@ -102,11 +105,24 @@ const Stats = () => {
                         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div className="py-2 align-middle inline-block lg:px-8">
                                 <div className="shadow overflow-hidden sm:rounded-lg">
-                                    <div className="bg-gray-800 p-3 border-b  border-gray-700">
+                                    <div className="flex justify-between items-center gap-2 bg-gray-800 p-3 border-b  border-gray-700">
+
+                                        <span className="relative">
+                                        <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
+                                            <input
+                                                type="text"
+                                                placeholder="Search by category"
+                                                value={searchTerm}
+                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                                className="pl-2 pr-10 py-1 border border-gray-700 rounded bg-gray-800 text-gray-300 focus:outline-none focus:border-blue-500"
+                                            />
+
+                                        </span>
                                         <span onClick={() => setIsShow(true)} className="text-slate-400 hover:text-white cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-gray-700 block">
 
                                             <LineChart className="" />
                                         </span>
+
                                     </div>
                                     <table className="text-sm text-gray-400">
                                         <thead className="bg-gray-800 text-xs uppercase ">
@@ -132,7 +148,7 @@ const Stats = () => {
                                             </tr>
                                         </thead>
                                         <tbody className="bg-gray-800">
-                                            {categoryStats.map((categoryInfo, index) => (
+                                            {filteredCategoryStats.map((categoryInfo, index) => (
                                                 <tr key={index} className=" bg-black bg-opacity-20 ">
                                                     <td className="text-center pl-3 text-xs  flex  py-2 whitespace-nowrap">
                                                         <img className="w-6 h-6 mr-2 rounded" src={categoryInfo.inStockProducts[0].image1} alt="" />
