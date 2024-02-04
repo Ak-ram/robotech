@@ -104,11 +104,11 @@ const Stats = () => {
                         <div className="flex-1"> <X className="cursor-pointer" onClick={() => setIsShow(false)} /> <ApexChartComp categoryStats={categoryStats} /></div>
                     </div></div>
                 <div className="flex justify-start gap-2">
-                    <div className="flex flex-col">
-                        <div className="-my-2 overflow-x-auto sm:-mx-6 ">
-                            <div className="py-2 align-middle inline-block lg:px-8">
-                                <div className="shadow overflow-hidden sm:rounded-lg">
-                                    <div className="flex justify-between items-center gap-2 bg-gray-800 p-3 border-b  border-gray-700">
+                    <div className="flex flex-col flex-1">
+                        <div className="-my-2 overflow-x-auto ">
+                            <div className="py-2 px-3">
+                                <div className="shadow-xl border border-slate-400 overflow-hidden sm:rounded-lg">
+                                    <div className="flex justify-between items-center gap-2 bg-white p-3 border-b  border-gray-400">
 
                                         <span className="relative">
                                             <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
@@ -117,18 +117,18 @@ const Stats = () => {
                                                 placeholder="Search by category"
                                                 value={searchTerm}
                                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                                className="pl-2 pr-10 py-1 border border-gray-700 rounded bg-gray-800 text-gray-300 focus:outline-none focus:border-blue-500"
+                                                className="pl-2 pr-10 py-1 border border-slate-300 rounded bg-white text-black focus:outline-none focus:border-blue-500"
                                             />
 
                                         </span>
-                                        <span onClick={() => setIsShow(true)} className="text-slate-400 hover:text-white cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-gray-700 block">
+                                        <span onClick={() => setIsShow(true)} className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-slate-300 block">
 
                                             <LineChart className="" />
                                         </span>
 
                                     </div>
-                                    <table className="text-sm text-gray-400">
-                                        <thead className="bg-gray-800 text-xs uppercase ">
+                                    <table className="w-full text-sm text-gray-600">
+                                        <thead className="bg-white text-sm uppercase ">
                                             <tr className="">
                                                 <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
                                                     Category
@@ -150,20 +150,20 @@ const Stats = () => {
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody className="bg-gray-800">
+                                        <tbody className="">
                                             {filteredCategoryStats.map((categoryInfo, index) => (
-                                                <tr key={index} className=" bg-black bg-opacity-20 ">
-                                                    <td className="text-center pl-3 text-xs  flex  py-2.5 whitespace-nowrap">
+                                                <tr key={index} className="border-b border-slate-300 bg-white bg-opacity-20 ">
+                                                    <td className="text-center pl-3 text-sm  flex  py-2.5 whitespace-nowrap">
                                                         <img className="w-6 h-6 mr-2 rounded" src={categoryInfo.inStockProducts[0].image1} alt="" />
-                                                        <span className="text-xs font-medium">{categoryInfo.categoryName.slice(0, 1).toUpperCase() + categoryInfo.categoryName.slice(1,)}</span>
+                                                        <span className="text-sm font-medium">{categoryInfo.categoryName.slice(0, 1).toUpperCase() + categoryInfo.categoryName.slice(1,)}</span>
                                                     </td>
-                                                    <td className="text-center text-xs   py-2.5 whitespace-nowrap">{categoryInfo.quantity}</td>
+                                                    <td className="text-center text-sm   py-2.5 whitespace-nowrap">{categoryInfo.quantity}</td>
                                                     <td className={`${categoryInfo.inStockLength >= 10 ? "text-green-500" :
                                                         categoryInfo.inStockLength > 5 ? 'text-orange-400' :
                                                             'text-yellow-500'
-                                                        } text-center text-xs   py-2.5 whitespace-nowrap`}>{categoryInfo.inStockLength}</td>
-                                                    <td className="text-center text-xs   py-2.5 whitespace-nowrap">
-                                                        <FormattedPrice className="text-xs" amount={categoryInfo.inStockTotalPrice} />
+                                                        } text-center text-sm   py-2.5 whitespace-nowrap`}>{categoryInfo.inStockLength}</td>
+                                                    <td className="text-center text-sm   py-2.5 whitespace-nowrap">
+                                                        <FormattedPrice className="text-sm" amount={categoryInfo.inStockTotalPrice} />
                                                     </td>
                                                     <td className={`${categoryInfo.outStockLength ? "text-red-500" : ""} text-center text-xs text-sm  py-2.5 whitespace-nowrap`}>{categoryInfo.outStockLength}</td>
                                                     <td className="text-center text-xs  py-2.5 whitespace-nowrap">
@@ -177,48 +177,48 @@ const Stats = () => {
                                 </div>
                             </div>
                         </div></div>
-                    <section className="rounded-lg min-w-[40%] min-w-[40%]  gap-3 flex p-5 bg-gray-800">
+                    <section className="rounded-lg border border-slate-400 min-w-[40%] min-w-[40%]  gap-3 flex p-5 bg-white">
                         <div className="flex justify-center flex-col gap-3 flex-1">
-                            <div className="h-28 border border-blue-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
-                                <span className="text-2xl text-blue-400  font-bold">  {products?.length}</span>
-                                <span className="text-center text-blue-200">اجمالى المنتجات</span>
+                            <div className="h-28 border shadow-lg border-slate-300 flex flex-col items-center gap-3 justify-center bg-white rounded">
+                                <span className="text-2xl text-blue-700  font-bold">  {products?.length}</span>
+                                <span className="text-center font-semibold text-blue-700">اجمالى المنتجات</span>
                             </div>
-                            <div className="h-28 border border-yellow-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
-                                <span className="text-2xl text-yellow-400  font-bold">   {
+                            <div className="h-28 shadow-lg border border-slate-300 flex flex-col items-center gap-3 justify-center bg-white rounded">
+                                <span className="text-2xl text-yellow-700  font-bold">   {
                                     categoryStats
                                         .map(item => item.inStockProducts.map((product: ProductType) => +product?.count !== 0))
                                         .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
                                 }  </span>
-                                <span className="text-center text-yellow-200">عدد المنتجات المتاحة</span>
+                                <span className="text-center text-yellow-700 font-semibold">عدد المنتجات المتاحة</span>
                             </div>
-                            <div className="h-28 border border-red-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
-                                <span className="text-2xl text-red-400  font-bold"> {
+                            <div className="h-28 shadow-lg border border-slate-300  flex flex-col items-center gap-3 justify-center bg-white rounded">
+                                <span className="text-2xl text-red-700  font-bold"> {
                                     categoryStats
                                         .map(item => item.outStockProducts.map((product: ProductType) => +product?.count === 0))
                                         .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
                                 }  </span>
-                                <span className="text-center text-red-200">عدد المنتجات الغير المتاحة</span>
+                                <span className="text-center text-red-700 font-semibold">عدد المنتجات الغير المتاحة</span>
                             </div>
                         </div>
                         <div className="flex py-2 justify-center flex-col gap-3 flex-1">
-                            <div className="h-28 border border-green-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
-                                <span className="text-2xl text-green-400  font-bold">  <FormattedPrice className="text-xl" amount=
+                            <div className="h-28 shadow-lg border border-slate-300  flex flex-col items-center gap-3 justify-center bg-white rounded">
+                                <span className="text-2xl text-green-700  font-bold">  <FormattedPrice className="text-xl" amount=
                                     {
                                         categoryStats
                                             .map(item => item.inStockProducts.map((product: ProductType) => +product?.price))
                                             .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
                                     } /> </span>
-                                <span className="text-center text-green-200">اجمالى سعر البضاعه المعروضة</span>
+                                <span className="text-center text-green-700 font-semibold">اجمالى سعر البضاعه المعروضة</span>
                             </div>                          
                               {/* <div className="h-28 bg-gray-700 text-white rounded">2</div> */}
-                            <div className="flex-1 border border-green-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
-                                <span className="text-2xl text-green-400  font-bold"> <FormattedPrice className="text-xl" amount=
+                            <div className="flex-1 shadow-lg border border-slate-300  flex flex-col items-center gap-3 justify-center bg-white rounded">
+                                <span className="text-2xl text-rose-700  font-bold"> <FormattedPrice className="text-xl" amount=
                                     {
                                         categoryStats
                                             .map(item => item.outStockProducts.map((product: ProductType) => +product?.price))
                                             .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
                                     } /> </span>
-                                <span className="text-center text-green-200">اجمالى سعر البضاعه الغير متاحه</span>
+                                <span className="text-center text-rose-700 font-semibold">اجمالى سعر البضاعه الغير متاحه</span>
                             </div>
 
                         </div>
