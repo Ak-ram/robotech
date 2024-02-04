@@ -213,20 +213,52 @@ const Stats = () => {
                                 </div>
                             </div>
                         </div></div>
-                        <section className="rounded-lg flex-1 gap-3 flex p-5 bg-gray-800">
-<div className="flex justify-center flex-col gap-3 flex-1">
-<div className="h-28 bg-gray-700 text-white rounded">1</div>
-<div className="h-28 bg-gray-700 text-white rounded">2</div>
-<div className="h-28 bg-gray-700 text-white rounded">3</div>
+                    <section className="rounded-lg flex-1 gap-3 flex p-5 bg-gray-800">
+                        <div className="flex justify-center flex-col gap-3 flex-1">
+                            <div className="h-28 border border-blue-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
+                                <span className="text-2xl text-blue-400  font-bold">  {products?.length}</span>
+                                <span className="text-center text-blue-200">اجمالى المنتجات</span>
+                            </div>
+                            <div className="h-28 border border-yellow-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
+                                <span className="text-2xl text-yellow-400  font-bold">   {
+                                    categoryStats
+                                        .map(item => item.inStockProducts.map((product: ProductType) => +product?.count !== 0))
+                                        .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
+                                }  </span>
+                                <span className="text-center text-yellow-200">عدد المنتجات المتاحة</span>
+                            </div>
+                            <div className="h-28 border border-red-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
+                                <span className="text-2xl text-red-400  font-bold"> {
+                                    categoryStats
+                                        .map(item => item.outStockProducts.map((product: ProductType) => +product?.count === 0))
+                                        .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
+                                }  </span>
+                                <span className="text-center text-red-200">عدد المنتجات الغير المتاحة</span>
+                            </div>
+                        </div>
+                        <div className="flex py-3 justify-center flex-col gap-3 flex-1">
+                            <div className="h-28 border border-green-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
+                                <span className="text-2xl text-green-400  font-bold">  <FormattedPrice className="text-xl" amount=
+                                    {
+                                        categoryStats
+                                            .map(item => item.inStockProducts.map((product: ProductType) => +product?.price))
+                                            .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
+                                    } /> </span>
+                                <span className="text-center text-green-200">اجمالى سعر البضاعه المعروضة</span>
+                            </div>                          
+                              {/* <div className="h-28 bg-gray-700 text-white rounded">2</div> */}
+                            <div className="flex-1 border border-green-400 flex flex-col items-center gap-3 justify-center bg-gray-700 rounded">
+                                <span className="text-2xl text-green-400  font-bold"> <FormattedPrice className="text-xl" amount=
+                                    {
+                                        categoryStats
+                                            .map(item => item.outStockProducts.map((product: ProductType) => +product?.price))
+                                            .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
+                                    } /> </span>
+                                <span className="text-center text-green-200">اجمالى سعر البضاعه الغير متاحه وفقا لاخير عملية شراء</span>
+                            </div>
 
-</div>
-<div className="flex justify-center flex-col gap-3 flex-1">
-<div className="h-28 bg-gray-700 text-white rounded">1</div>
-<div className="h-28 bg-gray-700 text-white rounded">2</div>
-<div className="h-28 bg-gray-700 text-white rounded">3</div>
-
-</div>
-                        </section>
+                        </div>
+                    </section>
                 </div>
             </section>
 
