@@ -95,20 +95,22 @@ const Stats = () => {
     return (
         <>
 
-            <section className='flex'>
+            <section className=''>
+                <h1 className="text-lg text-gray-950 font-medium mb-3 text-center">Categories & Products Stats</h1>
+
                 <div className={`${isShow ? "block" : "hidden"} z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
                     <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
                         <div className="flex-1"> <X className="cursor-pointer" onClick={() => setIsShow(false)} /> <ApexChartComp categoryStats={categoryStats} /></div>
                     </div></div>
-                <div>
-                    <div className="flex mx-auto flex-col">
+                <div className="flex justify-start gap-2">
+                    <div className="flex flex-col">
                         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div className="py-2 align-middle inline-block lg:px-8">
                                 <div className="shadow overflow-hidden sm:rounded-lg">
                                     <div className="flex justify-between items-center gap-2 bg-gray-800 p-3 border-b  border-gray-700">
 
                                         <span className="relative">
-                                        <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
+                                            <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
                                             <input
                                                 type="text"
                                                 placeholder="Search by category"
@@ -211,23 +213,24 @@ const Stats = () => {
                                 </div>
                             </div>
                         </div></div>
+                        <section className="rounded-lg flex-1 gap-3 flex p-5 bg-gray-800">
+<div className="flex justify-center flex-col gap-3 flex-1">
+<div className="h-28 bg-gray-700 text-white rounded">1</div>
+<div className="h-28 bg-gray-700 text-white rounded">2</div>
+<div className="h-28 bg-gray-700 text-white rounded">3</div>
+
+</div>
+<div className="flex justify-center flex-col gap-3 flex-1">
+<div className="h-28 bg-gray-700 text-white rounded">1</div>
+<div className="h-28 bg-gray-700 text-white rounded">2</div>
+<div className="h-28 bg-gray-700 text-white rounded">3</div>
+
+</div>
+                        </section>
                 </div>
             </section>
 
-            <div className="flex flex-col items-center min-h-screen py-10">
-                <h1 className="text-lg text-gray-950 font-medium">Stats For {
 
-                    new Date().toLocaleDateString('en-US', { dateStyle: 'long' })
-
-                }</h1>
-
-
-
-                {/* <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={380} />  */}
-
-
-
-            </div>
         </>
     );
 };
