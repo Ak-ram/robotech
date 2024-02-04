@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { CourseType, ProductType } from "../../type";
 import Link from 'next/link'
 import SearchComponent from "./SearchComponent";
+import { formatFullName } from "@/lib/utils";
 const AdminCustomers = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -100,6 +101,10 @@ const AdminCustomers = () => {
         setEditedItem({ ...jsonArray[index] });
         setSearchTerm('');
     };
+    function handleClick(event) {
+        event.stopPropagation();
+        // Handle the click event for the nested element
+    }
     const handleEditSubmit = async () => {
         // Check for empty fields
         if (
@@ -249,23 +254,35 @@ const AdminCustomers = () => {
                         </tbody> 
                     </table>
                 </div> : <NoContent />} */}
-            <div className="mb-5 flex items-center justify-between">
-                <button
-                    className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all duration-300"
-                    onClick={handleAddItemClick}
-                >
-                    <Plus size={18} className="mr-1" />
-                    Add Customer
-                </button>
+          <div className="mb-5 flex flex-col lg:flex-row items-center justify-between">
+    <input
+        type="text"
+        placeholder="Search By Name, Phone"
+        className="text-black mb-2 p-2 border border-gray-300 rounded w-full lg:w-[60%] focus:outline-none focus:border-blue-500"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+    />
 
-                {/* Toggle Button for Grid and List View */}
-                <button
-                    className={`text-gray-600 hover:text-blue-500 transition-colors duration-300 ${isGridView ? "opacity-50" : ""
-                        }`}
-                    onClick={toggleView}
-                >
-                    {isGridView ? <List size={20} /> : <Grid size={20} />}
-                </button>
+    <div className="flex items-center space-x-4 mb-2 lg:mb-0">
+        <button
+            className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all duration-300"
+            onClick={handleAddItemClick}
+        >
+            <Plus size={18} className="mr-1" />
+            Add Customer
+        </button>
+
+        {/* Toggle Button for Grid and List View */}
+        <button
+            className={`text-gray-600 hover:text-blue-500 transition-colors duration-300 ${isGridView ? "opacity-50" : ""
+                }`}
+            onClick={toggleView}
+        >
+            {isGridView ? <List size={20} /> : <Grid size={20} />}
+        </button>
+    </div>
+
+
             </div>
             {jsonArray.length !== 0 ? (
                 <div className={isGridView ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-4"}>
@@ -278,14 +295,23 @@ const AdminCustomers = () => {
                             return fullName.includes(search) || phone.includes(search);
                         })
                         .map((item, index) => (
-                            <div
-                                key={index}
-                                className={`border p-4 rounded bg-white shadow-md transition-all duration-300 transform ${isGridView ? "hover:scale-105" : ""
-                                    }`}
+                            <><div
+
+                                className={`border p-4 rounded bg-white shadow-md transition-all duration-300 transform 
+                            `}
                             >
-                                <span className="block font-bold mb-2 text-xl">{item.fullName}</span>
-                                <span className="block text-gray-600 mb-2">Phone: {item.phone}</span>
-                                <span className="block text-gray-600 mb-2">Age: {item.age}</span>
+                                <Link key={index} href={{
+                                    pathname: `admin/id_${item?.id}`,
+                                    query: {
+                                        id: item?.id,
+                                        data: JSON.stringify(item)
+                                    },
+                                }} className={`${isLinkDisabled ? 'cursor-wait text-gray-500' : ''} ${isGridView ? "hover:scale-105" : ""} block`}>
+
+                                    <span className="block font-bold mb-2 text-xl">{formatFullName(item.fullName)}</span>
+                                    <span className="block text-gray-600 mb-2">Phone: {item.phone}</span>
+                                    <span className="block text-gray-600 mb-2">Age: {item.age}</span>
+                                </Link>
                                 <div className="flex justify-end">
                                     <button
                                         className="text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
@@ -300,97 +326,101 @@ const AdminCustomers = () => {
                                         Remove
                                     </button>
                                 </div>
-                            </div>
-                        ))}
-                </div>
+                            </div></>
+
+                        ))
+                    }
+                </div >
             ) : (
                 <NoContent />
             )}
 
 
-            {editIndex !== null && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white w-[500px] p-8 rounded-lg shadow-md">
+            {
+                editIndex !== null && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                        <div className="bg-white w-[500px] p-8 rounded-lg shadow-md">
 
-                        <h2 className="font-bold mb-2 text-center text-lg">
-                            {editIndex === -1 ? "Add New Customer" : "Edit Customer"}
-                        </h2>
-                        {error && <p className="text-red-500 mb-2">{error}</p>}
-                        <div className="">
-                            <div className=" mb-2 lg:pr-4">
-                                <span className="font-bold mb-1">Full Name</span>
+                            <h2 className="font-bold mb-2 text-center text-lg">
+                                {editIndex === -1 ? "Add New Customer" : "Edit Customer"}
+                            </h2>
+                            {error && <p className="text-red-500 mb-2">{error}</p>}
+                            <div className="">
+                                <div className=" mb-2 lg:pr-4">
+                                    <span className="font-bold mb-1">Full Name</span>
 
-                                <input
-                                    type="text"
-                                    placeholder="Akram Ashraf"
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                    value={editedItem.fullName}
-                                    onChange={(e) => handleInputChange(e, "fullName")}
-                                />
-                            </div>
-                            <div className=" mb-2 lg:pr-4">
-                                <span className="font-bold mb-1">Phone No.</span>
+                                    <input
+                                        type="text"
+                                        placeholder="Akram Ashraf"
+                                        className="w-full p-2 border border-gray-300 rounded"
+                                        value={editedItem.fullName}
+                                        onChange={(e) => handleInputChange(e, "fullName")}
+                                    />
+                                </div>
+                                <div className=" mb-2 lg:pr-4">
+                                    <span className="font-bold mb-1">Phone No.</span>
 
-                                <input
-                                    type="text"
-                                    placeholder="01XXXXXXXXX"
-                                    className="p-2 w-full border border-gray-300 rounded"
-                                    value={editedItem.phone}
-                                    onChange={(e) => handleInputChange(e, "phone")}
-                                />
-                            </div>
-                            <div className=" mb-2 lg:pr-4">
-                                <span className="font-bold mb-1">Age</span>
+                                    <input
+                                        type="text"
+                                        placeholder="01XXXXXXXXX"
+                                        className="p-2 w-full border border-gray-300 rounded"
+                                        value={editedItem.phone}
+                                        onChange={(e) => handleInputChange(e, "phone")}
+                                    />
+                                </div>
+                                <div className=" mb-2 lg:pr-4">
+                                    <span className="font-bold mb-1">Age</span>
 
-                                <input
-                                    type="number"
-                                    placeholder="20"
-                                    className="p-2 w-full border border-gray-300 rounded"
-                                    value={editedItem.age}
-                                    onChange={(e) => handleInputChange(e, "age")}
-                                />
-                            </div>
-                            <div className=" mb-2 lg:pr-4">
-                                <span className="font-bold mb-1">Address</span>
+                                    <input
+                                        type="number"
+                                        placeholder="20"
+                                        className="p-2 w-full border border-gray-300 rounded"
+                                        value={editedItem.age}
+                                        onChange={(e) => handleInputChange(e, "age")}
+                                    />
+                                </div>
+                                <div className=" mb-2 lg:pr-4">
+                                    <span className="font-bold mb-1">Address</span>
 
-                                <input
-                                    type="text"
-                                    placeholder="شرق النيل, بني سويف, مصر"
-                                    className="p-2 w-full border border-gray-300 rounded"
-                                    value={editedItem.address}
-                                    onChange={(e) => handleInputChange(e, "address")}
-                                />
+                                    <input
+                                        type="text"
+                                        placeholder="شرق النيل, بني سويف, مصر"
+                                        className="p-2 w-full border border-gray-300 rounded"
+                                        value={editedItem.address}
+                                        onChange={(e) => handleInputChange(e, "address")}
+                                    />
+                                </div>
+                                <div className=" mb-2 lg:pr-4">
+                                    <span className="font-bold mb-1">Faculty</span>
+                                    <input
+                                        type="text"
+                                        placeholder="BS, Beni-Suef University"
+                                        className="p-2 w-full border border-gray-300 rounded"
+                                        value={editedItem.faculty}
+                                        onChange={(e) => handleInputChange(e, "faculty")}
+                                    />
+                                </div>
                             </div>
-                            <div className=" mb-2 lg:pr-4">
-                                <span className="font-bold mb-1">Faculty</span>
-                                <input
-                                    type="text"
-                                    placeholder="BS, Beni-Suef University"
-                                    className="p-2 w-full border border-gray-300 rounded"
-                                    value={editedItem.faculty}
-                                    onChange={(e) => handleInputChange(e, "faculty")}
-                                />
+                            <div className="flex mt-5">
+                                <button
+                                    className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+                                    onClick={handleEditSubmit}
+                                >
+                                    <Check size={18} className="mr-1" />
+                                    Save
+                                </button>
+                                <button
+                                    className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                                    onClick={handleEditCancel}
+                                >
+                                    <X size={18} className="mr-1" />
+                                    Cancel
+                                </button>
                             </div>
-                        </div>
-                        <div className="flex mt-5">
-                            <button
-                                className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
-                                onClick={handleEditSubmit}
-                            >
-                                <Check size={18} className="mr-1" />
-                                Save
-                            </button>
-                            <button
-                                className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-                                onClick={handleEditCancel}
-                            >
-                                <X size={18} className="mr-1" />
-                                Cancel
-                            </button>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             {/* <div className="mt-5">
         <button
@@ -410,7 +440,7 @@ const AdminCustomers = () => {
                     },
                 }}
             />
-        </div>
+        </div >
     );
 };
 
