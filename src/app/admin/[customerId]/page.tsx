@@ -59,7 +59,7 @@ const CustomerPage = () => {
             </div>
             <div>
               <p className="text-gray-600 mb-2">Total Purchase Transactions:</p>
-              <p className="font-semibold"><FormattedPrice amount={customerData.total_purchase_transactions} /></p>
+              <p className="font-semibold"><FormattedPrice amount={customerData.total_purchase_transactions || 0} /></p>
             </div>
           </div>
 
