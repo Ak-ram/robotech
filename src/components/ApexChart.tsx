@@ -71,7 +71,7 @@ const ApexChart = ({ categoryStats }) => {
 
   return (
     <div>
-      <LineChart className='w-full' width={500} height={380} data={chartData}>
+      <LineChart className='w-full' width={600} height={400} data={chartData}>
         <CartesianGrid strokeDasharray="1 1" />
         <XAxis dataKey="name" angle={-60} textAnchor="end" interval={0} />
         <YAxis />

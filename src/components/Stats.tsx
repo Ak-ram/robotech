@@ -7,6 +7,7 @@ import FormattedPrice from "./FormattedPrice";
 import Products from "./Products";
 import ApexChartComp from "./ApexChart";
 import { BarChart, LineChart, Search, X } from "lucide-react";
+import CustomersStats from "./CustomersStats";
 
 interface Product {
     id: string;
@@ -104,7 +105,7 @@ const Stats = () => {
                     </div></div>
                 <div className="flex justify-start gap-2">
                     <div className="flex flex-col">
-                        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div className="-my-2 overflow-x-auto sm:-mx-6 ">
                             <div className="py-2 align-middle inline-block lg:px-8">
                                 <div className="shadow overflow-hidden sm:rounded-lg">
                                     <div className="flex justify-between items-center gap-2 bg-gray-800 p-3 border-b  border-gray-700">
@@ -169,44 +170,7 @@ const Stats = () => {
                                                         <FormattedPrice className="text-xs" amount={categoryInfo.outStockTotalPrice} /></td>
                                                 </tr>
                                             ))}
-                                            {/* <tr>
-
-                                                <th scope="col" className="text-xs pl-3 py-2 text-left tracking-wider">
-                                                    Total
-                                                </th>
-                                                <th scope="col" className="text-center text-xs   py-3 text-left tracking-wider">
-                                                    {products?.length}
-                                                </th>
-                                                <th scope="col" className="text-center text-xs   py-3 text-left tracking-wider">
-                                                    {
-                                                        categoryStats
-                                                            .map(item => item.inStockProducts.map((product: ProductType) => +product?.count !== 0))
-                                                            .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
-                                                    }                                            </th>
-                                                <th scope="col" className="text-center text-xs   py-3 text-left tracking-wider">
-                                                    <FormattedPrice className="text-xs" amount=
-                                                        {
-                                                            categoryStats
-                                                                .map(item => item.inStockProducts.map((product: ProductType) => +product?.price))
-                                                                .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
-                                                        } />
-                                                </th>
-                                                <th scope="col" className="text-center text-xs   px-6 py-3 text-left tracking-wider">
-                                                    {
-                                                        categoryStats
-                                                            .map(item => item.outStockProducts.map((product: ProductType) => +product?.count === 0))
-                                                            .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
-                                                    }
-                                                </th>
-                                                <th scope="col" className="text-center text-xs px-6 py-3 text-left tracking-wider">
-                                                    <FormattedPrice className="text-xs" amount=
-                                                        {
-                                                            categoryStats
-                                                                .map(item => item.outStockProducts.map((product: ProductType) => +product?.price))
-                                                                .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
-                                                        } />
-                                                </th>
-                                            </tr> */}
+                                           
                                         </tbody>
                                     </table>
 
@@ -262,7 +226,7 @@ const Stats = () => {
                 </div>
             </section>
 
-
+<CustomersStats />
         </>
     );
 };
