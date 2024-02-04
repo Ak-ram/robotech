@@ -27,7 +27,7 @@ const CustomerPage = () => {
     { content: <CustomerPageAddPrintServices setCustomerData={setCustomerData} customerData={customerData} />, label: "Print Service" },
   ]
   return (
-    <div className="mx-auto mt-8">
+    <div className="m-8">
       <h1 className="text-4xl font-semibold mb-6 text-center">Customer ID: {customerId}</h1>
 
       {customerData && (

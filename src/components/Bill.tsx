@@ -2,10 +2,11 @@ import React from "react";
 import { X } from "lucide-react";
 import DetailedLogo from '@/assets/DetailedLogo.png';
 import Image from "next/image";
+import FormattedPrice from "./FormattedPrice";
 
 const Bill = ({ transactionData, setShowBill }) => {
-    const { date, productName, quantity, subtotal, piecePrice,discount } = transactionData;
-console.log(transactionData)
+    const { date, productName, quantity, subtotal, piecePrice, discount } = transactionData;
+    console.log(transactionData)
     // Add your company data
     const companyData = {
         name: "Electronic Store",
@@ -43,28 +44,35 @@ console.log(transactionData)
                                 Transaction Date: <span className="font-semibold">{date}</span>
                             </p>
                             <p className="font-bold text-zinc-800">
-                                Product Name: <span className="font-semibold"> {productName}</span>
+                                Product Name: <span className="font-semibold">
+                                    {productName}</span>
                             </p>
                             <p className="font-bold text-zinc-800">
-                                Quantity: <span className="font-semibold"> {quantity}</span>
+                                Quantity: <span className="font-semibold">
+
+                                    {quantity}</span>
                             </p>
                             <p className="font-bold text-zinc-800">
-                                Piece Price:  <span className="font-semibold">{piecePrice}</span>
+                                Piece Price:  <span className="font-semibold">
+
+                                    <FormattedPrice amount={piecePrice} />
+
+                                </span>
                             </p>
                             <p className="font-bold text-zinc-800">
-                                Discount:  <span className="font-semibold">{discount}</span>
+                                Discount:  <span className="font-semibold">
+
+                                    <FormattedPrice amount={discount} />
+                                </span>
                             </p>
                         </div>
 
                         {/* Subtotal and Total */}
                         <div className="border-t border-gray-300 py-4 mb-4">
                             <p className="text-sm">
-                                <strong>Subtotal:</strong> {subtotal}
+                                <strong>Subtotal:</strong> <FormattedPrice amount={subtotal} />
                             </p>
                             {/* Add more fields if needed, such as taxes, discounts, etc. */}
-                        </div>
-                        <div className="text-sm font-bold">
-                            Total: {subtotal} {/* You may need to calculate the total based on other factors */}
                         </div>
                         {/* Signature Section */}
                         <div className="my-16">

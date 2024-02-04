@@ -6,12 +6,15 @@ import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
+import Bill from "./Bill";
 
 const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
-
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
+    const [showBill, setShowBill] = useState(false);
     const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
     const [list, setList] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [newOrder, setNewOrder] = useState({
         productName: '',
@@ -19,12 +22,9 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         date: '',
         discount: 0
     });
-
-
     useEffect(() => {
         setUpdatedCustomerData(customerData)
     }, [customerData])
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -67,7 +67,13 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
                 // Update the customerData state with the new transaction
                 setCustomerData(existingCustomer);
-
+                // Reset newOrder fields
+                setNewOrder({
+                    productName: '',
+                    quantity: 1,
+                    date: '',
+                    discount: 0
+                });
                 toast.success(`Item Added/Updated successfully`);
                 toast.loading(`Be patient, changes take a few moments to be reflected`);
 
@@ -92,7 +98,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 setList(p);
 
             } catch (error) {
-                console.error('Error fetching products:', error);
+                console.error('Error fetching Products:', error);
             }
         };
 
@@ -101,6 +107,8 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
             fetchProducts();
         }
     }, []);
+
+
     return (
         <>
             <div className="max-w-3xl mx-auto my-8">
@@ -110,27 +118,38 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 >
                     Add Product
                 </button>
-                {updatedCustomerData?.transactions?.products?.slice().reverse().map((product, index) => (
-                    <div className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
+                {updatedCustomerData?.transactions?.products?.slice().reverse().map((service, index) => (
+                    <div key={index} className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
 
                         <div
-                            key={index}
+
                             className="flex-1"
                         >
-                            <p className="text-gray-600 mb-2">Transaction date: {product["date"]}</p>
-                            <p className="text-gray-600 mb-2">Product name: {product["productName"]}</p>
-                            <p className="text-gray-600 mb-2">Product price: <FormattedPrice amount={product["piecePrice"]} /></p>
-                            <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={product["discount"]!} /></p>
-                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={product["subtotal"]!} /></p>
+                            <p className="text-gray-600 mb-2">Transaction date: {service["date"]}</p>
+                            <p className="text-gray-600 mb-2">Service name: {service["productName"]}</p>
+                            <p className="text-gray-600 mb-2">Service price: <FormattedPrice amount={service["piecePrice"]} /></p>
+                            <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={service["discount"]!} /></p>
+                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={service["subtotal"]!} /></p>
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex-1">
                                 <Edit2 className="cursor-not-allowed text-blue-600" size={20} />
-                                <ScrollText className="my-2 cursor-pointer text-blue-600" size={20} />
+                                {/* ADD BILL HERE */}
+                                <ScrollText
+                                    onClick={() => {
+                                        setShowBill(true);
+                                        setSelectedProduct(service);
+                                    }}
+                                    className="my-2 cursor-pointer text-blue-600"
+                                    size={20}
+                                />
 
                             </div>
                             <Trash className="ml-auto mr-2 cursor-not-allowed text-red-600" size={20} />
                         </div>
+                        {showBill && selectedProduct && (
+                            <Bill transactionData={selectedProduct} setShowBill={setShowBill} />
+                        )}
                     </div>
                 ))}
 
