@@ -1,94 +1,156 @@
-{
-  "0":{
-    "date": "",
-  "courses": [
-    {
-      "productName": "JavaScript Monster",
-      "quantity": 4,
-      "date": "2024-02-03T21:30:42.604Z",
-      "subtotal": 4000,
-      "piecePrice": "1000"
+[
+  {
+    "id": "6f841e25-a9e2-4115-b8cd-77095d1bbc35",
+    "fullName": "akram ashraf",
+    "phone": "01152684108",
+    "transactions": {
+      "courses": [
+        {
+          "productName": "JavaScript Monster",
+          "quantity": 1,
+          "date": "Sun, Feb 04, 2024, 01:37 AM",
+          "discount": 0,
+          "subtotal": 1000,
+          "piecePrice": "1000"
+        },
+        {
+          "productName": "JavaScript Monster",
+          "quantity": 4,
+          "date": "Sun, Feb 04, 2024, 01:37 AM",
+          "discount": 1000,
+          "subtotal": 3000,
+          "piecePrice": "1000"
+        },
+        {
+          "productName": "JavaScript Monster",
+          "quantity": 4,
+          "date": "Sun, Feb 04, 2024, 01:42 AM",
+          "discount": 1000,
+          "subtotal": 3000,
+          "piecePrice": "1000"
+        },
+        {
+          "productName": "JavaScript Monster",
+          "quantity": 2,
+          "date": "Sun, Feb 04, 2024, 01:46 AM",
+          "discount": 200,
+          "subtotal": 1800,
+          "piecePrice": "1000"
+        },
+        {
+          "productName": "JavaScript Monster",
+          "quantity": 1,
+          "date": "Sun, Feb 04, 2024, 01:47 AM",
+          "discount": 500,
+          "subtotal": 500,
+          "piecePrice": "1000"
+        },
+        {
+          "productName": "JavaScript Monster",
+          "quantity": 1,
+          "date": "Sun, Feb 04, 2024, 01:50 AM",
+          "discount": 500,
+          "subtotal": 500,
+          "piecePrice": "1000"
+        },
+        {
+          "productName": "JavaScript Monster",
+          "quantity": 1,
+          "date": "Sun, Feb 04, 2024, 01:51 AM",
+          "discount": 0,
+          "subtotal": 1000,
+          "piecePrice": "1000"
+        },
+        {
+          "productName": "JavaScript Monster",
+          "quantity": 10,
+          "date": "Sun, Feb 04, 2024, 01:51 AM",
+          "discount": 547,
+          "subtotal": 9453,
+          "piecePrice": "1000"
+        },
+        {
+          "productName": "JavaScript Monster",
+          "quantity": 1,
+          "date": "Sun, Feb 04, 2024, 01:53 AM",
+          "discount": 0,
+          "subtotal": 1000,
+          "piecePrice": "1000"
+        }
+      ],
+      "products": [
+        {
+          "productName": "Arduino Nano V3.0 CH340 Chip + Mini USB Cable",
+          "quantity": 1,
+          "date": "Sun, Feb 04, 2024, 01:37 AM",
+          "discount": 0,
+          "subtotal": 245,
+          "piecePrice": "245"
+        }
+      ]
+    }
+  },
+  {
+    "id": "f65f1c56-c439-48cc-878f-3a58745d28a4",
+    "fullName": "ibrahem youssef",
+    "phone": "01158541832",
+    "age": "22",
+    "address": "",
+    "faculty": "",
+    "transactions": {}
+  },
+  {
+    "id": "c35037b2-3d19-4123-a3c7-60e1050acc1d",
+    "fullName": "Ali Ashraf Abdelbasir Mohamed",
+    "phone": "01111531680",
+    "age": "56",
+    "address": "",
+    "faculty": "",
+    "transactions": {}
+  },
+  {
+    "id": "275c268e-4fc8-4284-ba00-9b2383768a13",
+    "fullName": "Mona Hussesnin abass huss",
+    "phone": "01111531680",
+    "age": "56",
+    "address": "Sayed Abdelatif street",
+    "faculty": "Faculty of science",
+    "transactions": {
+      "products": [
+        {
+          "productName": "UNO CNC Shield V3 Engraving Machine",
+          "quantity": 1,
+          "date": "Sun, Feb 04, 2024, 02:49 PM",
+          "discount": 0,
+          "subtotal": 150,
+          "piecePrice": "150"
+        },
+        {
+          "productName": "RAMPS 1.4 Reprap 3D Printer Arduino Mega Shield",
+          "quantity": 1,
+          "date": "Sun, Feb 04, 2024, 02:49 PM",
+          "discount": 0,
+          "subtotal": 160,
+          "piecePrice": "160"
+        },
+        {
+          "productName": "UNO CNC Shield V3 Engraving Machine",
+          "quantity": 1,
+          "date": "Sun, Feb 04, 2024, 02:51 PM",
+          "discount": 0,
+          "subtotal": 150,
+          "piecePrice": "150"
+        },
+        {
+          "productName": "Robot Car Wheel Tyre (65mm) with DC Gear Motor",
+          "quantity": 4,
+          "date": "Sun, Feb 04, 2024, 02:53 PM",
+          "discount": 0,
+          "subtotal": 240,
+          "piecePrice": "60"
+        }
+      ]
     },
-    {
-      "productName": "JavaScript Monster",
-      "quantity": 7,
-      "date": "2024-02-03T21:32:56.974Z",
-      "subtotal": 7000,
-      "piecePrice": "1000"
-    }
-  ],
-  "products": [
-    {
-      "productName": "Optical Endstop with 50cm Cable and Retail Package",
-      "quantity": 1,
-      "date": "2024-02-03T21:46:20.043Z",
-      "discount": 0,
-      "subtotal": 30,
-      "piecePrice": "30"
-    },
-    {
-      "productName": "WIFI R3 ATMEGA2560 + ESP8266",
-      "quantity": 1,
-      "date": "Sat, Feb 03, 2024, 11:53 PM",
-      "discount": 0,
-      "subtotal": 1000,
-      "piecePrice": "1000"
-    }
-  ],
-  "printServices": [
-    {
-      "productName": "new",
-      "quantity": 1,
-      "date": "Sat, Feb 03, 2024, 11:54 PM",
-      "discount": 0,
-      "subtotal": 50,
-      "piecePrice": "50"
-    }
-  ]},
-  "1":{
-    "date": "",
-  "courses": [
-    {
-      "productName": "JavaScript Monster",
-      "quantity": 4,
-      "date": "2024-02-03T21:30:42.604Z",
-      "subtotal": 4000,
-      "piecePrice": "1000"
-    },
-    {
-      "productName": "JavaScript Monster",
-      "quantity": 7,
-      "date": "2024-02-03T21:32:56.974Z",
-      "subtotal": 7000,
-      "piecePrice": "1000"
-    }
-  ],
-  "products": [
-    {
-      "productName": "Optical Endstop with 50cm Cable and Retail Package",
-      "quantity": 1,
-      "date": "2024-02-03T21:46:20.043Z",
-      "discount": 0,
-      "subtotal": 30,
-      "piecePrice": "30"
-    },
-    {
-      "productName": "WIFI R3 ATMEGA2560 + ESP8266",
-      "quantity": 1,
-      "date": "Sat, Feb 03, 2024, 11:53 PM",
-      "discount": 0,
-      "subtotal": 1000,
-      "piecePrice": "1000"
-    }
-  ],
-  "printServices": [
-    {
-      "productName": "new",
-      "quantity": 1,
-      "date": "Sat, Feb 03, 2024, 11:54 PM",
-      "discount": 0,
-      "subtotal": 50,
-      "piecePrice": "50"
-    }
-  ]}
-}
+    "total_purchase_transactions": null
+  }
+]

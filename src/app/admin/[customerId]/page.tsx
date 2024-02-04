@@ -9,6 +9,7 @@ import CustomerPageAddCourses from '@/components/CustomerPageAddCourses';
 import CustomerPageAddPrintServices from '@/components/CustomerPageAddPrintServices';
 import Loading from '@/components/Loading';
 import LoadingScreen from '@/components/LoadingScreen';
+import FormattedPrice from '@/components/FormattedPrice';
 
 const CustomerPage = () => {
   const router = useRouter();
@@ -39,10 +40,26 @@ const CustomerPage = () => {
               <p className="text-gray-600 mb-2">Full Name:</p>
               <p className="font-semibold">{customerData.fullName}</p>
             </div>
-
+            <div>
+              <p className="text-gray-600 mb-2">Age:</p>
+              <p className="font-semibold">{customerData.age} Years(s)</p>
+            </div>
             <div>
               <p className="text-gray-600 mb-2">Phone No.:</p>
               <p className="font-semibold">{customerData.phone}</p>
+            </div>
+            <div>
+              <p className="text-gray-600 mb-2">Address:</p>
+              <p className="font-semibold">{customerData.address}</p>
+            </div>
+
+            <div>
+              <p className="text-gray-600 mb-2">Education:</p>
+              <p className="font-semibold">{customerData.faculty}</p>
+            </div>
+            <div>
+              <p className="text-gray-600 mb-2">Total Purchase Transactions:</p>
+              <p className="font-semibold"><FormattedPrice amount={customerData.total_purchase_transactions} /></p>
             </div>
           </div>
 

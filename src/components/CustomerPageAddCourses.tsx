@@ -57,7 +57,11 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
             }
 
             existingCustomer.transactions.courses.push(newOrder);
-
+            // Update the total purchase transactions
+            existingCustomer.total_purchase_transactions += existingCustomer.transactions.courses.reduce(
+                (total, transaction) => total + transaction.subtotal,
+                0
+            );
             jsonArray[existingCustomerIndex] = existingCustomer;
 
             // Update the JSON file with the modified JSON array

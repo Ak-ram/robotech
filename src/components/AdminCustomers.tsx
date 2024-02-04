@@ -29,6 +29,7 @@ const AdminCustomers = () => {
         address: string;
         faculty: string;
         age: number;
+        total_purchase_transactions: number;
         transactions: {};
     }
 
@@ -39,6 +40,7 @@ const AdminCustomers = () => {
         address: "",
         faculty: "",
         age: 0,
+        total_purchase_transactions: 0,
         transactions: {}
     });
 
@@ -65,6 +67,7 @@ const AdminCustomers = () => {
             age: 0,
             address: "",
             faculty: "",
+            total_purchase_transactions: 0,
             transactions: {}
         });
         setError(null); // Reset error state

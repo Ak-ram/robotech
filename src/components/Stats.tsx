@@ -254,7 +254,7 @@ const Stats = () => {
                                             .map(item => item.outStockProducts.map((product: ProductType) => +product?.price))
                                             .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
                                     } /> </span>
-                                <span className="text-center text-green-200">اجمالى سعر البضاعه الغير متاحه وفقا لاخير عملية شراء</span>
+                                <span className="text-center text-green-200">اجمالى سعر البضاعه الغير متاحه</span>
                             </div>
 
                         </div>

@@ -20,7 +20,9 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         productName: '',
         quantity: 1,
         date: '',
-        discount: 0
+        discount: 0,
+        subtotal: 0,
+        piecePrice: 0
     });
     useEffect(() => {
         setUpdatedCustomerData(customerData)
@@ -58,8 +60,13 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
             existingCustomer.transactions.products.push(newOrder);
 
+        // Update the total purchase transactions
+        existingCustomer.total_purchase_transactions += existingCustomer.transactions.products.reduce(
+            (total, transaction) => total + transaction.subtotal,
+            0
+        );
             jsonArray[existingCustomerIndex] = existingCustomer;
-
+            console.log(newOrder)
             // Update the JSON file with the modified JSON array
             try {
                 setShowAddOrderModal(false)
@@ -72,7 +79,9 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                     productName: '',
                     quantity: 1,
                     date: '',
-                    discount: 0
+                    discount: 0,
+                    subtotal: 0,
+                    piecePrice: 0
                 });
                 toast.success(`Item Added/Updated successfully`);
                 toast.loading(`Be patient, changes take a few moments to be reflected`);
