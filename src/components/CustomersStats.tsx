@@ -3,6 +3,7 @@ import { getCustomerData } from "@/helpers/getCustomerData";
 import { Activity, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
+import CustomerStatsChart from "./CustomerStatsChart";
 
 
 const CustomersStats = () => {
@@ -75,6 +76,7 @@ const CustomersStats = () => {
                 <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
                     <div className="flex-1"> <X className="cursor-pointer" onClick={() => setIsShow(false)} />
                         {/* <ApexChartComp categoryStats={categoryStats} /> */}
+                        <CustomerStatsChart customers={customers}/>
                     </div>
                 </div></div>
 

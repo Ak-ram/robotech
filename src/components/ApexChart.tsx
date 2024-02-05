@@ -17,7 +17,7 @@ const ApexChart = ({ categoryStats }) => {
     }
   }, [categoryStats]);
 
-  const abbreviateName = (fullName) => {
+  const abbreviateName = (fullName:string) => {
     return fullName.substring(0, 2).toUpperCase();
   };
 
