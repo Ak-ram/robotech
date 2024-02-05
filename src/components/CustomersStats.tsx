@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerData } from "@/helpers/getCustomerData";
-import { Activity, ArrowDown01, ArrowUp01, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X } from "lucide-react";
+import { Activity, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
 
@@ -47,18 +47,18 @@ const CustomersStats = () => {
             const compareValue = b.total_purchase_transactions - a.total_purchase_transactions;
             return order === "asc" ? compareValue : -compareValue;
         });
-    
+
         // Find the customer with the highest total purchase after sorting
         const highestTotal = sortedCustomers.reduce((max, customer) => {
             return customer.total_purchase_transactions > max ? customer.total_purchase_transactions : max;
         }, 0);
-    
+
         setHighestTotalPurchase(highestTotal);
-    
+
         setCustomers(sortedCustomers);
     };
-    
-    
+
+
 
     const handleSortClick = () => {
         const newOrder = sortOrder === "asc" ? "desc" : "asc";
@@ -123,9 +123,10 @@ const CustomersStats = () => {
                                 {filteredCategoryStats.map((customerInfo, index) => (
                                     <tr key={index} className="bg-black bg-opacity-20">
                                         <td className="pl-3 flex py-2.5 whitespace-nowrap">
-                                            {highestTotalPurchase === customerInfo.total_purchase_transactions && <Sparkle className="mt-1 text-yellow-500 mr-2 animate-pulse" size={20} />}
-                                            {calculateNumberOfTransactions(customerInfo.id) > 3 && <Activity className="mt-1 text-blue-500 mr-2 animate-pulse" size={20} />}
-                                            {calculateNumberOfTransactions(customerInfo.id) === 1 && <GitCommitHorizontal className="mt-1 text-rose-500 mr-2 animate-pulse" size={20} />}
+                                            {highestTotalPurchase === customerInfo.total_purchase_transactions && <span title="عميل مميز - الاكثر شراء"><Sparkle className="mt-1 text-yellow-500 mr-2 animate-pulse" size={20} /></span>}
+                                            {calculateNumberOfTransactions(customerInfo.id) > 3 && <span title="عميل متكرر"><Activity className="mt-1 text-green-500 mr-2 animate-pulse" size={20} /></span>}
+                                            {calculateNumberOfTransactions(customerInfo.id) === 1 && <span title="عميل عابر"><GitCommitHorizontal className="mt-1 text-rose-500 mr-2 animate-pulse" size={20} /></span>}
+                                            {calculateNumberOfTransactions(customerInfo.id) === 0 && <span title="عميل محتمل"><Clock className="mt-1 text-slate-500 mr-2 animate-pulse" size={20} /></span>}
                                             <span className="font-medium">{customerInfo.fullName}</span>
                                         </td>
                                         <td className="py-2.5 whitespace-nowrap">{customerInfo.phone}</td>
