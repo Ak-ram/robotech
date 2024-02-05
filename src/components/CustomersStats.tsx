@@ -76,7 +76,7 @@ const CustomersStats = () => {
                 <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
                     <div className="flex-1 "> <X className="ml-auto cursor-pointer" onClick={() => setIsShow(false)} />
                         {/* <ApexChartComp categoryStats={categoryStats} /> */}
-                        <CustomerStatsChart customers={customers}/>
+                        <CustomerStatsChart customers={customers} />
                     </div>
                 </div></div>
 

@@ -12,42 +12,34 @@ import FormattedPrice from "./FormattedPrice";
 import { formatFullName } from "@/lib/utils";
 
 const CustomTooltip = ({ active, payload, label }) => {
-  console.log(payload)
+  console.log(payload);
+
   if (active && payload && payload.length) {
+    const totalPurchase = payload[0].value;
+    const transactionLength = payload[1].value;
+    const maxProductAmount = payload[2].value;
+    const maxCourseAmount = payload[3].value;
+    const maxPrintServiceAmount = payload[4].value;
+
     return (
       <div className="custom-tooltip shadow-md bg-white border border-slate-400 p-4 rounded rtl">
         <p className="font-semibold">Name: <span>{formatFullName(label)}</span></p>
-        <p className="font-semibold">Total Purches: <FormattedPrice amount={payload[0].value} /></p>
+        <p className="font-semibold">Total Purchases: <FormattedPrice amount={totalPurchase} /></p>
+        <p className="font-semibold">Transaction Length: {transactionLength}</p>
+        <p className="font-semibold">Max Product Amount: <FormattedPrice amount={maxProductAmount} /></p>
+        <p className="font-semibold">Max Course Amount: <FormattedPrice amount={maxCourseAmount} /></p>
+        <p className="font-semibold">Max Print Service Amount: <FormattedPrice amount={maxPrintServiceAmount} /></p>
       </div>
-
     );
   }
 
   return null;
 };
 
+
 const CustomerStatsChart = ({ customers }) => {
-  const calculateAverageTransactionAmount = customer => {
-    const totalTransactions =
-      customer.transactions.courses.length +
-      customer.transactions.products.length +
-      customer.transactions.printServices.length;
-
-    const totalSubtotal =
-      customer.transactions.courses.reduce(
-        (sum, course) => sum + course.subtotal,
-        0
-      ) +
-      customer.transactions.products.reduce(
-        (sum, product) => sum + product.subtotal,
-        0
-      ) +
-      customer.transactions.printServices.reduce(
-        (sum, printService) => sum + printService.subtotal,
-        0
-      );
-
-    return totalTransactions > 0 ? totalSubtotal / totalTransactions : 0;
+  const calculateTransactionLength = customer => {
+    return customer.transactions.courses.length + customer.transactions.products.length + customer.transactions.printServices.length;
   };
 
   const calculateMaxTransactionAmount = customer => {
@@ -91,7 +83,7 @@ const CustomerStatsChart = ({ customers }) => {
   const chartData = customers.map(customer => ({
     name: customer.fullName,
     "اجمالي المشتريات": customer.total_purchase_transactions,
-    transactionLength: calculateAverageTransactionAmount(customer),
+    transactionLength: calculateTransactionLength(customer),
     maxTransactionAmounts: calculateMaxTransactionAmount(customer)
   }));
 
