@@ -69,8 +69,8 @@ const CustomersStats = () => {
 
 
     return (<>
-        <section className=''>
-            <h1 className="text-lg text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
+        <section className='my-5'>
+            <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
 
             <div className={`${isShow ? "block" : "hidden"} z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
                 <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
