@@ -79,7 +79,7 @@ const Bill = ({ transactionData, setShowBill }) => {
                             <h3 className="text-lg font-bold mb-2">Signatures</h3>
                             <div className="flex justify-between">
                                 <div>
-                                    <p>Customer's Signature:</p>
+                                    <p>Customer&rsquo;s Signature:</p>
                                     {/* Add a signature line or space for the customer to sign */}
                                 </div>
                                 <div>
