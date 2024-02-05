@@ -93,7 +93,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
           <div
             key={`${item.id}_${item.title}`}
-            className="flex p-2 sm:block  w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
+            className="flex p-2 sm:block  w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden rounded-md"
           >
 
             <Link
