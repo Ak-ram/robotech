@@ -231,95 +231,95 @@ const AdminComponent = () => {
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
         {/* <Stats /> */}
         <div className="overflow-x-auto">
-         
+
           {selectedSectionIndex !== null &&
             jsonData[selectedSectionIndex] &&
             selectedCat ? (
             <div key={selectedSectionIndex} className="mt-5">
 
               <span className="my-3 block flex items-center justify-end text-end text-sm">
-              {jsonData.length > 0 && (
-            <div className="flex-1 flex items-center gap-2">
-              {/* <label htmlFor="sectionDropdown" className="font-bold mb-2">
+                {jsonData.length > 0 && (
+                  <div className="flex-1 flex items-center gap-2">
+                    {/* <label htmlFor="sectionDropdown" className="font-bold mb-2">
                 Select Category:
               </label> */}
-              <select
-                id="sectionDropdown"
-                className="my-2 appearance-none block bg-white border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                value={selectedCat !== null ? selectedCat : ""}
-                onChange={(e) => {
-                  const selectedItem = e.target.value;
-                  setSelectedCat(selectedItem);
-                  const sectionIndex = e.target.selectedIndex + 1;
-                  setSelectedSectionIndex(sectionIndex);
-                }}
-              >
-                {jsonData.flatMap((section, sectionIndex) =>
-                  Object.keys(section).map((item) => (
-                    <option
-                      data-selected={item}
-                      key={`${sectionIndex}-${item}`}
-                      value={item}
+                    <select
+                      id="sectionDropdown"
+                      className="my-2 appearance-none block bg-white border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                      value={selectedCat !== null ? selectedCat : ""}
+                      onChange={(e) => {
+                        const selectedItem = e.target.value;
+                        setSelectedCat(selectedItem);
+                        const sectionIndex = e.target.selectedIndex + 1;
+                        setSelectedSectionIndex(sectionIndex);
+                      }}
                     >
-                      {item}
-                    </option>
-                  ))
+                      {jsonData.flatMap((section, sectionIndex) =>
+                        Object.keys(section).map((item) => (
+                          <option
+                            data-selected={item}
+                            key={`${sectionIndex}-${item}`}
+                            value={item}
+                          >
+                            {item}
+                          </option>
+                        ))
+                      )}
+                    </select>
+                    {selectedCat && (
+                      <button
+                        className="text-xs rounded-md absolute top-5 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
+                        onClick={handleDeleteCategory}
+                      >
+                        Delete {selectedCat} Category
+                      </button>
+                    )}
+
+                    <div>
+                      <span
+
+                        className={`${toggleNewCat ? "flex items-center" : "hidden"} mt-2`}
+                      >
+                        Category not exist ?{" "}
+                        <span onClick={() => setToggleNewCat(false)} className="cursor-pointer text-blue-400">
+                          add category
+                        </span>
+                      </span>
+                      <div className={`${toggleNewCat ? "hidden" : "flex items-center"}`}>
+                        <input
+                          type="text"
+                          placeholder="New Category"
+                          className="p-2 h-9 border mr-3 border-gray-300 rounded"
+                          value={newCategory}
+                          onChange={handleCategoryChange}
+                        />
+                        <button
+                          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                          onClick={handleAddCategory}
+                        >
+                          Add
+                        </button>
+                        <button
+                          className="ml-2 border border-red-400 text-red-500 font-bold py-2 px-4 rounded"
+                          onClick={() => setToggleNewCat(true)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 )}
-              </select>
-              {selectedCat && (
-                <button
-                  className="text-xs rounded-md absolute top-5 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
-                  onClick={handleDeleteCategory}
-                >
-                  Delete {selectedCat} Category
-                </button>
-              )}
-
-              <div>
-                <span
-
-                  className={`${toggleNewCat ? "flex items-center" : "hidden"} mt-2`}
-                >
-                  Category not exist ?{" "}
-                  <span onClick={() => setToggleNewCat(false)} className="cursor-pointer text-blue-400">
-                    add category
-                  </span>
-                </span>
-                <div className={`${toggleNewCat ? "hidden" : "flex items-center"}`}>
-                  <input
-                    type="text"
-                    placeholder="New Category"
-                    className="p-2 h-9 border mr-3 border-gray-300 rounded"
-                    value={newCategory}
-                    onChange={handleCategoryChange}
-                  />
-                  <button
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                    onClick={handleAddCategory}
-                  >
-                    Add
-                  </button>
-                  <button
-                    className="ml-2 border border-red-400 text-red-500 font-bold py-2 px-4 rounded"
-                    onClick={() => setToggleNewCat(true)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-              Count: {" "}
+                Count: {" "}
                 <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length} Product(s)</span>
 
                 {selectedSectionIndex !== null &&
                   jsonData[selectedSectionIndex] &&
                   selectedCat && (
-                    <span className="inline-flex items-center justify-end w-fit mr-2 ml-3 py-2 px-3 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded"> 
-                      <Plus className="inline-block w-5 h-5"
-                        onClick={handleAddItemClick} size={20} />
-                        New
-                     </span>
+                    <span onClick={handleAddItemClick} className="cursor-pointer inline-flex items-center justify-end w-fit mr-2 ml-3 py-2 px-3 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded">
+                      <Plus className="inline-block w-5 h-5 mr-1"
+                        size={20} />
+                      New
+                    </span>
 
                   )}
               </span>
@@ -355,7 +355,7 @@ const AdminComponent = () => {
                         </div>
                         <div className="ml-4 flex-1">
                           <p className="text-sm text-gray-800 font-bold">{product.title}
-                          
+
                           </p>
                           <span
                             className={cn(
@@ -369,7 +369,7 @@ const AdminComponent = () => {
                           >
                             {product.count === 0 ? 'Out of Stock' : product.count + ' in Stock'}
                           </span>
-                        <span className="opacity-0 transition text-sm font-semibold group-hover:opacity-100 ml-2 italic">#{product?.id}</span>
+                          <span className="opacity-0 transition text-sm font-semibold group-hover:opacity-100 ml-2 italic">#{product?.id}</span>
                         </div>
                         <div className="font-bold text-xs sm:text-sm text-zinc-700 pl-1.5">
                           <FormattedPrice amount={product.price} />
@@ -510,12 +510,15 @@ const AdminComponent = () => {
                   </tbody>
                 </table> */}
               {editIndex !== null && (
-                <div className="absolute top-0 left-0 py-10 h-full overflow-auto bg-slate-200 w-full">
-                  <div className="mt-5 w-[60%] mx-auto">
-                    <h2 className="font-bold mb-2">
-                      {editIndex === -1 ? "Add New Item" : "Edit Item"}
-                    </h2>
-                    <div className="flex flex-col lg:flex-row flex-wrap">
+                <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                  <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
+
+
+                  <h2 className="font-bold mb-2 text-center text-lg">
+              {editIndex === -1 ? "Add Product" : "Edit Product"}
+            </h2>
+
+                    <div className="">
                       {Object.entries({
                         // id: 'ID',
                         title: 'Title',
@@ -528,16 +531,13 @@ const AdminComponent = () => {
                         image2: 'Image2',
                         image3: 'Image3',
                       }).map(([key, placeholder], index) => (
-                        <div key={key} className={`${key.startsWith('image') ? 'h-[200px] border inline-block border-slate-400 rounded flex-col mx-auto flex items-center justify-center gap-3 border-dashed' : 'w-full'} flex-col mb-2 lg:pr-4`}>
-                          {/* {key.startsWith('image') ? <ImageUpload onInputChange={(e) => handleInputChange(e, key)} onImageChange={handleImageChange} index={index} /> : null} */}
-                          {editedItem[key] && key.startsWith('image') && (
-                            <img src={editedItem[key]} alt={`Uploaded ${key}`} className="mt-2" style={{ maxWidth: '100%', maxHeight: '100px' }} />
-                          )}
+                        <div key={key} className={`flex-col mb-2 lg:pr-4`}>
+
                           <span className="font-bold text-sm mb-2 inline-block ml-1">{placeholder}</span>
                           <input
                             type="text"
                             placeholder={placeholder}
-                            className={`outline-none w-full p-2 border-0 rounded`}
+                            className={`border border-gray-300 rounded outline-none w-full p-2 `}
                             value={editedItem[key]}
                             onChange={(e) => handleInputChange(e, key)}
                           />
@@ -562,6 +562,7 @@ const AdminComponent = () => {
                     </div>
                   </div>
                 </div>
+
               )}
             </div>
           ) : <Loading />}

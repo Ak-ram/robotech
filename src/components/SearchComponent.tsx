@@ -34,7 +34,7 @@ const SearchComponent = (className) => {
       setRes([]);
     } else {
       if (query.length < 3) {
-        setInputError("Search query must be at least 3 characters long.");
+        setInputError("less than 3 chars.");
       } else {
         setInputError(null);
         setIsInput(true);
@@ -87,12 +87,12 @@ const SearchComponent = (className) => {
           placeholder="Search..."
         />
         {inputError && (
-          <span className="text-xs sm:text-base font-semibold text-red-500 absolute top-8 right-4">
+          <span className="font-semibold text-red-500 absolute top-8 right-4">
             {inputError}
           </span>
         )}
         {!inputError && (
-          <span className="text-xs font-semibold sm:text-base text-zinc-500 absolute top-8 right-4">
+          <span className="font-semibold text-zinc-500 absolute top-8 right-4">
             Result: {res?.length !== products?.length ? res?.length : 0}
           </span>
         )}
