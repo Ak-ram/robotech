@@ -74,7 +74,7 @@ const CustomersStats = () => {
 
             <div className={`${isShow ? "block" : "hidden"} z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
                 <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
-                    <div className="flex-1"> <X className="cursor-pointer" onClick={() => setIsShow(false)} />
+                    <div className="flex-1 "> <X className="ml-auto cursor-pointer" onClick={() => setIsShow(false)} />
                         {/* <ApexChartComp categoryStats={categoryStats} /> */}
                         <CustomerStatsChart customers={customers}/>
                     </div>

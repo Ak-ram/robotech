@@ -9,13 +9,14 @@ import {
   YAxis
 } from "recharts";
 import FormattedPrice from "./FormattedPrice";
+import { formatFullName } from "@/lib/utils";
 
 const CustomTooltip = ({ active, payload, label }) => {
   console.log(payload)
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip shadow-md bg-white border border-slate-400 p-4 rounded rtl">
-        <p className="font-semibold">Name: <span>{label}</span></p>
+        <p className="font-semibold">Name: <span>{formatFullName(label)}</span></p>
         <p className="font-semibold">Total Purches: <FormattedPrice amount={payload[0].value} /></p>
       </div>
 
