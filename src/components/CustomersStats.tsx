@@ -92,14 +92,17 @@ const CustomersStats = () => {
                                 />
 
                             </span>
-                            <span onClick={handleSortClick}>
-                                {sortOrder === "asc" ? <ArrowDown01 /> : <ArrowUp01 />}
+                            <div className="flex items-center gap-1">
 
-                            </span>
-                            <span onClick={() => setIsShow(true)} className="text-slate-400 hover:text-white cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-gray-700 block">
+                                <span className="text-slate-400 hover:text-white cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-gray-700 block" onClick={handleSortClick}>
+                                    {sortOrder === "asc" ? <ArrowDown01 /> : <ArrowUp01 />}
 
-                                <LineChart className="" />
-                            </span>
+                                </span>
+                                <span onClick={() => setIsShow(true)} className="text-slate-400 hover:text-white cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-gray-700 block">
+
+                                    <LineChart className="" />
+                                </span>
+                            </div>
 
                         </div>
                         <table className="w-full text-gray-400">
