@@ -20,7 +20,9 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
         productName: '',
         quantity: 1,
         date: '',
-        discount: 0
+        discount: 0,
+        subtotal: 0,
+        piecePrice: 0
     });
     useEffect(() => {
         setUpdatedCustomerData(customerData)
@@ -50,7 +52,9 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
 
             if (!existingCustomer.transactions) {
                 existingCustomer.transactions = {
+                    courses:[],
                     printServices: [],
+                    products:[]
                 };
             } else if (!existingCustomer.transactions.printServices) {
                 existingCustomer.transactions.printServices = [];
@@ -76,7 +80,9 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
                     productName: '',
                     quantity: 1,
                     date: '',
-                    discount: 0
+                    discount: 0,
+                    subtotal: 0,
+                    piecePrice: 0
                 });
                 toast.success(`Item Added/Updated successfully`);
                 toast.loading(`Be patient, changes take a few moments to be reflected`);

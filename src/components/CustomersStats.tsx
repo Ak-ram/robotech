@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerData } from "@/helpers/getCustomerData";
-import { ArrowDown01, ArrowUp01, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X } from "lucide-react";
+import { Activity, ArrowDown01, ArrowUp01, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
 
@@ -36,26 +36,29 @@ const CustomersStats = () => {
     // Calculate the number of transactions for each customer
     const calculateNumberOfTransactions = (customerId: string): number => {
         const customer = customers.find((c) => c.id === customerId);
-        return customer ? customer.transactions.products.length + customer.transactions.courses.length + customer.transactions.printServices.length : 0;
+        return customer ? customer.transactions?.products?.length + customer.transactions?.courses?.length + customer.transactions?.printServices?.length : 0;
     };
 
     const filteredCategoryStats = customers.filter((customer) =>
         customer?.fullName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     const sortCustomers = (data: any[], order: "asc" | "desc") => {
-        const sortedCustomers = data.sort((a, b) => {
+        const sortedCustomers = [...data].sort((a, b) => {
             const compareValue = b.total_purchase_transactions - a.total_purchase_transactions;
             return order === "asc" ? compareValue : -compareValue;
         });
-
-        setCustomers(sortedCustomers);
-
-        // Update highest total purchase transactions
-        const highestTotal = sortedCustomers.length > 0 ? sortedCustomers[0].total_purchase_transactions : null;
+    
+        // Find the customer with the highest total purchase after sorting
+        const highestTotal = sortedCustomers.reduce((max, customer) => {
+            return customer.total_purchase_transactions > max ? customer.total_purchase_transactions : max;
+        }, 0);
+    
         setHighestTotalPurchase(highestTotal);
-
-
+    
+        setCustomers(sortedCustomers);
     };
+    
+    
 
     const handleSortClick = () => {
         const newOrder = sortOrder === "asc" ? "desc" : "asc";
@@ -121,6 +124,8 @@ const CustomersStats = () => {
                                     <tr key={index} className="bg-black bg-opacity-20">
                                         <td className="pl-3 flex py-2.5 whitespace-nowrap">
                                             {highestTotalPurchase === customerInfo.total_purchase_transactions && <Sparkle className="mt-1 text-yellow-500 mr-2 animate-pulse" size={20} />}
+                                            {calculateNumberOfTransactions(customerInfo.id) > 3 && <Activity className="mt-1 text-blue-500 mr-2 animate-pulse" size={20} />}
+                                            {calculateNumberOfTransactions(customerInfo.id) === 1 && <GitCommitHorizontal className="mt-1 text-rose-500 mr-2 animate-pulse" size={20} />}
                                             <span className="font-medium">{customerInfo.fullName}</span>
                                         </td>
                                         <td className="py-2.5 whitespace-nowrap">{customerInfo.phone}</td>

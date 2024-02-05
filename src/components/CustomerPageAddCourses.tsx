@@ -51,6 +51,8 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
             if (!existingCustomer.transactions) {
                 existingCustomer.transactions = {
                     courses: [],
+                    printServices: [],
+                    products: [],
                 };
             } else if (!existingCustomer.transactions.courses) {
                 existingCustomer.transactions.courses = [];

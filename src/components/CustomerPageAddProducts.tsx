@@ -52,19 +52,23 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
             if (!existingCustomer.transactions) {
                 existingCustomer.transactions = {
+                    courses: [],
+                    printServices: [],
                     products: [],
+
                 };
-            } else if (!existingCustomer.transactions.products) {
+            } 
+            else if (!existingCustomer.transactions.products) {
                 existingCustomer.transactions.products = [];
             }
 
             existingCustomer.transactions.products.push(newOrder);
 
-        // Update the total purchase transactions
-        existingCustomer.total_purchase_transactions += existingCustomer.transactions.products.reduce(
-            (total, transaction) => total + transaction.subtotal,
-            0
-        );
+            // Update the total purchase transactions
+            existingCustomer.total_purchase_transactions += existingCustomer.transactions.products.reduce(
+                (total, transaction) => total + transaction.subtotal,
+                0
+            );
             jsonArray[existingCustomerIndex] = existingCustomer;
             console.log(newOrder)
             // Update the JSON file with the modified JSON array

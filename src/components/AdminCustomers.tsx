@@ -16,7 +16,11 @@ const AdminCustomers = () => {
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [isLinkDisabled, setLinkDisabled] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-
+    interface Transactions {
+        products: [],
+        courses: [],
+        printServices: []
+    }
     interface CustomerServicesType {
         orders: ProductType[],
         courses: CourseType[],
@@ -41,7 +45,11 @@ const AdminCustomers = () => {
         faculty: "",
         age: 0,
         total_purchase_transactions: 0,
-        transactions: {}
+        transactions: {
+            products: [],
+            courses: [],
+            printServices: [],
+        }
     });
 
     useEffect(() => {
@@ -68,7 +76,11 @@ const AdminCustomers = () => {
             address: "",
             faculty: "",
             total_purchase_transactions: 0,
-            transactions: {}
+            transactions: {
+                products: [],
+                courses: [],
+                printServices: [],
+            }
         });
         setError(null); // Reset error state
         setSearchTerm('');
@@ -257,33 +269,33 @@ const AdminCustomers = () => {
                         </tbody> 
                     </table>
                 </div> : <NoContent />} */}
-          <div className="mb-5 flex flex-col lg:flex-row items-center justify-between">
-    <input
-        type="text"
-        placeholder="Search By Name, Phone"
-        className="text-black mb-2 p-2 border border-gray-300 rounded w-full lg:w-[60%] focus:outline-none focus:border-blue-500"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-    />
+            <div className="mb-5 flex flex-col lg:flex-row items-center justify-between">
+                <input
+                    type="text"
+                    placeholder="Search By Name, Phone"
+                    className="text-black mb-2 p-2 border border-gray-300 rounded w-full lg:w-[60%] focus:outline-none focus:border-blue-500"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
 
-    <div className="flex items-center space-x-4 mb-2 lg:mb-0">
-        <button
-            className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all duration-300"
-            onClick={handleAddItemClick}
-        >
-            <Plus size={18} className="mr-1" />
-            Add Customer
-        </button>
+                <div className="flex items-center space-x-4 mb-2 lg:mb-0">
+                    <button
+                        className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all duration-300"
+                        onClick={handleAddItemClick}
+                    >
+                        <Plus size={18} className="mr-1" />
+                        Add Customer
+                    </button>
 
-        {/* Toggle Button for Grid and List View */}
-        <button
-            className={`text-gray-600 hover:text-blue-500 transition-colors duration-300 ${isGridView ? "opacity-50" : ""
-                }`}
-            onClick={toggleView}
-        >
-            {isGridView ? <List size={20} /> : <Grid size={20} />}
-        </button>
-    </div>
+                    {/* Toggle Button for Grid and List View */}
+                    <button
+                        className={`text-gray-600 hover:text-blue-500 transition-colors duration-300 ${isGridView ? "opacity-50" : ""
+                            }`}
+                        onClick={toggleView}
+                    >
+                        {isGridView ? <List size={20} /> : <Grid size={20} />}
+                    </button>
+                </div>
 
 
             </div>
