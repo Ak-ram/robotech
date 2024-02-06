@@ -59,8 +59,6 @@ const CustomersStats = () => {
         setCustomers(sortedCustomers);
     };
 
-
-
     const handleSortClick = () => {
         const newOrder = sortOrder === "asc" ? "desc" : "asc";
         setSortOrder(newOrder);
@@ -92,9 +90,6 @@ const CustomersStats = () => {
 
         return { mostSellingProduct, sellingTimes: maxQuantity };
     };
-
-
-
     const getMostSellingService = () => {
         const serviceMap = new Map();
         customers.forEach((customer) => {
@@ -120,7 +115,6 @@ const CustomersStats = () => {
 
         return { mostSellingService, sellingTimes: maxQuantity };
     };
-
     const getMostSellingCourse = () => {
         const courseMap = new Map();
         customers.forEach((customer) => {
@@ -146,12 +140,9 @@ const CustomersStats = () => {
 
         return { mostSellingCourse, sellingTimes: maxQuantity };
     };
-
-
     const mostSellingProductData = getMostSellingProduct();
     const mostSellingServiceData = getMostSellingService();
     const mostSellingCourseData = getMostSellingCourse();
-
     return (<>
         <section className='my-5'>
             <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
