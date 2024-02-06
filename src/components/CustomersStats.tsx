@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerData } from "@/helpers/getCustomerData";
-import { Activity, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X } from "lucide-react";
+import { Activity, Briefcase, Book, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
 import CustomerStatsChart from "./CustomerStatsChart";
-
 
 const CustomersStats = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -145,7 +144,6 @@ const CustomersStats = () => {
     const mostSellingCourseData = getMostSellingCourse();
     return (<>
         <section className='my-5'>
-            <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
 
             <div className={`${isShow ? "block" : "hidden"} z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
                 <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
@@ -158,27 +156,55 @@ const CustomersStats = () => {
 
             </div>
             <div className="flex flex-col">
-            <div className="bg-white p-5 rounded border border-slate-400">
-  <div className="font-semibold mb-3">
-    Top Selling Product:
-  </div>
-  <div className="flex items-center justify-between border-b border-gray-300 py-2">
-    <div>
-      {mostSellingProductData.mostSellingProduct}
-    </div>
-    <div className="text-green-500 font-bold">
-      {mostSellingProductData.sellingTimes} times
-    </div>
-  </div>
-  <div className="font-bold mt-3">
-    Most Selling Service: {mostSellingServiceData.mostSellingService}{' '}
-    <span className="text-sm text-gray-600">({mostSellingServiceData.sellingTimes} times)</span>
-  </div>
-  <div className="font-bold mt-3">
-    Most Selling Course: {mostSellingCourseData.mostSellingCourse}{' '}
-    <span className="text-sm text-gray-600">({mostSellingCourseData.sellingTimes} times)</span>
-  </div>
-</div>
+
+                <div className="bg-white my-5 p-6 rounded-lg shadow-md animate-fade-in">
+                    {/* Top Selling Heading */}
+                    <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center bg-blue-100 py-2 px-4 rounded-md">
+                        <Activity className="mr-2 text-blue-500" size={24} /> Top Selling
+                    </h2>
+
+                    {/* Top Selling Product */}
+                    <div className="mb-3 bg-yellow-50 py-3 px-4 rounded-md">
+                        <h3 className="text-lg font-semibold mb-3 flex items-center">
+                            <Briefcase className="mr-2 text-yellow-500" size={20} /> Product:
+                        </h3>
+                        <div className="flex items-center justify-between border-b border-gray-300 py-2">
+                            <div>{mostSellingProductData.mostSellingProduct}</div>
+                            <div className="text-green-500 font-bold">
+                                {mostSellingProductData.sellingTimes} Selling times
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Top Selling Service */}
+                    <div className="mb-3 bg-yellow-50 py-3 px-4 rounded-md">
+                        <h3 className="text-lg font-semibold mb-3 flex items-center">
+                            <Briefcase className="mr-2 text-yellow-500" size={20} /> Service:
+                        </h3>
+                        <div className="flex items-center justify-between border-b border-gray-300 py-2">
+                            <div>{mostSellingServiceData.mostSellingService}</div>
+                            <div className="text-green-500 font-bold">
+                                {mostSellingServiceData.sellingTimes} Selling times
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Top Selling Course */}
+                    <div className="bg-purple-50 py-3 px-4 rounded-md">
+                        <h3 className="text-lg font-semibold mb-3 flex items-center">
+                            <Book className="mr-2 text-purple-500" size={20} /> Course:
+                        </h3>
+                        <div className="flex items-center justify-between border-b border-gray-300 py-2">
+                            <div>{mostSellingCourseData.mostSellingCourse}</div>
+                            <div className="text-green-500 font-bold">
+                                {mostSellingCourseData.sellingTimes} Selling times
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
 
                 <div className="py-2 -my-2 align-middle">
                     <div className="shadow overflow-hidden sm:rounded-lg">
