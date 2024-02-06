@@ -153,10 +153,28 @@ const CustomersStats = () => {
                         {/* <ApexChartComp categoryStats={categoryStats} /> */}
                         <CustomerStatsChart customers={customers} />
                     </div>
-                </div></div>
+                </div>
 
+               
+            </div>
             <div className="flex flex-col">
-
+            <div className="flex gap-2">
+  <div className="font-bold">
+    Most Selling Product: {mostSellingProductData.mostSellingProduct}
+    <span className="font-normal">for</span>
+    <span className="font-bold">{mostSellingProductData.sellingTimes} times</span>
+  </div>
+  <div className="font-bold">
+    Most Selling Service: {mostSellingServiceData.mostSellingService}
+    <span className="font-normal">for</span>
+    <span className="font-bold">{mostSellingServiceData.sellingTimes} times</span>
+  </div>
+  <div className="font-bold">
+    Most Selling Course: {mostSellingCourseData.mostSellingCourse}
+    <span className="font-normal">for</span>
+    <span className="font-bold">{mostSellingCourseData.sellingTimes} times</span>
+  </div>
+</div>
                 <div className="py-2 -my-2 align-middle">
                     <div className="shadow overflow-hidden sm:rounded-lg">
                         <div className="flex justify-between items-center gap-2 bg-gray-800 p-3 border-b  border-gray-700">
@@ -184,12 +202,7 @@ const CustomersStats = () => {
                                 </span>
                             </div>
 
-                        </div>
-                        <h2>Most Selling Product: {mostSellingProductData.mostSellingProduct} with  {mostSellingProductData.sellingTimes} times</h2>
-
-                        <h2>Most Selling Course: {mostSellingServiceData.mostSellingService} with  {mostSellingServiceData.sellingTimes} times</h2>
-                        <h2>Most Selling Course: {mostSellingCourseData.mostSellingCourse} with  {mostSellingCourseData.sellingTimes} times</h2>
-                        <table className="w-full text-gray-400">
+                        </div>                        <table className="w-full text-gray-400">
                             <thead className="bg-gray-800 uppercase">
                                 <tr>
                                     <th className="p-3 text-left text-sm tracking-wider">Name</th>
