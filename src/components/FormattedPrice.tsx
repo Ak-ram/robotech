@@ -10,8 +10,8 @@ const FormattedPrice = ({ amount, className }: Props) => {
     style: "currency",
     currency: "EGP",
     currencyDisplay: "symbol",
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2,
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
     useGrouping: true,
   });
   return (

@@ -142,7 +142,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 />
               </div> */}
               {/* <div className="py-3 px-10 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 translate-y-full transition-all group-hover:translate-y-0 w-full absolute"> */}
-              <div className="py-3 translate-y-0 transition-all group-hover:translate-y-full px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 border-t border-slate-300 rounded transition-all w-full absolute">
+              <div className="py-3  transition-all px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 border-t border-slate-300 rounded transition-all w-full absolute">
                 <p className="pr-2 w-[210px] text-xl whitespace-nowrap text-ellipsis overflow-hidden duration-300 font-bold">
                   {item?.title}
                 </p>
@@ -157,13 +157,13 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
                   {item?.count > 0 || prefix === 'print' ? (
 
-                    <span className="flex  gap-2 font-semibold items-center text-gray-600 bg-designColor/30 px-2 py-1 rounded">
+                    <span onClick={() => {
+                      dispatch(addToCart(item));
+                      toast.success(`${item?.title} is added to Cart!`);
+                    }} className="flex cursor-pointer gap-2 font-semibold items-center text-gray-600 bg-designColor/30 px-2 py-1 rounded">
                       Add to cart
                       <ShoppingBasketIcon
-                        onClick={() => {
-                          dispatch(addToCart(item));
-                          toast.success(`${item?.title} is added to Cart!`);
-                        }}
+
                         className=" ustify-center rounded flex items-center gap-1 font-semibold text-designColor rounded  duration-300 bg-white text-blue-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
                       />
                     </span>
@@ -176,7 +176,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       Out of stock
                       <Ban
 
-                        className=" ustify-center rounded flex items-center gap-1 font-semibold text-red-400 bg-white rounded-sm  duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
+                        className=" ustify-center rounded flex items-center gap-1 font-semibold text-rose-400 bg-white rounded-sm  duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
                       />
                     </span>
                   )}
