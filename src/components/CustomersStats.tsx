@@ -164,40 +164,40 @@ const CustomersStats = () => {
                     </h2>
 
                     {/* Top Selling Product */}
-                    <div className="mb-3 bg-yellow-50 py-3 px-4 rounded-md">
+                    <div className="mb-3 py-3 px-4 rounded-md">
                         <h3 className="text-lg font-semibold mb-3 flex items-center">
                             <Briefcase className="mr-2 text-yellow-500" size={20} /> Product:
                         </h3>
                         <div className="flex items-center justify-between border-b border-gray-300 py-2">
-                            <div>{mostSellingProductData.mostSellingProduct}</div>
-                            <div className="text-green-500 font-bold">
-                                {mostSellingProductData.sellingTimes} Selling times
+                            <div className="pl-3">{mostSellingProductData.mostSellingProduct}</div>
+                            <div className="text-zinc-500 font-semibold">
+                                Sold {mostSellingProductData.sellingTimes} times
                             </div>
                         </div>
                     </div>
 
                     {/* Top Selling Service */}
-                    <div className="mb-3 bg-yellow-50 py-3 px-4 rounded-md">
+                    <div className="mb-3  py-3 px-4 rounded-md">
                         <h3 className="text-lg font-semibold mb-3 flex items-center">
                             <Briefcase className="mr-2 text-yellow-500" size={20} /> Service:
                         </h3>
                         <div className="flex items-center justify-between border-b border-gray-300 py-2">
-                            <div>{mostSellingServiceData.mostSellingService}</div>
-                            <div className="text-green-500 font-bold">
-                                {mostSellingServiceData.sellingTimes} Selling times
+                            <div className="pl-3">{mostSellingServiceData.mostSellingService}</div>
+                            <div className="text-zinc-500 font-semibold">
+                                Sold {mostSellingServiceData.sellingTimes} times
                             </div>
                         </div>
                     </div>
 
                     {/* Top Selling Course */}
-                    <div className="bg-purple-50 py-3 px-4 rounded-md">
+                    <div className=" py-3 px-4 rounded-md">
                         <h3 className="text-lg font-semibold mb-3 flex items-center">
                             <Book className="mr-2 text-purple-500" size={20} /> Course:
                         </h3>
                         <div className="flex items-center justify-between border-b border-gray-300 py-2">
-                            <div>{mostSellingCourseData.mostSellingCourse}</div>
-                            <div className="text-green-500 font-bold">
-                                {mostSellingCourseData.sellingTimes} Selling times
+                            <div className="pl-3">{mostSellingCourseData.mostSellingCourse}</div>
+                            <div className="text-zinc-500 font-semibold">
+                                Sold {mostSellingCourseData.sellingTimes} times
                             </div>
                         </div>
                     </div>
