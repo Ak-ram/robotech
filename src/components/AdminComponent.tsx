@@ -26,7 +26,6 @@ const AdminComponent = () => {
   }
   const [selectedItem, setSelectedItem] = useState<SidebarItem | null>(null);
   const [isOpen, setOpen] = useState<Boolean>(true);
-
   const sidebarItems: SidebarItem[] = [
     { id: 1, icon: <LayoutList />, label: "Products", content: <AdminProducts /> },
     { id: 2, icon: <Printer />, label: "3D", content: <Admin3DComponent /> },
