@@ -94,11 +94,11 @@ const CustomersStats = () => {
         const serviceMap = new Map();
         customers.forEach((customer) => {
             customer.transactions.printServices.forEach((service) => {
-                const { serviceName, quantity } = service;
-                if (serviceMap.has(serviceName)) {
-                    serviceMap.set(serviceName, serviceMap.get(serviceName) + quantity);
+                const { productName, quantity } = service;
+                if (serviceMap.has(productName)) {
+                    serviceMap.set(productName, serviceMap.get(productName) + quantity);
                 } else {
-                    serviceMap.set(serviceName, quantity);
+                    serviceMap.set(productName, quantity);
                 }
             });
         });
@@ -119,11 +119,11 @@ const CustomersStats = () => {
         const courseMap = new Map();
         customers.forEach((customer) => {
             customer.transactions.courses.forEach((course) => {
-                const { courseName, quantity } = course;
-                if (courseMap.has(courseName)) {
-                    courseMap.set(courseName, courseMap.get(courseName) + quantity);
+                const { productName, quantity } = course;
+                if (courseMap.has(productName)) {
+                    courseMap.set(productName, courseMap.get(productName) + quantity);
                 } else {
-                    courseMap.set(courseName, quantity);
+                    courseMap.set(productName, quantity);
                 }
             });
         });
@@ -155,26 +155,31 @@ const CustomersStats = () => {
                     </div>
                 </div>
 
-               
+
             </div>
             <div className="flex flex-col">
-            <div className="flex gap-2">
-  <div className="font-bold">
-    Most Selling Product: {mostSellingProductData.mostSellingProduct}
-    <span className="font-normal">for</span>
-    <span className="font-bold">{mostSellingProductData.sellingTimes} times</span>
+            <div className="bg-white p-5 rounded border border-slate-400">
+  <div className="font-semibold mb-3">
+    Top Selling Product:
   </div>
-  <div className="font-bold">
-    Most Selling Service: {mostSellingServiceData.mostSellingService}
-    <span className="font-normal">for</span>
-    <span className="font-bold">{mostSellingServiceData.sellingTimes} times</span>
+  <div className="flex items-center justify-between border-b border-gray-300 py-2">
+    <div>
+      {mostSellingProductData.mostSellingProduct}
+    </div>
+    <div className="text-green-500 font-bold">
+      {mostSellingProductData.sellingTimes} times
+    </div>
   </div>
-  <div className="font-bold">
-    Most Selling Course: {mostSellingCourseData.mostSellingCourse}
-    <span className="font-normal">for</span>
-    <span className="font-bold">{mostSellingCourseData.sellingTimes} times</span>
+  <div className="font-bold mt-3">
+    Most Selling Service: {mostSellingServiceData.mostSellingService}{' '}
+    <span className="text-sm text-gray-600">({mostSellingServiceData.sellingTimes} times)</span>
+  </div>
+  <div className="font-bold mt-3">
+    Most Selling Course: {mostSellingCourseData.mostSellingCourse}{' '}
+    <span className="text-sm text-gray-600">({mostSellingCourseData.sellingTimes} times)</span>
   </div>
 </div>
+
                 <div className="py-2 -my-2 align-middle">
                     <div className="shadow overflow-hidden sm:rounded-lg">
                         <div className="flex justify-between items-center gap-2 bg-gray-800 p-3 border-b  border-gray-700">
