@@ -67,6 +67,90 @@ const CustomersStats = () => {
         sortCustomers(customers, newOrder);
     };
 
+    const getMostSellingProduct = () => {
+        const productMap = new Map();
+        customers.forEach((customer) => {
+            customer.transactions.products.forEach((product) => {
+                const { productName, quantity } = product;
+                if (productMap.has(productName)) {
+                    productMap.set(productName, productMap.get(productName) + quantity);
+                } else {
+                    productMap.set(productName, quantity);
+                }
+            });
+        });
+
+        let mostSellingProduct = '';
+        let maxQuantity = 0;
+
+        productMap.forEach((quantity, productName) => {
+            if (quantity > maxQuantity) {
+                maxQuantity = quantity;
+                mostSellingProduct = productName;
+            }
+        });
+
+        return { mostSellingProduct, sellingTimes: maxQuantity };
+    };
+
+
+
+    const getMostSellingService = () => {
+        const serviceMap = new Map();
+        customers.forEach((customer) => {
+            customer.transactions.printServices.forEach((service) => {
+                const { serviceName, quantity } = service;
+                if (serviceMap.has(serviceName)) {
+                    serviceMap.set(serviceName, serviceMap.get(serviceName) + quantity);
+                } else {
+                    serviceMap.set(serviceName, quantity);
+                }
+            });
+        });
+
+        let mostSellingService = '';
+        let maxQuantity = 0;
+
+        serviceMap.forEach((quantity, serviceName) => {
+            if (quantity > maxQuantity) {
+                maxQuantity = quantity;
+                mostSellingService = serviceName;
+            }
+        });
+
+        return { mostSellingService, sellingTimes: maxQuantity };
+    };
+
+    const getMostSellingCourse = () => {
+        const courseMap = new Map();
+        customers.forEach((customer) => {
+            customer.transactions.courses.forEach((course) => {
+                const { courseName, quantity } = course;
+                if (courseMap.has(courseName)) {
+                    courseMap.set(courseName, courseMap.get(courseName) + quantity);
+                } else {
+                    courseMap.set(courseName, quantity);
+                }
+            });
+        });
+
+        let mostSellingCourse = '';
+        let maxQuantity = 0;
+
+        courseMap.forEach((quantity, courseName) => {
+            if (quantity > maxQuantity) {
+                maxQuantity = quantity;
+                mostSellingCourse = courseName;
+            }
+        });
+
+        return { mostSellingCourse, sellingTimes: maxQuantity };
+    };
+
+
+    const mostSellingProductData = getMostSellingProduct();
+    const mostSellingServiceData = getMostSellingService();
+    const mostSellingCourseData = getMostSellingCourse();
 
     return (<>
         <section className='my-5'>
@@ -110,6 +194,10 @@ const CustomersStats = () => {
                             </div>
 
                         </div>
+                        <h2>Most Selling Product: {mostSellingProductData.mostSellingProduct} with  {mostSellingProductData.sellingTimes} times</h2>
+
+                        <h2>Most Selling Course: {mostSellingServiceData.mostSellingService} with  {mostSellingServiceData.sellingTimes} times</h2>
+                        <h2>Most Selling Course: {mostSellingCourseData.mostSellingCourse} with  {mostSellingCourseData.sellingTimes} times</h2>
                         <table className="w-full text-gray-400">
                             <thead className="bg-gray-800 uppercase">
                                 <tr>
