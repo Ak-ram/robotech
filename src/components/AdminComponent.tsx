@@ -59,7 +59,7 @@ const AdminComponent = () => {
   if (!userInfo) {
     setTimeout(() => {
       router.push('/login');
-    }, 2000);
+    }, 1000);
     return (
       <div className="h-[400px] flex items-center justify-center flex-col gap-3 p-3 mx-auto">
         <Loader className="animate-spin"/>
