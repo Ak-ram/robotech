@@ -28,13 +28,16 @@ const AdminComponent = () => {
   const [isPasswordEntered, setIsPasswordEntered] = useState<boolean>(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const storedPasswordStatus = sessionStorage.getItem("isPasswordEntered");
-    if (storedPasswordStatus === "true") {
-      setIsPasswordEntered(true);
-    }
-  }, []);
-
+  // useEffect(() => {
+  //   const storedPasswordStatus = sessionStorage.getItem("isPasswordEntered");
+  //   console.log(storedPasswordStatus)
+  //   if (storedPasswordStatus === "true") {
+  //     setIsPasswordEntered(true);
+  //   }
+  // }, []);
+useEffect(()=>{
+  return setIsPasswordEntered(false);
+})
   const sidebarItems: SidebarItem[] = [
     { id: 1, icon: <LayoutList />, label: "Products", content: <AdminProducts /> },
     { id: 2, icon: <Printer />, label: "3D", content: <Admin3DComponent /> },
@@ -59,7 +62,7 @@ const AdminComponent = () => {
     const preDefinedPassword = "test";
     if (password === preDefinedPassword) {
       setIsPasswordEntered(true);
-      sessionStorage.setItem("isPasswordEntered", "true");
+      // sessionStorage.setItem("isPasswordEntered", "true");
     }
   };
 
@@ -103,6 +106,35 @@ const AdminComponent = () => {
       <div className="flex-1 py-5 p-4 ">
         {selectedItem ? (
           <div className="">
+            {/* ... */}
+            {isPasswordEntered || selectedItem.id !== 9 ? (
+              selectedItem.content
+            ) : (
+              <div>
+                 <form onSubmit={handlePasswordSubmit}>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter the password"
+                  />
+                  <button type="submit">Submit</button>
+                </form>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            <span className="cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
+              {isOpen ? <X /> : <Menu />}
+            </span>
+            <p className="font-bold text-lg flex items-center justify-center lg:h-[500px] mb-5 text-gray-600">
+              Select Page from the sidebar.
+            </p>
+          </div>
+        )}
+        {/* {selectedItem ? (
+          <div className="">
             <div className="border-b-zinc-300 pb-2 border-b mb-2 flex items-center gap-2">
               <span className="hover:bg-slate-300 bgwhite  py-1 px-1 rounded cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
                 {isOpen ? <X /> : <Menu />}
@@ -134,7 +166,7 @@ const AdminComponent = () => {
               Select Page from the sidebar.
             </p>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );
