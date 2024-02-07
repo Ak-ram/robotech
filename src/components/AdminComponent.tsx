@@ -162,7 +162,7 @@ const AdminComponent = () => {
     e.preventDefault();
 
     // Check if the entered password matches the pre-defined password
-    const preDefinedPassword = "your_pre_defined_password";
+    const preDefinedPassword = "test";
     if (password === preDefinedPassword) {
       setIsPasswordEntered(true);
     }
