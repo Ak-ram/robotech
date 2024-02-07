@@ -29,7 +29,7 @@ const CustomerPage = () => {
   ]
   return (
     <div className="m-8">
-      <h1 className="text-4xl font-semibold mb-6 text-center">Customer ID: {customerId}</h1>
+      {/* <h1 className="text-4xl font-semibold mb-6 text-center">Customer ID: {customerId}</h1> */}
 
       {customerData && (
         <div className="bg-white p-8 rounded-lg shadow-md">
@@ -57,10 +57,10 @@ const CustomerPage = () => {
               <p className="text-gray-600 mb-2">Education:</p>
               <p className="font-semibold">{customerData.faculty || "No Education"}</p>
             </div>
-            {/* <div>
-              <p className="text-gray-600 mb-2">Total Purchase Transactions:</p>
-              <p className="font-semibold"><FormattedPrice amount={customerData.total_purchase_transactions || 0} /></p>
-            </div> */}
+            <div>
+              <p className="text-gray-600 mb-2">ID:</p>
+              <p className="font-semibold text-gray-500 text-xs">{customerId}</p>
+            </div>
           </div>
 
           <div className="mt-8">
