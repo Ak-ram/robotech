@@ -232,7 +232,7 @@
 
 
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
@@ -290,10 +290,28 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   };
   const [showSortingOptions, setShowSortingOptions] = useState(false);
 
-  // Function to toggle the visibility of sorting options UI
-  const toggleSortingOptions = () => {
-    setShowSortingOptions(!showSortingOptions)
-  }
+ // Ref for sorting options UI
+ const sortingOptionsRef = useRef<HTMLDivElement>(null); // Ensure proper typing
+
+ // Function to toggle the visibility of sorting options
+ const toggleSortingOptions = () => {
+   setShowSortingOptions(!showSortingOptions);
+ };
+
+ // Function to close sorting options when clicking outside the component
+ const handleClickOutside = (event) => {
+   if (sortingOptionsRef.current && !sortingOptionsRef.current.contains(event.target)) {
+     setShowSortingOptions(false);
+   }
+ };
+
+ // Attach click event listener to the document
+ useEffect(() => {
+   document.addEventListener('click', handleClickOutside);
+   return () => {
+     document.removeEventListener('click', handleClickOutside);
+   };
+ }, []);
   const handlePrev = () => {
     const newStart = Math.max(0, perPage.start - 9);
     const newEnd = newStart + 9;
@@ -331,7 +349,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
         {/* Sorting options UI */}
         {showSortingOptions && (
-          <div className="absolute z-50 left-0  p-4 rounded top-11 bg-white border border-zinc-400 flex flex-col gap-2 justify-start shadow-md">
+          <div ref={sortingOptionsRef} className="absolute z-50 left-0  p-4 rounded top-11 bg-white border border-zinc-400 flex flex-col gap-2 justify-start shadow-md">
             <div className="mr-2 flex items-center">
               <label htmlFor="sortingOption" className="mr-2">Sort by:</label>
               <select
