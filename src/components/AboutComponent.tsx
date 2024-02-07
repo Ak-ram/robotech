@@ -46,7 +46,7 @@ function AboutComponent() {
                 </div>
                 <div className="grid gap-8 md:grid-cols-2">
                     {data.map((item) => (
-                        <div key={item.id} className="bg-white rounded-lg shadow-md p-6">
+                        <div key={item.id} className="border shadow-lg border-blue-400 bg-white rounded-lg shadow-md p-6">
                             <div className="flex items-center justify-center w-12 h-12 mb-4 rounded bg-blue-100">
                                 <Info className="text-blue-600" size={35} />
                             </div>
