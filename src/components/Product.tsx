@@ -236,7 +236,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
-import { Ban, ChevronLeft, ChevronRight, Heart, ShoppingBasket, ShoppingBasketIcon, ShoppingCart } from "lucide-react";
+import { Ban, ChevronLeft, ChevronRight, Filter, Heart, ShoppingBasket, ShoppingBasketIcon, ShoppingCart } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToFavorite } from "@/redux/proSlice";
@@ -276,7 +276,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
     if (!Array.isArray(products)) {
       return [];
     }
-  
+
     // Sort the products array based on the selected sorting option and order
     const sortedProducts = [...products].sort((a, b) => {
       if (sortingOrder === "asc") {
@@ -285,11 +285,15 @@ const Product = ({ products, prefix, categoryName }: Item) => {
         return b[sortingOption] - a[sortingOption];
       }
     });
-  
+
     return sortedProducts;
   };
-  
+  const [showSortingOptions, setShowSortingOptions] = useState(false);
 
+  // Function to toggle the visibility of sorting options UI
+  const toggleSortingOptions = () => {
+    setShowSortingOptions(!showSortingOptions)
+  }
   const handlePrev = () => {
     const newStart = Math.max(0, perPage.start - 9);
     const newEnd = newStart + 9;
@@ -305,37 +309,56 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   return (
     <div className={`flex-1 pt-5`}>
 
-      <nav aria-label="Page navigation example" className="mx-2 sm:mx-4 flex items-center justify-end">
 
 
 
 
+
+
+
+      <nav aria-label="Page navigation example" className="mx-2 sm:mx-4 flex relative flex-wrap items-center justify-end">
+
+        {/* Filter Icon */}
+        <div className="mr-2">
+          <button
+            onClick={() => toggleSortingOptions()}
+            className="flex items-center px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700"
+          >
+            <Filter className="w-5 h-5 mr-1" />
+            <span className="hidden sm:inline">Filter</span>
+          </button>
+        </div>
 
         {/* Sorting options UI */}
-        <div className="mr-2">
-          <label htmlFor="sortingOption">Sort by:</label>
-          <select
-            id="sortingOption"
-            value={sortingOption}
-            onChange={(e) => setSortingOption(e.target.value)}
-            className="ml-2"
-          >
-            <option value="price">Price</option>
-            {/* Add more sorting options here */}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="sortingOrder">Order:</label>
-          <select
-            id="sortingOrder"
-            value={sortingOrder}
-            onChange={(e) => setSortingOrder(e.target.value)}
-            className="ml-2"
-          >
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-          </select>
-        </div>
+        {showSortingOptions && (
+          <div className="absolute z-50 left-0  p-4 rounded top-11 bg-white border border-zinc-400 flex flex-col gap-2 justify-start shadow-md">
+            <div className="mr-2 flex items-center">
+              <label htmlFor="sortingOption" className="mr-2">Sort by:</label>
+              <select
+                id="sortingOption"
+                value={sortingOption}
+                onChange={(e) => setSortingOption(e.target.value)}
+                className="px-2 py-1 border border-gray-300 rounded-md"
+              >
+                <option value="price">Price</option>
+                {/* Add more sorting options here */}
+              </select>
+            </div>
+            <div className="mr-2 flex items-center">
+              <label htmlFor="sortingOrder" className="mr-2">Order:</label>
+              <select
+                id="sortingOrder"
+                value={sortingOrder}
+                onChange={(e) => setSortingOrder(e.target.value)}
+                className="px-2 py-1 border border-gray-300 rounded-md"
+              >
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </select>
+            </div>
+          </div>
+        )}
+
         <ul className="flex items-center ml-auto -space-x-px h-8 ">
           <li className="  mr-2">
             {perPage.pageNo} / {Math.ceil(products?.length / 9)}
@@ -373,7 +396,14 @@ const Product = ({ products, prefix, categoryName }: Item) => {
           </li>
         </ul>
 
+
       </nav>
+
+
+
+
+
+
 
       <div className="m-auto mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
         {/* Use handleSorting function to get sorted products */}
@@ -394,7 +424,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-48 lg:h-68 overflow-hidden rounded-xl"
             >
               <img
-                className="peer group-hover: scale-125 group-hover:rotate-12 transition-transform duration-1000 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
+                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-1000 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
                 src={item.image1}
                 alt="product image"
               />
