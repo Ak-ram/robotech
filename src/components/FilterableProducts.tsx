@@ -95,7 +95,7 @@ function FilterableProducts({ categories }) {
 
           <SearchComponent />
           </div>
-          <div className={`${openSidebar ? "" : "blur-none"} `}>
+          <div className={`${openSidebar ? "blur-md" : "blur-none"} `}>
 
             <Product categoryName={categoryName} prefix={'pr'} products={products} />
           </div>

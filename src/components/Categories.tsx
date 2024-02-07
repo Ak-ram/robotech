@@ -23,8 +23,11 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
 
           <nav className="text-zinc-600 block overflow-x-auto">
             <button
-              onClick={closeSidebar}
-              className={`text-ellipsis overflow-hidden lg:w-full whitespace-nowrap
+              onClick={() => {
+                setCategoryName("");
+                closeSidebar();
+              }}
+              className={`text-ellipsis overflow-hidden w-full whitespace-nowrap
                  ${selectedCategory === '' ? 'bg-gray-100 text-black' : 'text-zinc-800 hover:bg-zinc-100 hover:text-zinc-950'} font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
             >
               <svg className="mr-4 h-5 w-5 align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -35,7 +38,7 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
             {categories?.map((cat_title: string, i: number) => (
               <div key={`${cat_title}_${i}`}>
                 <button
-                  className={`text-ellipsis overflow-hidden lg:w-full whitespace-nowrap ${selectedCategory === cat_title ? 'bg-gray-100 text-black' : 'text-zinc-800 hover:bg-zinc-100 hover:text-zinc-950'} font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
+                  className={`text-ellipsis overflow-hidden w-full whitespace-nowrap ${selectedCategory === cat_title ? 'bg-gray-100 text-black' : 'text-zinc-800 hover:bg-zinc-100 hover:text-zinc-950'} font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
                   onClick={() => {
                     setCategoryName(cat_title);
                     setSelectedCategory((prev) => (prev === cat_title ? '' : cat_title)); // Toggle the selected category
