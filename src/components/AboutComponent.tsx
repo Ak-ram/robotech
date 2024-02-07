@@ -1,9 +1,8 @@
-// Assuming that 'getAboutData' returns the correct type
 'use client'
-import { getAboutData } from '@/helpers/getAboutData';
-import { ListTodo } from 'lucide-react';
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { FileQuestion, Info, ListTodo } from 'lucide-react';
+import Link from 'next/link';
+import { getAboutData } from '@/helpers/getAboutData';
 
 function AboutComponent() {
     // Assuming this structure fits your data
@@ -13,7 +12,6 @@ function AboutComponent() {
         description: string;
         link_url: string;
         link_text: string;
-
     }
 
     const [data, setData] = useState<AboutData[]>([]);
@@ -35,66 +33,34 @@ function AboutComponent() {
     }, []);
 
     return (
-        <div className="py-16 ">
-            <div className="mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
-                <div>
-                    <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400">
+        <div className="py-10 px-5 bg-gray-100">
+            <div className="container mx-auto px-4 md:px-0">
+                <div className="mb-10 text-center">
+                    <p className="inline-block px-3 py-px mb-4 text-xs font-bold tracking-wider text-designColor uppercase rounded-full bg-teal-accent-400">
                         Robotech space
                     </p>
+                    <h2 className="text-3xl font-bold text-gray-800 mb-4">Mechatronics Engineering Space</h2>
+                    <p className="text-base text-gray-700 md:text-lg">
+                        We integrate cutting-edge technologies for precision and innovation in spacecraft design, robotics, and control systems.
+                    </p>
                 </div>
-                <h2 className="max-w-lg mb-6 mx-auto font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
-                    <span className="relative inline-block">
-                        <svg
-                            viewBox="0 0 52 24"
-                            fill="currentColor"
-                            className="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-blue-gray-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block"
-                        >
-                            <defs>
-                                <pattern
-                                    id="27df4f81-c854-45de-942a-fe90f7a300f9"
-                                    x="0"
-                                    y="0"
-                                    width=".135"
-                                    height=".30"
-                                >
-                                    <circle cx="1" cy="1" r=".7" />
-                                </pattern>
-                            </defs>
-                            <rect
-                                fill="url(#27df4f81-c854-45de-942a-fe90f7a300f9)"
-                                width="52"
-                                height="24"
-                            />
-                        </svg>
-                        <span className="relative">A</span>
-                    </span>{' '}
-                    Mechatronics Engineering Space
-                </h2>
-                <p className="text-base text-gray-700 md:text-lg">
-                    We integrate cutting-edge technologies for precision and innovation in spacecraft design, robotics, and control systems.                </p>
-            </div>
-            <div className="grid gap-8 row-gap-10 md:grid-cols-2">
-                {data &&
-                    data.map((item) => (
-                        <div key={item?.id} className="border p-2 rounded-lg flex flex-col sm:flex-row">
-                            <div className="mr-4">
-                                <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-orange-500">
-                                    <ListTodo />
-                                </div>
+                <div className="grid gap-8 md:grid-cols-2">
+                    {data.map((item) => (
+                        <div key={item.id} className="bg-white rounded-lg shadow-md p-6">
+                            <div className="flex items-center justify-center w-12 h-12 mb-4 rounded bg-blue-100">
+                                <Info className="text-blue-600" size={35} />
                             </div>
                             <div>
-                                <h6 className="mb-3 text-xl font-bold leading-5">{item?.title}</h6>
-                                <p className="mb-3 text-sm text-gray-900">{item?.description}</p>
-
-                                <Link
-                                    href={item?.link_url}
-                                    className="items-center justify-center bg-black text-white p-2 rounded-md inline-flex items-center font-semibold transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800"
-                                >
-                                    {item?.link_text.charAt(0).toUpperCase() + item?.link_text.slice(1).toLowerCase()}
+                                <h6 className="text-xl font-bold uppercase leading-5 text-gray-800 mb-3">{item.title}</h6>
+                                <p className="text-sm text-gray-700 mb-3">{item.description}</p>
+                                <Link href={item.link_url} className="inline-block bg-indigo-600 text-white text-sm py-2 px-4 rounded-md font-semibold transition-colors duration-200 hover:bg-indigo-700">
+                                        {item.link_text.charAt(0).toUpperCase() + item.link_text.slice(1).toLowerCase()}
+                                    
                                 </Link>
                             </div>
                         </div>
                     ))}
+                </div>
             </div>
         </div>
     );
