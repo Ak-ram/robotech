@@ -107,10 +107,12 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               className="min-w-[130px] w-full relative sm:mx-3 sm:mt-3 flex h-40 md:h-60 lg:h-68 overflow-hidden rounded-xl"
             >
               <img
-                className="peer absolute top-0 right-0 h-full w-full object-contain"
+                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-1000 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
                 src={item.image1}
                 alt="product image"
               />
+
+
               {item.image2 ? (
                 <img
                   className="peer  bg-white absolute top-0 -right-96 h-full w-full object-contain transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
@@ -122,7 +124,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
               {
                 item.price < item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
-                  <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center  md: font-medium text-white">
+                  <span className="absolute -top-2 -left-2 m-2 rounded-full bg-black px-2 text-center  md: font-medium text-white">
                     {calculatePercentage(item?.price, item?.previousPrice)}% OFF
                   </span>
                   : null}
@@ -140,7 +142,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 />
               </div> */}
               {/* <div className="py-3 px-10 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 translate-y-full transition-all group-hover:translate-y-0 w-full absolute"> */}
-              <div className="py-3  px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 border-t border-slate-300 rounded transition-all w-full absolute">
+              <div className="py-3  transition-all px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 border-t border-slate-300 rounded transition-all w-full absolute">
                 <p className="pr-2 w-[210px] text-xl whitespace-nowrap text-ellipsis overflow-hidden duration-300 font-bold">
                   {item?.title}
                 </p>
@@ -155,13 +157,13 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
                   {item?.count > 0 || prefix === 'print' ? (
 
-                    <span className="flex  gap-2 font-semibold items-center text-gray-600 bg-designColor/30 px-2 py-1 rounded">
+                    <span onClick={() => {
+                      dispatch(addToCart(item));
+                      toast.success(`${item?.title} is added to Cart!`);
+                    }} className="flex cursor-pointer gap-2 font-semibold items-center text-gray-600 bg-designColor/30 px-2 py-1 rounded">
                       Add to cart
                       <ShoppingBasketIcon
-                        onClick={() => {
-                          dispatch(addToCart(item));
-                          toast.success(`${item?.title} is added to Cart!`);
-                        }}
+
                         className=" ustify-center rounded flex items-center gap-1 font-semibold text-designColor rounded  duration-300 bg-white text-blue-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
                       />
                     </span>
@@ -174,7 +176,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       Out of stock
                       <Ban
 
-                        className=" ustify-center rounded flex items-center gap-1 font-semibold text-red-400 bg-white rounded-sm  duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
+                        className=" ustify-center rounded flex items-center gap-1 font-semibold text-rose-400 bg-white rounded-sm  duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
                       />
                     </span>
                   )}

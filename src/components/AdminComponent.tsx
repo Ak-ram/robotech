@@ -12,11 +12,11 @@ import AdminAbout from "./AdminAbout";
 import AdminFaq from "./AdminFaq";
 import AdminSlides from "./AdminSlides";
 import AdminAnnouncement from "./AdminAnnouncement";
-import { BarChart, GraduationCap, HelpCircle, Key, LayoutList, Menu, Printer, SlidersHorizontal, Smile, StickyNote, UserCircle , X } from "lucide-react";
+import { BarChart, GraduationCap, HelpCircle, Key, LayoutList, Menu, Printer, SlidersHorizontal, Smile, StickyNote, UserCircle, X } from "lucide-react";
 import Stats from "./Stats";
 import AdminCustomers from "./AdminCustomers";
 
-const AdminComponent = (router) => {
+const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
   interface SidebarItem {
     id: number;
@@ -26,19 +26,19 @@ const AdminComponent = (router) => {
   }
   const [selectedItem, setSelectedItem] = useState<SidebarItem | null>(null);
   const [isOpen, setOpen] = useState<Boolean>(true);
-
   const sidebarItems: SidebarItem[] = [
-    { id: 1,icon:<LayoutList/>, label: "Products", content: <AdminProducts /> },
-    { id: 2,icon:<Printer/>, label: "3D", content: <Admin3DComponent /> },
-    { id: 3,icon:<GraduationCap />, label: "Courses", content: <AdminCourses /> },
-    { id: 4,icon:<Smile/>, label: "About", content: <AdminAbout /> },
-    { id: 5,icon:<HelpCircle/>, label: "Faq", content: <AdminFaq /> },
-    { id: 6,icon:<SlidersHorizontal/>, label: "Slides", content: <AdminSlides /> },
-    { id: 7,icon:<StickyNote/>, label: "Announcement", content: <AdminAnnouncement /> },
-    { id: 8,icon:<UserCircle />, label: "Customers", content: <AdminCustomers /> },
-    { id: 9,icon:<BarChart/>, label: "Stats", content: <Stats /> },
+    { id: 1, icon: <LayoutList />, label: "Products", content: <AdminProducts /> },
+    { id: 2, icon: <Printer />, label: "3D", content: <Admin3DComponent /> },
+    { id: 3, icon: <GraduationCap />, label: "Courses", content: <AdminCourses /> },
+    { id: 4, icon: <Smile />, label: "About", content: <AdminAbout /> },
+    { id: 5, icon: <HelpCircle />, label: "Faq", content: <AdminFaq /> },
+    { id: 6, icon: <SlidersHorizontal />, label: "Slides", content: <AdminSlides /> },
+    { id: 7, icon: <StickyNote />, label: "Announcement", content: <AdminAnnouncement /> },
+    { id: 8, icon: <UserCircle />, label: "Customers", content: <AdminCustomers /> },
+    { id: 9, icon: <BarChart />, label: "Stats", content: <Stats /> },
     // Add more items as needed
   ];
+  const router = useRouter();
 
   const handleItemClick = (item: SidebarItem) => {
     setSelectedItem(item);
@@ -86,20 +86,20 @@ const AdminComponent = (router) => {
 
         {selectedItem ? (
           <div className="">
-           
+
             <div className="border-b-zinc-300 pb-2 border-b mb-2 flex items-center gap-2">
-            <span className="hover:bg-slate-300 bg-white  py-1 px-1 rounded cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
-              {
-                isOpen ? <X /> : <Menu />
-              }
-            </span>
+              <span className="hover:bg-slate-300 bg-white  py-1 px-1 rounded cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
+                {
+                  isOpen ? <X /> : <Menu />
+                }
+              </span>
               <span className="bg-white hover:bg-slate-300 font-bold px-1.5 py-1 rounded">{selectedItem.label} Page</span>
             </div>
             <div>{selectedItem.content}</div>
           </div>
         ) : (
           <div>
-            <span  className="cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
+            <span className="cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
               {
                 isOpen ? <X /> : <Menu />
               }

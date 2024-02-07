@@ -92,6 +92,7 @@ const LoginComponent = () => {
                   Submit
                 </button>
               </div>
+              
               <div className="relative mt-5">
                 {!isAuth && message && <p className={`${message.includes('authorized') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
                 {isAuth && (
