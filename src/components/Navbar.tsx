@@ -70,7 +70,7 @@ const Navbar = () => {
 
         <Logo />
         {/* Navigation */}
-        <ul className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"} flex px-2 -ml-6 absolute md:relative top-0 w-[250px] border-gray-400 border-r md:border-0 z-50 transition transform bgDesign md:bg-transprot md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}>
+        <ul className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"} flex px-2 -ml-6 absolute md:relative top-0 w-[250px] border-gray-400 border-r md:border-0 z-50 transition transform  md:bg-transparent md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}>
           <X className='ml-auto text-black m-2 md:hidden' onClick={() => setOpenSidebar(false)} />
           {navigation.map((item) => (
             <Link href={item?.href} key={item.title}>
@@ -127,7 +127,7 @@ const Navbar = () => {
         </div>
 
       </div>
-      <div className='mt-3 md:h-[1px] w-full bg-gray-900 opacity-20'></div>
+      {/* <div className='mt-3 md:h-[1px] w-full bg-gray-900 opacity-20'></div> */}
      {/* 
        <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
         <span className='md:block hidden mt-4 font-bold'>Look for specific Product ? </span>
