@@ -40,21 +40,21 @@ function SupportComponent() {
   };
 
   return (
-    <div className="min-h-[400px] bg-white rounded py-1">
+    <div className="min-h-[400px]  rounded py-1">
       <div>
         <div className="flex bg-slate-100 py-2 items-center justify-center gap-2 mx-auto text-center px-4 mt-8 text-2xl text-indigo-900 font-semibold">
           <Activity className='bg-white w-12 h-12 p-2 rounded-full text-rose-400' size={30} /> Frequently Asked Questions
-        </div>
+        </div> 
         <dl style={{ direction: 'rtl' }} className="mt-8 mx-auto max-w-screen-sm lg:max-w-screen-lg flex flex-col lg:flex-row lg:flex-wrap">
           <div className="lg:w-1/2">
             {data &&
               data.slice(0, Math.ceil(data?.length / 2)).map((item, i) => (
                 <div
-                  className="question-and-answer select-none cursor-pointer border-2 mx-8 my-3 rounded-lg group"
+                  className="question-and-answer select-none cursor-pointer border-2 mx-8 my-2 rounded-lg group"
                   onClick={() => toggleAnswer(i)}
                   key={`${i}_${item?.question}`}
                 >
-                  <dt className={`py-3 px-2 rounded ${item.open ? "bg-blue-200" : "hover:bg-gray-200"}`}>
+                  <dt className={`py-3 mb-1 px-2 rounded border border-slate-300 ${item.open ? "bg-white" : "hover:bg-white"}`}>
                     <div className="flex justify-between items-center">
                       <div className="text-indigo-800 text-sm xs:text-base font-semibold cursor-pointer">
                         {item?.question}
@@ -79,11 +79,11 @@ function SupportComponent() {
             {data &&
               data.slice(Math.ceil(data?.length / 2), data?.length).map((item, i) => (
                 <div
-                  className="question-and-answer select-none cursor-pointer border-2 mx-8 my-3 rounded-lg group"
-                  onClick={() => toggleAnswer(i + Math.ceil(data?.length / 2))}
+                className="question-and-answer select-none cursor-pointer border-2 mx-8 my-2 rounded-lg group"
+                onClick={() => toggleAnswer(i + Math.ceil(data?.length / 2))}
                   key={`${i}_${item?.question}`}
                 >
-                  <dt className={`py-3 px-2 rounded ${item.open ? "bg-blue-200" : "hover:bg-gray-200"}`}>
+                  <dt className={`py-3 mb-1 px-2 rounded border border-slate-300 ${item.open ? "bg-white" : "hover:bg-white"}`}>
                     <div className="flex justify-between items-center">
                       <div className="text-sm xs:text-base text-indigo-800 font-semibold cursor-pointer">
                         {item?.question}
