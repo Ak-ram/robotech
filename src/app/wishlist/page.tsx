@@ -12,7 +12,7 @@ const page = () => {
         <Heart className="w-8 h-8 text-gray-600" />
         <div>
           <h2 className="text-xl font-bold text-gray-800">Your Wishlist</h2>
-          <p className="text-gray-600">Explore items you've saved for later.</p>
+          <p className="text-gray-600">Explore items you have saved for later.</p>
         </div>
       </div>
     </div>
