@@ -278,7 +278,7 @@ const AdminCustomers = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
 
-                <div className="flex items-center space-x-4 mb-2 lg:mb-0">
+                <div className="flex items-end space-x-4 mb-2 lg:mb-0">
                     <button
                         className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all duration-300"
                         onClick={handleAddItemClick}

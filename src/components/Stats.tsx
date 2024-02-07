@@ -6,7 +6,7 @@ import { ProductType } from "../../type";
 import FormattedPrice from "./FormattedPrice";
 import Products from "./Products";
 import ApexChartComp from "./ApexChart";
-import { BarChart, LineChart, Search, X } from "lucide-react";
+import { Banknote, BarChart, CheckCircle, DollarSign, LineChart, Search, ShoppingCart, X, XCircle } from "lucide-react";
 import CustomersStats from "./CustomersStats";
 
 interface Product {
@@ -86,6 +86,11 @@ const Stats = () => {
             fetchData();
         }
     }, []);
+    const totalProducts = products?.length || 0;
+    const totalAvailableProducts = categoryStats.reduce((acc, category) => acc + category.inStockProducts.length, 0);
+    const totalUnavailableProducts = categoryStats.reduce((acc, category) => acc + category.outStockProducts.length, 0);
+    const totalAvailablePrice = categoryStats.reduce((acc, category) => acc + category.inStockProducts.reduce((total, product) => total + +product.price, 0), 0);
+    const totalUnavailablePrice = categoryStats.reduce((acc, category) => acc + category.outStockProducts.reduce((total, product) => total + +product.price, 0), 0);
 
     useEffect(() => {
         console.log(categoryStats);
@@ -128,7 +133,7 @@ const Stats = () => {
 
                                     </div>
                                     <table className="w-full text-sm text-gray-600">
-                                        <thead className="bg-white text-sm uppercase ">
+                                        <thead className="bg-black text-white text-sm uppercase ">
                                             <tr className="">
                                                 <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
                                                     Category
@@ -136,23 +141,23 @@ const Stats = () => {
                                                 <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
                                                     Quantity
                                                 </th>
-                                                <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
+                                                <th scope="col" className="whitespace-nowrap text-center text-xs  p-3 text-left tracking-wider">
                                                     In Stock
                                                 </th>
-                                                <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
+                                                <th scope="col" className="whitespace-nowrap text-center text-xs  p-3 text-left tracking-wider">
                                                     IS Price
                                                 </th>
-                                                <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
+                                                <th scope="col" className="whitespace-nowrap text-center text-xs  p-3 text-left tracking-wider">
                                                     Out Stock
                                                 </th>
-                                                <th scope="col" className="pr-5 text-center text-xs  p-3 text-left tracking-wider">
+                                                <th scope="col" className="whitespace-nowrap pr-5 text-center text-xs  p-3 text-left tracking-wider">
                                                     OS Price
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody className="">
                                             {filteredCategoryStats.map((categoryInfo, index) => (
-                                                <tr key={index} className="border-b border-slate-300 bg-white bg-opacity-20 ">
+                                                <tr key={index} className="hover:bg-white border-b border-slate-300 bg-white bg-opacity-20 ">
                                                     <td className="text-center pl-3 text-sm  flex  py-2.5 whitespace-nowrap">
                                                         <img className="w-6 h-6 mr-2 rounded" src={categoryInfo.inStockProducts[0].image1} alt="" />
                                                         <span className="text-sm font-medium">{categoryInfo.categoryName.slice(0, 1).toUpperCase() + categoryInfo.categoryName.slice(1,)}</span>
@@ -170,63 +175,68 @@ const Stats = () => {
                                                         <FormattedPrice className="text-xs" amount={categoryInfo.outStockTotalPrice} /></td>
                                                 </tr>
                                             ))}
-                                           
+
                                         </tbody>
                                     </table>
 
                                 </div>
                             </div>
                         </div></div>
-                    <section className="rounded-lg border border-slate-400 min-w-[40%] min-w-[40%]  gap-3 flex p-5 bg-white">
-                        <div className="flex justify-center flex-col gap-3 flex-1">
-                            <div className="h-28 border shadow-lg border-slate-300 flex flex-col items-center gap-3 justify-center bg-white rounded">
-                                <span className="text-2xl text-blue-700  font-bold">  {products?.length}</span>
-                                <span className="text-center font-semibold text-blue-700">اجمالى المنتجات</span>
+                    <section className="rounded-lg flex-1 border border-gray-300 p-5 bg-white">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div className="flex items-center justify-center p-6 rounded-lg bg-blue-50">
+                                <div className="mr-2">
+                                    <ShoppingCart size={32} className="text-blue-500" />
+                                </div>
+                                <div>
+                                    <span className="text-xl font-bold text-blue-700">{totalProducts}</span>
+                                    <p className="text-sm text-blue-700">Total Products</p>
+                                </div>
                             </div>
-                            <div className="h-28 shadow-lg border border-slate-300 flex flex-col items-center gap-3 justify-center bg-white rounded">
-                                <span className="text-2xl text-yellow-700  font-bold">   {
-                                    categoryStats
-                                        .map(item => item.inStockProducts.map((product: ProductType) => +product?.count !== 0))
-                                        .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
-                                }  </span>
-                                <span className="text-center text-yellow-700 font-semibold">عدد المنتجات المتاحة</span>
+                            <div className="flex items-center justify-center p-6 rounded-lg bg-yellow-50">
+                                <div className="mr-2">
+                                    <CheckCircle size={32} className="text-yellow-500" />
+                                </div>
+                                <div>
+                                    <span className="text-xl font-bold text-yellow-700">{totalAvailableProducts}</span>
+                                    <p className="text-sm text-yellow-700">Available Products</p>
+                                </div>
                             </div>
-                            <div className="h-28 shadow-lg border border-slate-300  flex flex-col items-center gap-3 justify-center bg-white rounded">
-                                <span className="text-2xl text-red-700  font-bold"> {
-                                    categoryStats
-                                        .map(item => item.outStockProducts.map((product: ProductType) => +product?.count === 0))
-                                        .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
-                                }  </span>
-                                <span className="text-center text-red-700 font-semibold">عدد المنتجات الغير المتاحة</span>
+                            <div className="flex items-center justify-center p-6 rounded-lg bg-red-50">
+                                <div className="mr-2">
+                                    <XCircle size={32} className="text-red-500" />
+                                </div>
+                                <div>
+                                    <span className="text-xl font-bold text-red-700">{totalUnavailableProducts}</span>
+                                    <p className="text-sm text-red-700">Unavailable Products</p>
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex py-2 justify-center flex-col gap-3 flex-1">
-                            <div className="h-28 shadow-lg border border-slate-300  flex flex-col items-center gap-3 justify-center bg-white rounded">
-                                <span className="text-2xl text-green-700  font-bold">  <FormattedPrice className="text-xl" amount=
-                                    {
-                                        categoryStats
-                                            .map(item => item.inStockProducts.map((product: ProductType) => +product?.price))
-                                            .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
-                                    } /> </span>
-                                <span className="text-center text-green-700 font-semibold">اجمالى سعر البضاعه المعروضة</span>
-                            </div>                          
-                              {/* <div className="h-28 bg-gray-700 text-white rounded">2</div> */}
-                            <div className="flex-1 shadow-lg border border-slate-300  flex flex-col items-center gap-3 justify-center bg-white rounded">
-                                <span className="text-2xl text-rose-700  font-bold"> <FormattedPrice className="text-xl" amount=
-                                    {
-                                        categoryStats
-                                            .map(item => item.outStockProducts.map((product: ProductType) => +product?.price))
-                                            .reduce((accumulator, currentValue) => accumulator + currentValue.reduce((a, b) => a + b, 0), 0)
-                                    } /> </span>
-                                <span className="text-center text-rose-700 font-semibold">اجمالى سعر البضاعه الغير متاحه</span>
+                            <div className="flex items-center justify-center p-6 rounded-lg bg-green-50">
+                                <div className="mr-2">
+                                    <span className="text-green-500 text-2xl font-bold"><DollarSign size={32}/></span>
+                                </div>
+                                <div>
+                                    <span className="text-xl font-bold text-green-700">{totalAvailablePrice}</span>
+                                    <p className="text-sm text-green-700">Total Available Price</p>
+                                </div>
                             </div>
-
+                            <div className="col-span-full">
+                                <div className="flex items-center justify-center p-6 rounded-lg bg-rose-50">
+                                    <div className="mr-2">
+                                        <span className="text-rose-500 text-2xl font-bold"><Banknote size={32}/></span>
+                                    </div>
+                                    <div>
+                                        <span className="text-xl font-bold text-rose-700">{totalUnavailablePrice}</span>
+                                        <p className="text-sm text-rose-700">Total Unavailable Price</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>
             </section>
 
-<CustomersStats />
+            <CustomersStats />
         </>
     );
 };

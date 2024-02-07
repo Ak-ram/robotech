@@ -246,7 +246,7 @@ const CustomersStats = () => {
                             </thead>
                             <tbody className="bg-gray-800">
                                 {filteredCategoryStats.map((customerInfo, index) => (
-                                    <tr key={index} className="bg-black bg-opacity-20">
+                                    <tr key={index} className="hover:bg-opacity-50 bg-black bg-opacity-20">
                                         <td className="pl-3 flex py-2.5 whitespace-nowrap">
                                             {highestTotalPurchase === customerInfo.total_purchase_transactions && <span title="عميل مميز - الاكثر شراء"><Sparkle className="mt-1 text-yellow-500 mr-2 animate-pulse" size={20} /></span>}
                                             {calculateNumberOfTransactions(customerInfo.id) > 3 && <span title="عميل متكرر"><Activity className="mt-1 text-green-500 mr-2 animate-pulse" size={20} /></span>}
