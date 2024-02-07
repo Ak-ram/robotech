@@ -103,8 +103,8 @@ const Stats = () => {
                     <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
                         <div className="flex-1"> <X className="cursor-pointer" onClick={() => setIsShow(false)} /> <ApexChartComp categoryStats={categoryStats} /></div>
                     </div></div>
-                <div className="flex justify-start gap-2">
-                    <div className="flex flex-col flex-1">
+                <div className="flex justify-start flex-wrap gap-2">
+                    <div className="flex flex-col  flex-1">
                         <div className="-my-2 overflow-x-auto ">
                             <div className="py-2 px-3">
                                 <div className="shadow-xl border border-slate-400 overflow-hidden sm:rounded-lg">
