@@ -35,9 +35,11 @@ const AdminComponent = () => {
   //     setIsPasswordEntered(true);
   //   }
   // }, []);
-useEffect(()=>{
-  return setIsPasswordEntered(false);
-})
+  useEffect(() => {
+    return () => {
+      setIsPasswordEntered(false);
+    };
+  }, []);
   const sidebarItems: SidebarItem[] = [
     { id: 1, icon: <LayoutList />, label: "Products", content: <AdminProducts /> },
     { id: 2, icon: <Printer />, label: "3D", content: <Admin3DComponent /> },
@@ -106,21 +108,46 @@ useEffect(()=>{
       <div className="flex-1 py-5 p-4 ">
         {selectedItem ? (
           <div className="">
-            {/* ... */}
+            <div className="border-b-zinc-300 pb-2 border-b mb-2 flex items-center gap-2">
+              <span className="hover:bg-slate-300 bgwhite  py-1 px-1 rounded cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
+                {isOpen ? <X /> : <Menu />}
+              </span>
+              <span className="bg-white hover:bg-slate-300 font-bold px-1.5 py-1 rounded">{selectedItem.label} Page</span>
+            </div>
             {isPasswordEntered || selectedItem.id !== 9 ? (
               selectedItem.content
             ) : (
-              <div>
-                 <form onSubmit={handlePasswordSubmit}>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter the password"
-                  />
-                  <button type="submit">Submit</button>
+              <div className="grid place-items-center h-[300px]">
+                <form onSubmit={handlePasswordSubmit}>
+
+                  <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+                    <div className="text-2xl font-bold mb-4">Enter Password</div>
+
+                    <div className="mb-4">
+                      <div className="border flex rounded-md focus-within:border-blue-500">
+                        <input
+                          type="password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder="Enter the password"
+                          className="border-l-0 p-2 text-gray-700 focus:outline-none"
+                        />
+                        <span className="flex items-center text-gray-400 hover:text-gray-500 bg-white px-2">
+                          <Key />
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none"
+                    >
+                      Submit
+                    </button>
+                  </div>
                 </form>
               </div>
+
             )}
           </div>
         ) : (
