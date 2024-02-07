@@ -822,16 +822,19 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
 
                   ) : (
-                    <span className="cursor-not-allowed flex gap-2 font-semibold items-center text-red-400 bg-red-100 px-2 py-1 rounded">
-                      Out of stock
-                      <Ban
-
-                        className=" ustify-center rounded flex items-center gap-1 font-semibold text-rose-400 bg-white rounded-sm  duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
-                      />
-                    </span>
+                    <>
+                      <span className="cursor-not-allowed flex gap-2 font-semibold items-center text-red-400 bg-red-100 px-2 py-1 rounded">
+                        Out of stock
+                        <Ban
+                          className=" ustify-center rounded flex items-center gap-1 font-semibold text-rose-400 bg-white rounded-sm  duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
+                        />
+                      </span>
+                    </>
                   )}
 
-                  <Heart
+
+
+                  {prefix !== 'print' ?  <Heart
                     fill={isFavorite(item.id) ? "red" : "black"}
                     onClick={() => {
                       dispatch(addToFavorite(item));
@@ -842,12 +845,8 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       }
                     }}
                     className="text-zinc-500  cursor-pointer duration-200 hover:text-black"
-                  />
-                  {/* {
-                 prefix === 'print' ? <span className="flex-col items-center justify-center">
-                   <b className="text-designColor"><FormattedPrice amount={item.count} /></b> Per Minute.
-                 </span> : null
-               } */}
+                  /> : null
+               }
 
                 </div>
               </div>

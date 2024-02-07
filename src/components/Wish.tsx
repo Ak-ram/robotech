@@ -27,7 +27,7 @@ const Wish = () => {
                                         pathname: `/id_${item?.id}`,
                                         query: {
                                             id: item?.id,
-                                            prefix: (item?.category ? item?.category : "print"),
+                                            prefix: (item?.category),
                                         },
                                     }}>
                                         <Link2Icon />
