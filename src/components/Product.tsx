@@ -301,7 +301,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
       <nav aria-label="Page navigation example" className="mx-2 sm:mx-4 flex items-center justify-end">
 
 
-       
+
 
 
         {/* Sorting options UI */}
@@ -429,6 +429,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 <p className="flex  items-center justify-start w-full text-black font-semibold">
                   {item?.previousPrice > item?.price ? <del><FormattedPrice className={'text-base  text-zinc-500'} amount={item?.previousPrice} /></del>
                     : null}
+                  {prefix === 'print' ? <span className="text-lg">دقيقـة /</span> : null}
                   <FormattedPrice className={'text-xl'} amount={item?.price} />
                 </p>
                 <div className="flex gap-2  w-full items-center justify-between mt-2">
@@ -473,11 +474,11 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                     }}
                     className="text-zinc-500  cursor-pointer duration-200 hover:text-black"
                   />
-                  {
+                  {/* {
                     prefix === 'print' ? <span className="flex-col items-center justify-center">
                       <b className="text-designColor"><FormattedPrice amount={item.count} /></b> Per Minute.
                     </span> : null
-                  }
+                  } */}
 
                 </div>
               </div>

@@ -40,7 +40,7 @@ function SupportComponent() {
   };
 
   return (
-    <div className="min-h-screen bg-white rounded py-1">
+    <div className="min-h-[400px] bg-white rounded py-1">
       <div>
         <div className="flex bg-slate-100 py-2 items-center justify-center gap-2 mx-auto text-center px-4 mt-8 text-2xl text-indigo-900 font-semibold">
           <Activity className='bg-white w-12 h-12 p-2 rounded-full text-rose-400' size={30} /> Frequently Asked Questions
