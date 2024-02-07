@@ -17,78 +17,52 @@ const Wish = () => {
     return (
         <Container>
             {favoriteData.length > 0 ? (
-                <div className="mt-5 flex flex-col">
-                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table className="w-full text-sm text-left">
-                            <thead className="text-xs text-white uppercase bg-zinc-950">
-                                <tr>
-                                    <th scope="col" className="px-6 py-3">
-                                        Product Information
-                                    </th>
-                                    <th scope="col" className="hidden sm:block px-6 py-3">
-                                        Unit Price
-                                    </th>
-                                    <th scope="col" className="px-6 py-3 text-center">
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            {favoriteData.map((item: ProductType) => (
-                                <tbody key={item?.id}>
-
-                                    <tr className="bg-white border-b-[1px] border-b-zinc-300">
-                                        <th
-                                            scope="row"
-                                            className="flex items-center gap-3"
-                                        >
-                                            <img
-                                                src={item?.image1}
-                                                alt="proudct image"
-                                                width={500}
-                                                height={500}
-                                                className="w-20 object-contain"
-                                            />
-                                            <p className="text-ellipsis overflow-hidden whitespace-nowrap w-[70%] text-base font-medium text-black">
-                                                {item?.title}
-                                            </p>
-                                        </th>
-                                        <td className="hidden sm:table-cell ">
-                                            <FormattedPrice amount={item?.price} />
-                                        </td>
-                                        <td className="">
-                                            <div className=" flex justify-center items-center gap-3">
-                                                <Link className="hover:text-designColor" href={{ pathname: `/${item?.id}`, query: { id: item?.id } }}>
-                                                    <Link2Icon />
-                                                </Link>
-                                                <X
-                                                    onClick={() => {
-                                                        dispatch(deleteFavorite(item)),
-                                                            toast.success(
-                                                                `${item?.title} is removed from Wishlist!`
-                                                            );
-                                                    }}
-                                                    className="w-4 h-4 hover:text-red-600 cursor-pointer duration-200"
-                                                />
-
-                                            </div>
-                                        </td>
-
-                                    </tr>
-
-                                </tbody>
-                            ))}
-                        </table>
-                    </div>
+                <div className="my-5 grid grid-cols-1 gap-4 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {favoriteData.map((item: ProductType) => (
+                        <div key={item?.id} className="border border-gray-200 rounded-md overflow-hidden">
+                            <div className="flex h-20 items-center justify-between bg-gray-100 px-4 py-2">
+                                <p className="text-sm font-semibold text-gray-700">{item?.title}</p>
+                                <div className="flex items-center gap-2">
+                                    <Link className="hover:text-designColor" href={{
+                                        pathname: `/id_${item?.id}`,
+                                        query: {
+                                            id: item?.id,
+                                            prefix: (item?.category ? item?.category : "print"),
+                                        },
+                                    }}>
+                                        <Link2Icon />
+                                    </Link>
+                                    <X
+                                        onClick={() => {
+                                            dispatch(deleteFavorite(item));
+                                            toast.success(`${item?.title} is removed from Wishlist!`);
+                                        }}
+                                        className="w-4 h-4 hover:text-red-600 cursor-pointer duration-200"
+                                    />
+                                </div>
+                            </div>
+                            <div className="py-2">
+                                <div className="aspect-w-1 w-full h-48 bg-white aspect-h-1">
+                                    <img
+                                        src={item?.image1}
+                                        alt="product image"
+                                        className="object-contain w-full h-44 rounded-md"
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex h-20 justify-between items-center px-4 py-2 bg-gray-100">
+                                <p className="text-sm text-gray-600">{item?.description}</p>
+                                <FormattedPrice amount={item?.price} />
+                            </div>
+                        </div>
+                    ))}
                 </div>
             ) : (
-                <div className="py-10 flex flex-col gap-1 items-center justify-center">
-                    <Image className="" src={FavImg} alt="ShortLogo" width={200} height={200} />
-                    <p className="text-lg font-bold">Your Favourite List is Empty</p>
-                    <Link
-                        href={"/"}
-                        className="text-sm uppercase font-semibold underline underline-offset-2 hover:text-designColor duration-200 cursor-pointer"
-                    >
-                        ADD Favourites
+                <div className="py-10 flex flex-col items-center justify-center gap-4">
+                    <Image src={FavImg} alt="ShortLogo" width={200} height={200} />
+                    <p className="text-lg font-bold">Your Favorites List is Empty</p>
+                    <Link href={"/"} className="text-sm uppercase font-semibold underline underline-offset-2 hover:text-designColor duration-200 cursor-pointer">
+                        Add Favorites
                     </Link>
                 </div>
             )}
@@ -103,6 +77,9 @@ const Wish = () => {
             />
         </Container>
     );
+
+
+
 };
 
 export default Wish;
