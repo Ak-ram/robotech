@@ -47,7 +47,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   return (
     <div className={`flex-1 pt-5`}>
 
-      <nav aria-label="Page navigation example" className=" flex items-center justify-end">
+      <nav aria-label="Page navigation example" className="mx-2 sm:mx-4 flex items-center justify-end">
         <ul className="flex items-center -space-x-px h-8 ">
           <li className="  mr-2">
             {perPage.pageNo} / {Math.ceil(products?.length / 9)}
@@ -87,7 +87,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
       </nav>
 
 
-      <div className="m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
+      <div className="m-auto mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
 
         {products ? products.slice(perPage.start, perPage.end)?.map((item) => (
 

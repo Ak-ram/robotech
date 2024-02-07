@@ -79,7 +79,7 @@ function FilterableProducts({ categories }) {
 
   return (
     <div className='mt-3 md:mt-0'>
-      <div className='relative flex gap-4 overflow-auto m-auto'>
+      <div className='relative flex md:gap-2 overflow-auto m-auto'>
         <Categories products={products} setOpenSidebar={setOpenSidebar} openSidebar={openSidebar} setCategoryName={setCategoryName} categories={categories} />
         <div className='flex-1'>
           {openSidebar ? null :
@@ -91,7 +91,10 @@ function FilterableProducts({ categories }) {
               Explore custom layouts designed for seamless electronic shopping.
             </p>
           </div>
+          <div className='mx-2'>
+
           <SearchComponent />
+          </div>
           <div className={`${openSidebar ? "" : "blur-none"} `}>
 
             <Product categoryName={categoryName} prefix={'pr'} products={products} />
