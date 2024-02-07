@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerData } from "@/helpers/getCustomerData";
-import { Activity, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X } from "lucide-react";
+import { Activity, Briefcase, Book, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
 import CustomerStatsChart from "./CustomerStatsChart";
-
 
 const CustomersStats = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -59,18 +58,92 @@ const CustomersStats = () => {
         setCustomers(sortedCustomers);
     };
 
-
-
     const handleSortClick = () => {
         const newOrder = sortOrder === "asc" ? "desc" : "asc";
         setSortOrder(newOrder);
         sortCustomers(customers, newOrder);
     };
 
+    const getMostSellingProduct = () => {
+        const productMap = new Map();
+        customers.forEach((customer) => {
+            customer.transactions.products.forEach((product) => {
+                const { productName, quantity } = product;
+                if (productMap.has(productName)) {
+                    productMap.set(productName, productMap.get(productName) + quantity);
+                } else {
+                    productMap.set(productName, quantity);
+                }
+            });
+        });
 
+        let mostSellingProduct = '';
+        let maxQuantity = 0;
+
+        productMap.forEach((quantity, productName) => {
+            if (quantity > maxQuantity) {
+                maxQuantity = quantity;
+                mostSellingProduct = productName;
+            }
+        });
+
+        return { mostSellingProduct, sellingTimes: maxQuantity };
+    };
+    const getMostSellingService = () => {
+        const serviceMap = new Map();
+        customers.forEach((customer) => {
+            customer.transactions.printServices.forEach((service) => {
+                const { productName, quantity } = service;
+                if (serviceMap.has(productName)) {
+                    serviceMap.set(productName, serviceMap.get(productName) + quantity);
+                } else {
+                    serviceMap.set(productName, quantity);
+                }
+            });
+        });
+
+        let mostSellingService = '';
+        let maxQuantity = 0;
+
+        serviceMap.forEach((quantity, serviceName) => {
+            if (quantity > maxQuantity) {
+                maxQuantity = quantity;
+                mostSellingService = serviceName;
+            }
+        });
+
+        return { mostSellingService, sellingTimes: maxQuantity };
+    };
+    const getMostSellingCourse = () => {
+        const courseMap = new Map();
+        customers.forEach((customer) => {
+            customer.transactions.courses.forEach((course) => {
+                const { productName, quantity } = course;
+                if (courseMap.has(productName)) {
+                    courseMap.set(productName, courseMap.get(productName) + quantity);
+                } else {
+                    courseMap.set(productName, quantity);
+                }
+            });
+        });
+
+        let mostSellingCourse = '';
+        let maxQuantity = 0;
+
+        courseMap.forEach((quantity, courseName) => {
+            if (quantity > maxQuantity) {
+                maxQuantity = quantity;
+                mostSellingCourse = courseName;
+            }
+        });
+
+        return { mostSellingCourse, sellingTimes: maxQuantity };
+    };
+    const mostSellingProductData = getMostSellingProduct();
+    const mostSellingServiceData = getMostSellingService();
+    const mostSellingCourseData = getMostSellingCourse();
     return (<>
         <section className='my-5'>
-            <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
 
             <div className={`${isShow ? "block" : "hidden"} z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
                 <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
@@ -78,9 +151,60 @@ const CustomersStats = () => {
                         {/* <ApexChartComp categoryStats={categoryStats} /> */}
                         <CustomerStatsChart customers={customers} />
                     </div>
-                </div></div>
+                </div>
 
+
+            </div>
             <div className="flex flex-col">
+
+                <div className="bg-white my-5 p-6 rounded-lg shadow-md animate-fade-in">
+                    {/* Top Selling Heading */}
+                    <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center bg-blue-100 py-2 px-4 rounded-md">
+                        <Activity className="mr-2 text-blue-500" size={24} /> Top Selling
+                    </h2>
+
+                    {/* Top Selling Product */}
+                    <div className="mb-3 py-3 px-4 rounded-md">
+                        <h3 className="text-lg font-semibold mb-3 flex items-center">
+                            <Briefcase className="mr-2 text-yellow-500" size={20} /> Product:
+                        </h3>
+                        <div className="flex items-center justify-between border-b border-gray-300 py-2">
+                            <div className="pl-3">{mostSellingProductData.mostSellingProduct}</div>
+                            <div className="text-zinc-500 font-semibold">
+                                Sold {mostSellingProductData.sellingTimes} times
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Top Selling Service */}
+                    <div className="mb-3  py-3 px-4 rounded-md">
+                        <h3 className="text-lg font-semibold mb-3 flex items-center">
+                            <Briefcase className="mr-2 text-yellow-500" size={20} /> Service:
+                        </h3>
+                        <div className="flex items-center justify-between border-b border-gray-300 py-2">
+                            <div className="pl-3">{mostSellingServiceData.mostSellingService}</div>
+                            <div className="text-zinc-500 font-semibold">
+                                Sold {mostSellingServiceData.sellingTimes} times
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Top Selling Course */}
+                    <div className=" py-3 px-4 rounded-md">
+                        <h3 className="text-lg font-semibold mb-3 flex items-center">
+                            <Book className="mr-2 text-purple-500" size={20} /> Course:
+                        </h3>
+                        <div className="flex items-center justify-between border-b border-gray-300 py-2">
+                            <div className="pl-3">{mostSellingCourseData.mostSellingCourse}</div>
+                            <div className="text-zinc-500 font-semibold">
+                                Sold {mostSellingCourseData.sellingTimes} times
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
 
                 <div className="py-2 -my-2 align-middle">
                     <div className="shadow overflow-hidden sm:rounded-lg">
@@ -109,8 +233,7 @@ const CustomersStats = () => {
                                 </span>
                             </div>
 
-                        </div>
-                        <table className="w-full text-gray-400">
+                        </div>                        <table className="w-full text-gray-400">
                             <thead className="bg-gray-800 uppercase">
                                 <tr>
                                     <th className="p-3 text-left text-sm tracking-wider">Name</th>

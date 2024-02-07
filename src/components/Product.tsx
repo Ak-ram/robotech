@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Heart, ShoppingBasket, ShoppingBasketIcon, ShoppingCart } from "lucide-react";
+import { Ban, ChevronLeft, ChevronRight, Heart, ShoppingBasket, ShoppingBasketIcon, ShoppingCart } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToFavorite } from "@/redux/proSlice";
@@ -87,13 +87,13 @@ const Product = ({ products, prefix, categoryName }: Item) => {
       </nav>
 
 
-      <div className="m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-2">
+      <div className="m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 mt-2">
 
         {products ? products.slice(perPage.start, perPage.end)?.map((item) => (
 
           <div
             key={`${item.id}_${item.title}`}
-            className="flex p-2 sm:block  w-full mx-auto relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-400 duration-300 hover:shadow-xl overflow-hidden rounded-md"
+            className="flex p-2 sm:block  w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden rounded-md"
           >
 
             <Link
@@ -107,10 +107,12 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               className="min-w-[130px] w-full relative sm:mx-3 sm:mt-3 flex h-40 md:h-60 lg:h-68 overflow-hidden rounded-xl"
             >
               <img
-                className="peer absolute top-0 right-0 h-full w-full object-contain"
+                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-1000 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
                 src={item.image1}
                 alt="product image"
               />
+
+
               {item.image2 ? (
                 <img
                   className="peer  bg-white absolute top-0 -right-96 h-full w-full object-contain transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
@@ -119,29 +121,18 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 />
               ) : null}
 
-           
+
               {
                 item.price < item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
-                  <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center  md: font-medium text-white">
+                  <span className="absolute -top-2 -left-2 m-2 rounded-full bg-black px-2 text-center  md: font-medium text-white">
                     {calculatePercentage(item?.price, item?.previousPrice)}% OFF
                   </span>
                   : null}
             </Link>
 
-            <div className="sm:p-4 mt-5 w-[60%] flex justify-center w-full items-start flex-col px-2">
-              <div className="absolute top-4 right-2 flex items-center space-x-2">
-                <Heart
-                  fill={isFavorite(item.id) ? "red" : "black"}
-                  onClick={() => {
-                    dispatch(addToFavorite(item));
-                    if (isFavorite(item?.id)) {
-                      toast.error(`${item?.title} removed from favorites!`);
-                    } else {
-                      toast.success(`${item?.title} added to favorites!`);
-                    }
-                  }}
-                  className="text-zinc-500  cursor-pointer duration-200 hover:text-black"
-                />
+            <div className="sm:p-4 group mt-5 w-[60%] flex justify-center w-full items-start flex-col px-2">
+              {/* <div className="absolute top-4 right-2 flex items-center space-x-2">
+               
                 <ShoppingCart
                   onClick={() => {
                     dispatch(addToCart(item));
@@ -149,46 +140,66 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   }}
                   className="text-zinc-500  cursor-pointer duration-200 hover:text-black"
                 />
-              </div>
-              <p className="pr-2 w-[210px] text-xl whitespace-nowrap text-ellipsis overflow-hidden group-hover:text-designColor duration-300 font-bold">
-                {item?.title}
-              </p>
-              <p className="flex  items-center justify-start w-full text-designColor font-semibold">
-                <FormattedPrice className = {'text-xl'} amount={item?.price} />
-              </p>
-              <div className="flex flex-col gap-2 sm:flex-row w-full items-start sm:items-center justify-between mt-2">
-                {item?.count > 0 || prefix === 'print' ? (
-                  <>
-                    <button
-                      onClick={() => {
-                        dispatch(addToCart(item));
-                        toast.success(`${item?.title} is added to Cart!`);
-                      }}
-                      className="sm:w-fit justify-center flex items-center gap-1 md:text-base uppercase font-semibold text-white bg-black py-1 sm:py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
-                    >
+              </div> */}
+              {/* <div className="py-3 px-10 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 translate-y-full transition-all group-hover:translate-y-0 w-full absolute"> */}
+              <div className="py-3  transition-all px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 border-t border-slate-300 rounded transition-all w-full absolute">
+                <p className="pr-2 w-[210px] text-xl whitespace-nowrap text-ellipsis overflow-hidden duration-300 font-bold">
+                  {item?.title}
+                </p>
+                <p className="flex  items-center justify-start w-full text-black font-semibold">
+                  {item?.previousPrice > item?.price ? <del><FormattedPrice className={'text-base  text-zinc-500'} amount={item?.previousPrice} /></del>
+                    : null}
+                  <FormattedPrice className={'text-xl'} amount={item?.price} />
+                </p>
+                <div className="flex gap-2  w-full items-center justify-between mt-2">
+
+
+
+                  {item?.count > 0 || prefix === 'print' ? (
+
+                    <span onClick={() => {
+                      dispatch(addToCart(item));
+                      toast.success(`${item?.title} is added to Cart!`);
+                    }} className="flex cursor-pointer gap-2 font-semibold items-center text-gray-600 bg-designColor/30 px-2 py-1 rounded">
+                      Add to cart
                       <ShoppingBasketIcon
-                        onClick={() => {
-                          dispatch(addToCart(item));
-                          toast.success(`${item?.title} is added to Cart!`);
-                        }}
-                        className="text-designColor w-6 h-6 cursor-pointer duration-200 hover:text-black"
+
+                        className=" ustify-center rounded flex items-center gap-1 font-semibold text-designColor rounded  duration-300 bg-white text-blue-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
                       />
-                      <span className="hidden sm:inline-block ">Add to Cart</span>
-                      <span className="sm:hidden  ">Buy</span>
+                    </span>
 
-                    </button>
-                  </>
-                ) : (
-                  <span className="text-[10px] md:text-base uppercase font-semibold py-1 sm:px-2 rounded-sm hover:bg-opacity-80 duration-300 text-red-500 bg-red-200">
-                    Out of stock
-                  </span>
-                )}
-                {
-                  prefix === 'print' ? <span className="flex-col items-center justify-center">
-                    <b className="text-designColor"><FormattedPrice amount={item.count} /></b> Per Minute.
-                  </span> : null
-                }
 
+
+
+                  ) : (
+                    <span className="cursor-not-allowed flex gap-2 font-semibold items-center text-red-400 bg-red-100 px-2 py-1 rounded">
+                      Out of stock
+                      <Ban
+
+                        className=" ustify-center rounded flex items-center gap-1 font-semibold text-rose-400 bg-white rounded-sm  duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
+                      />
+                    </span>
+                  )}
+
+                  <Heart
+                    fill={isFavorite(item.id) ? "red" : "black"}
+                    onClick={() => {
+                      dispatch(addToFavorite(item));
+                      if (isFavorite(item?.id)) {
+                        toast.error(`${item?.title} removed from favorites!`);
+                      } else {
+                        toast.success(`${item?.title} added to favorites!`);
+                      }
+                    }}
+                    className="text-zinc-500  cursor-pointer duration-200 hover:text-black"
+                  />
+                  {
+                    prefix === 'print' ? <span className="flex-col items-center justify-center">
+                      <b className="text-designColor"><FormattedPrice amount={item.count} /></b> Per Minute.
+                    </span> : null
+                  }
+
+                </div>
               </div>
             </div>
           </div>
