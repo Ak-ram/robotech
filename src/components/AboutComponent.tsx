@@ -46,13 +46,13 @@ function AboutComponent() {
                 </div>
                 <div className="grid gap-8 md:grid-cols-2">
                     {data.map((item) => (
-                        <div key={item.id} className="border shadow-lg border-blue-400 bg-white rounded-lg shadow-md p-6">
+                        <div key={item.id} className="border shadow-lg border-blue-500/50  bg-white rounded-lg shadow-md p-6">
                             <div className="flex items-center justify-center w-12 h-12 mb-4 rounded bg-blue-100">
                                 <Info className="text-blue-600" size={35} />
                             </div>
                             <div>
                                 <h6 className="text-xl font-bold uppercase leading-5 text-gray-800 mb-3">{item.title}</h6>
-                                <p className="text-sm text-gray-700 mb-3">{item.description}</p>
+                                <p className="text-sm text-gray-700 mb-3 ml-3">{item.description}</p>
                                 <Link href={item.link_url} className="inline-block bg-indigo-600 text-white text-sm py-2 px-4 rounded-md font-semibold transition-colors duration-200 hover:bg-indigo-700">
                                         {item.link_text.charAt(0).toUpperCase() + item.link_text.slice(1).toLowerCase()}
                                     
