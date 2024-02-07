@@ -6,6 +6,13 @@ import Stats from "./Stats";
 import AdminCustomers from "./AdminCustomers";
 import { useRouter } from "next/navigation";
 import Loading from "./Loading";
+import AdminProducts from "./AdminProducts";
+import Admin3DComponent from "./Admin3DComponent";
+import AdminCourses from "./AdminCourses";
+import AdminAbout from "./AdminAbout";
+import AdminFaq from "./AdminFaq";
+import AdminSlides from "./AdminSlides";
+import AdminAnnouncement from "./AdminAnnouncement";
 
 const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -29,13 +36,13 @@ const AdminComponent = () => {
   }, []);
 
   const sidebarItems: SidebarItem[] = [
-    { id: 1, icon: <LayoutList />, label: "Products", content: <div>AdminProducts</div> },
-    { id: 2, icon: <Printer />, label: "3D", content: <div>Admin3DComponent</div> },
-    { id: 3, icon: <GraduationCap />, label: "Courses", content: <div>AdminCourses</div> },
-    { id: 4, icon: <Smile />, label: "About", content: <div>AdminAbout</div> },
-    { id: 5, icon: <HelpCircle />, label: "Faq", content: <div>AdminFaq</div> },
-    { id: 6, icon: <SlidersHorizontal />, label: "Slides", content: <div>AdminSlides</div> },
-    { id: 7, icon: <StickyNote />, label: "Announcement", content: <div>AdminAnnouncement</div> },
+    { id: 1, icon: <LayoutList />, label: "Products", content: <AdminProducts /> },
+    { id: 2, icon: <Printer />, label: "3D", content: <Admin3DComponent /> },
+    { id: 3, icon: <GraduationCap />, label: "Courses", content: <AdminCourses /> },
+    { id: 4, icon: <Smile />, label: "About", content: <AdminAbout /> },
+    { id: 5, icon: <HelpCircle />, label: "Faq", content: <AdminFaq /> },
+    { id: 6, icon: <SlidersHorizontal />, label: "Slides", content: <AdminSlides /> },
+    { id: 7, icon: <StickyNote />, label: "Announcement", content: <AdminAnnouncement /> },
     { id: 8, icon: <UserCircle />, label: "Customers", content: <AdminCustomers /> },
     { id: 9, icon: <BarChart />, label: "Stats", content: <Stats /> },
     // Add more items as needed
@@ -62,7 +69,7 @@ const AdminComponent = () => {
     }, 1000);
     return (
       <div className="h-[400px] flex items-center justify-center flex-col gap-3 p-3 mx-auto">
-        <Loader className="animate-spin"/>
+        <Loader className="animate-spin" />
         <h2 className="text-center">You should login first, you will be redirected to the login page...</h2>
         {/* Redirect to the login page */}
       </div>

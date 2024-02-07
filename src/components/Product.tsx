@@ -272,6 +272,11 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
   // Function to handle sorting
   const handleSorting = () => {
+    // Ensure products is defined and an array before sorting
+    if (!Array.isArray(products)) {
+      return [];
+    }
+  
     // Sort the products array based on the selected sorting option and order
     const sortedProducts = [...products].sort((a, b) => {
       if (sortingOrder === "asc") {
@@ -280,8 +285,10 @@ const Product = ({ products, prefix, categoryName }: Item) => {
         return b[sortingOption] - a[sortingOption];
       }
     });
+  
     return sortedProducts;
   };
+  
 
   const handlePrev = () => {
     const newStart = Math.max(0, perPage.start - 9);
