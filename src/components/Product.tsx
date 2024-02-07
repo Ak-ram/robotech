@@ -87,13 +87,13 @@ const Product = ({ products, prefix, categoryName }: Item) => {
       </nav>
 
 
-      <div className="m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 mt-2">
+      <div className="m-auto flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
 
         {products ? products.slice(perPage.start, perPage.end)?.map((item) => (
 
           <div
             key={`${item.id}_${item.title}`}
-            className="flex p-2 sm:block  w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden rounded-md"
+            className="p-2 sm:w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden rounded-md"
           >
 
             <Link
@@ -104,10 +104,10 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="min-w-[130px] w-full relative sm:mx-3 sm:mt-3 flex h-40 md:h-60 lg:h-68 overflow-hidden rounded-xl"
+              className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-48 lg:h-68 overflow-hidden rounded-xl"
             >
               <img
-                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-1000 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
+                className="peer group-hover: scale-125 group-hover:rotate-12 transition-transform duration-1000 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
                 src={item.image1}
                 alt="product image"
               />
@@ -115,7 +115,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
               {item.image2 ? (
                 <img
-                  className="peer  bg-white absolute top-0 -right-96 h-full w-full object-contain transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
+                  className="peer  bg-white sm:absolute  top-0 -right-96 h-full w-full object-contain  transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
                   src={item.image2}
                   alt="product image"
                 />
@@ -130,7 +130,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   : null}
             </Link>
 
-            <div className="sm:p-4 group mt-5 w-[60%] flex justify-center w-full items-start flex-col px-2">
+            <div className="group w-[60%] flex justify-center w-full items-start flex-col">
               {/* <div className="absolute top-4 right-2 flex items-center space-x-2">
                
                 <ShoppingCart
@@ -142,7 +142,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 />
               </div> */}
               {/* <div className="py-3 px-10 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 translate-y-full transition-all group-hover:translate-y-0 w-full absolute"> */}
-              <div className="py-3  transition-all px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 border-t border-slate-300 rounded transition-all w-full absolute">
+              <div className="py-3  transition-all px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 border-t border-slate-300 rounded transition-all w-full ">
                 <p className="pr-2 w-[210px] text-xl whitespace-nowrap text-ellipsis overflow-hidden duration-300 font-bold">
                   {item?.title}
                 </p>

@@ -12,6 +12,9 @@ const config: Config = {
         designColor: "#ff9900",
         // designColor: "#000",
       },
+      screens: {
+        'xs': '500px',
+      },
     },
   },
   plugins: [],
