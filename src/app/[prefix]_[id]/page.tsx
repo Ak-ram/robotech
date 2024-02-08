@@ -106,7 +106,6 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
             </a>
           </div>
         </li> */}
-
         {/* Separator */}
         <li className="text-left">
           <div className="flex items-center">
