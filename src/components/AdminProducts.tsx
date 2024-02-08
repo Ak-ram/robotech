@@ -340,10 +340,10 @@ const AdminComponent = () => {
                       <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
                       <input
                         type="text"
-                        placeholder="Search by category"
+                        placeholder="Search by Name"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-2 pr-10 py-1 border border-slate-300 rounded bg-white text-black focus:outline-none focus:border-blue-500"
+                        className="pl-2 pr-10 py-1 border border-slate-300 rounded bg-white text-black text-sm focus:outline-none focus:border-blue-500"
                       />
 
                     </span>
