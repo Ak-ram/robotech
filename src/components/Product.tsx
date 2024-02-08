@@ -741,6 +741,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
         {/* Use handleSorting function to get sorted products */}
         {handleSorting().slice(perPage.start, perPage.end).map((item) => (
           <div
+          title={item?.title}
             key={`${item.id}_${item.title}`}
             className="p-0 w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden rounded-md"
           >
@@ -792,7 +793,8 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       </div> */}
               {/* <div className="py-3 px-10 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 translate-y-full transition-all group-hover:translate-y-0 w-full absolute"> */}
               <div className="py-3  transition-all px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 border-t border-slate-300 rounded transition-all w-full ">
-                <p className="pr-2 text-xl flex items-center h-20 text-ellipsis overflow-hidden duration-300 font-bold">
+                <p
+                  className="pr-2 text-xl whitespace-nowrap text-ellipsis overflow-hidden duration-300 font-bold">
                   {item?.title}
                 </p>
                 <p className="flex  items-center justify-start w-full text-black font-semibold">
@@ -834,7 +836,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
 
 
-                  {prefix !== 'print' ?  <Heart
+                  {prefix !== 'print' ? <Heart
                     fill={isFavorite(item.id) ? "red" : "black"}
                     onClick={() => {
                       dispatch(addToFavorite(item));
@@ -846,7 +848,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                     }}
                     className="text-zinc-500  cursor-pointer duration-200 hover:text-black"
                   /> : null
-               }
+                  }
 
                 </div>
               </div>
