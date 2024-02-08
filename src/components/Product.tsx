@@ -19,7 +19,7 @@ interface Item {
 const Product = ({ products, prefix, categoryName }: Item) => {
   const [perPage, setPerPage] = useState({
     start: 0,
-    end: 9,
+    end: 12,
     pageNo: 1,
   });
   const [sortingOption, setSortingOption] = useState("price"); // Default sorting option
@@ -33,7 +33,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setPerPage({ start: 0, end: 9, pageNo: 1 });
+    setPerPage({ start: 0, end: 12, pageNo: 1 });
   }, [categoryName]);
 
   // Function to handle sorting
@@ -80,14 +80,14 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   }, []);
 
   const handlePrev = () => {
-    const newStart = Math.max(0, perPage.start - 9);
-    const newEnd = newStart + 9;
+    const newStart = Math.max(0, perPage.start - 12);
+    const newEnd = newStart + 12;
     setPerPage({ start: newStart, end: newEnd, pageNo: perPage.pageNo - 1 });
   };
 
   const handleNext = () => {
-    const newStart = perPage.start + 9;
-    const newEnd = Math.min(products.length, perPage.end + 9);
+    const newStart = perPage.start + 12;
+    const newEnd = Math.min(products.length, perPage.end + 12);
     setPerPage({ start: newStart, end: newEnd, pageNo: perPage.pageNo + 1 });
   };
 
@@ -137,7 +137,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
         <ul className="flex items-center ml-auto -space-x-px h-8 ">
           <li className="  mr-2">
-            {perPage.pageNo} / {Math.ceil(products?.length / 9)}
+            {perPage.pageNo} / {Math.ceil(products?.length / 12)}
           </li>
           <li>
             <button
