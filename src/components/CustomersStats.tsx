@@ -233,7 +233,7 @@ const CustomersStats = () => {
 
                                     <LineChart className="" />
                                 </span>
-                                <span onClick={() => downloadJSON(`${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/customers.json`, 'customers.json')} className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center hover:bg-slate-200 block">
+                                <span onClick={() => downloadJSON(`${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/customers.json`, 'customers.json')} className="text-slate-400 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center hover:bg-slate-200 block">
                                     <Download className="" />
                                 </span>
                             </div>
