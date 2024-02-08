@@ -7,7 +7,7 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
-import { Banknote, Check, Dot, Gift, Link2, Link2Icon, Wallet2 } from "lucide-react";
+import { Banknote, Check, Dot, Gift, Home, Link2, Link2Icon, Redo, Undo, Wallet2 } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import Product from "@/components/Product";
@@ -69,37 +69,61 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
         product ?
           <section className="">
             <div className="py-6 sm:py-12 mx-auto px-4">
-              <nav className="flex">
-                <ol role="list" className="flex items-center">
-                  <li className="text-left">
-                    <div className="-m-1">
-                      <Link href="/" className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800"> Home </Link>
-                    </div>
-                  </li>
-                  <li className="text-left">
-                    <div className="flex items-center">
-                      <span className="mx-2 text-gray-400">/</span>
-                      <div className="-m-1">
-                        <Link
-                          href={`/${(prefix === 'courses' || prefix === '3d_print') ? prefix : ''}`}
-                          className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800"
-                          aria-current="page"
-                        >
-                          {prefix}
-                        </Link>
-                      </div>
-                    </div>
-                  </li>
-                  <li className="text-left">
-                    <div className="flex items-end">
-                      <span className="mx-2 text-gray-400">/</span>
-                      <div className="">
-                        <Link href="#" className="overflow-hidden text-ellipsis whitespace-nowrap block w-36 rounded-md text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800" aria-current="page"> {product?.title} </Link>
-                      </div>
-                    </div>
-                  </li>
-                </ol>
-              </nav>
+            <nav className="flex">
+      <ol role="list" className="flex items-center">
+        {/* Home */}
+        <li className="text-left">
+          <div className="-m-1">
+            <a href="/" className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800">
+              <Home className="w-7 h-7 p-1 bg-white rounded-sm border border-blue-500/50 text-blue-600" size={17} />
+            </a>
+          </div>
+        </li>
+
+        {/* Separator */}
+        <li className="text-left">
+          <div className="flex items-center">
+            <span className="mx-2 text-blue-400">/</span>
+          </div>
+        </li>
+
+        {/* Prefix */}
+        <li className="text-left">
+          <div className="-m-1">
+            <a href="/" className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800">
+              <Undo className="w-7 h-7 p-1 bg-white rounded-sm border border-blue-500/50 text-blue-600" size={17} />
+            </a>
+          </div>
+        </li>
+        {/* <li className="text-left">
+          <div className="-m-1">
+            <a
+              href={`/${(prefix === 'courses' || prefix === '3d_print') ? prefix : ''}`}
+              className="rounded-md p-1 text-xs xs:text-sm font-medium text-blue-600 focus:text-blue-900 focus:shadow hover:text-blue-800"
+              aria-current="page"
+            >
+              {prefix}
+            </a>
+          </div>
+        </li> */}
+
+        {/* Separator */}
+        <li className="text-left">
+          <div className="flex items-center">
+            <span className="mx-2 text-blue-400">/</span>
+          </div>
+        </li>
+
+        {/* Product Title */}
+        <li className="text-left">
+          <div className="">
+            <a href="#" className="py-1 text-blue-600 overflow-hidden text-sm text-ellipsis whitespace-nowrap block  rounded-md font-medium focus:text-blue-900 focus:shadow hover:text-blue-800" aria-current="page">
+              {product?.title?.toLowerCase()}
+            </a>
+          </div>
+        </li>
+      </ol>
+    </nav>
 
               <div className="ml-5 lg:col-gap-12 pb-5 xl:col-gap-16 mt-8 grid grid-cols-1 gap-8 lg:mt-12 lg:grid-cols-5 lg:gap-16">
                 <div className="lg:col-span-3 lg:row-end-1">
