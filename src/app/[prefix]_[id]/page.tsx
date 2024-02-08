@@ -7,7 +7,7 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
-import { Banknote, Check, Dot, Gift, Wallet2 } from "lucide-react";
+import { Banknote, Check, Dot, Gift, Link2Icon, Wallet2 } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import Product from "@/components/Product";
@@ -207,6 +207,10 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                       <Gift size={18} className="mr-2" />
                       Newly added
                     </li>
+                    <li className="flex items-center text-left text-sm font-medium text-gray-600">
+                      <Link2Icon size={18} className="mr-2" />
+                     Link : <Link href={product?.externalLink}>Follow</Link>
+                    </li>
                     {/* {product?.isNew ? <li className="flex items-center text-left text-sm font-medium text-gray-600">
                       <Gift size={18} className="mr-2" />
                       Newly added
@@ -224,9 +228,9 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   <div className="mt-8 flow-root sm:mt-12">
                     <h1 className="text-lg md:text-3xl font-bold">More details about {product?.title}</h1>
 
-                      {product?.description && (
-                    <ul className="space-y-1 w-[80%] font-semibold mt-3 text-gray-600 mb-6">
-                      <p className="mb-5">{product?.description?.split('|').slice(0,1)}</p>
+                    {product?.description && (
+                      <ul className="space-y-1 w-[80%] font-semibold mt-3 text-gray-600 mb-6">
+                        <p className="mb-5">{product?.description?.split('|').slice(0, 1)}</p>
                         <span className="font-bold text-black">Product Attributes : </span>
 
                         <>
@@ -253,13 +257,13 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                           })}
 
                         </>
-                    </ul>
-                      )}
+                      </ul>
+                    )}
 
 
 
                     <h1 className="mt-8 text-lg md:text-3xl  font-bold">Quick Order ?</h1>
-                    <p className="mt-4 text-xs sm:text-base">Contact Us in Whatsapp : 01066745733</p>
+                    <p className="mt-4 text-xs sm:text-base">Contact Us in Whatsapp : 01102071544</p>
                   </div>
                 </div>
               </div>

@@ -29,6 +29,7 @@ const AdminComponent = () => {
     // brand: "",
     isNew: false,
     quantity: 1,
+    externalLink: '',
     category: selectedCat,
   });
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<
@@ -71,7 +72,7 @@ const AdminComponent = () => {
       image1: "",
       image2: "",
       image3: "",
-      // brand: "",
+      externalLink: "",
       isNew: false,
       quantity: 1,
       category: selectedCat,
@@ -530,6 +531,7 @@ const AdminComponent = () => {
                         image1: 'Image1',
                         image2: 'Image2',
                         image3: 'Image3',
+                        externalLink: "External Link",
                       }).map(([key, placeholder], index) => (
                         <div key={key} className={`flex-col mb-2 lg:pr-4`}>
 
