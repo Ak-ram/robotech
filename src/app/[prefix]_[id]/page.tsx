@@ -225,7 +225,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                     <h1 className="text-lg md:text-3xl font-bold">More details about {product?.title}</h1>
 
                       {product?.description && (
-                    <ul className="space-y-1 font-semibold mt-3 text-gray-600 mb-6">
+                    <ul className="space-y-1 w-[80%] font-semibold mt-3 text-gray-600 mb-6">
                       <p className="mb-5">{product?.description?.split('|').slice(0,1)}</p>
                         <span className="font-bold text-black">Product Attributes : </span>
 
@@ -236,7 +236,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                               // If it contains bullet points, split it further based on '|'
                               const bullets = part.split('|').map(bullet => bullet.trim());
                               return bullets.map((bullet, i) => (
-                                <li key={i} className="flex items-center px-2 sm:px-6 py-2.5 hover:bg-gray-100 transition-colors duration-300 ease-in-out">
+                                <li key={i} className="border-b-slate-500 flex items-center px-2 sm:px-6 py-2.5 hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                                   <span className="w-[5px] h-[5px] mr-2 rounded-full bg-black"></span>
                                   <span>{bullet}</span>
                                 </li>
@@ -244,7 +244,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                             } else {
                               // If it doesn't contain bullet points, render as ordinary text
                               return (
-                                <p className="mt-4 text-xs sm:text-base items-center flex gap-1" key={index}>
+                                <p className="mt-4  border-b-slate-400 border-b-[1px] py-2 text-xs sm:text-base items-center flex gap-1" key={index}>
                                   <span className="w-[5px] h-[5px] mr-2 rounded-full bg-black"></span>
                                   <span>{part.split('|')[0]}</span>
                                 </p>
