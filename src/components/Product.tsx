@@ -19,7 +19,7 @@ interface Item {
 const Product = ({ products, prefix, categoryName }: Item) => {
   const [perPage, setPerPage] = useState({
     start: 0,
-    end: 9,
+    end: 12,
     pageNo: 1,
   });
   const [sortingOption, setSortingOption] = useState("price"); // Default sorting option
@@ -33,7 +33,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setPerPage({ start: 0, end: 9, pageNo: 1 });
+    setPerPage({ start: 0, end: 12, pageNo: 1 });
   }, [categoryName]);
 
   // Function to handle sorting
@@ -80,14 +80,14 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   }, []);
 
   const handlePrev = () => {
-    const newStart = Math.max(0, perPage.start - 9);
-    const newEnd = newStart + 9;
+    const newStart = Math.max(0, perPage.start - 12);
+    const newEnd = newStart + 12;
     setPerPage({ start: newStart, end: newEnd, pageNo: perPage.pageNo - 1 });
   };
 
   const handleNext = () => {
-    const newStart = perPage.start + 9;
-    const newEnd = Math.min(products.length, perPage.end + 9);
+    const newStart = perPage.start + 12;
+    const newEnd = Math.min(products.length, perPage.end + 12);
     setPerPage({ start: newStart, end: newEnd, pageNo: perPage.pageNo + 1 });
   };
 
@@ -137,7 +137,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
         <ul className="flex items-center ml-auto -space-x-px h-8 ">
           <li className="  mr-2">
-            {perPage.pageNo} / {Math.ceil(products?.length / 9)}
+            {perPage.pageNo} / {Math.ceil(products?.length / 12)}
           </li>
           <li>
             <button
@@ -146,7 +146,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               disabled={perPage.start === 0}
             >
               <svg className="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
               </svg>
               <span className="hidden sm:block   ml-1">Previous</span>
             </button>
@@ -159,7 +159,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
             >
               <span className="hidden sm:block   mr-1">Next</span>
               <svg className="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 9l4-4-4-4" />
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 9l4-4-4-4" />
               </svg>
             </button>
           </li>
@@ -169,7 +169,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
 
 
-      <div className="m-auto md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
+      <div className="m-auto pb-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
         {/* Use handleSorting function to get sorted products */}
         {handleSorting().slice(perPage.start, perPage.end).map((item) => (
           <div

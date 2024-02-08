@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
-import { Check, X, Trash, Edit, Plus, Upload } from "lucide-react";
+import { Check, X, Trash, Edit, Plus, Upload, Search } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import ImageUpload from "./ImageUpload";
 import Stats from "./Stats";
@@ -16,6 +16,8 @@ const AdminComponent = () => {
   const [selectedCat, setSelectedCat] = useState<string | null>(null);
   const [newCategory, setNewCategory] = useState<string>("");
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [editedItem, setEditedItem] = useState<any>({
     id: "",
     title: "",
@@ -332,21 +334,37 @@ const AdminComponent = () => {
                   <div className="  rounded-sm">
                     Image
                   </div>
-                  <div className="ml-4 flex-1">
+                  <div className="ml-4 flex-1 flex items-center gap-2">
                     <p className="text-sm">Product Name</p>
+                    <span className="relative">
+                      <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
+                      <input
+                        type="text"
+                        placeholder="Search by Name"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-2 pr-10 py-1 border border-slate-300 rounded bg-white text-black text-sm focus:outline-none focus:border-blue-500"
+                      />
 
+                    </span>
                   </div>
                   <div className="text-xs sm:text-sm">Price</div>
                   <div className="text-xs sm:text-sm ml-8">Actions</div>
                 </div>
                 <div className="max-h-[500px] p-3 overflow-auto ">
-                  {jsonData[selectedSectionIndex][selectedCat!]?.map(
+                  {jsonData[selectedSectionIndex][selectedCat!]?.filter(product => product.title.toLowerCase().includes(searchTerm.toLowerCase())).map(
                     (product: any, itemIndex: number) => (
                       <div
                         key={product.id}
                         // href={`/product/${product.id}`}
-                        className="flex group items-start hover:no-underline bg-gray-200 p-2 rounded hover:bg-white"
+                        className={`${cn(
+                          +product.count === 0
+                            ? 'bg-red-200 animate-pulse'
+                            : 'bg-gray-200 hover:bg-white',
+                          'text-xs font-medium'
+                        )} flex group items-start hover:no-underline my-2 p-2 rounded `}
                       >
+
                         <div className="w-10 h-10 min-w-[2.5rem]  rounded-sm">
                           <img
                             className="w-full h-full object-cover rounded-sm"
@@ -360,15 +378,15 @@ const AdminComponent = () => {
                           </p>
                           <span
                             className={cn(
-                              product.count === 0
+                              +product.count === 0
                                 ? 'text-red-500'
-                                : product.count > 10
+                                : +product.count > 10
                                   ? 'text-green-500'
                                   : 'text-orange-500',
                               'text-xs font-medium'
                             )}
                           >
-                            {product.count === 0 ? 'Out of Stock' : product.count + ' in Stock'}
+                            {product.count === 0 ? 'Out of Stock' : parseInt(product.count,10) + ' in Stock'}
                           </span>
                           <span className="opacity-0 transition text-sm font-semibold group-hover:opacity-100 ml-2 italic">#{product?.id}</span>
                         </div>

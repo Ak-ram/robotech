@@ -3,9 +3,12 @@ import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 import { CourseType, ProductType } from "../../type";
+import { fetchJsonData } from "@/helpers/getJSONData";
+import { updateJsonFile } from "@/helpers/updateJSONData";
 
 const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModal, list }) => {
     const [selectedItem, setSelectedItem] = useState<CourseType | ProductType | null>(null);
+    const [categoriesList, setCategoriesList] = useState<any[][]>([[]]);
 
     useEffect(() => {
         // Update subtotal whenever quantity or discount changes
@@ -13,14 +16,65 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
         setNewOrder((prevOrder) => ({ ...prevOrder, subtotal }));
     }, [newOrder.quantity, newOrder.discount, selectedItem]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetchJsonData("robotech/pages/categories.json");
+                setCategoriesList(data);
+                if (data.length > 0) {
+                }
 
+            } catch (error) {
+                toast.error(`${(error as Error).message}`);
+            }
+        };
 
-    const handleAddOrderClick = () => {
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        console.log(categoriesList); // This will reflect the updated state
+    }, [categoriesList]); // Add categoriesList as a dependency to useEffect
+
+    const handleAddOrderClick = async () => {
         // Validate quantity
         if (newOrder.quantity <= 0) {
             toast.error("Quantity should be greater than zero");
             return;
         }
+
+        if ("count" in selectedItem!) {
+            // Access the count property only when the selectedItem is of type ProductType
+            const itemCount = +selectedItem.count;
+            if (newOrder.quantity > itemCount) {
+                toast.error(`only ${itemCount} piece(s) available in-stock`);
+
+                return;
+            }
+            else {
+                let obj = categoriesList[0][selectedItem.category].find(product => product.id === selectedItem.id)
+                let updatedObject = { ...obj, count: `${(+selectedItem?.count - +newOrder?.quantity)}` };
+                const updatedProducts = categoriesList[0][selectedItem.category].map(product => {
+                    if (product.id === selectedItem.id) {
+                        return updatedObject;
+                    }
+                    return product;
+                });
+
+                // Update the correct object within the categoriesList array
+                const updatedCategoriesList = [...categoriesList]; // Copy the original array
+                updatedCategoriesList[0][selectedItem.category] = updatedProducts; // Update the correct category array
+
+                setCategoriesList(updatedCategoriesList); // Update the state with the updated array
+                await updateJsonFile("robotech/pages/categories.json", categoriesList);
+
+            }
+
+
+
+
+        }
+
 
         // Validate discount
         if (newOrder.discount < 0 || newOrder.discount > selectedItem?.price!) {
@@ -33,6 +87,10 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
             toast.error("Please select a product");
             return;
         }
+
+
+
+
 
         // Proceed with adding order
         handleAddOrder();
@@ -70,7 +128,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
                             >
                                 <option value="">Select a product</option>
                                 {list?.map((product: ProductType) => (
-                                    <option key={product?.id} value={product?.title!}>
+                                    <option key={`${product?.id}_${product?.title}`} value={product?.title!}>
                                         <span className="mr-4">{product?.title!}</span>
                                         <FormattedPrice amount={product?.price!} />
                                     </option>

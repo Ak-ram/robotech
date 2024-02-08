@@ -104,7 +104,7 @@ const SearchComponent = (className) => {
             {res.length > 0 &&
               res.map((item, index) => (
                 <li
-                  key={item.title}
+                  key={`${item.title}_${item.id}`}
                   className={`${isInput ? 'py-1 border-b' : 'p-0 border-0'
                     } hover:bg-zinc-100 cursor-pointer hover:bg-slate-200 rounded-sm my-1 ${
                     selectedSuggestion === index ? 'bg-gray-200' : ''

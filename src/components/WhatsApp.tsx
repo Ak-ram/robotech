@@ -18,7 +18,7 @@ const WhatsApp = () => {
         onClick={openWhatsApp}
       >
         <Image
-        style={{filter: 'drop-shadow(0px 0px 6px black)'}}
+        style={{filter: 'drop-shadow(0px 0px 6px gray)'}}
           className="md:w-14"
           src={whatsappImg}
           width={50}
