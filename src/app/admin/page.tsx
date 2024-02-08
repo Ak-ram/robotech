@@ -24,8 +24,8 @@ const Page: React.FC<RouteProps> = () => {
 
   if (!isLargeScreen) {
     return (
-      <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
-        <div className="bg-white w-96 p-8 rounded-lg shadow-md flex flex-col items-center">
+      <div className="fixed inset-0 bg-white z-100 flex items-center justify-center">
+        <div className="bg-white w-96 p-8 rounded-lg xs:shadow-md flex flex-col items-center">
           <XCircle className="text-red-500 w-12 h-12 mb-4" />
           <p className="text-center text-red-500">
             This page is not optimized for smaller screens. Please access it

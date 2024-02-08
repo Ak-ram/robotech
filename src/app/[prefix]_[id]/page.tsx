@@ -7,7 +7,7 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
-import { Banknote, Check, Gift, Wallet2 } from "lucide-react";
+import { Banknote, Check, Dot, Gift, Link2, Link2Icon, Wallet2 } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import Product from "@/components/Product";
@@ -207,6 +207,14 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                       <Gift size={18} className="mr-2" />
                       Newly added
                     </li>
+                    {product?.externalLink && product.externalLink.length &&
+                      <li className="flex items-center text-left text-sm font-medium text-gray-600">
+                        <Link2 size={18} className="mr-2" /> {/* Using Link2Icon with size prop */}
+                        Know More ?: {' '}
+                        <Link href={product?.externalLink} className="ml-2 text-blue-500 hover:underline">Visit</Link> {/* Assuming product has externalLink */}
+                      </li>
+                    }
+
                     {/* {product?.isNew ? <li className="flex items-center text-left text-sm font-medium text-gray-600">
                       <Gift size={18} className="mr-2" />
                       Newly added
@@ -223,9 +231,43 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
 
                   <div className="mt-8 flow-root sm:mt-12">
                     <h1 className="text-lg md:text-3xl font-bold">More details about {product?.title}</h1>
-                    <p className="mt-4 text-xs sm:text-base">{product?.description}</p>
+
+                    {product?.description && (
+                      <ul className="space-y-1 w-[80%] font-semibold mt-3 text-gray-600 mb-6">
+                        <p className="mb-5">{product?.description?.split('|').slice(0, 1)}</p>
+                        <span className="font-bold text-black">Product Attributes : </span>
+
+                        <>
+                          {product?.description?.split('|').slice(1).map((part, index) => {
+                            // Check if the part contains bullet points
+                            if (part.includes('|')) {
+                              // If it contains bullet points, split it further based on '|'
+                              const bullets = part.split('|').map(bullet => bullet.trim());
+                              return bullets.map((bullet, i) => (
+                                <li key={i} className="border-b-slate-500 flex items-center px-2 sm:px-6 py-2.5 hover:bg-gray-100 transition-colors duration-300 ease-in-out">
+                                  <span className="w-[5px] h-[5px] mr-2 rounded-full bg-black"></span>
+                                  <span>{bullet}</span>
+                                </li>
+                              ));
+                            } else {
+                              // If it doesn't contain bullet points, render as ordinary text
+                              return (
+                                <p className="mt-4  border-b-slate-400 border-b-[1px] py-2 text-xs sm:text-base items-center flex gap-1" key={index}>
+                                  <span className="w-[5px] h-[5px] mr-2 rounded-full bg-black"></span>
+                                  <span>{part.split('|')[0]}</span>
+                                </p>
+                              );
+                            }
+                          })}
+
+                        </>
+                      </ul>
+                    )}
+
+
+
                     <h1 className="mt-8 text-lg md:text-3xl  font-bold">Quick Order ?</h1>
-                    <p className="mt-4 text-xs sm:text-base">Contact Us in Whatsapp : 01066745733</p>
+                    <p className="mt-4 text-xs sm:text-base">Contact Us in Whatsapp : 01102071544</p>
                   </div>
                 </div>
               </div>

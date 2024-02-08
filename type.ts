@@ -12,6 +12,7 @@ export interface ProductType {
   isNew: boolean;
   category: string;
   quantity: number;
+  externalLink: string;
 }
 
 export interface CourseType {
