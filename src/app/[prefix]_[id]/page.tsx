@@ -7,7 +7,7 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
-import { Banknote, Check, Dot, Gift, Link2Icon, Wallet2 } from "lucide-react";
+import { Banknote, Check, Dot, Gift, Link2, Link2Icon, Wallet2 } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import Product from "@/components/Product";
@@ -207,10 +207,14 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                       <Gift size={18} className="mr-2" />
                       Newly added
                     </li>
-                    <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                      <Link2Icon size={18} className="mr-2" />
-                     Link : <Link href={product?.externalLink}>Follow</Link>
-                    </li>
+                    {product?.externalLink && product.externalLink.length &&
+                      <li className="flex items-center text-left text-sm font-medium text-gray-600">
+                        <Link2 size={18} className="mr-2" /> {/* Using Link2Icon with size prop */}
+                        Know More ?: {' '}
+                        <Link href={product?.externalLink} className="ml-2 text-blue-500 hover:underline">Visit</Link> {/* Assuming product has externalLink */}
+                      </li>
+                    }
+
                     {/* {product?.isNew ? <li className="flex items-center text-left text-sm font-medium text-gray-600">
                       <Gift size={18} className="mr-2" />
                       Newly added
