@@ -22,6 +22,16 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
             return;
         }
 
+        if ("count" in selectedItem!) {
+            // Access the count property only when the selectedItem is of type ProductType
+            const itemCount = +selectedItem.count;
+            if (newOrder.quantity > itemCount) {
+                toast.error(`only ${itemCount} piece(s) available in-stock`);
+                return;
+            }
+        }
+
+
         // Validate discount
         if (newOrder.discount < 0 || newOrder.discount > selectedItem?.price!) {
             toast.error("Discount should be non-negative");
@@ -33,9 +43,9 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
             toast.error("Please select a product");
             return;
         }
-
+      
         // Proceed with adding order
-        handleAddOrder();
+        // handleAddOrder();
     };
     return (
         <>
