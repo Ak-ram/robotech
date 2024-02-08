@@ -150,7 +150,7 @@ const AdminComponent = () => {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     key: string
   ) => {
     setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
@@ -514,9 +514,9 @@ const AdminComponent = () => {
                   <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
 
 
-                  <h2 className="font-bold mb-2 text-center text-lg">
-              {editIndex === -1 ? "Add Product" : "Edit Product"}
-            </h2>
+                    <h2 className="font-bold mb-2 text-center text-lg">
+                      {editIndex === -1 ? "Add Product" : "Edit Product"}
+                    </h2>
 
                     <div className="">
                       {Object.entries({
@@ -534,15 +534,25 @@ const AdminComponent = () => {
                         <div key={key} className={`flex-col mb-2 lg:pr-4`}>
 
                           <span className="font-bold text-sm mb-2 inline-block ml-1">{placeholder}</span>
-                          <input
-                            type="text"
-                            placeholder={placeholder}
-                            className={`border border-gray-300 rounded outline-none w-full p-2 `}
-                            value={editedItem[key]}
-                            onChange={(e) => handleInputChange(e, key)}
-                          />
+                          {key === 'description' ? (
+                            <textarea
+                              placeholder={placeholder}
+                              className={`border border-gray-300 rounded outline-none w-full p-2 `}
+                              value={editedItem[key]}
+                              onChange={(e) => handleInputChange(e, key)}
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              placeholder={placeholder}
+                              className={`border border-gray-300 rounded outline-none w-full p-2 `}
+                              value={editedItem[key]}
+                              onChange={(e) => handleInputChange(e, key)}
+                            />
+                          )}
                         </div>
                       ))}
+
                     </div>
                     <div className="flex">
                       <button

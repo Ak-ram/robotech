@@ -99,7 +99,7 @@ const SearchComponent = (className) => {
         {res.length > 0 && (
           <ul
             className={`max-h-[50vh] overflow-auto ${isInput ? "block py-1 lg:py-3 " : "hidden p-0 "
-              } shadow-lg mx-0 top-11 w-full border shadow-md border-zinc-400 z-10 absolute bg-white mt-5 rounded-lg`}
+              } shadow-lg mx-0 top-11 w-full border shadow-md border-zinc-400 z-100 absolute bg-white mt-5 rounded-lg`}
           >
             {res.length > 0 &&
               res.map((item, index) => (

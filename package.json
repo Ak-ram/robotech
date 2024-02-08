@@ -17,6 +17,7 @@
     "axios": "^1.6.5",
     "canvas-confetti": "^1.9.2",
     "clsx": "^2.0.0",
+    "draft-js": "^0.11.7",
     "fs": "^0.0.1-security",
     "lucide-react": "^0.290.0",
     "mini-css-extract-plugin": "^2.7.7",

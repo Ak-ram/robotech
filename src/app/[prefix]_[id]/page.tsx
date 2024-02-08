@@ -7,7 +7,7 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
-import { Banknote, Check, Gift, Wallet2 } from "lucide-react";
+import { Banknote, Check, Dot, Gift, Wallet2 } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import Product from "@/components/Product";
@@ -223,7 +223,39 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
 
                   <div className="mt-8 flow-root sm:mt-12">
                     <h1 className="text-lg md:text-3xl font-bold">More details about {product?.title}</h1>
-                    <p className="mt-4 text-xs sm:text-base">{product?.description}</p>
+
+                      <ul className="space-y-1 font-semibold text-gray-600 mb-6">
+
+                        {product?.description && (
+                          <>
+                            {product?.description?.split('|').map((part, index) => {
+  // Check if the part contains bullet points
+  if (part.includes('|')) {
+    // If it contains bullet points, split it further based on '|'
+    const bullets = part.split('|').map(bullet => bullet.trim());
+    return bullets.map((bullet, i) => (
+      <li key={i} className="flex items-center px-2 sm:px-6 py-2.5 hover:bg-gray-100 transition-colors duration-300 ease-in-out">
+        <span className="w-[5px] h-[5px] mr-2 rounded-full bg-black"></span>
+        <span>{bullet}</span>
+      </li>
+    ));
+  } else {
+    // If it doesn't contain bullet points, render as ordinary text
+    return (
+      <p className="mt-4 text-xs sm:text-base items-center flex gap-1" key={index}>
+        <span className="w-[5px] h-[5px] mr-2 rounded-full bg-black"></span>
+        <span>{part.split('|')[0]}</span>
+      </p>
+    );
+  }
+})}
+
+                          </>
+                        )}
+
+                      </ul>
+
+                  
                     <h1 className="mt-8 text-lg md:text-3xl  font-bold">Quick Order ?</h1>
                     <p className="mt-4 text-xs sm:text-base">Contact Us in Whatsapp : 01066745733</p>
                   </div>
