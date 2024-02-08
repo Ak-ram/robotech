@@ -213,6 +213,8 @@ const CustomersStats = () => {
                         {/* Top Selling Heading */}
                         <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center text-red-500 bg-red-100 py-2 px-4 rounded-md">
                             <Ban className="mr-2 text-red-500" size={24} /> Out-Stocks
+                            <span className="ml-auto text-sm">{products && products
+                                .filter((product: ProductType) => +product?.count === 0).length} Product(s)</span>
                         </h2>
 
                         {/* Top Selling Product */}
