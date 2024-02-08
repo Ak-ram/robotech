@@ -109,7 +109,7 @@ const Navbar = () => {
           </Link>
           <Link
             href={"/cart"}
-            className={`${flashAnimation ? "animate-ping" : ""
+            className={`${flashAnimation ? "animate-pulse" : ""
               } text-designColor cursor-pointer duration-200 relative group`}
           >            <ShoppingBasket className="w-7 h-7 xs:w-8 xs:h-8" />
             <span className="absolute top-0 -left-1  bg-black text-white w-4 h-4 xs:w-5 xs:h-5  rounded-full  flex items-center justify-center group-hover: sm:font-bold ">

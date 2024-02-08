@@ -188,7 +188,7 @@ const Cart = () => {
       </div>
       <div className="">
         <div className="grid -mx-4  lg:grid-cols-2">
-          <div className="px-10 pt-8">
+          <div className="px-3 pt-8">
             <p className="text-xl font-medium">Order Summary</p>
             <p className="text-gray-400">Check your items. And select a suitable payment method.</p>
             <div className="max-h-[300px] overflow-y-auto mt-8 space-y-3 rounded-lg border bg-white px-2 sm:px-6">
@@ -201,13 +201,13 @@ const Cart = () => {
                     <span className="text-xs sm:text-sm font-semibold">{item.title}</span>
                     <div className="text-xs sm:text-sm flex items-center gap-1">
                       {
-                        item.price !== item.previousPrice ? <del className="text-xs float-right text-gray-400"><FormattedPrice amount={item.previousPrice} /></del>
+                        item.price < item.previousPrice ? <del className="text-xs float-right text-gray-400"><FormattedPrice amount={item.previousPrice} /></del>
                           : null
                       }
                       <p className="text-xs sm:text-sm md:text-lg font-bold"><FormattedPrice amount={item.price} /></p>
                     </div>
                     {
-                      item.price > item.previousPrice ? <span className="font-bold text-sm">Save: {calculatePercentage(item?.price, item?.previousPrice)}%</span>
+                      item.price < item.previousPrice ? <span className="font-bold text-sm">Save: {calculatePercentage(item?.price, item?.previousPrice)}%</span>
 
                         : null
                     }

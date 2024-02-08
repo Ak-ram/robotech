@@ -140,7 +140,10 @@ const Banner: React.FC<BannerProps> = () => {
               <p className="font-semibold">Email us</p>
             </div>
           </div>
-        </div>      </div>
+        </div>     
+        
+        
+         </div>
     </div>
   );
 };

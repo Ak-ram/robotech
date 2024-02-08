@@ -69,33 +69,33 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
         product ?
           <section className="">
             <div className="py-6 sm:py-12 mx-auto px-4">
-            <nav className="flex">
-      <ol role="list" className="flex items-center">
-        {/* Home */}
-        <li className="text-left">
-          <div className="-m-1">
-            <a href="/" className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800">
-              <Home className="w-7 h-7 p-1 bg-white rounded-sm border border-blue-500/50 text-blue-600" size={17} />
-            </a>
-          </div>
-        </li>
+              <nav className="flex">
+                <ol role="list" className="flex items-center">
+                  {/* Home */}
+                  <li className="text-left">
+                    <div className="-m-1">
+                      <a href="/" className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800">
+                        <Home className="w-7 h-7 p-1 bg-white rounded-sm border border-blue-500/50 text-blue-600" size={17} />
+                      </a>
+                    </div>
+                  </li>
 
-        {/* Separator */}
-        <li className="text-left">
-          <div className="flex items-center">
-            <span className="mx-2 text-blue-400">/</span>
-          </div>
-        </li>
+                  {/* Separator */}
+                  <li className="text-left">
+                    <div className="flex items-center">
+                      <span className="mx-2 text-blue-400">/</span>
+                    </div>
+                  </li>
 
-        {/* Prefix */}
-        <li className="text-left">
-          <div className="-m-1">
-            <a href="/" className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800">
-              <Undo className="w-7 h-7 p-1 bg-white rounded-sm border border-blue-500/50 text-blue-600" size={17} />
-            </a>
-          </div>
-        </li>
-        {/* <li className="text-left">
+                  {/* Prefix */}
+                  <li className="text-left">
+                    <div className="-m-1">
+                      <a href="/" className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800">
+                        <Undo className="w-7 h-7 p-1 bg-white rounded-sm border border-blue-500/50 text-blue-600" size={17} />
+                      </a>
+                    </div>
+                  </li>
+                  {/* <li className="text-left">
           <div className="-m-1">
             <a
               href={`/${(prefix === 'courses' || prefix === '3d_print') ? prefix : ''}`}
@@ -106,29 +106,29 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
             </a>
           </div>
         </li> */}
-        {/* Separator */}
-        <li className="text-left">
-          <div className="flex items-center">
-            <span className="mx-2 text-blue-400">/</span>
-          </div>
-        </li>
+                  {/* Separator */}
+                  <li className="text-left">
+                    <div className="flex items-center">
+                      <span className="mx-2 text-blue-400">/</span>
+                    </div>
+                  </li>
 
-        {/* Product Title */}
-        <li className="text-left">
-          <div className="">
-            <a href="#" className="py-1 text-blue-600 overflow-hidden text-sm text-ellipsis whitespace-nowrap block  rounded-md font-medium focus:text-blue-900 focus:shadow hover:text-blue-800" aria-current="page">
-              {product?.title?.toLowerCase()}
-            </a>
-          </div>
-        </li>
-      </ol>
-    </nav>
+                  {/* Product Title */}
+                  <li className="text-left">
+                    <div className="">
+                      <a href="#" className="py-1 text-blue-600 overflow-hidden text-sm text-ellipsis whitespace-nowrap block  rounded-md font-medium focus:text-blue-900 focus:shadow hover:text-blue-800" aria-current="page">
+                        {product?.title?.toLowerCase()}
+                      </a>
+                    </div>
+                  </li>
+                </ol>
+              </nav>
 
               <div className="ml-5 lg:col-gap-12 pb-5 xl:col-gap-16 mt-8 grid grid-cols-1 gap-8 lg:mt-12 lg:grid-cols-5 lg:gap-16">
                 <div className="lg:col-span-3 lg:row-end-1">
                   <div className="lg:flex lg:items-center">
                     <div className="flex-1 lg:p-10 lg:p-5 lg:order-2 lg:ml-5">
-                      <div className="max-w-xl overflow-hidden rounded-lg">
+                      <div className="max-w-xl mx-auto overflow-hidden rounded-lg">
                         {/* <Magnifier
                       className="max-w-xl overflow-hidden rounded-lg"
                       style={{ height: '100%', width: '100%' }}
@@ -182,10 +182,19 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                     <div className="flex items-end">
 
                       {
-                        product?.price > 0 && prefix !== 'print' ? <><h1 className="sm:text-lg md:text-3xl font-bold"><FormattedPrice amount={(product?.price!)} /></h1>
-                          <span className="text-base">/piece</span></>
-                          : <><h1 className="sm:text-lg md:text-3xl font-bold"><FormattedPrice amount={(product?.count!)} /></h1>
-                            <span className="text-base">/Minute</span></>
+                        product?.price > 0 && prefix !== 'print' ?
+                          <h1 className="sm:text-lg md:text-3xl font-bold rtl" style={{ direction: 'rtl' }}>
+
+                            <FormattedPrice amount={(product?.price!)} />
+                            <span className="text-base">/ قطعـة</span>
+                          </h1>
+
+                          :
+                          <h1 className="sm:text-lg md:text-3xl font-bold rtl" style={{ direction: 'rtl' }}>
+                            <FormattedPrice amount={(product?.count!)} />
+
+                            <span className="text-base">/ دقيقـة</span>
+                          </h1>
                       }
 
 
@@ -255,9 +264,8 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   <div className="mt-8 flow-root sm:mt-12">
                     <h1 className="text-lg md:text-3xl font-bold">More details about {product?.title}</h1>
 
-                    {product?.description && (
+                    {product?.description?.length && product?.description?.includes('|') ? (
                       <ul className="space-y-1 w-[80%] font-semibold mt-3 text-gray-600 mb-6">
-                        <p className="mb-5">{product?.description?.split('|').slice(0, 1)}</p>
                         <span className="font-bold text-black">Product Attributes : </span>
 
                         <>
@@ -285,7 +293,8 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
 
                         </>
                       </ul>
-                    )}
+                    ) : <p className="my-5">{product?.description?.split('|').slice(0, 1)}</p>
+                    }
 
 
 
