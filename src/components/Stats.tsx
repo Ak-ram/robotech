@@ -127,13 +127,16 @@ const Stats = () => {
                                             />
 
                                         </span>
-                                        <span onClick={() => setIsShow(true)} className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-slate-300 block">
+                                        <div className="flex gap-1">
+
+                                        <span onClick={() => setIsShow(true)} className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-slate-200 block">
 
                                             <LineChart className="" />
                                         </span>
-                                        <span onClick={() => downloadJSON(`${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/categories.json`)} className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center hover:bg-slate-300 block">
+                                        <span onClick={() => downloadJSON(`${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/categories.json`,'categories.json')} className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center hover:bg-slate-200 block">
                                             <Download className="" />
                                         </span>
+                                        </div>
                                     </div>
                                     <table className="w-full text-sm text-gray-600">
                                         <thead className="bg-black text-white text-sm uppercase ">

@@ -1,4 +1,4 @@
-export function downloadJSON(url) {
+export function downloadJSON(url,fileName) {
     // URL of the JSON file
     const jsonUrl = url;
 
@@ -17,7 +17,7 @@ export function downloadJSON(url) {
             link.href = window.URL.createObjectURL(blob);
             
             // Set the filename for the downloaded file
-            link.download = 'data.json';
+            link.download = fileName;
 
             // Append the link to the body and click it programmatically
             document.body.appendChild(link);
