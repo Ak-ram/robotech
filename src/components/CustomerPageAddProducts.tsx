@@ -40,6 +40,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         fetchData();
     }, []);
 
+    
 
     const handleAddOrder = async () => {
         // Validate order details if needed
@@ -57,7 +58,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                     products: [],
 
                 };
-            } 
+            }
             else if (!existingCustomer.transactions.products) {
                 existingCustomer.transactions.products = [];
             }
@@ -92,7 +93,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
                 setTimeout(() => {
                     toast.dismiss();
-                }, 5000);
+                }, 10000);
             } catch (error) {
                 toast.error((error as Error).message);
             }
@@ -126,13 +127,13 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         <>
             <div className="max-w-3xl mx-auto my-8">
                 <button
-                    className="mb-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+                    className={`mb-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300`}
                     onClick={() => setShowAddOrderModal(true)}
                 >
                     Add Product
                 </button>
                 {updatedCustomerData?.transactions?.products?.slice().reverse().map((service, index) => (
-                    <div key={index} className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4">
+                    <div key={index} className={`bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4`}>
 
                         <div
 

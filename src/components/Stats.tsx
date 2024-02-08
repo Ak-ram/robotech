@@ -90,6 +90,7 @@ const Stats = () => {
     const totalProducts = products?.length || 0;
     const totalAvailableProducts = categoryStats.reduce((acc, category) => acc + category.inStockProducts.length, 0);
     const totalUnavailableProducts = categoryStats.reduce((acc, category) => acc + category.outStockProducts.length, 0);
+ 
     const totalAvailablePrice = categoryStats.reduce((acc, category) => acc + category.inStockProducts.reduce((total, product) => total + +product.price, 0), 0);
     const totalUnavailablePrice = categoryStats.reduce((acc, category) => acc + category.outStockProducts.reduce((total, product) => total + +product.price, 0), 0);
 
@@ -165,7 +166,7 @@ const Stats = () => {
                                             {filteredCategoryStats.map((categoryInfo, index) => (
                                                 <tr key={index} className="hover:bg-white border-b border-slate-300 bg-white bg-opacity-20 ">
                                                     <td className="text-center pl-3 text-sm  flex  py-2.5 whitespace-nowrap">
-                                                        <img className="w-6 h-6 mr-2 rounded" src={categoryInfo.inStockProducts[0].image1} alt="" />
+                                                        <img className="w-6 h-6 mr-2 rounded" src={categoryInfo.inStockProducts[0]?.image1} alt="" />
                                                         <span className="text-sm font-medium">{categoryInfo.categoryName.slice(0, 1).toUpperCase() + categoryInfo.categoryName.slice(1,)}</span>
                                                     </td>
                                                     <td className="text-center text-sm   py-2.5 whitespace-nowrap">{categoryInfo.quantity}</td>

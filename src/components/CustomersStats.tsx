@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerData } from "@/helpers/getCustomerData";
-import { Activity, Briefcase, Book, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X, Download } from "lucide-react";
+import { Activity, Briefcase, Book, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X, Download, Ban } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
 import CustomerStatsChart from "./CustomerStatsChart";
 import { downloadJSON } from "@/helpers/downloadJsonfile";
+import { ProductType } from "../../type";
+import { getProducts } from "@/helpers/getProducts";
 
 const CustomersStats = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -12,14 +14,14 @@ const CustomersStats = () => {
     const [customers, setCustomers] = useState<any[]>([]);
     const [highestTotalPurchase, setHighestTotalPurchase] = useState<number | null>(null);
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-
+    const [products, setProducts] = useState<ProductType[]>([])
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const categoriesList = await getCustomerData();
-
+                const allProducts = await getProducts();
                 sortCustomers(categoriesList, sortOrder); // Initial sorting based on sortOrder
-
+                setProducts(allProducts)
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -157,52 +159,82 @@ const CustomersStats = () => {
 
             </div>
             <div className="flex flex-col">
+                <div className="flex gap-2 ">
+                    <div className="flex-1 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
+                        {/* Top Selling Heading */}
+                        <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center bg-blue-100 py-2 px-4 rounded-md">
+                            <Activity className="mr-2 text-blue-500" size={24} /> Top Selling
+                        </h2>
 
-                <div className="bg-white my-5 p-6 rounded-lg shadow-md animate-fade-in">
-                    {/* Top Selling Heading */}
-                    <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center bg-blue-100 py-2 px-4 rounded-md">
-                        <Activity className="mr-2 text-blue-500" size={24} /> Top Selling
-                    </h2>
+                        {/* Top Selling Product */}
+                        <div className="mb-3 py-3 px-2 rounded-md">
+                            <h3 className="text-lg font-semibold mb-3 flex items-center">
+                                <Briefcase className="mr-2 text-yellow-500" size={20} /> Product:
+                            </h3>
+                            <div className="flex items-center justify-between border-b border-gray-300 py-2">
+                                <div className="pl-3  w-[80%]">{mostSellingProductData.mostSellingProduct}</div>
+                                <div className="text-zinc-500 font-semibold">
+                                    Sold {mostSellingProductData.sellingTimes} times
+                                </div>
+                            </div>
+                        </div>
 
-                    {/* Top Selling Product */}
-                    <div className="mb-3 py-3 px-4 rounded-md">
-                        <h3 className="text-lg font-semibold mb-3 flex items-center">
-                            <Briefcase className="mr-2 text-yellow-500" size={20} /> Product:
-                        </h3>
-                        <div className="flex items-center justify-between border-b border-gray-300 py-2">
-                            <div className="pl-3">{mostSellingProductData.mostSellingProduct}</div>
-                            <div className="text-zinc-500 font-semibold">
-                                Sold {mostSellingProductData.sellingTimes} times
+                        {/* Top Selling Service */}
+                        <div className="mb-3  py-3 px-2 rounded-md">
+                            <h3 className="text-lg font-semibold mb-3 flex items-center">
+                                <Briefcase className="mr-2 text-yellow-500" size={20} /> Service:
+                            </h3>
+                            <div className="flex items-center justify-between border-b border-gray-300 py-2">
+                                <div className="pl-3  w-[80%]">{mostSellingServiceData.mostSellingService}</div>
+                                <div className="text-zinc-500 font-semibold">
+                                    Sold {mostSellingServiceData.sellingTimes} times
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Top Selling Course */}
+                        <div className=" py-3 px-2 rounded-md">
+                            <h3 className="text-lg font-semibold mb-3 flex items-center">
+                                <Book className="mr-2 text-purple-500" size={20} /> Course:
+                            </h3>
+                            <div className="flex items-center justify-between border-b border-gray-300 py-2">
+                                <div className="pl-3  w-[80%]">{mostSellingCourseData.mostSellingCourse}</div>
+                                <div className="text-zinc-500 font-semibold">
+                                    Sold {mostSellingCourseData.sellingTimes} times
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Top Selling Service */}
-                    <div className="mb-3  py-3 px-4 rounded-md">
-                        <h3 className="text-lg font-semibold mb-3 flex items-center">
-                            <Briefcase className="mr-2 text-yellow-500" size={20} /> Service:
-                        </h3>
-                        <div className="flex items-center justify-between border-b border-gray-300 py-2">
-                            <div className="pl-3">{mostSellingServiceData.mostSellingService}</div>
-                            <div className="text-zinc-500 font-semibold">
-                                Sold {mostSellingServiceData.sellingTimes} times
-                            </div>
+
+
+
+                    <div className="flex-1 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
+                        {/* Top Selling Heading */}
+                        <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center text-red-500 bg-red-100 py-2 px-4 rounded-md">
+                            <Ban className="mr-2 text-red-500" size={24} /> Out-Stocks
+                        </h2>
+
+                        {/* Top Selling Product */}
+                        <div className="mb-3 h-[380px]  overflow-auto  py-3 px-2 rounded-md">
+                            {products && products
+                                .filter((product: ProductType) => +product?.count === 0)
+                                .map((product: ProductType) => (
+                                    <div className="flex items-center justify-start gap-1 border-b border-gray-300 py-2" key={product.id}>
+                                        <img className="w-8 h-8 rounded" src={product?.image1}/> <div className="pl-3">{product.title}</div>
+                                    </div>
+                                ))}
+
+
                         </div>
+
+
                     </div>
 
-                    {/* Top Selling Course */}
-                    <div className=" py-3 px-4 rounded-md">
-                        <h3 className="text-lg font-semibold mb-3 flex items-center">
-                            <Book className="mr-2 text-purple-500" size={20} /> Course:
-                        </h3>
-                        <div className="flex items-center justify-between border-b border-gray-300 py-2">
-                            <div className="pl-3">{mostSellingCourseData.mostSellingCourse}</div>
-                            <div className="text-zinc-500 font-semibold">
-                                Sold {mostSellingCourseData.sellingTimes} times
-                            </div>
-                        </div>
-                    </div>
                 </div>
+
+
+
 
 
                 <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>

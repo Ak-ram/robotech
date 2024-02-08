@@ -72,8 +72,8 @@ const Navbar = () => {
         {/* Navigation */}
         <ul className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"} bg-white flex px-2 -ml-6 absolute md:relative top-0 w-[250px] border-gray-400 border-r md:border-0 z-50 transition transform  md:bg-transparent md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}>
           <X className='ml-auto cursor-pointer text-black m-2 md:hidden' onClick={() => setOpenSidebar(false)} />
-          {navigation.map((item) => (
-            <Link href={item?.href} key={item.title}>
+          {navigation.map((item,index) => (
+            <Link href={item?.href} key={`${item.title}_${index}`}>
               <li
                 className={`mt-2 hover:text-designColor cursor-pointer duration-200 relative overflow-hidden group ${item.href === pathname && "text-designColor font-bold"
                   }`}
