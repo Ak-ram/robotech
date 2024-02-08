@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/helpers/editJSON.js", "src/app/admin/[customerId]"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/helpers/editJSON.js", "src/app/admin/[customerId]", "src/components/JsonToExcelConvertion.js"],
   "exclude": ["node_modules"]
 }

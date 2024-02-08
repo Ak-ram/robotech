@@ -1,12 +1,13 @@
 import { getCategories } from "@/helpers/getCategories";
 import { getCategoryProducts } from "@/helpers/getCategoryProducts";
+import { downloadJSON } from "@/helpers/downloadJsonfile";
 import { getProducts } from "@/helpers/getProducts";
 import { useEffect, useState } from "react";
 import { ProductType } from "../../type";
 import FormattedPrice from "./FormattedPrice";
 import Products from "./Products";
 import ApexChartComp from "./ApexChart";
-import { Banknote, BarChart, CheckCircle, DollarSign, LineChart, Search, ShoppingCart, X, XCircle } from "lucide-react";
+import { Banknote, BarChart, CheckCircle, DollarSign, Download, LineChart, Search, ShoppingCart, X, XCircle } from "lucide-react";
 import CustomersStats from "./CustomersStats";
 
 interface Product {
@@ -130,7 +131,9 @@ const Stats = () => {
 
                                             <LineChart className="" />
                                         </span>
-
+                                        <span onClick={() => downloadJSON(`${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/categories.json`)} className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center hover:bg-slate-300 block">
+                                            <Download className="" />
+                                        </span>
                                     </div>
                                     <table className="w-full text-sm text-gray-600">
                                         <thead className="bg-black text-white text-sm uppercase ">
@@ -213,7 +216,7 @@ const Stats = () => {
                             </div>
                             <div className="flex items-center justify-center p-6 rounded-lg bg-green-50">
                                 <div className="mr-2">
-                                    <span className="text-green-500 text-2xl font-bold"><DollarSign size={32}/></span>
+                                    <span className="text-green-500 text-2xl font-bold"><DollarSign size={32} /></span>
                                 </div>
                                 <div>
                                     <span className="text-xl font-bold text-green-700">{totalAvailablePrice}</span>
@@ -223,7 +226,7 @@ const Stats = () => {
                             <div className="col-span-full">
                                 <div className="flex items-center justify-center p-6 rounded-lg bg-rose-50">
                                     <div className="mr-2">
-                                        <span className="text-rose-500 text-2xl font-bold"><Banknote size={32}/></span>
+                                        <span className="text-rose-500 text-2xl font-bold"><Banknote size={32} /></span>
                                     </div>
                                     <div>
                                         <span className="text-xl font-bold text-rose-700">{totalUnavailablePrice}</span>
