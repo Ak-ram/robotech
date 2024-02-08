@@ -792,7 +792,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       </div> */}
               {/* <div className="py-3 px-10 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 translate-y-full transition-all group-hover:translate-y-0 w-full absolute"> */}
               <div className="py-3  transition-all px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 border-t border-slate-300 rounded transition-all w-full ">
-                <p className="pr-2 w-[210px] text-xl whitespace-nowrap text-ellipsis overflow-hidden duration-300 font-bold">
+                <p className="pr-2 text-xl flex items-center h-20 text-ellipsis overflow-hidden duration-300 font-bold">
                   {item?.title}
                 </p>
                 <p className="flex  items-center justify-start w-full text-black font-semibold">
