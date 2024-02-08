@@ -93,7 +93,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
 
 
         // Proceed with adding order
-        // handleAddOrder();
+        handleAddOrder();
     };
     return (
         <>
