@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerData } from "@/helpers/getCustomerData";
-import { Activity, Briefcase, Book, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X } from "lucide-react";
+import { Activity, Briefcase, Book, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X, Download } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
 import CustomerStatsChart from "./CustomerStatsChart";
+import { downloadJSON } from "@/helpers/downloadJsonfile";
 
 const CustomersStats = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -227,11 +228,16 @@ const CustomersStats = () => {
                                     {sortOrder === "asc" ? <ArrowDown01 /> : <ArrowUp01 />}
 
                                 </span>
+                         
                                 <span onClick={() => setIsShow(true)} className="text-slate-400 hover:text-white cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-gray-700 block">
 
-                                    <LineChart className="" />
-                                </span>
-                            </div>
+<LineChart className="" />
+</span>
+<span onClick={() => downloadJSON(`${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/customers.json`,'customers.json')} className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center hover:bg-slate-200 block">
+        <Download className="" />
+    </span>
+                                </div>
+                         
 
                         </div>                        <table className="w-full text-gray-400">
                             <thead className="bg-gray-800 uppercase">
