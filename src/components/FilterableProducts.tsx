@@ -79,15 +79,15 @@ function FilterableProducts({ categories }) {
 
   return (
     <div className='mt-3 md:mt-0'>
-      <div className='relative flex md:gap-2 overflow-auto m-auto'>
+      <div className='relative flex md:gap-2 overflow-auto m-auto '>
         <Categories products={products} setOpenSidebar={setOpenSidebar} openSidebar={openSidebar} setCategoryName={setCategoryName} categories={categories} />
-        <div className='flex-1'>
+        <div className='flex-1 bg-white pt-5 rounded-lg'>
           {openSidebar ? null :
-            <AlignJustify className='cursor-pointer text-slate-700  ml-3 mr-auto' onClick={() => setOpenSidebar(true)} />
+            <AlignJustify className='cursor-pointer bg-white p-1 rounded w-8 h-8 text-blue-500  ml-3 mr-auto' onClick={() => setOpenSidebar(true)} />
           }
           <div className="hidden lg:flex flex-col gap-2 items-center">
-            <h2 className="text-2xl font-bold lg:text-3xl ">Choose a Category</h2>
-            <p className="text-sm lg:text-lg text-center">
+            <h2 className="text-2xl text-designColor font-bold lg:text-3xl ">Choose a Category</h2>
+            <p className="text-sm lg:text-lg text-slate-400 text-center">
               Explore custom layouts designed for seamless electronic shopping.
             </p>
           </div>
