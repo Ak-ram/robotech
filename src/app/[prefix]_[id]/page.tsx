@@ -7,7 +7,7 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
-import { Banknote, Check, Dot, Gift, Home, Link2, Link2Icon, Redo, Undo, Wallet2 } from "lucide-react";
+import { Banknote, Check, Dot, Gift, Home, Link2, Link2Icon, Redo, Undo, Wallet2, X } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import Product from "@/components/Product";
@@ -68,7 +68,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
       {
         product ?
           <section className="">
-            <div className="py-6 sm:py-12 mx-auto px-4">
+            <div className="py-6  mx-auto px-4">
               <nav className="flex">
                 <ol role="list" className="flex items-center">
                   {/* Home */}
@@ -161,17 +161,34 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
                   <h1 className="sm:text-2xl font-bold text-gray-900 sm:text-3xl">{product?.title}</h1>
 
-                  <div className="mt-5 flex items-center">
-
-                    {/* <p className="ml-2 text-sm font-medium text-gray-500">{product?.count} Piece(s)</p> */}
+                  <div className="mt-5 flex flex-col items-stretch w-48 gap-2">
 
                     {
-                      product?.count > 0 && prefix !== 'print' ? <p className="ml-2 text-sm font-medium text-gray-500">
-                        <span className="mr-2">In Stock:</span>
-                        {product?.count} Piece(s)</p>
-                        : <span className="hidden sm:flex flex-col items-center justify-center">
-                          <span className="text-slate-600 flex items-center"><Check size={18} /> Availability :  avilable</span>
+                      product?.count > 0 && prefix !== 'print' ? (
+                        <>
+                        <span className="hidden sm:flex bg-white rounded py-1 px-2 items-center">
+                          <span className="font-semibold mr-1">Availability:</span>
+                          <span className="flex items-center text-green-600 ">
+                            Available <Check className="ml-2" size={18} />
+                          </span>
                         </span>
+
+                        <span className="hidden sm:flex  bg-white rounded py-1 px-2 items-center">
+                          <span className="flex items-center text-blue-400 "> 
+                           <Gift className="mr-2" size={20} />
+                          </span>
+                          <span className="font-semibold mr-1">Newly added</span>
+                        </span>
+                        
+                       </>
+                      ) : (
+                        <span className="hidden sm:flex bg-white rounded py-1 px-2 items-center">
+                          <span className="font-semibold mr-1">Availability:</span>
+                          <span className="flex items-center text-red-600 ">
+                            Not Available <X className="ml-2" size={18} />
+                          </span>
+                        </span>
+                      )
                     }
 
 
@@ -183,17 +200,17 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
 
                       {
                         product?.price > 0 && prefix !== 'print' ?
-                          <h1 className="sm:text-lg md:text-3xl font-bold rtl" style={{ direction: 'rtl' }}>
+                          <h1 className="sm:text-lg md:text-3xl font-bold">
 
                             <FormattedPrice amount={(product?.price!)} />
-                            <span className="text-base">/ قطعـة</span>
+                            <span className="text-base"> / Piece</span>
                           </h1>
 
                           :
-                          <h1 className="sm:text-lg md:text-3xl font-bold rtl" style={{ direction: 'rtl' }}>
+                          <h1 className="sm:text-lg md:text-3xl font-bold">
                             <FormattedPrice amount={(product?.count!)} />
 
-                            <span className="text-base">/ دقيقـة</span>
+                            <span className="text-base"> / Minute</span>
                           </h1>
                       }
 
@@ -235,10 +252,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                         </>
                         : null}
 
-                    <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                      <Gift size={18} className="mr-2" />
-                      Newly added
-                    </li>
+                   
                     {product?.externalLink && product.externalLink.length &&
                       <li className="flex items-center text-left text-sm font-medium text-gray-600">
                         <Link2 size={18} className="mr-2" /> {/* Using Link2Icon with size prop */}
