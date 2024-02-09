@@ -130,7 +130,7 @@ const TransactionAnalyzer = ({ customers }) => {
             id: transaction?.customerId,
             data: JSON.stringify(customers.find(customer => customer.id === transaction?.customerId))
           },
-        }} key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
+        }} key={index} className="flex flex-col hover:bg-slate-100 border border-slate-200 rounded p-3 mb-2 justify-between">
           <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
           <div className="flex justify-between items-center">
             <p>{transaction.productName}</p>
@@ -175,21 +175,75 @@ const TransactionAnalyzer = ({ customers }) => {
             </div>
           ));
 
+
       case 'revenue':
-        let totalRevenue = 0;
+        // Initialize objects to store revenue totals for each day, month, and year
+        const dailyRevenue: { [key: string]: number } = {};
+        const monthlyRevenue: { [key: string]: number } = {};
+        const yearlyRevenue: { [key: string]: number } = {};
+
+        // Calculate total revenue and populate revenue totals for each day, month, and year
         customers.forEach(customer => {
           customer.transactions.products.forEach(transaction => {
-            totalRevenue += parseInt(transaction.subtotal);
+            const transactionDate = new Date(transaction.date);
+            const dayKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}-${transactionDate.getDate()}`;
+            const monthKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}`;
+            const yearKey = `${transactionDate.getFullYear()}`;
+
+            // Update daily revenue
+            dailyRevenue[dayKey] = (dailyRevenue[dayKey] || 0) + parseInt(transaction.subtotal);
+
+            // Update monthly revenue
+            monthlyRevenue[monthKey] = (monthlyRevenue[monthKey] || 0) + parseInt(transaction.subtotal);
+
+            // Update yearly revenue
+            yearlyRevenue[yearKey] = (yearlyRevenue[yearKey] || 0) + parseInt(transaction.subtotal);
           });
         });
 
-        return (
-          <div>
-            <h3 className="text-lg font-semibold">Revenue Transactions</h3>
-            <p>Total Revenue: <FormattedPrice amount={totalRevenue} /></p>
-          </div>
-        );
+        // Calculate total revenue
+        const totalRevenue: number = Object.values(yearlyRevenue).reduce((total: number, revenue: number) => total + revenue, 0);
 
+        return (
+          <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
+          <h3 className="text-lg font-semibold mb-4">Revenue Transactions</h3>
+          <div className="bg-white rounded-lg p-4 mb-4">
+            <div className="flex items-center mb-4">
+              <Banknote className="w-6 h-6 mr-2 text-blue-500" />
+              <p className="text-md font-semibold">Total Revenue:</p>
+              <p className="ml-auto"><FormattedPrice amount={totalRevenue} /></p>
+            </div>
+            <div>
+              <h4 className="text-md font-semibold mb-2">Daily Revenue Totals</h4>
+              {Object.entries(dailyRevenue).map(([day, revenue]) => (
+                <p key={day} className="flex items-center"><Clock className="w-5 h-5 mr-2 text-blue-500" />{day}: <FormattedPrice amount={revenue} /></p>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white rounded-lg p-4 mb-4">
+            <div className="flex items-center mb-4">
+              <Calendar className="w-6 h-6 mr-2 text-green-500" />
+              <p className="text-md font-semibold">Monthly Revenue Totals</p>
+            </div>
+            <div>
+              {Object.entries(monthlyRevenue).map(([month, revenue]) => (
+                <p key={month} className="flex items-center"><Calendar className="w-5 h-5 mr-2 text-green-500" />{month}: <FormattedPrice amount={revenue} /></p>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white rounded-lg p-4">
+            <div className="flex items-center mb-4">
+              <Package className="w-6 h-6 mr-2 text-yellow-500" />
+              <p className="text-md font-semibold">Yearly Revenue Totals</p>
+            </div>
+            <div>
+              {Object.entries(yearlyRevenue).map(([year, revenue]) => (
+                <p key={year} className="flex items-center"><Package className="w-5 h-5 mr-2 text-yellow-500" />{year}: <FormattedPrice amount={revenue} /></p>
+              ))}
+            </div>
+          </div>
+        </div>
+        );
       default:
         return null;
     }
