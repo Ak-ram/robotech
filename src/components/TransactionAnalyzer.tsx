@@ -108,9 +108,9 @@
 //           </div>
 //         </div>
 //       )}
-      
+
 //     </div>
-    
+
 //   );
 
 //   function calculateTotalRevenue() {
@@ -371,7 +371,7 @@ const TransactionAnalyzer = ({ customers }) => {
   }));
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container overflow-auto mx-auto p-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
           onClick={() => handlePeriodClick('daily')}>
@@ -415,38 +415,47 @@ const TransactionAnalyzer = ({ customers }) => {
         </div>
       )}
       {/* Render Revenue Charts */}
-      <div className="mt-8">
+      <div className="mt-8 ">
         <h3 className="text-lg font-semibold mb-4">Revenue Overview</h3>
-        {/* Daily Revenue Chart */}
-        <h4 className="text-md font-semibold mb-2">Daily Revenue</h4>
-        <LineChart width={600} height={300} data={dailyRevenueData}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <CartesianGrid stroke="#eee" />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="revenue" stroke="#8884d8" />
-        </LineChart>
-        {/* Monthly Revenue Chart */}
-        <h4 className="text-md font-semibold mb-2">Monthly Revenue</h4>
-        <LineChart width={600} height={300} data={monthlyRevenueData}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <CartesianGrid stroke="#eee" />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="revenue" stroke="#82ca9d" />
-        </LineChart>
-        {/* Yearly Revenue Chart */}
-        <h4 className="text-md font-semibold mb-2">Yearly Revenue</h4>
-        <LineChart width={600} height={300} data={yearlyRevenueData}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <CartesianGrid stroke="#eee" />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="revenue" stroke="#ffc658" />
-        </LineChart>
+        <div className='flex p-6 bg-white rounded'>
+          <div className=''>
+            {/* Daily Revenue Chart */}
+            <h4 className="text-md font-semibold mb-2 text-indigo-500">Daily Revenue</h4>
+            <LineChart width={380} height={300} data={dailyRevenueData}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <CartesianGrid stroke="#eee" />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="revenue" stroke="#8884d8" />
+            </LineChart>
+          </div>
+          <div>
+            {/* Monthly Revenue Chart */}
+            <h4 className="text-md font-semibold mb-2 text-green-500">Monthly Revenue</h4>
+            <LineChart width={380} height={300} data={monthlyRevenueData}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <CartesianGrid stroke="#eee" />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="revenue" stroke="#82ca9d" />
+            </LineChart>
+          </div>
+          <div>
+            {/* Yearly Revenue Chart */}
+            <h4 className="text-md font-semibold mb-2 text-orange-500">Yearly Revenue</h4>
+            <LineChart width={380} height={300} data={yearlyRevenueData}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <CartesianGrid stroke="#eee" />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="revenue" stroke="#ffc658" />
+            </LineChart>
+          </div>
+        </div>
+
       </div>
     </div>
   );
@@ -515,10 +524,89 @@ const TransactionAnalyzer = ({ customers }) => {
             </div>
           ));
 
+      case 'revenue':
+        // Initialize objects to store revenue totals for each day, month, and year
+        const dailyRevenue: { [key: string]: number } = {};
+        const monthlyRevenue: { [key: string]: number } = {};
+        const yearlyRevenue: { [key: string]: number } = {};
+
+        // Calculate total revenue and populate revenue totals for each day, month, and year
+        customers.forEach(customer => {
+          customer.transactions.products.forEach(transaction => {
+            const transactionDate = new Date(transaction.date);
+            const dayKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}-${transactionDate.getDate()}`;
+            const monthKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}`;
+            const yearKey = `${transactionDate.getFullYear()}`;
+
+            // Update daily revenue
+            dailyRevenue[dayKey] = (dailyRevenue[dayKey] || 0) + parseInt(transaction.subtotal);
+
+            // Update monthly revenue
+            monthlyRevenue[monthKey] = (monthlyRevenue[monthKey] || 0) + parseInt(transaction.subtotal);
+
+            // Update yearly revenue
+            yearlyRevenue[yearKey] = (yearlyRevenue[yearKey] || 0) + parseInt(transaction.subtotal);
+          });
+        });
+
+        // Calculate total revenue
+        const totalRevenue: number = Object.values(yearlyRevenue).reduce((total: number, revenue: number) => total + revenue, 0);
+
+        return (
+          <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
+            <h3 className="text-lg font-semibold mb-4">Revenue Overview</h3>
+            <div className="bg-white rounded-lg p-4 mb-4">
+              <div className="flex items-center mb-4">
+                <Banknote className="w-6 h-6 mr-2 text-blue-500" />
+                <p className="text-md font-semibold">Total Revenue:</p>
+                <p className="ml-auto text-lg font-semibold">
+                  <FormattedPrice amount={totalRevenue} /></p>
+              </div>
+              <div>
+                <h4 className="text-md font-semibold mb-2">Daily Revenue</h4>
+                {Object.entries(dailyRevenue).map(([day, revenue]) => (
+                  <p key={day} className="flex items-center my-2">
+                    <Clock className="w-5 h-5 mr-2 text-blue-500" />{day}
+                    <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
+                    <FormattedPrice amount={revenue} /></p>
+                ))}
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-4 mb-4">
+              <div className="flex items-center mb-4">
+                <Calendar className="w-6 h-6 mr-2 text-green-500" />
+                <p className="text-md font-semibold">Monthly Revenue</p>
+              </div>
+              <div>
+                {Object.entries(monthlyRevenue).map(([month, revenue]) => (
+                  <p key={month} className="flex items-center my-2">
+                    <Calendar className="w-5 h-5 mr-2 text-blue-500" />{month}
+                    <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
+                    <FormattedPrice amount={revenue} /></p>
+                ))}
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-4">
+              <div className="flex items-center mb-4">
+                <Package className="w-6 h-6 mr-2 text-yellow-500" />
+                <p className="text-md font-semibold">Yearly Revenue</p>
+              </div>
+              <div>
+                {Object.entries(yearlyRevenue).map(([year, revenue]) => (
+                  <p key={year} className="flex items-center my-2">
+                    <Package className="w-5 h-5 mr-2 text-blue-500" />{year}
+                    <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
+                    <FormattedPrice amount={revenue} /></p>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
       default:
         return null;
     }
   }
+
 
 };
 
