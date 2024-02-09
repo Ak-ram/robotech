@@ -87,7 +87,7 @@ const Stats = () => {
         if (typeof window !== "undefined") {
             fetchData();
         }
-    }, []);
+    }, [categories,products]);
     const totalProducts = products?.length || 0;
     const totalAvailableProducts = categoryStats.reduce((acc, category) => acc + category.inStockProducts.length, 0);
     const totalUnavailableProducts = categoryStats.reduce((acc, category) => acc + category.outStockProducts.length, 0);

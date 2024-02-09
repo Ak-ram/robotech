@@ -96,7 +96,7 @@ const AdminComponent = () => {
           {sidebarItems.map((item) => (
             <li
               key={item.id}
-              className={`flex items-center gap-2 my-2 w-full hover:bg-slate-300 p-1.5 rounded-md cursor-pointer ${selectedItem === item ? "bg-slate-300" : ""} my-0`}
+              className={`flex items-center gap-2 my-2 w-full hover:bg-slate-200 p-1.5 rounded-md cursor-pointer ${selectedItem === item ? "bg-slate-300" : ""} my-0`}
               onClick={() => handleItemClick(item)}
             >
               {item.icon}
