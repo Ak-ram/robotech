@@ -8,6 +8,7 @@ import { downloadJSON } from "@/helpers/downloadJsonfile";
 import { ProductType } from "../../type";
 import { getProducts } from "@/helpers/getProducts";
 import TransactionAnalyzer from "./TransactionAnalyzer";
+import CustomerStatsTopSelling from "./CustomerStatsTopSelling";
 
 const CustomersStats = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -68,84 +69,7 @@ const CustomersStats = () => {
         sortCustomers(customers, newOrder);
     };
 
-    const getMostSellingProduct = () => {
-        const productMap = new Map();
-        customers.forEach((customer) => {
-            customer.transactions.products.forEach((product) => {
-                const { productName, quantity } = product;
-                if (productMap.has(productName)) {
-                    productMap.set(productName, productMap.get(productName) + quantity);
-                } else {
-                    productMap.set(productName, quantity);
-                }
-            });
-        });
 
-        let mostSellingProduct = '';
-        let maxQuantity = 0;
-
-        productMap.forEach((quantity, productName) => {
-            if (quantity > maxQuantity) {
-                maxQuantity = quantity;
-                mostSellingProduct = productName;
-            }
-        });
-
-        return { mostSellingProduct, sellingTimes: maxQuantity };
-    };
-    const getMostSellingService = () => {
-        const serviceMap = new Map();
-        customers.forEach((customer) => {
-            customer.transactions.printServices.forEach((service) => {
-                const { productName, quantity } = service;
-                if (serviceMap.has(productName)) {
-                    serviceMap.set(productName, serviceMap.get(productName) + quantity);
-                } else {
-                    serviceMap.set(productName, quantity);
-                }
-            });
-        });
-
-        let mostSellingService = '';
-        let maxQuantity = 0;
-
-        serviceMap.forEach((quantity, serviceName) => {
-            if (quantity > maxQuantity) {
-                maxQuantity = quantity;
-                mostSellingService = serviceName;
-            }
-        });
-
-        return { mostSellingService, sellingTimes: maxQuantity };
-    };
-    const getMostSellingCourse = () => {
-        const courseMap = new Map();
-        customers.forEach((customer) => {
-            customer.transactions.courses.forEach((course) => {
-                const { productName, quantity } = course;
-                if (courseMap.has(productName)) {
-                    courseMap.set(productName, courseMap.get(productName) + quantity);
-                } else {
-                    courseMap.set(productName, quantity);
-                }
-            });
-        });
-
-        let mostSellingCourse = '';
-        let maxQuantity = 0;
-
-        courseMap.forEach((quantity, courseName) => {
-            if (quantity > maxQuantity) {
-                maxQuantity = quantity;
-                mostSellingCourse = courseName;
-            }
-        });
-
-        return { mostSellingCourse, sellingTimes: maxQuantity };
-    };
-    const mostSellingProductData = getMostSellingProduct();
-    const mostSellingServiceData = getMostSellingService();
-    const mostSellingCourseData = getMostSellingCourse();
     const [searchQuery, setSearchQuery] = useState('');
 
     // Function to handle changes in the search query
@@ -165,55 +89,70 @@ const CustomersStats = () => {
 
 
             </div>
+
+
+
+            <CustomerStatsTopSelling customers={customers} />
+
+
+
+
+
+
+
             <div className="flex flex-col">
                 <div className="flex gap-2 ">
+
                     <div className="flex-1 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
-                        {/* Top Selling Heading */}
-                        <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center bg-blue-100 py-2 px-4 rounded-md">
-                            <Activity className="mr-2 text-blue-500" size={24} /> Top Selling
+
+
+                        {/* Out-Stocks Heading */}
+                        <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center text-red-500 bg-red-100 py-2 px-4 rounded-md">
+                            <Ban className="mr-2 text-red-500" size={24} /> Out-Stocks
+
+                            <span className="mx-4 relative">
+                                <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
+                                <input
+                                    type="text"
+                                    placeholder="Product Name..."
+                                    value={searchQuery}
+                                    onChange={handleSearchInputChange}
+                                    className="pl-2 pr-10  placeholder-red-300 py-1 text-sm border border-red-200 rounded focus:outline-none focus:border-red-500"
+                                />
+
+                            </span>
+
+                            <span className="ml-auto text-sm">
+
+                                {products &&
+                                    products.filter((product) => +product?.count === 0).length}{' '}
+                                Product(s)
+                            </span>
                         </h2>
 
-                        {/* Top Selling Product */}
-                        <div className="mb-3 py-3 px-2 rounded-md">
-                            <h3 className="text-lg font-semibold mb-3 flex items-center">
-                                <Briefcase className="mr-2 text-yellow-500" size={20} /> Product:
-                            </h3>
-                            <div className="flex items-center justify-between border-b border-gray-300 py-2">
-                                <div className="pl-3  w-[70%] overflow-hidden whitespace-nowrap text-ellipsis">{mostSellingProductData.mostSellingProduct}</div>
-                                <div className="text-zinc-500 text-sm font-semibold">
-                                    Sold {mostSellingProductData.sellingTimes} times
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Top Selling Service */}
-                        <div className="mb-3  py-3 px-2 rounded-md">
-                            <h3 className="text-lg font-semibold mb-3 flex items-center">
-                                <Briefcase className="mr-2 text-yellow-500" size={20} /> Service:
-                            </h3>
-                            <div className="flex items-center justify-between border-b border-gray-300 py-2">
-                                <div className="pl-3  w-[80%]">{mostSellingServiceData.mostSellingService}</div>
-                                <div className="text-zinc-500 font-semibold">
-                                    Sold {mostSellingServiceData.sellingTimes} times
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Top Selling Course */}
-                        <div className=" py-3 px-2 rounded-md">
-                            <h3 className="text-lg font-semibold mb-3 flex items-center">
-                                <Book className="mr-2 text-purple-500" size={20} /> Course:
-                            </h3>
-                            <div className="flex items-center justify-between border-b border-gray-300 py-2">
-                                <div className="pl-3  w-[80%]">{mostSellingCourseData.mostSellingCourse}</div>
-                                <div className="text-zinc-500 font-semibold">
-                                    Sold {mostSellingCourseData.sellingTimes} times
-                                </div>
-                            </div>
+                        {/* Out-Stocks Product List */}
+                        <div className="mb-3 h-[380px] overflow-auto py-3 px-2 rounded-md">
+                            {products &&
+                                products
+                                    .filter((product) => +product?.count === 0)
+                                    .filter((product) =>
+                                        product.title.toLowerCase().includes(searchQuery.toLowerCase())
+                                    )
+                                    .map((product) => (
+                                        <div
+                                            className="flex items-center justify-start gap-1 border-b border-gray-300 py-2"
+                                            key={product.id}
+                                        >
+                                            <img
+                                                className="w-8 h-8 rounded"
+                                                src={product?.image1}
+                                                alt={product.title}
+                                            />{' '}
+                                            <div className="pl-3">{product.title}</div>
+                                        </div>
+                                    ))}
                         </div>
                     </div>
-
-
 
 
                     <div className="flex-1 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
