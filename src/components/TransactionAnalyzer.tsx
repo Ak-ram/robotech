@@ -142,11 +142,15 @@ const TransactionAnalyzer = ({ customers }) => {
           <div key={month} className="mb-4">
             <h3 className="text-lg font-semibold">{month}</h3>
             {monthlySells[month].map((transaction, index) => (
-              <div key={index} className="flex justify-between">
+              <div key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
+              <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
+              <div className="flex justify-between items-center">
                 <p>{transaction.productName}</p>
-                <p>{transaction.customerName}</p> {/* Render customer name */}
-                <FormattedPrice amount={transaction.subtotal} />
+                <div className="flex items-center">
+                  <FormattedPrice amount={transaction.subtotal} />
+                </div>
               </div>
+            </div>
             ))}
           </div>
         ));
@@ -155,11 +159,15 @@ const TransactionAnalyzer = ({ customers }) => {
           <div key={year} className="mb-4">
             <h3 className="text-lg font-semibold">{year}</h3>
             {yearlySells[year].map((transaction, index) => (
-              <div key={index} className="flex justify-between">
+              <div key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
+              <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
+              <div className="flex justify-between items-center">
                 <p>{transaction.productName}</p>
-                <p>{transaction.customerName}</p> {/* Render customer name */}
-                <FormattedPrice amount={transaction.subtotal} />
+                <div className="flex items-center">
+                  <FormattedPrice amount={transaction.subtotal} />
+                </div>
               </div>
+            </div>
             ))}
           </div>
         ));
