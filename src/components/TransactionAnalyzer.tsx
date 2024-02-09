@@ -1,6 +1,7 @@
 import { Clock, Calendar, DollarSign, Package, Banknote } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import FormattedPrice from './FormattedPrice';
+import Link from 'next/link';
 
 const TransactionAnalyzer = ({ customers }) => {
   const [dailySells, setDailySells] = useState({});
@@ -18,6 +19,7 @@ const TransactionAnalyzer = ({ customers }) => {
       customers.forEach(customer => {
         const transactions = customer.transactions;
         const customerName = customer.fullName; // Assuming fullName as the customer name field
+        const customerId = customer.id; // Assuming fullName as the customer name field
         // Iterate over each transaction
         transactions.products.forEach(transaction => {
           const transactionDate = new Date(transaction.date);
@@ -27,6 +29,7 @@ const TransactionAnalyzer = ({ customers }) => {
 
           // Add customerName to the transaction
           transaction.customerName = customerName;
+          transaction.customerId = customerId;
 
           // Group transactions by day
           if (!dailyTransactions[dayKey]) {
@@ -121,7 +124,13 @@ const TransactionAnalyzer = ({ customers }) => {
   function renderTransactions(period) {
     const renderTransactionsByPeriod = (transactions) => {
       return transactions.map((transaction, index) => (
-        <div key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
+        <Link href={{
+          pathname: `admin/id_${transaction?.customerId}`,
+          query: {
+              id: transaction?.customerId,
+              data: JSON.stringify(customers.find(customer=> customer.id === transaction?.customerId))
+          },
+      }} key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
           <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
           <div className="flex justify-between items-center">
             <p>{transaction.productName}</p>
@@ -129,41 +138,41 @@ const TransactionAnalyzer = ({ customers }) => {
               <FormattedPrice amount={transaction.subtotal} />
             </div>
           </div>
-        </div>
+        </Link>
       ));
     };
-  
+
     switch (period) {
       case 'daily':
         return Object.keys(dailySells)
-        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
-        .map(day => (
+          .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+          .map(day => (
             <div key={day} className="mb-4">
               <h3 className="text-lg font-semibold">{day}</h3>
               {renderTransactionsByPeriod(dailySells[day])}
             </div>
           ));
-  
+
       case 'monthly':
         return Object.keys(monthlySells)
-        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
-        .map(month => (
+          .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+          .map(month => (
             <div key={month} className="mb-4">
               <h3 className="text-lg font-semibold">{month}</h3>
               {renderTransactionsByPeriod(monthlySells[month])}
             </div>
           ));
-  
+
       case 'yearly':
         return Object.keys(yearlySells)
-        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
-        .map(year => (
+          .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+          .map(year => (
             <div key={year} className="mb-4">
               <h3 className="text-lg font-semibold">{year}</h3>
               {renderTransactionsByPeriod(yearlySells[year])}
             </div>
           ));
-  
+
       case 'revenue':
         let totalRevenue = 0;
         customers.forEach(customer => {
@@ -171,19 +180,19 @@ const TransactionAnalyzer = ({ customers }) => {
             totalRevenue += parseInt(transaction.subtotal);
           });
         });
-  
+
         return (
           <div>
             <h3 className="text-lg font-semibold">Revenue Transactions</h3>
             <p>Total Revenue: <FormattedPrice amount={totalRevenue} /></p>
           </div>
         );
-  
+
       default:
         return null;
     }
   }
-  
+
 };
 
 export default TransactionAnalyzer;
