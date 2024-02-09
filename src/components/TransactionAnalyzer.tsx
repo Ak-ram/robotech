@@ -356,19 +356,27 @@ const TransactionAnalyzer = ({ customers }) => {
     });
   });
 
-  // Prepare data for Recharts
-  const dailyRevenueData = Object.entries(dailyRevenue).map(([day, revenue]) => ({
+  const dailyRevenueData = Object.entries(dailyRevenue)
+  .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+  .map(([day, revenue]) => ({
     name: day,
     revenue: revenue,
   }));
-  const monthlyRevenueData = Object.entries(monthlyRevenue).map(([month, revenue]) => ({
+
+const monthlyRevenueData = Object.entries(monthlyRevenue)
+  .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+  .map(([month, revenue]) => ({
     name: month,
     revenue: revenue,
   }));
-  const yearlyRevenueData = Object.entries(yearlyRevenue).map(([year, revenue]) => ({
+
+const yearlyRevenueData = Object.entries(yearlyRevenue)
+  .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+  .map(([year, revenue]) => ({
     name: year,
     revenue: revenue,
   }));
+
 
   return (
     <div className="container overflow-auto mx-auto p-4">
