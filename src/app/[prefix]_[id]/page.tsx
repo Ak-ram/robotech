@@ -7,7 +7,7 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
-import { Banknote, Check, Dot, Gift, Home, Link2, Link2Icon, Redo, Undo, Wallet2 } from "lucide-react";
+import { Banknote, Check, Dot, Gift, Home, Link2, Link2Icon, Redo, Undo, Wallet2, X } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import Product from "@/components/Product";
@@ -166,11 +166,22 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                     {/* <p className="ml-2 text-sm font-medium text-gray-500">{product?.count} Piece(s)</p> */}
 
                     {
-                      product?.count > 0 && prefix !== 'print' &&
-                        <span className="hidden sm:flex flex-col items-center justify-center">
-                          <span className="text-slate-600 flex items-center"><Check size={18} /> Availability :  avilable</span>
-                        </span>
-                    }
+  product?.count > 0 && prefix !== 'print' ? (
+    <span className="hidden sm:flex bg-white rounded py-1 px-2 items-center">
+      <span className="font-semibold mr-1">Availability:</span>
+      <span className="flex items-center text-green-600 ">
+        Available <Check className="ml-2" size={18} />
+      </span>
+    </span>
+  ) : (
+    <span className="hidden sm:flex bg-white rounded py-1 px-2 items-center">
+      <span className="font-semibold mr-1">Availability:</span>
+      <span className="flex items-center text-red-600 ">
+        Not Available <X className="ml-2" size={18} />
+      </span>
+    </span>
+  )
+}
 
 
 
