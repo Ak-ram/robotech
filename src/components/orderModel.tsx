@@ -222,7 +222,7 @@ import { CourseType, ProductType } from "../../type";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 
-const CustomSelect = ({ options, onSelect, newOrder, setNewOrder,setSelectedItem }) => {
+const CustomSelect = ({ options, onSelect, newOrder, setNewOrder, setSelectedItem }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredOptions, setFilteredOptions] = useState(options);
     const [isOpen, setIsOpen] = useState(false);
@@ -237,12 +237,11 @@ const CustomSelect = ({ options, onSelect, newOrder, setNewOrder,setSelectedItem
         onSelect(option);
         setIsOpen(false);
         setSearchTerm(option.title); // Set search term to selected option's title
-        console.log(option)
         setSelectedItem(option || null);
 
         setNewOrder({
             ...newOrder,
-            productName: option?.name,
+            productName: option?.title,
             piecePrice: option?.price!,
             date: new Date().toLocaleDateString('en-US', {
                 weekday: 'short',
@@ -329,13 +328,73 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
             toast.error("Please select a product");
             return;
         }
+
+
+        if (newOrder.quantity <= 0) {
+            toast.error("Quantity should be greater than zero");
+            return;
+        }
+
+        if ("count" in selectedItem!) {
+            // Access the count property only when the selectedItem is of type ProductType
+            const itemCount = +selectedItem.count;
+            if (newOrder.quantity > itemCount) {
+                toast.error(`only ${itemCount} piece(s) available in-stock`);
+
+                return;
+            }
+            else {
+                let obj = categoriesList[0][selectedItem.category].find(product => product.id === selectedItem.id)
+                let updatedObject = { ...obj, count: `${(+selectedItem?.count - +newOrder?.quantity)}` };
+                const updatedProducts = categoriesList[0][selectedItem.category].map(product => {
+                    if (product.id === selectedItem.id) {
+                        return updatedObject;
+                    }
+                    return product;
+                });
+
+                // Update the correct object within the categoriesList array
+                const updatedCategoriesList = [...categoriesList]; // Copy the original array
+                updatedCategoriesList[0][selectedItem.category] = updatedProducts; // Update the correct category array
+
+                setCategoriesList(updatedCategoriesList); // Update the state with the updated array
+                await updateJsonFile("robotech/pages/categories.json", categoriesList);
+
+            }
+
+
+
+
+        }
+
+
+        // Validate discount
+        if (newOrder.discount < 0 || newOrder.discount > selectedItem?.price!) {
+            toast.error("Discount should be non-negative");
+            return;
+        }
+
+        // Validate selected product
+        if (!selectedItem) {
+            toast.error("Please select a product");
+            return;
+        }
+
+
+
+
+
+
+
+
+
         // Proceed with adding order
         handleAddOrder();
     };
 
     return (
         <>
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="fixed inset-0 bg-black bg-opacity-50 z-100 flex items-center justify-center">
                 <div className="bg-white min-w-[40rem] p-8 rounded-lg shadow-md">
                     <h2 className="text-xl font-semibold mb-4">Add Order</h2>
                     <form>
