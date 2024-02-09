@@ -492,20 +492,27 @@ const TransactionAnalyzer = ({ customers }) => {
           <div className='flex-1 flex gap-4 justify-between items-center'>
             <div className='flex flex-col  font-semibold'>
               <span className='text-blue-400 '>{transaction.customerName}</span>
-              
+
               <span className='flex-1'>{transaction.productName}</span>
-              </div>
-             
+            </div>
+
             <div className='ml-auto flex gap-4'>
 
-            <div className="flex justify-center items-center flex-col">
+              <div className="flex justify-center items-center flex-col">
                 <span className='text-sm font-semibold'>Price</span>
                 <FormattedPrice className='text-sm font-semibold' amount={transaction.subtotal} />
               </div>
-              <div className="flex justify-center items-center flex-col">
-                <span className='text-sm font-semibold'>Profit</span>
-                <FormattedPrice className='text-sm text-green-400 font-semibold' amount={((transaction.subtotal) - (transaction?.wholesalePrice || 0))} />
-              </div>
+              {transaction?.wholesalePrice &&
+                <div className="flex justify-center items-center flex-col">
+                  <span className='text-sm font-semibold'>Profit</span>
+                  {transaction?.wholesalePrice && transaction?.wholesalePrice < transaction.subtotal &&
+                    <FormattedPrice className='text-sm text-green-400 font-semibold' amount={((transaction.subtotal) - (transaction?.wholesalePrice || 0))} />
+                  }
+                  {transaction?.wholesalePrice && transaction?.wholesalePrice > transaction.subtotal &&
+                    <FormattedPrice className='text-sm text-red-400 font-semibold' amount={((transaction?.wholesalePrice || 0) - (transaction.subtotal))} />
+                  }
+                </div>
+              }
             </div>
           </div>
 
