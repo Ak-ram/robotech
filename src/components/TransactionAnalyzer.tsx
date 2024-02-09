@@ -127,10 +127,10 @@ const TransactionAnalyzer = ({ customers }) => {
         <Link href={{
           pathname: `admin/id_${transaction?.customerId}`,
           query: {
-              id: transaction?.customerId,
-              data: JSON.stringify(customers.find(customer=> customer.id === transaction?.customerId))
+            id: transaction?.customerId,
+            data: JSON.stringify(customers.find(customer => customer.id === transaction?.customerId))
           },
-      }} key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
+        }} key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
           <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
           <div className="flex justify-between items-center">
             <p>{transaction.productName}</p>
@@ -148,7 +148,9 @@ const TransactionAnalyzer = ({ customers }) => {
           .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
           .map(day => (
             <div key={day} className="mb-4">
-              <h3 className="text-lg font-semibold">{day}</h3>
+              <h3 className="text-lg flex items-center justify-between w-full font-semibold">
+                <span>{day}</span>
+                <span className='text-xs ml-auto'><FormattedPrice className='text-xs' amount={dailySells[day].reduce((accumulator, day) => accumulator + day.subtotal, 0)} /> for {dailySells[day].length} Transaction(s)</span></h3>
               {renderTransactionsByPeriod(dailySells[day])}
             </div>
           ));
