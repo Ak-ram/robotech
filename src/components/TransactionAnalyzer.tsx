@@ -119,58 +119,51 @@ const TransactionAnalyzer = ({ customers }) => {
   }
 
   function renderTransactions(period) {
+    const renderTransactionsByPeriod = (transactions) => {
+      return transactions.map((transaction, index) => (
+        <div key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
+          <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
+          <div className="flex justify-between items-center">
+            <p>{transaction.productName}</p>
+            <div className="flex items-center">
+              <FormattedPrice amount={transaction.subtotal} />
+            </div>
+          </div>
+        </div>
+      ));
+    };
+  
     switch (period) {
       case 'daily':
-        return Object.keys(dailySells).map(day => (
-          <div key={day} className="mb-4">
-          <h3 className="text-lg font-semibold">{day}</h3>
-          {dailySells[day].map((transaction, index) => (
-            <div key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
-              <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
-              <div className="flex justify-between items-center">
-                <p>{transaction.productName}</p>
-                <div className="flex items-center">
-                  <FormattedPrice amount={transaction.subtotal} />
-                </div>
-              </div>
+        return Object.keys(dailySells)
+          .sort((a, b) => new Date(b) - new Date(a))
+          .map(day => (
+            <div key={day} className="mb-4">
+              <h3 className="text-lg font-semibold">{day}</h3>
+              {renderTransactionsByPeriod(dailySells[day])}
             </div>
-          ))}
-        </div>
-        ));
+          ));
+  
       case 'monthly':
-        return Object.keys(monthlySells).map(month => (
-          <div key={month} className="mb-4">
-            <h3 className="text-lg font-semibold">{month}</h3>
-            {monthlySells[month].map((transaction, index) => (
-              <div key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
-              <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
-              <div className="flex justify-between items-center">
-                <p>{transaction.productName}</p>
-                <div className="flex items-center">
-                  <FormattedPrice amount={transaction.subtotal} />
-                </div>
-              </div>
+        return Object.keys(monthlySells)
+          .sort((a, b) => new Date(b) - new Date(a))
+          .map(month => (
+            <div key={month} className="mb-4">
+              <h3 className="text-lg font-semibold">{month}</h3>
+              {renderTransactionsByPeriod(monthlySells[month])}
             </div>
-            ))}
-          </div>
-        ));
+          ));
+  
       case 'yearly':
-        return Object.keys(yearlySells).map(year => (
-          <div key={year} className="mb-4">
-            <h3 className="text-lg font-semibold">{year}</h3>
-            {yearlySells[year].map((transaction, index) => (
-              <div key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
-              <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
-              <div className="flex justify-between items-center">
-                <p>{transaction.productName}</p>
-                <div className="flex items-center">
-                  <FormattedPrice amount={transaction.subtotal} />
-                </div>
-              </div>
+        return Object.keys(yearlySells)
+          .sort((a, b) => new Date(b) - new Date(a))
+          .map(year => (
+            <div key={year} className="mb-4">
+              <h3 className="text-lg font-semibold">{year}</h3>
+              {renderTransactionsByPeriod(yearlySells[year])}
             </div>
-            ))}
-          </div>
-        ));
+          ));
+  
       case 'revenue':
         let totalRevenue = 0;
         customers.forEach(customer => {
@@ -178,18 +171,19 @@ const TransactionAnalyzer = ({ customers }) => {
             totalRevenue += parseInt(transaction.subtotal);
           });
         });
-
+  
         return (
           <div>
             <h3 className="text-lg font-semibold">Revenue Transactions</h3>
             <p>Total Revenue: <FormattedPrice amount={totalRevenue} /></p>
           </div>
         );
-
+  
       default:
         return null;
     }
   }
+  
 };
 
 export default TransactionAnalyzer;
