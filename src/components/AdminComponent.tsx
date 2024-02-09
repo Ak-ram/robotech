@@ -96,7 +96,7 @@ const AdminComponent = () => {
           {sidebarItems.map((item) => (
             <li
               key={item.id}
-              className={`flex items-center gap-2 my-2 w-full hover:bg-slate-300 p-1.5 rounded-md cursor-pointer ${selectedItem === item ? "bg-slate-300" : ""} my-0`}
+              className={`flex items-center gap-2 my-2 w-full hover:bg-slate-200 p-1.5 rounded-md cursor-pointer ${selectedItem === item ? "bg-slate-300" : ""} my-0`}
               onClick={() => handleItemClick(item)}
             >
               {item.icon}
@@ -112,7 +112,7 @@ const AdminComponent = () => {
               <span className="hover:bg-slate-300 bgwhite  py-1 px-1 rounded cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
                 {isOpen ? <X /> : <Menu />}
               </span>
-              <span className="bg-white hover:bg-slate-300 font-bold px-1.5 py-1 rounded">{selectedItem.label} Page</span>
+              <span className="bg-white  hover:bg-slate-300 font-bold px-1.5 py-1 rounded">{selectedItem.label} Page</span>
             </div>
             {isPasswordEntered || selectedItem.id !== 9 ? (
               selectedItem.content
