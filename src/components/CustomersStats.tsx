@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerData } from "@/helpers/getCustomerData";
-import { Activity, Briefcase, Book, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X, Download, Ban } from "lucide-react";
+import { Activity,  ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X, Download, Ban } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
 import CustomerStatsChart from "./CustomerStatsChart";
 import { downloadJSON } from "@/helpers/downloadJsonfile";
-import { ProductType } from "../../type";
 import { getProducts } from "@/helpers/getProducts";
 import TransactionAnalyzer from "./TransactionAnalyzer";
 import CustomerStatsTopSelling from "./CustomerStatsTopSelling";
@@ -35,9 +34,7 @@ const CustomersStats = () => {
         }
     }, []);
 
-    useEffect(() => {
-        console.log(customers);
-    }, [customers]);
+
     // Calculate the number of transactions for each customer
     const calculateNumberOfTransactions = (customerId: string): number => {
         const customer = customers.find((c) => c.id === customerId);
