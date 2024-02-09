@@ -9,6 +9,7 @@ import Products from "./Products";
 import ApexChartComp from "./ApexChart";
 import { Banknote, BarChart, CheckCircle, DollarSign, Download, LineChart, Search, ShoppingCart, X, XCircle } from "lucide-react";
 import CustomersStats from "./CustomersStats";
+import TransactionAnalyzer from "./TransactionAnalyzer";
 
 interface Product {
     id: string;

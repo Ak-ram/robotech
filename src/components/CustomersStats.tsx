@@ -7,6 +7,7 @@ import CustomerStatsChart from "./CustomerStatsChart";
 import { downloadJSON } from "@/helpers/downloadJsonfile";
 import { ProductType } from "../../type";
 import { getProducts } from "@/helpers/getProducts";
+import TransactionAnalyzer from "./TransactionAnalyzer";
 
 const CustomersStats = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -329,6 +330,8 @@ const CustomersStats = () => {
 
             {/* Display additional statistics */}
             <div className="mt-4">
+            <TransactionAnalyzer  customers={customers}/>
+
             </div>
         </section>
     </>)
