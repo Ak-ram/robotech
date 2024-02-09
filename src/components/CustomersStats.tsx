@@ -10,6 +10,7 @@ import { getProducts } from "@/helpers/getProducts";
 import TransactionAnalyzer from "./TransactionAnalyzer";
 import CustomerStatsTopSelling from "./CustomerStatsTopSelling";
 import CustomerStatsOutStocks from "./CustomerStatsOutStocks";
+import CustomerStatsInStocks from "./CustomerStatsInStocks";
 
 const CustomersStats = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -100,9 +101,12 @@ const CustomersStats = () => {
 
 
             <div className="flex flex-col">
+            <div className="flex gap-2 ">
+
+                <CustomerStatsInStocks />
                 <CustomerStatsOutStocks />
 
-
+</div>
 
 
                 <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>

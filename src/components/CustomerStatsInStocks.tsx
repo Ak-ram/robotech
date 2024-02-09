@@ -1,9 +1,9 @@
-import { Ban, Search } from "lucide-react"
+import { Ban, Search} from "lucide-react"
 import { useEffect, useState } from "react";
 import { ProductType } from "../../type";
 import { getProducts } from "@/helpers/getProducts";
 
-const CustomerStatsOutStocks = () => {
+const CustomerStatsInStocks = () => {
 
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -40,9 +40,12 @@ const CustomerStatsOutStocks = () => {
 
     return (
 
-            <div className="flex-1 bg-white my-5 px-3 py-6 border-red-400 border-2 rounded-lg shadow-md animate-fade-in">
-                <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center text-red-500 bg-red-100 py-2 px-4 rounded-md">
-                    <Ban className="mr-2 text-red-500" size={24} /> Out-Stocks
+            <div className="flex-1 border-green-400 border-2 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
+
+
+                {/* Out-Stocks Heading */}
+                <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center text-green-500 bg-green-100 py-2 px-4 rounded-md">
+                    <Ban className="mr-2 text-green-500" size={24} /> In-Stocks
 
                     <span className="mx-4 relative">
                         <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
@@ -51,7 +54,7 @@ const CustomerStatsOutStocks = () => {
                             placeholder="Product Name..."
                             value={searchQuery}
                             onChange={handleSearchInputChange}
-                            className="pl-2 pr-10  placeholder-red-300 py-1 text-sm border border-red-200 rounded focus:outline-none focus:border-red-500"
+                            className="pl-2 pr-10  placeholder-green-300 py-1 text-sm border border-green-200 rounded focus:outline-none focus:border-green-500"
                         />
 
                     </span>
@@ -59,7 +62,7 @@ const CustomerStatsOutStocks = () => {
                     <span className="ml-auto text-sm">
 
                         {products &&
-                            products.filter((product) => +product?.count === 0).length}{' '}
+                            products.filter((product) => +product?.count > 0).length}{' '}
                         Product(s)
                     </span>
                 </h2>
@@ -68,7 +71,7 @@ const CustomerStatsOutStocks = () => {
                 <div className="mb-3 h-[380px] overflow-auto py-3 px-2 rounded-md">
                     {products &&
                         products
-                            .filter((product) => +product?.count === 0)
+                            .filter((product) => +product?.count > 0)
                             .filter((product) =>
                                 product.title.toLowerCase().includes(searchQuery.toLowerCase())
                             )
@@ -90,9 +93,8 @@ const CustomerStatsOutStocks = () => {
 
 
 
-
     )
 }
 
 
-export default CustomerStatsOutStocks
+export default CustomerStatsInStocks
