@@ -173,8 +173,8 @@ const CustomersStats = () => {
                                 <Briefcase className="mr-2 text-yellow-500" size={20} /> Product:
                             </h3>
                             <div className="flex items-center justify-between border-b border-gray-300 py-2">
-                                <div className="pl-3  w-[80%]">{mostSellingProductData.mostSellingProduct}</div>
-                                <div className="text-zinc-500 font-semibold">
+                                <div className="pl-3  w-[70%] overflow-hidden whitespace-nowrap text-ellipsis">{mostSellingProductData.mostSellingProduct}</div>
+                                <div className="text-zinc-500 text-sm font-semibold">
                                     Sold {mostSellingProductData.sellingTimes} times
                                 </div>
                             </div>

@@ -206,43 +206,53 @@ const TransactionAnalyzer = ({ customers }) => {
 
         return (
           <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
-          <h3 className="text-lg font-semibold mb-4">Revenue Transactions</h3>
-          <div className="bg-white rounded-lg p-4 mb-4">
-            <div className="flex items-center mb-4">
-              <Banknote className="w-6 h-6 mr-2 text-blue-500" />
-              <p className="text-md font-semibold">Total Revenue:</p>
-              <p className="ml-auto"><FormattedPrice amount={totalRevenue} /></p>
+            <h3 className="text-lg font-semibold mb-4">Revenue Overview</h3>
+            <div className="bg-white rounded-lg p-4 mb-4">
+              <div className="flex items-center mb-4">
+                <Banknote className="w-6 h-6 mr-2 text-blue-500" />
+                <p className="text-md font-semibold">Total Revenue:</p>
+                <p className="ml-auto text-lg font-semibold">
+                  <FormattedPrice amount={totalRevenue} /></p>
+              </div>
+              <div>
+                <h4 className="text-md font-semibold mb-2">Daily Revenue</h4>
+                {Object.entries(dailyRevenue).map(([day, revenue]) => (
+                  <p key={day} className="flex items-center my-2">
+                    <Clock className="w-5 h-5 mr-2 text-blue-500" />{day}
+                     <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
+                    <FormattedPrice amount={revenue} /></p>
+                ))}
+              </div>
             </div>
-            <div>
-              <h4 className="text-md font-semibold mb-2">Daily Revenue Totals</h4>
-              {Object.entries(dailyRevenue).map(([day, revenue]) => (
-                <p key={day} className="flex items-center"><Clock className="w-5 h-5 mr-2 text-blue-500" />{day}: <FormattedPrice amount={revenue} /></p>
-              ))}
+            <div className="bg-white rounded-lg p-4 mb-4">
+              <div className="flex items-center mb-4">
+                <Calendar className="w-6 h-6 mr-2 text-green-500" />
+                <p className="text-md font-semibold">Monthly Revenue</p>
+              </div>
+              <div>
+                {Object.entries(monthlyRevenue).map(([month, revenue]) => (
+                  <p key={month} className="flex items-center my-2">
+                  <Calendar className="w-5 h-5 mr-2 text-blue-500" />{month}
+                   <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
+                  <FormattedPrice amount={revenue} /></p>
+                ))}
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-4">
+              <div className="flex items-center mb-4">
+                <Package className="w-6 h-6 mr-2 text-yellow-500" />
+                <p className="text-md font-semibold">Yearly Revenue</p>
+              </div>
+              <div>
+                {Object.entries(yearlyRevenue).map(([year, revenue]) => (
+                  <p key={year} className="flex items-center my-2">
+                  <Package className="w-5 h-5 mr-2 text-blue-500" />{year}
+                   <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
+                  <FormattedPrice amount={revenue} /></p>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="bg-white rounded-lg p-4 mb-4">
-            <div className="flex items-center mb-4">
-              <Calendar className="w-6 h-6 mr-2 text-green-500" />
-              <p className="text-md font-semibold">Monthly Revenue Totals</p>
-            </div>
-            <div>
-              {Object.entries(monthlyRevenue).map(([month, revenue]) => (
-                <p key={month} className="flex items-center"><Calendar className="w-5 h-5 mr-2 text-green-500" />{month}: <FormattedPrice amount={revenue} /></p>
-              ))}
-            </div>
-          </div>
-          <div className="bg-white rounded-lg p-4">
-            <div className="flex items-center mb-4">
-              <Package className="w-6 h-6 mr-2 text-yellow-500" />
-              <p className="text-md font-semibold">Yearly Revenue Totals</p>
-            </div>
-            <div>
-              {Object.entries(yearlyRevenue).map(([year, revenue]) => (
-                <p key={year} className="flex items-center"><Package className="w-5 h-5 mr-2 text-yellow-500" />{year}: <FormattedPrice amount={revenue} /></p>
-              ))}
-            </div>
-          </div>
-        </div>
         );
       default:
         return null;
