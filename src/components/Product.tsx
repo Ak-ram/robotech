@@ -189,7 +189,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-48 lg:h-68 overflow-hidden rounded-xl"
             >
               <img
-                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-1000 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
+                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
                 src={item.image1}
                 alt="product image"
               />

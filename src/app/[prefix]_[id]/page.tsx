@@ -68,7 +68,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
       {
         product ?
           <section className="">
-            <div className="py-6 sm:py-12 mx-auto px-4">
+            <div className="py-6  mx-auto px-4">
               <nav className="flex">
                 <ol role="list" className="flex items-center">
                   {/* Home */}
@@ -166,10 +166,8 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                     {/* <p className="ml-2 text-sm font-medium text-gray-500">{product?.count} Piece(s)</p> */}
 
                     {
-                      product?.count > 0 && prefix !== 'print' ? <p className="ml-2 text-sm font-medium text-gray-500">
-                        <span className="mr-2">In Stock:</span>
-                        {product?.count} Piece(s)</p>
-                        : <span className="hidden sm:flex flex-col items-center justify-center">
+                      product?.count > 0 && prefix !== 'print' &&
+                        <span className="hidden sm:flex flex-col items-center justify-center">
                           <span className="text-slate-600 flex items-center"><Check size={18} /> Availability :  avilable</span>
                         </span>
                     }
