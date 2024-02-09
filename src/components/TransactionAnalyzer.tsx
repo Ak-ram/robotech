@@ -1,74 +1,8 @@
-// import React, { useEffect, useState } from 'react';
-
-// const TransactionAnalyzer = ({customers}) => {
-//   const [dailySells, setDailySells] = useState({});
-//   const [monthlySells, setMonthlySells] = useState({});
-//   const [yearlySells, setYearlySells] = useState({});
-
-//   useEffect(() => {
-//     const analyzeTransactions = () => {
-//       const dailyTransactions = {};
-//       const monthlyTransactions = {};
-//       const yearlyTransactions = {};
-//       // Iterate over each customer object
-//       customers?.forEach(customer => {
-//         const transactions = customer.transactions;
-
-//         // Iterate over each transaction
-//         transactions.products.forEach(transaction => {
-//           const transactionDate = new Date(transaction.date);
-//           const dayKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}-${transactionDate.getDate()}`;
-//           const monthKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}`;
-//           const yearKey = `${transactionDate.getFullYear()}`;
-
-//           // Group transactions by day
-//           if (!dailyTransactions[dayKey]) {
-//             dailyTransactions[dayKey] = [];
-//           }
-//           dailyTransactions[dayKey].push(transaction);
-
-//           // Group transactions by month
-//           if (!monthlyTransactions[monthKey]) {
-//             monthlyTransactions[monthKey] = [];
-//           }
-//           monthlyTransactions[monthKey].push(transaction);
-
-//           // Group transactions by year
-//           if (!yearlyTransactions[yearKey]) {
-//             yearlyTransactions[yearKey] = [];
-//           }
-//           yearlyTransactions[yearKey].push(transaction);
-//         });
-//       });
-
-//       setDailySells(dailyTransactions);
-//       setMonthlySells(monthlyTransactions);
-//       setYearlySells(yearlyTransactions);
-//     };
-
-//     // Call the function to analyze transactions
-//     analyzeTransactions();
-//   }, [customers]);
-
-//   return (
-//     <div>
-//       <h2>Daily Sells</h2>
-//      <pre>{JSON.stringify(dailySells, null, 2)}</pre>
-
-//       <h2>Monthly Sells</h2>
-//       <pre>{JSON.stringify(monthlySells, null, 2)}</pre>
-
-//       <h2>Yearly Sells</h2>
-//       <pre>{JSON.stringify(yearlySells, null, 2)}</pre> 
-//     </div>
-//   );
-// };
-
-// export default TransactionAnalyzer;
-import { Clock, Calendar, DollarSign, Package } from 'lucide-react';
+import { Clock, Calendar, DollarSign, Package, Banknote } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+import FormattedPrice from './FormattedPrice';
 
-const TransactionAnalyzer = ({customers}) => {
+const TransactionAnalyzer = ({ customers }) => {
   const [dailySells, setDailySells] = useState({});
   const [monthlySells, setMonthlySells] = useState({});
   const [yearlySells, setYearlySells] = useState({});
@@ -83,13 +17,16 @@ const TransactionAnalyzer = ({customers}) => {
       // Iterate over each customer object
       customers.forEach(customer => {
         const transactions = customer.transactions;
-
+        const customerName = customer.fullName; // Assuming fullName as the customer name field
         // Iterate over each transaction
         transactions.products.forEach(transaction => {
           const transactionDate = new Date(transaction.date);
           const dayKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}-${transactionDate.getDate()}`;
           const monthKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}`;
           const yearKey = `${transactionDate.getFullYear()}`;
+
+          // Add customerName to the transaction
+          transaction.customerName = customerName;
 
           // Group transactions by day
           if (!dailyTransactions[dayKey]) {
@@ -153,10 +90,10 @@ const TransactionAnalyzer = ({customers}) => {
         </div>
         <div className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
           onClick={() => handlePeriodClick('revenue')}>
-          <DollarSign className="w-8 h-8 mr-2 text-gray-500" />
+          <Banknote className="w-8 h-8 mr-2 text-gray-500" />
           <div>
             <h3 className="text-lg font-semibold">Total Revenue</h3>
-            <p className="text-gray-600">{calculateTotalRevenue()}</p>
+            <p className="text-gray-600"><FormattedPrice amount={calculateTotalRevenue()} /></p>
           </div>
         </div>
       </div>
@@ -186,14 +123,19 @@ const TransactionAnalyzer = ({customers}) => {
       case 'daily':
         return Object.keys(dailySells).map(day => (
           <div key={day} className="mb-4">
-            <h3 className="text-lg font-semibold">{day}</h3>
-            {dailySells[day].map((transaction, index) => (
-              <div key={index} className="flex justify-between">
+          <h3 className="text-lg font-semibold">{day}</h3>
+          {dailySells[day].map((transaction, index) => (
+            <div key={index} className="flex flex-col bg-slate-100 rounded p-3 mb-2 justify-between">
+              <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
+              <div className="flex justify-between items-center">
                 <p>{transaction.productName}</p>
-                <p>${transaction.subtotal}</p>
+                <div className="flex items-center">
+                  <FormattedPrice amount={transaction.subtotal} />
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
         ));
       case 'monthly':
         return Object.keys(monthlySells).map(month => (
@@ -202,7 +144,8 @@ const TransactionAnalyzer = ({customers}) => {
             {monthlySells[month].map((transaction, index) => (
               <div key={index} className="flex justify-between">
                 <p>{transaction.productName}</p>
-                <p>${transaction.subtotal}</p>
+                <p>{transaction.customerName}</p> {/* Render customer name */}
+                <FormattedPrice amount={transaction.subtotal} />
               </div>
             ))}
           </div>
@@ -214,26 +157,27 @@ const TransactionAnalyzer = ({customers}) => {
             {yearlySells[year].map((transaction, index) => (
               <div key={index} className="flex justify-between">
                 <p>{transaction.productName}</p>
-                <p>${transaction.subtotal}</p>
+                <p>{transaction.customerName}</p> {/* Render customer name */}
+                <FormattedPrice amount={transaction.subtotal} />
               </div>
             ))}
           </div>
         ));
-        case 'revenue':
-          let totalRevenue = 0;
-          customers.forEach(customer => {
-            customer.transactions.products.forEach(transaction => {
-              totalRevenue += parseInt(transaction.subtotal);
-            });
+      case 'revenue':
+        let totalRevenue = 0;
+        customers.forEach(customer => {
+          customer.transactions.products.forEach(transaction => {
+            totalRevenue += parseInt(transaction.subtotal);
           });
-        
-          return (
-            <div>
-              <h3 className="text-lg font-semibold">Revenue Transactions</h3>
-              <p>Total Revenue: ${totalRevenue}</p>
-            </div>
-          );
-    
+        });
+
+        return (
+          <div>
+            <h3 className="text-lg font-semibold">Revenue Transactions</h3>
+            <p>Total Revenue: <FormattedPrice amount={totalRevenue} /></p>
+          </div>
+        );
+
       default:
         return null;
     }
