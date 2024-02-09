@@ -112,7 +112,7 @@ const AdminComponent = () => {
               <span className="hover:bg-slate-300 bgwhite  py-1 px-1 rounded cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
                 {isOpen ? <X /> : <Menu />}
               </span>
-              <span className="bg-white hover:bg-slate-300 font-bold px-1.5 py-1 rounded">{selectedItem.label} Page</span>
+              <span className="bg-white  hover:bg-slate-300 font-bold px-1.5 py-1 rounded">{selectedItem.label} Page</span>
             </div>
             {isPasswordEntered || selectedItem.id !== 9 ? (
               selectedItem.content

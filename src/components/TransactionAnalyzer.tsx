@@ -269,7 +269,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { Clock, Calendar, Package, Banknote } from 'lucide-react';
+import { Clock, Calendar, Package, Banknote, User, Cable } from 'lucide-react';
 import FormattedPrice from './FormattedPrice';
 import Link from 'next/link';
 
@@ -381,36 +381,36 @@ const yearlyRevenueData = Object.entries(yearlyRevenue)
   return (
     <div className="container overflow-auto mx-auto p-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
+        <div className="bg-white border border-indigo-500 rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
           onClick={() => handlePeriodClick('daily')}>
-          <Clock className="w-8 h-8 mr-2 text-gray-500" />
+          <Clock className="w-8 h-8 mr-2 text-indigo-500" />
           <div>
-            <h3 className="text-lg font-semibold">Daily Sells</h3>
-            <p className="text-gray-600">{Object.keys(dailySells).length}</p>
+            <h3 className="text-lg text-indigo-600 font-semibold">Daily Sells</h3>
+            <p className="text-indigo-500">{Object.keys(dailySells).length}</p>
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
+        <div className="bg-white border border-green-500  rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
           onClick={() => handlePeriodClick('monthly')}>
-          <Calendar className="w-8 h-8 mr-2 text-gray-500" />
+          <Calendar className="w-8 h-8 mr-2 text-green-500" />
           <div>
-            <h3 className="text-lg font-semibold">Monthly Sells</h3>
-            <p className="text-gray-600">{Object.keys(monthlySells).length}</p>
+            <h3 className="text-lg text-green-500  font-semibold">Monthly Sells</h3>
+            <p className="text-green-500 ">{Object.keys(monthlySells).length}</p>
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
+        <div className="bg-white rounded-lg border border-orange-500 shadow-lg p-4 flex items-center justify-center cursor-pointer"
           onClick={() => handlePeriodClick('yearly')}>
-          <Package className="w-8 h-8 mr-2 text-gray-500" />
+          <Package className="w-8 h-8 mr-2 text-orange-500" />
           <div>
-            <h3 className="text-lg font-semibold">Yearly Sells</h3>
-            <p className="text-gray-600">{Object.keys(yearlySells).length}</p>
+            <h3 className="text-lg text-orange-500 font-semibold">Yearly Sells</h3>
+            <p className="text-orange-600">{Object.keys(yearlySells).length}</p>
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
+        <div className="bg-white border border-rose-500 rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
           onClick={() => handlePeriodClick('revenue')}>
-          <Banknote className="w-8 h-8 mr-2 text-gray-500" />
+          <Banknote className="w-8 h-8 mr-2 text-rose-500" />
           <div>
-            <h3 className="text-lg font-semibold">Total Revenue</h3>
-            <p className="text-gray-600"><FormattedPrice amount={calculateTotalRevenue()} /></p>
+            <h3 className="text-lg text-rose-500 font-semibold">Total Revenue</h3>
+            <p className="text-rose-600"><FormattedPrice amount={calculateTotalRevenue()} /></p>
           </div>
         </div>
       </div>
@@ -487,14 +487,19 @@ const yearlyRevenueData = Object.entries(yearlyRevenue)
             id: transaction?.customerId,
             data: JSON.stringify(customers.find(customer => customer.id === transaction?.customerId))
           },
-        }} key={index} className="flex flex-col hover:bg-slate-100 border border-slate-200 rounded p-3 mb-2 justify-between">
-          <p className='text-blue-400 font-semibold'>{transaction.customerName}</p> {/* Render customer name */}
+        }} key={index} className="flex hover:bg-slate-100 border border-slate-200 rounded p-3 mb-2 items-center gap-3">
+          <User  size={25} className='text-blue-400'/>
+          <div className='flex-1'>
+          <p className='text-blue-400 flex gap-2  font-semibold'>
+            {transaction.customerName}</p> 
           <div className="flex justify-between items-center">
-            <p>{transaction.productName}</p>
-            <div className="flex items-center">
+            <p className='flex-1'>{transaction.productName}</p>
+            <div className="">
               <FormattedPrice className='text-sm font-bold' amount={transaction.subtotal} />
             </div>
           </div>
+          </div>
+          
         </Link>
       ));
     };
