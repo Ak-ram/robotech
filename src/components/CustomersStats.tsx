@@ -146,6 +146,12 @@ const CustomersStats = () => {
     const mostSellingProductData = getMostSellingProduct();
     const mostSellingServiceData = getMostSellingService();
     const mostSellingCourseData = getMostSellingCourse();
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // Function to handle changes in the search query
+    const handleSearchInputChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
     return (<>
         <section className='my-5'>
 
@@ -211,27 +217,54 @@ const CustomersStats = () => {
 
 
                     <div className="flex-1 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
-                        {/* Top Selling Heading */}
+
+
+                        {/* Out-Stocks Heading */}
                         <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center text-red-500 bg-red-100 py-2 px-4 rounded-md">
                             <Ban className="mr-2 text-red-500" size={24} /> Out-Stocks
-                            <span className="ml-auto text-sm">{products && products
-                                .filter((product: ProductType) => +product?.count === 0).length} Product(s)</span>
+
+                            <span className="mx-4 relative">
+                                <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
+                                <input
+                                    type="text"
+                                    placeholder="Product Name..."
+                                    value={searchQuery}
+                                    onChange={handleSearchInputChange}
+                                    className="pl-2 pr-10  placeholder-red-300 py-1 text-sm border border-red-200 rounded focus:outline-none focus:border-red-500"
+                                />
+
+                            </span>
+
+                            <span className="ml-auto text-sm">
+
+                                {products &&
+                                    products.filter((product) => +product?.count === 0).length}{' '}
+                                Product(s)
+                            </span>
                         </h2>
 
-                        {/* Top Selling Product */}
-                        <div className="mb-3 h-[380px]  overflow-auto  py-3 px-2 rounded-md">
-                            {products && products
-                                .filter((product: ProductType) => +product?.count === 0)
-                                .map((product: ProductType) => (
-                                    <div className="flex items-center justify-start gap-1 border-b border-gray-300 py-2" key={product.id}>
-                                        <img className="w-8 h-8 rounded" src={product?.image1}/> <div className="pl-3">{product.title}</div>
-                                    </div>
-                                ))}
-
-
+                        {/* Out-Stocks Product List */}
+                        <div className="mb-3 h-[380px] overflow-auto py-3 px-2 rounded-md">
+                            {products &&
+                                products
+                                    .filter((product) => +product?.count === 0)
+                                    .filter((product) =>
+                                        product.title.toLowerCase().includes(searchQuery.toLowerCase())
+                                    )
+                                    .map((product) => (
+                                        <div
+                                            className="flex items-center justify-start gap-1 border-b border-gray-300 py-2"
+                                            key={product.id}
+                                        >
+                                            <img
+                                                className="w-8 h-8 rounded"
+                                                src={product?.image1}
+                                                alt={product.title}
+                                            />{' '}
+                                            <div className="pl-3">{product.title}</div>
+                                        </div>
+                                    ))}
                         </div>
-
-
                     </div>
 
                 </div>
@@ -330,7 +363,7 @@ const CustomersStats = () => {
 
             {/* Display additional statistics */}
             <div className="mt-4">
-            <TransactionAnalyzer  customers={customers}/>
+                <TransactionAnalyzer customers={customers} />
 
             </div>
         </section>
