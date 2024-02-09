@@ -135,7 +135,7 @@ const TransactionAnalyzer = ({ customers }) => {
           <div className="flex justify-between items-center">
             <p>{transaction.productName}</p>
             <div className="flex items-center">
-              <FormattedPrice amount={transaction.subtotal} />
+              <FormattedPrice className='text-sm font-bold' amount={transaction.subtotal} />
             </div>
           </div>
         </Link>
