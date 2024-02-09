@@ -136,8 +136,8 @@ const TransactionAnalyzer = ({ customers }) => {
     switch (period) {
       case 'daily':
         return Object.keys(dailySells)
-          .sort((a, b) => new Date(b) - new Date(a))
-          .map(day => (
+        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+        .map(day => (
             <div key={day} className="mb-4">
               <h3 className="text-lg font-semibold">{day}</h3>
               {renderTransactionsByPeriod(dailySells[day])}
@@ -146,8 +146,8 @@ const TransactionAnalyzer = ({ customers }) => {
   
       case 'monthly':
         return Object.keys(monthlySells)
-          .sort((a, b) => new Date(b) - new Date(a))
-          .map(month => (
+        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+        .map(month => (
             <div key={month} className="mb-4">
               <h3 className="text-lg font-semibold">{month}</h3>
               {renderTransactionsByPeriod(monthlySells[month])}
@@ -156,8 +156,8 @@ const TransactionAnalyzer = ({ customers }) => {
   
       case 'yearly':
         return Object.keys(yearlySells)
-          .sort((a, b) => new Date(b) - new Date(a))
-          .map(year => (
+        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+        .map(year => (
             <div key={year} className="mb-4">
               <h3 className="text-lg font-semibold">{year}</h3>
               {renderTransactionsByPeriod(yearlySells[year])}
