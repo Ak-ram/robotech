@@ -357,25 +357,25 @@ const TransactionAnalyzer = ({ customers }) => {
   });
 
   const dailyRevenueData = Object.entries(dailyRevenue)
-  .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
-  .map(([day, revenue]) => ({
-    name: day,
-    revenue: revenue,
-  }));
+    .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+    .map(([day, revenue]) => ({
+      name: day,
+      revenue: revenue,
+    }));
 
-const monthlyRevenueData = Object.entries(monthlyRevenue)
-  .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
-  .map(([month, revenue]) => ({
-    name: month,
-    revenue: revenue,
-  }));
+  const monthlyRevenueData = Object.entries(monthlyRevenue)
+    .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+    .map(([month, revenue]) => ({
+      name: month,
+      revenue: revenue,
+    }));
 
-const yearlyRevenueData = Object.entries(yearlyRevenue)
-  .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
-  .map(([year, revenue]) => ({
-    name: year,
-    revenue: revenue,
-  }));
+  const yearlyRevenueData = Object.entries(yearlyRevenue)
+    .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+    .map(([year, revenue]) => ({
+      name: year,
+      revenue: revenue,
+    }));
 
 
   return (
@@ -488,18 +488,23 @@ const yearlyRevenueData = Object.entries(yearlyRevenue)
             data: JSON.stringify(customers.find(customer => customer.id === transaction?.customerId))
           },
         }} key={index} className="flex hover:bg-slate-100 border border-slate-200 rounded p-3 mb-2 items-center gap-3">
-          <User  size={25} className='text-blue-400'/>
-          <div className='flex-1'>
-          <p className='text-blue-400 flex gap-2  font-semibold'>
-            {transaction.customerName}</p> 
-          <div className="flex justify-between items-center">
-            <p className='flex-1'>{transaction.productName}</p>
-            <div className="">
-              <FormattedPrice className='text-sm font-bold' amount={transaction.subtotal} />
-            </div>
+          <User size={25} className='text-blue-400' />
+          <div className='flex-1 flex gap-2 justify-between items-center'>
+            <p className='text-blue-400 flex gap-2  font-semibold'>
+              {transaction.customerName}</p>
+              <p className='flex-1'>{transaction.productName}</p>
+             
+            
+            <div className="flex flex-col gap-1">
+                <span className='text-sm font-semibold'>Price</span>
+                <FormattedPrice className='text-sm font-semibold' amount={transaction.subtotal} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className='text-sm font-semibold'>Profit</span>
+                <FormattedPrice className='text-sm text-green-400 font-semibold' amount={((transaction.subtotal) - (transaction?.wholesalePrice || 0))} />
+              </div>
           </div>
-          </div>
-          
+
         </Link>
       ));
     };
