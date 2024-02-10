@@ -21,6 +21,7 @@ const Admin3DComponent = () => {
     image3: "",
     brand: "",
     quantity: 1,
+    externalLink:''
   });
 
   useEffect(() => {
@@ -50,6 +51,7 @@ const Admin3DComponent = () => {
       image3: "",
       brand: "",
       quantity: 1,
+      externalLink:''
     });
   };
 
@@ -348,6 +350,17 @@ const Admin3DComponent = () => {
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.brand}
                 onChange={(e) => handleInputChange(e, "brand")}
+              />
+            </div>
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">External Link</span>
+
+              <input
+                type="text"
+                placeholder="Link to video, or anything else"
+                className="p-2 w-full border border-gray-300 rounded"
+                value={editedItem.externalLink}
+                onChange={(e) => handleInputChange(e, "externalLink")}
               />
             </div>
           </div>
