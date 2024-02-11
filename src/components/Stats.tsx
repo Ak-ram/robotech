@@ -120,7 +120,7 @@ const Stats = () => {
                                         </span>
                                         </div>
                                     </div>
-                                    <table className="w-full text-sm text-gray-600">
+                                    {/* <table className="w-full text-sm text-gray-600">
                                         <thead className="bg-black text-white text-sm uppercase ">
                                             <tr className="">
                                                 <th scope="col" className="text-center text-xs  p-3 text-left tracking-wider">
@@ -165,12 +165,12 @@ const Stats = () => {
                                             ))}
 
                                         </tbody>
-                                    </table>
+                                    </table> */}
 
                                 </div>
                             </div>
                         </div></div>
-                    <section className="rounded-lg flex-1 border border-gray-300 p-5 bg-white">
+                    {/* <section className="rounded-lg flex-1 border border-gray-300 p-5 bg-white">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <div className="flex items-center justify-center p-6 rounded-lg bg-blue-50">
                                 <div className="mr-2">
@@ -220,7 +220,7 @@ const Stats = () => {
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </section> */}
                 </div>
             </section>
 

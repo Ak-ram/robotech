@@ -269,7 +269,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { Clock, Calendar, Package, Banknote, User, Cable } from 'lucide-react';
+import { Clock, Calendar, Package, Banknote, User, Cable, ArrowDown, ArrowUp, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import FormattedPrice from './FormattedPrice';
 import Link from 'next/link';
 
@@ -425,11 +425,11 @@ const TransactionAnalyzer = ({ customers }) => {
         </div>
       )}
       {/* Render Revenue Charts */}
-      <div className="mt-8 ">
+      {/* <div className="mt-8 ">
         <h3 className="text-lg font-semibold mb-4">Revenue Overview</h3>
         <div className='flex p-6 bg-white rounded'>
           <div className=''>
-            {/* Daily Revenue Chart */}
+             // Daily Revenue Chart 
             <h4 className="text-md font-semibold mb-2 text-indigo-500">Daily Revenue</h4>
             <LineChart width={380} height={300} data={dailyRevenueData}>
               <XAxis dataKey="name" />
@@ -441,7 +441,7 @@ const TransactionAnalyzer = ({ customers }) => {
             </LineChart>
           </div>
           <div>
-            {/* Monthly Revenue Chart */}
+           // Monthly Revenue Chart 
             <h4 className="text-md font-semibold mb-2 text-green-500">Monthly Revenue</h4>
             <LineChart width={380} height={300} data={monthlyRevenueData}>
               <XAxis dataKey="name" />
@@ -453,7 +453,7 @@ const TransactionAnalyzer = ({ customers }) => {
             </LineChart>
           </div>
           <div>
-            {/* Yearly Revenue Chart */}
+           // Yearly Revenue Chart
             <h4 className="text-md font-semibold mb-2 text-orange-500">Yearly Revenue</h4>
             <LineChart width={380} height={300} data={yearlyRevenueData}>
               <XAxis dataKey="name" />
@@ -465,7 +465,7 @@ const TransactionAnalyzer = ({ customers }) => {
             </LineChart>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 
@@ -500,26 +500,30 @@ const TransactionAnalyzer = ({ customers }) => {
 
             <div className='ml-auto flex gap-4'>
 
-              <div className="flex justify-center items-center flex-col">
-                <span className='text-sm font-semibold'>Price</span>
-                <FormattedPrice className='text-sm font-semibold' amount={transaction.subtotal} />
+              <div className="flex flex-col justify-center items-center">
+                <span className='text-xs font-semibold'>Buy</span>
+                <FormattedPrice className='text-xs font-semibold' amount={transaction?.wholesalePrice || 0} />
+              </div>
+              <div className="flex  flex-col justify-center items-center">
+                <span className='text-xs font-semibold'>Sell</span>
+                <FormattedPrice className='text-xs font-semibold' amount={transaction.subtotal} />
               </div>
               {transaction?.wholesalePrice && transaction?.wholesalePrice !== 0 &&
-                <div className="flex justify-center items-center flex-col">
+                <>
 
                   {transaction?.wholesalePrice && (transaction?.wholesalePrice * transaction?.quantity) < transaction.subtotal &&
-                    <>
-                      <span className='text-sm font-semibold'>Profit</span>
-                      <FormattedPrice className='text-sm text-green-400 font-semibold' amount={((transaction.subtotal) - (transaction?.wholesalePrice * transaction?.quantity || 0))} />
-                    </>
+                    <div className='flex  flex-col items-center'>
+                      <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <ArrowUp size={16}/></span>
+                      <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((transaction.subtotal) - (transaction?.wholesalePrice * transaction?.quantity || 0))} />
+                    </div>
                   }
                   {transaction?.wholesalePrice && (transaction?.wholesalePrice * transaction?.quantity) > transaction.subtotal &&
-                    <>
-                      <span className='text-sm font-semibold'>Profit</span>
-                      <FormattedPrice className='text-sm text-red-400 font-semibold' amount={((transaction?.wholesalePrice * transaction?.quantity || 0) - (transaction.subtotal))} />
-                    </>
+                    <div className='flex  flex-col items-center'>
+                      <span className='text-xs flex items-center text-red-400 font-semibold'><ArrowDown size={16}/>Loss</span>
+                      <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((transaction?.wholesalePrice * transaction?.quantity || 0) - (transaction.subtotal))} />
+                    </div>
                   }
-                </div>
+                </>
               }
             </div>
           </div>
