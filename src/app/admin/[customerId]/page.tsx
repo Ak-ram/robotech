@@ -67,7 +67,7 @@ const CustomerPage = () => {
             <h2 className="text-3xl font-semibold mb-8">Transactions</h2>
 
             <section className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
-              <div className="flex-1 bg-slate-200 h-[400px] overflow-auto mb-4 lg:mr-8">
+              <div className="flex-1 px-6 bg-slate-200 h-[400px] overflow-auto mb-4 lg:mr-8">
                 {tabs[currentTab].content}
               </div>
 

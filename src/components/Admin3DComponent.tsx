@@ -15,7 +15,6 @@ const Admin3DComponent = () => {
     price: "",
     previousPrice: 0,
     description: "",
-    count: 0,
     image1: "",
     image2: "",
     image3: "",
@@ -45,7 +44,6 @@ const Admin3DComponent = () => {
       price: "",
       previousPrice: 0,
       description: "",
-      // count: 0,
       image1: "",
       image2: "",
       image3: "",
@@ -83,9 +81,7 @@ const Admin3DComponent = () => {
       !editedItem.id ||
       !editedItem.title ||
       !editedItem.price ||
-      // !editedItem.previousPrice ||
       !editedItem.description ||
-      !editedItem.count ||
       !editedItem.image1 ||
       !editedItem.brand
     ) {
@@ -271,7 +267,6 @@ const Admin3DComponent = () => {
                 value={editedItem.price}
                 onChange={(e) => {
                   handleInputChange(e, "price")
-                  handleInputChange(e, "count")
                 }
 
                 }

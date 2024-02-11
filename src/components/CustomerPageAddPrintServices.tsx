@@ -1,28 +1,26 @@
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import OrderModel from "./orderModel"
 import { useEffect, useState } from "react";
-import { getPrintServices } from "@/helpers/getPrintServices";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
+import { getPrintServices } from "@/helpers/getPrintServices";
 
 const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
     const [showBill, setShowBill] = useState(false);
     const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
     const [list, setList] = useState([]);
-    const [selectedPrintService, setSelectedPrintService] = useState(null);
+    const [selectedService, setSelectedService] = useState(null);
 
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [newOrder, setNewOrder] = useState({
         productName: '',
         quantity: 1,
         date: '',
-        discount: 0,
-        subtotal: 0,
-        piecePrice: 0
+        discount: 0
     });
     useEffect(() => {
         setUpdatedCustomerData(customerData)
@@ -52,9 +50,9 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
 
             if (!existingCustomer.transactions) {
                 existingCustomer.transactions = {
-                    courses:[],
+                    courses: [],
                     printServices: [],
-                    products:[]
+                    products: [],
                 };
             } else if (!existingCustomer.transactions.printServices) {
                 existingCustomer.transactions.printServices = [];
@@ -80,9 +78,7 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
                     productName: '',
                     quantity: 1,
                     date: '',
-                    discount: 0,
-                    subtotal: 0,
-                    piecePrice: 0
+                    discount: 0
                 });
                 toast.success(`Item Added/Updated successfully`);
                 toast.loading(`Be patient, changes take a few moments to be reflected`);
@@ -148,7 +144,7 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
                                 <ScrollText
                                     onClick={() => {
                                         setShowBill(true);
-                                        setSelectedPrintService(service);
+                                        setSelectedService(service);
                                     }}
                                     className="my-2 cursor-pointer text-blue-600"
                                     size={20}
@@ -157,8 +153,8 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
                             </div>
                             <Trash className="ml-auto mr-2 cursor-not-allowed text-red-600" size={20} />
                         </div>
-                        {showBill && selectedPrintService && (
-                            <Bill transactionData={selectedPrintService} setShowBill={setShowBill} />
+                        {showBill && selectedService && (
+                            <Bill transactionData={selectedService} setShowBill={setShowBill} />
                         )}
                     </div>
                 ))}

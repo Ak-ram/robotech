@@ -244,6 +244,8 @@ const CustomSelect = ({ options, onSelect, newOrder, setNewOrder, setSelectedIte
             productName: option?.title,
             piecePrice: option?.price!,
             wholesalePrice:option.wholesalePrice || 0,
+            discount: option.discount,
+
             date: new Date().toLocaleDateString('en-US', {
                 weekday: 'short',
                 year: 'numeric',
@@ -312,6 +314,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
             ...newOrder,
             productName: option.title,
             piecePrice: option.price,
+            discount: option.discount || 0,
             wholesalePrice:option.wholesalePrice || 0,
             date: new Date().toLocaleDateString('en-US', {
                 weekday: 'short',
@@ -449,7 +452,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
                                 value={newOrder.subtotal}
                                 onChange={(e) => setNewOrder({
                                     ...newOrder,
-                                    subtotal: (selectedItem?.price! * newOrder.quantity) - (newOrder.discount || 0)
+                                    subtotal: (+selectedItem?.price! * +newOrder.quantity!) - (+newOrder.discount! || 0)
                                 })}
                                 disabled
                             />

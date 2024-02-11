@@ -127,6 +127,7 @@ import FormattedPrice from "./FormattedPrice";
 import { Map, MessageSquare, PhoneCall } from "lucide-react";
 import toast from "react-hot-toast";
 import emailjs from '@emailjs/browser'
+import { useRouter } from 'next/navigation';
 
 const EmailJsForm = ({ totalAmt, productData }) => {
     const [clientName, setClientName] = useState("");
@@ -134,6 +135,7 @@ const EmailJsForm = ({ totalAmt, productData }) => {
     const [address, setAddress] = useState("");
     const [message, setMessage] = useState("");
     const formElement = useRef(null);
+    const router = useRouter();
 
     const handleNameChange = (e) => {
         setClientName(e.target.value);
@@ -163,10 +165,12 @@ const EmailJsForm = ({ totalAmt, productData }) => {
                 setClientName('')
                 setPhone('')
                 setMessage('')
-                setAddress('')
+                setAddress('');
+                router.push('/success');
             }, (error) => {
                 toast.error("Order unsuccessful. An error occurred.")
             });
+
     };
 
     return (
