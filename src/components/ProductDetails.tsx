@@ -86,17 +86,27 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                         Newly added
                     </div>
 
-                    {
-                        product?.colors && <div className="flex items-center text-sm font-medium text-gray-600">
-                            <Paintbrush className="w-4 h-4 mr-2" />
-                            Colors:
-                            {product?.colors?.split("|").map((color, i) => <>
-                                <span>{i}</span>
-                                <span>{color}</span>
-
-                            </>)}
+                    {product?.colors && (
+                        <div className="text-sm font-medium text-gray-600">
+                            <div className="flex items-center">
+                                <Paintbrush className="w-4 h-4 mr-2" />
+                                Colors:
+                            </div>
+                            <div className="pl-3 mt-3 flex items-center w-full gap-6">
+                                {product.colors.split("|").map((color, index) => (
+                                    <div key={index} className={`flex justify-center gap-1 items-center`}>
+                                        <span
+                                            className={`block w-[14px] h-[14px] rounded bg-${color.toLowerCase().trim()}-500`}
+                                        ></span>
+                                        <span className={`text-${color.toLowerCase().trim()}-500 capitalize`}>
+                                            {color}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    }
+                    )}
+
 
                 </div>
             </div>

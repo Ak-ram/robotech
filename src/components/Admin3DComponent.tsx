@@ -330,6 +330,17 @@ const Admin3DComponent = () => {
                 onChange={(e) => handleInputChange(e, "description")}
               />
             </div>
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">Colors</span>
+
+              <input
+                type="text"
+                placeholder="colors list, separated by |"
+                className="p-2 w-full border border-gray-300 rounded"
+                value={editedItem.colors}
+                onChange={(e) => handleInputChange(e, "colors")}
+              />
+            </div>
             {/* <div className="w-full mb-2 lg:pr-4">
              <span className="text-sm font-bold my-2 -ml-2">Count</span>
 
