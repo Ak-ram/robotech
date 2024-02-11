@@ -93,11 +93,11 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                                 {product.colors.split("|").map((color, index) => (
                                     <div key={index} className={`flex justify-center gap-1 items-center`}>
                                         <span
-                                            style={{ backgroundColor: color.toLowerCase().trim() }}
-                                            className={`block w-[14px] h-[14px] rounded`}
+                                            style={{ backgroundColor: color.toLowerCase().trim(),opacity: 0.9 }}
+                                            className={`block  w-[14px] h-[14px] rounded`}
                                         ></span>
                                         <span className={`capitalize`}
-                                            style={{ color: color.toLowerCase().trim() }}
+                                            style={{ color: color.toLowerCase().trim() ,opacity: 0.9}}
                                         >
                                             {color}
                                         </span>
