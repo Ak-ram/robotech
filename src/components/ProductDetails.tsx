@@ -1,7 +1,7 @@
 import React from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy } from "lucide-react";
+import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
 import { ProductType } from "../../type";
@@ -54,22 +54,25 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                 </div>
 
                 <div className="mt-5 space-y-2">
-                    <div className="flex items-center text-sm font-medium text-gray-600">
-                        <Wallet2 className="w-4 h-4 mr-2" />
-                        Previous Price:{" "}
-                        <FormattedPrice className="mx-1"
-                            amount={product?.previousPrice!} /> from this product.
-                    </div>
-                    <div className="flex items-center text-sm font-medium text-gray-600">
-                        <Check className="w-4 h-4 mr-2" />
-                        You saved:{" "}
-                        <FormattedPrice
-                            className="mx-1"
-                            amount={product?.previousPrice! - product?.price!}
-                        />{" "}
-                        from this product.
-                    </div>
+                    {product?.previousPrice! > product?.price! && <>
+                        <div className="flex items-center text-sm font-medium text-gray-600">
+                            <Wallet2 className="w-4 h-4 mr-2" />
+                            Previous Price:{" "}
+                            <FormattedPrice className="mx-1"
+                                amount={product?.previousPrice!} /> from this product.
+                        </div>
 
+                        <div className="flex items-center text-sm font-medium text-gray-600">
+                            <Check className="w-4 h-4 mr-2" />
+                            You saved:{" "}
+                            <FormattedPrice
+                                className="mx-1"
+                                amount={product?.previousPrice! - product?.price!}
+                            />{" "}
+                            from this product.
+                        </div>
+                    </>
+                    }
                     <div className="flex items-center text-sm font-medium text-gray-600">
                         <BookCopy className="w-4 h-4 mr-2" />
                         Categroy:
@@ -103,33 +106,37 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                     <div className="flex items-center">
                         <Link2 className="w-4 h-4 text-blue-500 mr-2" />
                         <span className="font-semibold">
-                            <a href={product?.externalLink} className="text-blue-500 hover:underline">
-                                Visit
+                            More Details:
+                            <a href={product?.externalLink} className="ml-2 text-blue-500 hover:underline">
+                                Follow
                             </a>
                         </span>
                     </div>
                 )}
             </div>
 
-            <div className="mt-5 pb-5 border-b space-y-2">
-                <h3>You May love:</h3>
-                {
-                    products?.filter((item: ProductType) => item?.id !== product?.id).map((item =>
-                        <Link href={{
-                            pathname: `/id_${item?.id}`,
-                            query: {
-                                id: item?.id,
-                                prefix: (prefix === "print" ? prefix : item?.category),
-                            },
-                        }} key={`${item?.id}_${item?.title}`} className="flex items-center text-sm font-medium text-gray-600">
-                            <Check className="w-4 h-4 mr-2" />
-                            {item?.title}
-                        </Link>
+            {products?.filter((item: ProductType) => item?.id !== product?.id).length &&
+                <>
+                    <div className="mt-5 pb-5 border-b space-y-2">
+                        <h3 className="text-gray-600">You May also love:</h3>
+                        {
+                            products?.filter((item: ProductType) => item?.id !== product?.id).map((item =>
+                                <Link href={{
+                                    pathname: `/id_${item?.id}`,
+                                    query: {
+                                        id: item?.id,
+                                        prefix: (prefix === "print" ? prefix : item?.category),
+                                    },
+                                }} key={`${item?.id}_${item?.title}`} className="pl-2 flex items-center text-sm font-medium text-blue-500">
+                                    <Link2Icon className="w-4 h-4 mr-2" />
+                                    {item?.title}
+                                </Link>
 
-                    ))
-                }
-
-            </div>
+                            ))
+                        }
+                    </div>
+                </>
+            }
 
         </div>
     );
