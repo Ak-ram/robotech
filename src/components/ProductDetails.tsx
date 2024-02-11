@@ -4,8 +4,9 @@ import { FacebookIcon, TwitterIcon } from "react-share";
 import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
+import { ProductType } from "../../type";
 
-const ProductDetails = ({ product, prefix, dispatch, addToCart }) => {
+const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
     return (
         <div className="bg-white p-6 rounded lg:col-span-2 lg:row-span-2 lg:row-end-2">
             <h1 className="text-3xl font-bold text-gray-900">{product?.title}</h1>
@@ -107,6 +108,20 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart }) => {
                         </span>
                     </div>
                 )}
+            </div>
+
+            <div className="mt-5 pb-5 border-b space-y-2">
+                <h3>You May love:</h3>
+                {
+                    products?.filter((item: ProductType) => item?.id !== product?.id).map((item =>
+                        <div key={`${item?.id}_${item?.title}`} className="flex items-center text-sm font-medium text-gray-600">
+                            <Check className="w-4 h-4 mr-2" />
+                            {item?.title}
+                        </div>
+
+                    ))
+                }
+
             </div>
 
         </div>

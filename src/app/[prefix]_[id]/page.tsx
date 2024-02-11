@@ -159,7 +159,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   </div>
                 </div>
 
-              <ProductDetails product={product} prefix={prefix} dispatch={dispatch} addToCart={addToCart} />
+              <ProductDetails product={product} prefix={prefix} dispatch={dispatch} addToCart={addToCart} products={products}/>
 
                 <div className="lg:col-span-3">
                   <div className="border-b border-gray-300">
