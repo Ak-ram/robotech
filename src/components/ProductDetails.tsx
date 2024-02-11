@@ -1,7 +1,7 @@
 import React from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-import { PhoneCall, Check, Gift, Wallet2, Link2 } from "lucide-react";
+import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
 
@@ -67,10 +67,20 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart }) => {
                         />{" "}
                         from this product.
                     </div>
+
+                    <div className="flex items-center text-sm font-medium text-gray-600">
+                        <BookCopy className="w-4 h-4 mr-2" />
+                        Categroy:
+                        <span className="ml-1 text-sm text-indigo-600">{product?.category?.toUpperCase()}</span>
+                    </div>
+                    <div className="flex items-center text-sm font-medium text-gray-600">
+                        <Gift className="w-4 h-4 mr-2" />
+                        Newly added
+                    </div>
                 </div>
             </div>
 
-            <div className="mt-5 space-y-2">
+            <div className="mt-5 pb-5 border-b space-y-2">
                 <div className="flex items-center">
                     <PhoneCall className="w-4 h-4 text-green-600 mr-2" />
                     <span className="font-semibold">Phone: 01102071544</span>
@@ -98,6 +108,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart }) => {
                     </div>
                 )}
             </div>
+
         </div>
     );
 };
