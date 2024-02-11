@@ -176,7 +176,7 @@ const EmailJsForm = ({ totalAmt, productData }) => {
                 <>
                     <input key={`product_${index}`} type="hidden" name={`product_${index + 1}_title`} value={product.title} />
                     <input key={`product_${index}`} type="hidden" name={`product_${index + 1}_price`} value={product.price} />
-                    <input key={`product_${index}`} type="hidden" name={`product_${index + 1}_qunatity`} value={product.quantity} />
+                    <input key={`product_${index}`} type="hidden" name={`product_${index + 1}_quantity`} value={product.quantity} />
                     <input key={`product_${index}`} type="hidden" name={`product_${index + 1}_subTotal`} value={`${+product.price * +product.quantity}`} />
                 </>
             ))}
