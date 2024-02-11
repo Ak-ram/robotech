@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerData } from "@/helpers/getCustomerData";
-import { Activity,  ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X, Download, Ban } from "lucide-react";
+import { Activity, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X, Download, Ban } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
 import CustomerStatsChart from "./CustomerStatsChart";
@@ -97,12 +97,12 @@ const CustomersStats = () => {
 
 
             <div className="flex flex-col">
-            <div className="flex gap-2 ">
+                <div className="flex gap-2 ">
 
-                <CustomerStatsInStocks />
-                <CustomerStatsOutStocks />
+                    <CustomerStatsInStocks />
+                    <CustomerStatsOutStocks />
 
-</div>
+                </div>
 
 
                 <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
@@ -137,10 +137,8 @@ const CustomersStats = () => {
                                     <Download className="" />
                                 </span>
                             </div>
-
-
                         </div>
-                        <table className="w-full text-gray-400">
+                        <table className="w-full h-[400px] overflow-auto text-gray-400">
                             <thead className="bg-gray-800 uppercase">
                                 <tr>
                                     <th className="p-3 text-left text-sm tracking-wider">Name</th>
@@ -151,7 +149,7 @@ const CustomersStats = () => {
                                     <th className="p-3 text-left text-sm tracking-wider"></th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-gray-800">
+                            <tbody className="bg-gray-800 ">
                                 {filteredCategoryStats.map((customerInfo, index) => (
                                     <tr key={index} className="hover:bg-opacity-50 bg-black bg-opacity-20">
                                         <td className="pl-3 flex py-2.5 whitespace-nowrap">
