@@ -243,6 +243,7 @@ const CustomSelect = ({ options, onSelect, newOrder, setNewOrder, setSelectedIte
             ...newOrder,
             productName: option?.title,
             piecePrice: option?.price!,
+            wholesalePrice:option.wholesalePrice || 0,
             date: new Date().toLocaleDateString('en-US', {
                 weekday: 'short',
                 year: 'numeric',
@@ -311,7 +312,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
             ...newOrder,
             productName: option.title,
             piecePrice: option.price,
-            wholesalePrice:0,
+            wholesalePrice:option.wholesalePrice || 0,
             date: new Date().toLocaleDateString('en-US', {
                 weekday: 'short',
                 year: 'numeric',
@@ -321,6 +322,8 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
                 minute: '2-digit',
             })
         });
+        console.log('new order',option)
+
     };
 
     const handleAddOrderClick = async () => {
