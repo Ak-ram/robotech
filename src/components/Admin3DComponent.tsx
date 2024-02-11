@@ -81,7 +81,6 @@ const Admin3DComponent = () => {
       !editedItem.id ||
       !editedItem.title ||
       !editedItem.price ||
-      // !editedItem.previousPrice ||
       !editedItem.description ||
       !editedItem.image1 ||
       !editedItem.brand

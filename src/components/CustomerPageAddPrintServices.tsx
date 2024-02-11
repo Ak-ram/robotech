@@ -1,12 +1,12 @@
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import OrderModel from "./orderModel"
 import { useEffect, useState } from "react";
-import { getPrintServices } from "@/helpers/getPrintServices";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
+import { getPrintServices } from "@/helpers/getPrintServices";
 
 const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
