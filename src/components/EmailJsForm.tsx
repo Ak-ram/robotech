@@ -47,6 +47,8 @@ const EmailJsForm = ({ totalAmt }) => {
     };
 
     return (<form ref={formElement} onSubmit={sendEmail}>
+        <input type="hidden" name="client_totalAmt" value={totalAmt} />
+
         <label htmlFor="client_name" className="mt-4 mb-2 block text-sm font-medium">Your Name</label>
         <div className="relative">
             <input onChange={handleNameChange} type="text" value={clientName} id="client_name" name="client_name" className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Your full name here" />
