@@ -21,7 +21,6 @@ const CustomersStats = () => {
         const fetchData = async () => {
             try {
                 const categoriesList = await getCustomerData();
-                const allProducts = await getProducts();
                 sortCustomers(categoriesList, sortOrder); // Initial sorting based on sortOrder
 
             } catch (error) {
