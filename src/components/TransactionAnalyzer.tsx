@@ -510,7 +510,7 @@ const TransactionAnalyzer = ({ customers }) => {
               </div>
               <div className="flex  flex-col justify-center items-center">
                 <span className='text-xs font-semibold'>Quantity</span>
-                <FormattedPrice className='text-xs font-semibold' amount={transaction.quantity} />
+                <span className='text-xs font-semibold'>{transaction.quantity} <span/>
               </div>
               <div className="flex  flex-col justify-center items-center">
                 <span className='text-xs font-semibold'>Sub Total</span>
