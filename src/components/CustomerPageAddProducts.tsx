@@ -132,18 +132,18 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 >
                     Add Product
                 </button>
-                {updatedCustomerData?.transactions?.products?.slice().reverse().map((service, index) => (
+                {updatedCustomerData?.transactions?.products?.slice().reverse().map((product, index) => (
                     <div key={index} className={`bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4`}>
 
                         <div
 
                             className="flex-1"
                         >
-                            <p className="text-gray-600 mb-2">Transaction date: {service["date"]}</p>
-                            <p className="text-gray-600 mb-2">Service name: {service["productName"]}</p>
-                            <p className="text-gray-600 mb-2">Service price: <FormattedPrice amount={service["piecePrice"]} /></p>
-                            <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={service["discount"]!} /></p>
-                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={service["subtotal"]!} /></p>
+                            <p className="text-gray-600 mb-2">Transaction date: {product["date"]}</p>
+                            <p className="text-gray-600 mb-2">Product name: {product["productName"]}</p>
+                            <p className="text-gray-600 mb-2">Product price: <FormattedPrice amount={product["piecePrice"]} /></p>
+                            <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={product["discount"]!} /></p>
+                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={product["subtotal"]!} /></p>
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex-1">
@@ -152,7 +152,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                                 <ScrollText
                                     onClick={() => {
                                         setShowBill(true);
-                                        setSelectedProduct(service);
+                                        setSelectedProduct(product);
                                     }}
                                     className="my-2 cursor-pointer text-blue-600"
                                     size={20}
