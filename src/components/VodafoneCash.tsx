@@ -62,7 +62,7 @@ const VodafoneCash = ({ totalAmt, productData }) => {
                                 </p>
                             </label>
                         </div>
-                        <EmailJsForm productData={productData} totalAmt={totalAmt} />
+                        <EmailJsForm  productData={productData} totalAmt={totalAmt} />
 
                      
                     </div>
