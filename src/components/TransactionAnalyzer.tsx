@@ -302,7 +302,7 @@ const TransactionAnalyzer = ({ customers }) => {
           transaction.customerName = customerName;
           transaction.customerId = customerId;
           // transaction.wholesalePrice = wholesalePrice;
-     
+
           // Group transactions by day
           if (!dailyTransactions[dayKey]) {
             dailyTransactions[dayKey] = [];
@@ -465,7 +465,6 @@ const TransactionAnalyzer = ({ customers }) => {
             </LineChart>
           </div>
         </div>
-
       </div>
     </div>
   );
@@ -482,7 +481,7 @@ const TransactionAnalyzer = ({ customers }) => {
 
   function renderTransactions(period) {
     const renderTransactionsByPeriod = (transactions) => {
-      console.log('tr',transactions)
+      console.log('tr', transactions)
       return transactions.map((transaction, index) => (
         <Link href={{
           pathname: `admin/id_${transaction?.customerId}`,
@@ -505,14 +504,20 @@ const TransactionAnalyzer = ({ customers }) => {
                 <span className='text-sm font-semibold'>Price</span>
                 <FormattedPrice className='text-sm font-semibold' amount={transaction.subtotal} />
               </div>
-              {transaction?.wholesalePrice &&
+              {transaction?.wholesalePrice && transaction?.wholesalePrice !== 0 &&
                 <div className="flex justify-center items-center flex-col">
-                  <span className='text-sm font-semibold'>Profit</span>
+
                   {transaction?.wholesalePrice && (transaction?.wholesalePrice * transaction?.quantity) < transaction.subtotal &&
-                    <FormattedPrice className='text-sm text-green-400 font-semibold' amount={((transaction.subtotal) - (transaction?.wholesalePrice * transaction?.quantity || 0))} />
+                    <>
+                      <span className='text-sm font-semibold'>Profit</span>
+                      <FormattedPrice className='text-sm text-green-400 font-semibold' amount={((transaction.subtotal) - (transaction?.wholesalePrice * transaction?.quantity || 0))} />
+                    </>
                   }
                   {transaction?.wholesalePrice && (transaction?.wholesalePrice * transaction?.quantity) > transaction.subtotal &&
-                    <FormattedPrice className='text-sm text-red-400 font-semibold' amount={((transaction?.wholesalePrice * transaction?.quantity|| 0) - (transaction.subtotal))} />
+                    <>
+                      <span className='text-sm font-semibold'>Profit</span>
+                      <FormattedPrice className='text-sm text-red-400 font-semibold' amount={((transaction?.wholesalePrice * transaction?.quantity || 0) - (transaction.subtotal))} />
+                    </>
                   }
                 </div>
               }

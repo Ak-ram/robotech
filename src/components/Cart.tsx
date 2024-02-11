@@ -294,7 +294,7 @@ const Cart = () => {
                   </div>
                 </label>
               </div>
-              <div className="relative"
+              {/* <div className="relative"
                 onClick={handleCheckout}
               >
                 <input className="peer hidden" id="radio_1" type="radio" name="radio" />
@@ -306,13 +306,13 @@ const Cart = () => {
                     <p className="text-slate-500 text-sm leading-6">Debit & Credit Cards</p>
                   </div>
                 </label>
-              </div>
+              </div> */}
             </form>
           </div>
           {currentMethod === 'vodafoneCash' ?
-            <VodafoneCash totalAmt={totalAmt} isVodafoneCashOpened={isVodafoneCashOpened} setIsVodafoneCashOpened={setIsVodafoneCashOpened} />
+            <VodafoneCash totalAmt={totalAmt} productData={productData} />
             : currentMethod === 'cashOnDelivery' ?
-              <CashOnDelivery rowPrice={rowPrice} totalAmt={totalAmt} isCashOnDeliveryOpened={isCashOnDeliveryOpened} setCashOnDeliveryOpened={setIsCashOnDeliveryOpened} />
+              <CashOnDelivery  totalAmt={totalAmt} productData={productData}  />
               : <div
                 className="flex gap-2 bg-white items-center justify-center flex-col pt-8 mt-8 bg-gray-50 lg:mt-0"
 
