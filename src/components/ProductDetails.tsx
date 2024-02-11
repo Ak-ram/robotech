@@ -31,7 +31,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                                 </>
                             ) : (
                                 <>
-                                    <FormattedPrice className="text-xl font-bold" amount={product?.count!} />
+                                    <FormattedPrice className="text-xl font-bold" amount={product?.price!} />
                                     <span className="text-xl font-bold"> / Minute</span>
                                 </>
                             )}
