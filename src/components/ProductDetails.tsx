@@ -93,9 +93,12 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                                 {product.colors.split("|").map((color, index) => (
                                     <div key={index} className={`flex justify-center gap-1 items-center`}>
                                         <span
-                                            className={`block w-[14px] h-[14px] rounded bg-${color.toLowerCase().trim()}-500`}
+                                            style={{ backgroundColor: color.toLowerCase().trim() }}
+                                            className={`block w-[14px] h-[14px] rounded`}
                                         ></span>
-                                        <span className={`text-${color.toLowerCase().trim()}-500 capitalize`}>
+                                        <span className={`capitalize`}
+                                            style={{ color: color.toLowerCase().trim() }}
+                                        >
                                             {color}
                                         </span>
                                     </div>
@@ -120,7 +123,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                 </FacebookShareButton> */}
                 <ShareProductOnFacebook product={product} className="flex items-center" />
                 <ShareProductOnTwitter product={product} className="flex items-center" />
-              
+
                 {product?.externalLink && product.externalLink.length && (
                     <div className="flex items-center">
                         <Link2 className="w-4 h-4 text-blue-500 mr-2" />
