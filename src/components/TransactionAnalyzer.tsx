@@ -506,7 +506,19 @@ const TransactionAnalyzer = ({ customers }) => {
               </div>
               <div className="flex  flex-col justify-center items-center">
                 <span className='text-xs font-semibold'>Sell</span>
+                <FormattedPrice className='text-xs font-semibold' amount={transaction.piecePrice} />
+              </div>
+              <div className="flex  flex-col justify-center items-center">
+                <span className='text-xs font-semibold'>Quantity</span>
+                <FormattedPrice className='text-xs font-semibold' amount={transaction.quantity} />
+              </div>
+              <div className="flex  flex-col justify-center items-center">
+                <span className='text-xs font-semibold'>Sub Total</span>
                 <FormattedPrice className='text-xs font-semibold' amount={transaction.subtotal} />
+              </div>
+              <div className="flex  flex-col justify-center items-center">
+                <span className='text-xs font-semibold'>Discount</span>
+                <FormattedPrice className='text-xs font-semibold' amount={transaction.discount} />
               </div>
               {transaction?.wholesalePrice && transaction?.wholesalePrice !== 0 &&
                 <>
