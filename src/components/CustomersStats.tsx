@@ -138,51 +138,59 @@ const CustomersStats = () => {
                                 </span>
                             </div>
                         </div>
-                        <table className="w-full h-[400px] overflow-auto text-gray-400">
-                            <thead className="bg-gray-800 uppercase">
-                                <tr>
-                                    <th className="p-3 text-left text-sm tracking-wider">Name</th>
-                                    <th className="p-3 text-left text-sm tracking-wider">Phone</th>
-                                    <th className="p-3 text-left text-sm tracking-wider"># Transactions</th>
-                                    <th className="p-3 text-left text-sm tracking-wider">TPT</th>
-                                    <th className="p-3 text-left text-sm tracking-wider"></th>
-                                    <th className="p-3 text-left text-sm tracking-wider"></th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-gray-800 ">
-                                {filteredCategoryStats.map((customerInfo, index) => (
-                                    <tr key={index} className="hover:bg-opacity-50 bg-black bg-opacity-20">
-                                        <td className="pl-3 flex py-2.5 whitespace-nowrap">
-                                            {highestTotalPurchase === customerInfo.total_purchase_transactions && <span title="عميل مميز - الاكثر شراء"><Sparkle className="mt-1 text-yellow-500 mr-2 animate-pulse" size={20} /></span>}
-                                            {calculateNumberOfTransactions(customerInfo.id) > 1 && <span title="عميل متكرر"><Activity className="mt-1 text-green-500 mr-2 animate-pulse" size={20} /></span>}
-                                            {calculateNumberOfTransactions(customerInfo.id) === 1 && <span title="عميل عابر"><GitCommitHorizontal className="mt-1 text-rose-500 mr-2 animate-pulse" size={20} /></span>}
-                                            {calculateNumberOfTransactions(customerInfo.id) === 0 && <span title="عميل محتمل"><Clock className="mt-1 text-slate-500 mr-2 animate-pulse" size={20} /></span>}
-                                            <span className="font-medium">{customerInfo.fullName}</span>
-                                        </td>
-                                        <td className="py-2.5 whitespace-nowrap">{customerInfo.phone}</td>
-                                        <td className="py-2.5 text-center whitespace-nowrap">
-                                            {calculateNumberOfTransactions(customerInfo.id)}
+                        <div className="w-full max-h-[400px] overflow-auto">
+                            <div className="bg-gray-800 uppercase text-gray-400">
+                                <div className="flex">
+                                    <div className="p-3 flex-1 text-left text-sm tracking-wider">Name</div>
+                                    <div className="p-3 w-1/6 text-left text-sm tracking-wider">Phone</div>
+                                    <div className="p-3 w-1/6 text-left text-sm tracking-wider"># Transactions</div>
+                                    <div className="p-3 w-1/6 text-left text-sm tracking-wider">TPT</div>
+                                    <div className="p-3 w-1/6 text-left text-sm tracking-wider">Link</div>
 
-                                        </td>
-                                        <td className="py-2.5 whitespace-nowrap">
+                                </div>
+                            </div>
+                            <div className="bg-gray-800 text-white">
+                                {filteredCategoryStats.map((customerInfo, index) => (
+                                    <div key={index} className="flex hover:bg-opacity-50 bg-black bg-opacity-20">
+                                        <div className="p-3 flex gap-2 flex-1 whitespace-nowrap">
+                                            {highestTotalPurchase === customerInfo.total_purchase_transactions && (
+                                                <span title="عميل مميز - الاكثر شراء">
+                                                    <Sparkle className="mt-1 text-yellow-500 mr-2 animate-pulse" size={20} />
+                                                </span>
+                                            )}
+                                            {calculateNumberOfTransactions(customerInfo.id) > 1 && (
+                                                <span title="عميل متكرر">
+                                                    <Activity className="mt-1 text-green-500 mr-2 animate-pulse" size={20} />
+                                                </span>
+                                            )}
+                                            {calculateNumberOfTransactions(customerInfo.id) === 1 && (
+                                                <span title="عميل عابر">
+                                                    <GitCommitHorizontal className="mt-1 text-rose-500 mr-2 animate-pulse" size={20} />
+                                                </span>
+                                            )}
+                                            {calculateNumberOfTransactions(customerInfo.id) === 0 && (
+                                                <span title="عميل محتمل">
+                                                    <Clock className="mt-1 text-slate-500 mr-2 animate-pulse" size={20} />
+                                                </span>
+                                            )}
+                                            <span className="font-medium">{customerInfo.fullName}</span>
+                                        </div>
+                                        <div className="p-3 w-1/6 whitespace-nowrap">{customerInfo.phone}</div>
+                                        <div className="p-3 w-1/6 whitespace-nowrap">
+                                            {calculateNumberOfTransactions(customerInfo.id)}
+                                        </div>
+                                        <div className="p-3 w-1/6 whitespace-nowrap">
                                             <FormattedPrice amount={customerInfo.total_purchase_transactions} />
-                                        </td>
-                                        <td className="py-2.5 whitespace-nowrap">
-                                            <Link href={{
-                                                pathname: `admin/id_${customerInfo?.id}`,
-                                                query: {
-                                                    id: customerInfo?.id,
-                                                    data: JSON.stringify(customerInfo)
-                                                },
-                                            }}>
+                                        </div>
+                                        <div className="p-3 w-1/6 whitespace-nowrap">
+                                            <Link href={{ pathname: `admin/id_${customerInfo?.id}`, query: { id: customerInfo?.id, data: JSON.stringify(customerInfo) } }}>
                                                 <LinkIcon />
                                             </Link>
-                                        </td>
-                                        <td className="py-2.5 whitespace-nowrap"></td>
-                                    </tr>
+                                        </div>
+                                    </div>
                                 ))}
-                            </tbody>
-                        </table>
+                            </div>
+                        </div>
 
 
                     </div>
