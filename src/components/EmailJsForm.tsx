@@ -1,16 +1,17 @@
 import { useRef, useState } from "react";
 import FormattedPrice from "./FormattedPrice";
-import { MessageSquare, PhoneCall } from "lucide-react";
+import { Map, MessageSquare, PhoneCall } from "lucide-react";
 import toast from "react-hot-toast";
 import emailjs from '@emailjs/browser'
 
-const EmailJsForm = ({  totalAmt }) => {
+const EmailJsForm = ({ totalAmt }) => {
     const [clientName, setClientName] = useState("");
     const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+    const [message, setMessage] = useState("");
     const formElement = useRef(null);
 
 
-    const [message, setMessage] = useState("");
     const handleNameChange = (e) => {
         setClientName(e.target.value);
     }
@@ -21,9 +22,12 @@ const EmailJsForm = ({  totalAmt }) => {
     const handleMessageChange = (e) => {
         setMessage(e.target.value);
     }
+    const handleAddressChange = (e) => {
+        setAddress(e.target.value);
+    }
     const sendEmail = (e) => {
         e.preventDefault();
-        if (!phone || !clientName) {
+        if (!phone || !clientName || !address) {
             toast.error("Please provide both your name and phone number.")
             return;
         }
@@ -31,13 +35,12 @@ const EmailJsForm = ({  totalAmt }) => {
 
         emailjs.sendForm(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, formElement.current!, process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!)
             .then((result) => {
-                console.log(result.text);
                 toast.success('Order submitted. Expect a call from customer service soon. Thank you.')
                 setClientName('')
                 setPhone('')
                 setMessage('')
+                setAddress('')
             }, (error) => {
-                console.log(error.text);
                 toast.error("Order unsuccessful. An error occurred.")
 
             });
@@ -66,6 +69,21 @@ const EmailJsForm = ({  totalAmt }) => {
                 </div>
             </div>
         </div>
+
+
+        <label htmlFor="address" className="mt-4 mb-2 block text-sm font-medium">Address</label>
+        <div className="">
+            <div className="relative">
+                <input value={address}
+                    name="client_address"
+                    onChange={handleAddressChange} type="text" id="address" className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Your Address" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                    <Map size={16} className="text-zinc-400" />
+                </div>
+            </div>
+        </div>
+
+
         <label htmlFor="message" className="mt-4 mb-2 block text-sm font-medium">Message</label>
         <div className="">
             <div className="relative">
@@ -79,7 +97,7 @@ const EmailJsForm = ({  totalAmt }) => {
         </div>
 
         <div className="mt-6 border-t border-b py-2">
-          
+
         </div>
         <div className="mt-6 flex items-center justify-between">
             <p className="text-sm font-medium text-gray-900">Total</p>
