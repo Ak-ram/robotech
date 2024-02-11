@@ -5,20 +5,23 @@ import Container from "@/components/Container";
 import Link from "next/link";
 
 const page = () => {
+  const openWhatsApp = () => {
+    const phoneNumber = "201102071544";
+    const message = "Hi Robotech, I need some help.";
+    const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappLink, '_blank');
+};
   return (
     <Container className="flex items-center justify-center py-20">
       <ConfettiComponent />
-      <div className="min-h-[400px] flex flex-col items-center justify-center gap-y-5">
+      <div className="flex flex-col items-center justify-center gap-y-5">
         <h2 className="text-4xl font-bold">
-          Your Payment Accepted by Robotech place
-        </h2>
-        <p>Now you can view your Orders or continue Shopping with us</p>
+        Your order has been sent to the Robotech</h2>
+        <p>You can now track your order by contacting us via WhatsApp.</p>
         <div className="flex items-center gap-x-5">
-          {/* <Link href={"/order"}>
-            <button className="bg-black text-slate-100 w-44 h-12 rounded-full text-base font-semibold hover:bg-designColor duration-300">
-              View Orders
+            <button onClick={openWhatsApp} className="bg-black text-slate-100 w-44 h-12 rounded-full text-base font-semibold hover:bg-designColor duration-300">
+             Contact Us
             </button>
-          </Link> */}
           <Link href={"/"}>
             <button className="bg-black text-slate-100 w-44 h-12 rounded-full text-base font-semibold hover:bg-designColor duration-300">
               Continue Shopping
