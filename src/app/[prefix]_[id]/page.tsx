@@ -128,7 +128,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
               <div className="ml-5 lg:col-gap-12 pb-5 xl:col-gap-16 mt-8 grid grid-cols-1 gap-8 lg:mt-12 lg:grid-cols-5 lg:gap-16">
                 <div className="lg:col-span-3 lg:row-end-1">
                   <div className="lg:flex lg:items-center">
-                    <div className="flex-1 lg:order-2">
+                    <div className="flex-1 lg:order-2 border-slate-300 rounded-md border-2">
                       <div className="max-w-xl mx-auto overflow-hidden rounded-lg">
                         {/* <Magnifier
                       className="max-w-xl overflow-hidden rounded-lg"
