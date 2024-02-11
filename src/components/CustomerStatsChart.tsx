@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Bar,
   BarChart,
@@ -12,7 +12,6 @@ import FormattedPrice from "./FormattedPrice";
 import { formatFullName } from "@/lib/utils";
 
 const CustomTooltip = ({ active, payload, label }) => {
-  console.log(payload);
 
   if (active && payload && payload.length) {
     const totalPurchase = payload[0].value;
@@ -76,9 +75,7 @@ const CustomerStatsChart = ({ customers }) => {
     return maxTransactionAmounts;
   };
 
-  useEffect(() => {
-    // Code for data manipulation or additional logic if needed
-  }, [customers]);
+
 
   const chartData = customers.map(customer => ({
     name: customer.fullName,

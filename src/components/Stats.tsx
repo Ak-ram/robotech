@@ -1,31 +1,14 @@
 import { getCategories } from "@/helpers/getCategories";
-import { getCategoryProducts } from "@/helpers/getCategoryProducts";
 import { downloadJSON } from "@/helpers/downloadJsonfile";
 import { getProducts } from "@/helpers/getProducts";
 import { useEffect, useState } from "react";
 import { ProductType } from "../../type";
 import FormattedPrice from "./FormattedPrice";
-import Products from "./Products";
 import ApexChartComp from "./ApexChart";
-import { Banknote, BarChart, CheckCircle, DollarSign, Download, LineChart, Search, ShoppingCart, X, XCircle } from "lucide-react";
+import { Banknote, CheckCircle, DollarSign, Download, LineChart, Search, ShoppingCart, X, XCircle } from "lucide-react";
 import CustomersStats from "./CustomersStats";
-import TransactionAnalyzer from "./TransactionAnalyzer";
 
-interface Product {
-    id: string;
-    title: string;
-    price: string;
-    previousPrice: string;
-    description: string;
-    count: string;
-    image1: string;
-    image2: string;
-    image3: string;
-    brand: string;
-    isNew: boolean;
-    quantity: number;
-    category: string;
-}
+
 
 interface CategoryStats {
     categoryName: string;
@@ -95,9 +78,6 @@ const Stats = () => {
     const totalAvailablePrice = categoryStats.reduce((acc, category) => acc + category.inStockProducts.reduce((total, product) => total + +product.price, 0), 0);
     const totalUnavailablePrice = categoryStats.reduce((acc, category) => acc + category.outStockProducts.reduce((total, product) => total + +product.price, 0), 0);
 
-    useEffect(() => {
-        console.log(categoryStats);
-    }, [categoryStats]);
     const filteredCategoryStats = categoryStats.filter((categoryInfo) =>
         categoryInfo.categoryName.toLowerCase().includes(searchTerm.toLowerCase())
     );

@@ -290,6 +290,7 @@ const TransactionAnalyzer = ({ customers }) => {
         const transactions = customer.transactions;
         const customerName = customer.fullName; // Assuming fullName as the customer name field
         const customerId = customer.id; // Assuming fullName as the customer name field
+        // const wholesalePrice = customer.wholesalePrice; // Assuming fullName as the customer name field
         // Iterate over each transaction
         transactions.products.forEach(transaction => {
           const transactionDate = new Date(transaction.date);
@@ -300,7 +301,8 @@ const TransactionAnalyzer = ({ customers }) => {
           // Add customerName to the transaction
           transaction.customerName = customerName;
           transaction.customerId = customerId;
-
+          // transaction.wholesalePrice = wholesalePrice;
+     
           // Group transactions by day
           if (!dailyTransactions[dayKey]) {
             dailyTransactions[dayKey] = [];
@@ -357,25 +359,25 @@ const TransactionAnalyzer = ({ customers }) => {
   });
 
   const dailyRevenueData = Object.entries(dailyRevenue)
-  .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
-  .map(([day, revenue]) => ({
-    name: day,
-    revenue: revenue,
-  }));
+    .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+    .map(([day, revenue]) => ({
+      name: day,
+      revenue: revenue,
+    }));
 
-const monthlyRevenueData = Object.entries(monthlyRevenue)
-  .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
-  .map(([month, revenue]) => ({
-    name: month,
-    revenue: revenue,
-  }));
+  const monthlyRevenueData = Object.entries(monthlyRevenue)
+    .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+    .map(([month, revenue]) => ({
+      name: month,
+      revenue: revenue,
+    }));
 
-const yearlyRevenueData = Object.entries(yearlyRevenue)
-  .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
-  .map(([year, revenue]) => ({
-    name: year,
-    revenue: revenue,
-  }));
+  const yearlyRevenueData = Object.entries(yearlyRevenue)
+    .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+    .map(([year, revenue]) => ({
+      name: year,
+      revenue: revenue,
+    }));
 
 
   return (
@@ -480,6 +482,7 @@ const yearlyRevenueData = Object.entries(yearlyRevenue)
 
   function renderTransactions(period) {
     const renderTransactionsByPeriod = (transactions) => {
+      console.log('tr',transactions)
       return transactions.map((transaction, index) => (
         <Link href={{
           pathname: `admin/id_${transaction?.customerId}`,
@@ -488,18 +491,34 @@ const yearlyRevenueData = Object.entries(yearlyRevenue)
             data: JSON.stringify(customers.find(customer => customer.id === transaction?.customerId))
           },
         }} key={index} className="flex hover:bg-slate-100 border border-slate-200 rounded p-3 mb-2 items-center gap-3">
-          <User  size={25} className='text-blue-400'/>
-          <div className='flex-1'>
-          <p className='text-blue-400 flex gap-2  font-semibold'>
-            {transaction.customerName}</p> 
-          <div className="flex justify-between items-center">
-            <p className='flex-1'>{transaction.productName}</p>
-            <div className="">
-              <FormattedPrice className='text-sm font-bold' amount={transaction.subtotal} />
+          <User size={25} className='text-blue-400' />
+          <div className='flex-1 flex gap-4 justify-between items-center'>
+            <div className='flex flex-col  font-semibold'>
+              <span className='text-blue-400 '>{transaction.customerName}</span>
+
+              <span className='flex-1'>{transaction.productName}</span>
+            </div>
+
+            <div className='ml-auto flex gap-4'>
+
+              <div className="flex justify-center items-center flex-col">
+                <span className='text-sm font-semibold'>Price</span>
+                <FormattedPrice className='text-sm font-semibold' amount={transaction.subtotal} />
+              </div>
+              {transaction?.wholesalePrice &&
+                <div className="flex justify-center items-center flex-col">
+                  <span className='text-sm font-semibold'>Profit</span>
+                  {transaction?.wholesalePrice && (transaction?.wholesalePrice * transaction?.quantity) < transaction.subtotal &&
+                    <FormattedPrice className='text-sm text-green-400 font-semibold' amount={((transaction.subtotal) - (transaction?.wholesalePrice * transaction?.quantity || 0))} />
+                  }
+                  {transaction?.wholesalePrice && (transaction?.wholesalePrice * transaction?.quantity) > transaction.subtotal &&
+                    <FormattedPrice className='text-sm text-red-400 font-semibold' amount={((transaction?.wholesalePrice * transaction?.quantity|| 0) - (transaction.subtotal))} />
+                  }
+                </div>
+              }
             </div>
           </div>
-          </div>
-          
+
         </Link>
       ));
     };

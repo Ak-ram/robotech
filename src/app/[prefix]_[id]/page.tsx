@@ -7,14 +7,14 @@ import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import Link from "next/link";
-import { Banknote, Check, Dot, Gift, Home, Link2, Link2Icon, Redo, Undo, Wallet2, X } from "lucide-react";
+import { Banknote, Check, CheckCircle, Dot, FacebookIcon, Gift, Home, Link2, Link2Icon, PhoneCall, Redo, TwitterIcon, Undo, Wallet2, X } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
-import Product from "@/components/Product";
 import { getCategoryProducts } from "@/helpers/getCategoryProducts";
 import Related from "@/components/Related";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "@/components/Loading";
+import ProductDetails from "@/components/ProductDetails";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -127,7 +127,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
               <div className="ml-5 lg:col-gap-12 pb-5 xl:col-gap-16 mt-8 grid grid-cols-1 gap-8 lg:mt-12 lg:grid-cols-5 lg:gap-16">
                 <div className="lg:col-span-3 lg:row-end-1">
                   <div className="lg:flex lg:items-center">
-                    <div className="flex-1 lg:p-10 lg:p-5 lg:order-2 lg:ml-5">
+                    <div className="flex-1 lg:order-2 border-slate-300 rounded-md border-2">
                       <div className="max-w-xl mx-auto overflow-hidden rounded-lg">
                         {/* <Magnifier
                       className="max-w-xl overflow-hidden rounded-lg"
@@ -158,115 +158,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   </div>
                 </div>
 
-                <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
-                  <h1 className="sm:text-2xl font-bold text-gray-900 sm:text-3xl">{product?.title}</h1>
-
-                  <div className="mt-5 flex flex-col items-stretch w-48 gap-2">
-
-                    {
-                      product?.count > 0 && prefix !== 'print' ? (
-                        <>
-                        <span className="hidden sm:flex bg-white rounded py-1 px-2 items-center">
-                          <span className="font-semibold mr-1">Availability:</span>
-                          <span className="flex items-center text-green-600 ">
-                            Available <Check className="ml-2" size={18} />
-                          </span>
-                        </span>
-
-                        <span className="hidden sm:flex  bg-white rounded py-1 px-2 items-center">
-                          <span className="flex items-center text-blue-400 "> 
-                           <Gift className="mr-2" size={20} />
-                          </span>
-                          <span className="font-semibold mr-1">Newly added</span>
-                        </span>
-                        
-                       </>
-                      ) : (
-                        <span className="hidden sm:flex bg-white rounded py-1 px-2 items-center">
-                          <span className="font-semibold mr-1">Availability:</span>
-                          <span className="flex items-center text-red-600 ">
-                            Not Available <X className="ml-2" size={18} />
-                          </span>
-                        </span>
-                      )
-                    }
-
-
-
-                  </div>
-
-                  <div className="mt-10 flex lg:flex-col lg:items-start gap-4 items-center justify-between border-t border-b py-4 sm:flex-row sm:space-y-0">
-                    <div className="flex items-end">
-
-                      {
-                        product?.price > 0 && prefix !== 'print' ?
-                          <h1 className="sm:text-lg md:text-3xl font-bold">
-
-                            <FormattedPrice amount={(product?.price!)} />
-                            <span className="text-base"> / Piece</span>
-                          </h1>
-
-                          :
-                          <h1 className="sm:text-lg md:text-3xl font-bold">
-                            <FormattedPrice amount={(product?.count!)} />
-
-                            <span className="text-base"> / Minute</span>
-                          </h1>
-                      }
-
-
-
-
-
-                    </div>
-
-                    <button onClick={() => {
-                      dispatch(addToCart(product));
-                      toast.success(`${product?.title} successfully added to the basket`)
-                    }} type="button" className="mt-0 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-3 py-2 md:px-12 md:py-3 text-center  text-sm sm:text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                      </svg>
-                      Add to cart
-                    </button>
-                  </div>
-
-
-
-
-                  <ul className="mt-8 space-y-2">
-                    {
-                      product?.price < product?.previousPrice ?
-                        <>
-                          <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                            <Wallet2 size={18} className="mr-1" />
-                            Previous Price:<span className="mr-1"></span> <FormattedPrice amount={(product?.previousPrice!)} /> <span className="ml-1"></span> from this product.
-                          </li>
-                          <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                            <svg className="mr-2 block h-5 w-5 align-middle text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" className=""></path>
-                            </svg>
-                            You saved:<span className="mr-1"></span> <FormattedPrice amount={(product?.previousPrice! - product?.price!)} /> <span className="ml-1"></span> from this product.
-                          </li>
-
-                        </>
-                        : null}
-
-                   
-                    {product?.externalLink && product.externalLink.length &&
-                      <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                        <Link2 size={18} className="mr-2" /> {/* Using Link2Icon with size prop */}
-                        Know More ?: {' '}
-                        <Link href={product?.externalLink} className="ml-2 text-blue-500 hover:underline">Visit</Link> {/* Assuming product has externalLink */}
-                      </li>
-                    }
-
-                    {/* {product?.isNew ? <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                      <Gift size={18} className="mr-2" />
-                      Newly added
-                    </li> : null} */}
-                  </ul>
-                </div>
+              <ProductDetails product={product} prefix={prefix} dispatch={dispatch} addToCart={addToCart} products={products}/>
 
                 <div className="lg:col-span-3">
                   <div className="border-b border-gray-300">
@@ -278,37 +170,34 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   <div className="mt-8 flow-root sm:mt-12">
                     <h1 className="text-lg md:text-3xl font-bold">More details about {product?.title}</h1>
 
-                    {product?.description?.length && product?.description?.includes('|') ? (
-                      <ul className="space-y-1 w-[80%] font-semibold mt-3 text-gray-600 mb-6">
-                        <span className="font-bold text-black">Product Attributes : </span>
-
-                        <>
+                    <>
+                      {product?.description?.length && product?.description?.includes('|') ? (
+                        <ul className="space-y-1 w-[90%] font-semibold mt-3 text-gray-600 mb-6">
+                          <li className="font-bold text-black">Product Attributes:</li>
                           {product?.description?.split('|').slice(1).map((part, index) => {
-                            // Check if the part contains bullet points
                             if (part.includes('|')) {
-                              // If it contains bullet points, split it further based on '|'
                               const bullets = part.split('|').map(bullet => bullet.trim());
                               return bullets.map((bullet, i) => (
-                                <li key={i} className="border-b-slate-500 flex items-center px-2 sm:px-6 py-2.5 hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-                                  <span className="w-[5px] h-[5px] mr-2 rounded-full bg-black"></span>
+                                <li key={i} className="bg-white border-slate-500 flex items-center px-2 sm:px-6 py-2.5 hover:bg-gray-100 transition-colors duration-300 ease-in-out">
+                                  <CheckCircle className="w-4 h-4 mr-2 text-black" />
                                   <span>{bullet}</span>
                                 </li>
                               ));
                             } else {
-                              // If it doesn't contain bullet points, render as ordinary text
                               return (
-                                <p className="mt-4  border-b-slate-400 border-b-[1px] py-2 text-xs sm:text-base items-center flex gap-1" key={index}>
-                                  <span className="w-[5px] h-[5px] mr-2 rounded-full bg-black"></span>
+                                <li className="mt-4 bg-white border-slate-400 border rounded p-2 text-xs sm:text-base items-center flex gap-1" key={index}>
+                                  <CheckCircle className="w-4 h-4 mr-2 text-black" />
                                   <span>{part.split('|')[0]}</span>
-                                </p>
+                                </li>
                               );
                             }
                           })}
+                        </ul>
+                      ) : (
+                        <p className="my-5">{product?.description?.split('|').slice(0, 1)}</p>
+                      )}
 
-                        </>
-                      </ul>
-                    ) : <p className="my-5">{product?.description?.split('|').slice(0, 1)}</p>
-                    }
+                    </>
 
 
 
@@ -318,7 +207,10 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 </div>
               </div>
             </div>
-            <Related prefix={prefix} products={products} product={product} />
+            {
+              products?.filter((item: ProductType) => item?.id !== product?.id).length && <Related prefix={prefix} products={products} product={product} />
+
+            }
             <Toaster
               position="bottom-right"
               toastOptions={{

@@ -311,6 +311,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
             ...newOrder,
             productName: option.title,
             piecePrice: option.price,
+            wholesalePrice:0,
             date: new Date().toLocaleDateString('en-US', {
                 weekday: 'short',
                 year: 'numeric',
