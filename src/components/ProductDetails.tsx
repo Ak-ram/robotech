@@ -10,6 +10,12 @@ import ShareProductOnFacebook from "./ShareProductOnFacebook";
 import ShareProductOnTwitter from "./ShareProductOnTwitter";
 
 const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
+    const openWhatsApp = () => {
+        const phoneNumber = "201102071544";
+        const message = "Hi Robotech, I need some help.";
+        const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappLink, '_blank');
+    };
     return (
         <div className="bg-white p-6 rounded lg:col-span-2 lg:row-span-2 lg:row-end-2">
             <h1 className="text-3xl font-bold text-gray-900">{product?.title}</h1>
@@ -81,7 +87,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                         <div className="text-sm font-medium text-gray-600">
                             <div className="flex items-center">
                                 <Paintbrush className="w-4 h-4 mr-2" />
-                                Colors:
+                                Print Colors:
                             </div>
                             <div className="pl-3 mt-3 flex items-center w-full gap-6">
                                 {product.colors.split("|").map((color, index) => (
@@ -103,9 +109,9 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
             </div>
 
             <div className="mt-5 pb-5 border-b space-y-2">
-                <div className="flex items-center">
+                <div onClick={openWhatsApp} className="flex cursor-pointer items-center">
                     <PhoneCall className="w-4 h-4 text-green-600 mr-2" />
-                    <span className="font-semibold">Phone: 01102071544</span>
+                    <span className="font-semibold">Whatsapp: 01102071544</span>
                 </div>
 
                 {/* <FacebookShareButton className="flex items-center" url={'robotechspace.com' + product.id}>
