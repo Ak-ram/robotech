@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
+import EmailJsForm from "./EmailJsForm";
 
 const VodafoneCash = ({ totalAmt, isVodafoneCashOpened, setIsVodafoneCashOpened }) => {
     const [showNumber, setShowNumber] = useState(false);
@@ -55,7 +56,11 @@ const VodafoneCash = ({ totalAmt, isVodafoneCashOpened, setIsVodafoneCashOpened 
                             </label>
                         </div>
 
-                        <div className="relative mb-4">
+
+
+
+
+                        {/* <div className="relative mb-4">
                             <label className="flex flex-col rounded-2xl border border-gray-300 bg-slate-100/80 p-4 pr-8 sm:pr-16">
                                 <span className="mb-2 font-bold">Step 2</span>
                                 <p className="text-sm sm:text-base">
@@ -84,14 +89,15 @@ const VodafoneCash = ({ totalAmt, isVodafoneCashOpened, setIsVodafoneCashOpened 
                                         >
                                             Show Number
                                         </button>
-                                    )} */}
+                                    )} 
                                 </p>
                             </label>
-                        </div>
+                        </div> */}
+                        <EmailJsForm totalAmt={totalAmt} />
 
-                        <button onClick={openWhatsApp} className="my-2 rounded-md bg-gray-900 py-3 font-medium text-white">
+                        {/* <button onClick={openWhatsApp} className="my-2 rounded-md bg-gray-900 py-3 font-medium text-white">
                             Contact us in WhatsApp
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>
