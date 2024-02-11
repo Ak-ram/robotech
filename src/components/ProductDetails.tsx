@@ -5,6 +5,7 @@ import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
 import { ProductType } from "../../type";
+import Link from "next/link";
 
 const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
     return (
@@ -114,10 +115,16 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                 <h3>You May love:</h3>
                 {
                     products?.filter((item: ProductType) => item?.id !== product?.id).map((item =>
-                        <div key={`${item?.id}_${item?.title}`} className="flex items-center text-sm font-medium text-gray-600">
+                        <Link href={{
+                            pathname: `/id_${item?.id}`,
+                            query: {
+                                id: item?.id,
+                                prefix: (prefix === "print" ? prefix : item?.category),
+                            },
+                        }} key={`${item?.id}_${item?.title}`} className="flex items-center text-sm font-medium text-gray-600">
                             <Check className="w-4 h-4 mr-2" />
                             {item?.title}
-                        </div>
+                        </Link>
 
                     ))
                 }
