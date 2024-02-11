@@ -1,7 +1,7 @@
 import React from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon } from "lucide-react";
+import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon, Paintbrush } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
 import { ProductType } from "../../type";
@@ -73,15 +73,31 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                         </div>
                     </>
                     }
-                    <div className="flex items-center text-sm font-medium text-gray-600">
-                        <BookCopy className="w-4 h-4 mr-2" />
-                        Categroy:
-                        <span className="ml-1 text-sm text-indigo-600">{product?.category?.toUpperCase()}</span>
-                    </div>
+                    {
+                        product?.category && <div className="flex items-center text-sm font-medium text-gray-600">
+                            <BookCopy className="w-4 h-4 mr-2" />
+                            Categroy:
+                            <span className="ml-1 text-sm text-indigo-600">{product?.category?.toUpperCase()}</span>
+                        </div>
+                    }
+
                     <div className="flex items-center text-sm font-medium text-gray-600">
                         <Gift className="w-4 h-4 mr-2" />
                         Newly added
                     </div>
+
+                    {
+                        product?.colors && <div className="flex items-center text-sm font-medium text-gray-600">
+                            <Paintbrush className="w-4 h-4 mr-2" />
+                            Colors:
+                            {product?.colors?.split("|").map((color, i) => <>
+                                <span>{i}</span>
+                                <span>{color}</span>
+
+                            </>)}
+                        </div>
+                    }
+
                 </div>
             </div>
 
@@ -113,6 +129,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                         </span>
                     </div>
                 )}
+
             </div>
 
             {products?.filter((item: ProductType) => item?.id !== product?.id).length &&
@@ -127,9 +144,9 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                                         id: item?.id,
                                         prefix: (prefix === "print" ? prefix : item?.category),
                                     },
-                                }} key={`${item?.id}_${item?.title}`} className="pl-2 flex items-center text-sm font-medium text-blue-500">
+                                }} key={`${item?.id}_${item?.title}`} className="overflow-hidden  pl-2 flex items-center text-sm font-medium text-blue-500">
                                     <Link2Icon className="w-4 h-4 mr-2" />
-                                    {item?.title}
+                                    <span className="whitespace-nowrap text-ellipsis min-w-[250px] overflow-hidden">{item?.title}</span>
                                 </Link>
 
                             ))

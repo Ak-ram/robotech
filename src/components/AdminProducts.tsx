@@ -549,6 +549,7 @@ const AdminComponent = () => {
                         image1: 'Image1',
                         image2: 'Image2',
                         image3: 'Image3',
+                        colors: "colors",
                         externalLink: "External Link",
                       }).map(([key, placeholder], index) => (
                         <div key={key} className={`flex-col mb-2 lg:pr-4`}>
