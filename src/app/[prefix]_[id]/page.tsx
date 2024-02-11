@@ -10,7 +10,6 @@ import Link from "next/link";
 import { Banknote, Check, CheckCircle, Dot, FacebookIcon, Gift, Home, Link2, Link2Icon, PhoneCall, Redo, TwitterIcon, Undo, Wallet2, X } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
-import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { getCategoryProducts } from "@/helpers/getCategoryProducts";
 import Related from "@/components/Related";
 import toast, { Toaster } from "react-hot-toast";

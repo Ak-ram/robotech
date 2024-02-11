@@ -6,6 +6,8 @@ import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
 import { ProductType } from "../../type";
 import Link from "next/link";
+import ShareProductOnFacebook from "./ShareProductOnFacebook";
+import ShareProductOnTwitter from "./ShareProductOnTwitter";
 
 const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
     return (
@@ -37,7 +39,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                         type="button"
                         className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-white bg-gray-900 border border-transparent rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                     >
-                       <ShoppingBag size={18} className="mr-2 text-bold"/>
+                        <ShoppingBag size={18} className="mr-2 text-bold" />
                         Add to cart
                     </button>
                 </div>
@@ -106,17 +108,13 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                     <span className="font-semibold">Phone: 01102071544</span>
                 </div>
 
-                <FacebookShareButton className="flex items-center" url={"productUrl"}>
+                {/* <FacebookShareButton className="flex items-center" url={'robotechspace.com' + product.id}>
                     <FacebookIcon className="w-4 h-4 text-blue-500 mr-2" />
                     <span className="font-semibold">Share on Facebook</span>
-                </FacebookShareButton>
-
-
-                <TwitterShareButton className="flex items-center" url={"productUrl"}>
-                    <TwitterIcon className="w-4 h-4 text-sky-500 mr-2" />
-                    <span className="font-semibold">Share on Twitter</span>
-                </TwitterShareButton>
-
+                </FacebookShareButton> */}
+                <ShareProductOnFacebook product={product} className="flex items-center" />
+                <ShareProductOnTwitter product={product} className="flex items-center" />
+              
                 {product?.externalLink && product.externalLink.length && (
                     <div className="flex items-center">
                         <Link2 className="w-4 h-4 text-blue-500 mr-2" />
