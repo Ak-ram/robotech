@@ -189,7 +189,7 @@ const Stats = () => {
                                         <span className="text-green-500 text-2xl font-bold"><DollarSign size={32} /></span>
                                     </div>
                                     <div>
-                                        <span className="text-xl font-bold text-green-700">{totalAvailablePrice}</span>
+                                    <FormattedPrice amount={+totalAvailablePrice} className="text-xl font-bold text-green-700" />
                                         <p className="text-sm text-green-700">Total Available Price</p>
                                     </div>
                                 </div>
@@ -199,7 +199,7 @@ const Stats = () => {
                                             <span className="text-rose-500 text-2xl font-bold"><Banknote size={32} /></span>
                                         </div>
                                         <div>
-                                            <span className="text-xl font-bold text-rose-700">{totalUnavailablePrice}</span>
+                                            <FormattedPrice amount={+totalUnavailablePrice} className="text-xl font-bold text-rose-700" />
                                             <p className="text-sm text-rose-700">Total Unavailable Price</p>
                                         </div>
                                     </div>
