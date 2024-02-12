@@ -103,8 +103,8 @@ const CustomerStatsOutStocks = () => {
     useEffect((
     ) => { console.log(jsonData) }, [jsonData])
     return (
-        <div className="border-red-400 overflow-auto flex-1 border-2 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
-            <h2 className="text-xl whitespace-nowrap font-semibold mb-6 flex items-center justify-center text-red-500 bg-red-100 py-2 px-4 rounded-md">
+        <div className="border-red-400 overflow-auto  border-2 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
+            <h2 className="text-xl font-semibold mb-6 flex items-center justify-center text-red-500 bg-red-100 py-2 px-4 rounded-md">
                 <Ban className="mr-2 text-red-500" size={22} /> Out-Stocks
                 <span className="mx-4 relative">
                     <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
@@ -132,7 +132,7 @@ const CustomerStatsOutStocks = () => {
                         )
                         .map((product) => (
                             <div
-                                className="flex items-center justify-start gap-1 border-b border-gray-300 py-2"
+                                className="flex  items-center justify-start gap-1 border-b border-gray-300 py-2"
                                 key={`${product.id}_${product.title}`}
                             >
                                 <img
@@ -140,7 +140,7 @@ const CustomerStatsOutStocks = () => {
                                     src={product?.image1}
                                     alt={product.title}
                                 />{' '}
-                                <div className="pl-3 w-[250px] text-sm whitespace-nowrap overflow-hidden text-ellipsis">{product.title}</div>
+                                <div className="pl-3 w-[250px] text-sm overflow-hidden text-ellipsis">{product.title}</div>
                                 <div className="ml-auto">
                                     <button
                                         className="mr-1"

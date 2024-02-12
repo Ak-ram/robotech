@@ -105,7 +105,7 @@ const AdminComponent = () => {
           ))}
         </ul>
       </div>
-      <div className="flex-1 py-5 p-4 ">
+      <div className={`${isOpen ? 'max-w-screen-lg':'w-full'} flex-1  mx-auto py-5 p-4 `}>
         {selectedItem ? (
           <div className="">
             <div className="border-b-zinc-300 pb-2 border-b mb-2 flex items-center gap-2">
