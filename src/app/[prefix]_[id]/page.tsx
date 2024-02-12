@@ -124,7 +124,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 </ol>
               </nav>
 
-              <div className="ml-5 lg:col-gap-12 pb-5 xl:col-gap-16 mt-8 grid grid-cols-1 gap-8 lg:mt-12 lg:grid-cols-5 lg:gap-16">
+              <div className="lg:ml-5 lg:col-gap-12 pb-5 xl:col-gap-16 mt-8 grid grid-cols-1 gap-8 lg:mt-12 lg:grid-cols-5 lg:gap-16">
                 <div className="lg:col-span-3 lg:row-end-1">
                   <div className="lg:flex lg:items-center">
                     <div className="flex-1 lg:order-2 border-slate-300 rounded-md border-2">
@@ -186,7 +186,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                             } else {
                               return (
                                 <li className="mt-4 bg-white border-slate-400 border rounded p-2 text-xs sm:text-base items-center flex gap-1" key={index}>
-                                  <CheckCircle className="w-4 h-4 mr-2 text-black" />
+                                  <CheckCircle className="w-4 h-4 min-w-[1rem] mr-2 text-black" />
                                   <span>{part.split('|')[0]}</span>
                                 </li>
                               );
