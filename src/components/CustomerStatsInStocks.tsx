@@ -1,4 +1,4 @@
-import { Ban, Check, Edit, Search, Trash, X } from "lucide-react";
+import { Ban, Check, CheckCheck, Edit, Search, Trash, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ProductType } from "../../type";
 import { getProducts } from "@/helpers/getProducts";
@@ -103,9 +103,9 @@ const CustomerStatsInStocks = () => {
     useEffect((
     ) => { console.log(jsonData) }, [jsonData])
     return (
-        <div className="flex-1 border-green-400 border-2 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
-            <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center text-green-500 bg-green-100 py-2 px-4 rounded-md">
-                <Ban className="mr-2 text-green-500" size={24} /> In-Stocks
+        <div className=" border-green-400  border-2 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
+            <h2 className="text-xl whitespace-nowrap font-semibold mb-6 flex items-center justify-center text-green-500 bg-green-100 py-2 px-4 rounded-md">
+                <CheckCheck className="mr-2 text-green-500" size={22} /> In-Stocks
                 <span className="mx-4 relative">
                     <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
                     <input
@@ -140,8 +140,8 @@ const CustomerStatsInStocks = () => {
                                     src={product?.image1}
                                     alt={product.title}
                                 />{' '}
-                                <div className="pl-3">{product.title}</div>
-                                <div className="ml-8">
+                                <div className="pl-3 text-sm whitespace-nowrap overflow-hidden text-ellipsis">{product.title}</div>
+                                <div className="ml-auto">
                                     <button
                                         className="mr-1"
                                         onClick={() => openEditPopup(product)}
