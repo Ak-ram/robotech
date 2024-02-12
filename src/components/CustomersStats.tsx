@@ -75,7 +75,7 @@ const CustomersStats = () => {
     return (<>
         <section className='my-5'>
 
-         <div className={`${isShow ? "block" : "hidden"} z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
+            <div className={`${isShow ? "block" : "hidden"} z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
                 <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
                     <div className="flex-1 "> <X className="ml-auto cursor-pointer" onClick={() => setIsShow(false)} />
                         {/* <ApexChartComp categoryStats={categoryStats} /> */}
@@ -84,11 +84,11 @@ const CustomersStats = () => {
                 </div>
 
 
-            </div> 
+            </div>
 
 
 
-          <CustomerStatsTopSelling customers={customers} /> 
+            <CustomerStatsTopSelling customers={customers} />
 
 
 
@@ -97,12 +97,15 @@ const CustomersStats = () => {
 
 
             <div className="flex flex-col">
-                <div className="flex gap-2 ">
+                <div className="flex gap-2">
+                    <div className="flex-1">
+                        <CustomerStatsInStocks />
+                    </div>
+                    <div className="flex-1">
+                        <CustomerStatsOutStocks />
+                    </div>
+                </div>
 
-                    <CustomerStatsInStocks />
-                    <CustomerStatsOutStocks />
-
-                </div> 
 
 
                 <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
