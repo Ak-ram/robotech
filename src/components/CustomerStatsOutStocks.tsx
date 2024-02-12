@@ -140,7 +140,7 @@ const CustomerStatsOutStocks = () => {
                                     src={product?.image1}
                                     alt={product.title}
                                 />{' '}
-                                <div className="pl-3 w-[250px] text-sm overflow-hidden text-ellipsis">{product.title}</div>
+                                <div className="pl-3 text-sm overflow-hidden text-ellipsis">{product.title}</div>
                                 <div className="ml-auto">
                                     <button
                                         className="mr-1"
