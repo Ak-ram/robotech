@@ -104,7 +104,7 @@ const CustomerStatsInStocks = () => {
     ) => { console.log(jsonData) }, [jsonData])
     return (
         <div className=" border-green-400  border-2 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
-            <h2 className="text-xl whitespace-nowrap font-semibold mb-6 flex items-center justify-center text-green-500 bg-green-100 py-2 px-4 rounded-md">
+            <h2 className="whitespace-nowrap font-semibold mb-6 flex items-center justify-center text-green-500 bg-green-100 py-2 px-4 rounded-md">
                 <CheckCheck className="mr-2 text-green-500" size={22} /> In-Stocks
                 <span className="mx-4 relative">
                     <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
@@ -119,7 +119,7 @@ const CustomerStatsInStocks = () => {
                 <span className="ml-auto text-sm">
                     {products &&
                         products.filter((product) => +product?.count > 0).length}{' '}
-                    Product(s)
+                    Items(s)
                 </span>
             </h2>
 

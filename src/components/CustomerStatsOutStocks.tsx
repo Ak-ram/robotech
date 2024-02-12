@@ -104,7 +104,7 @@ const CustomerStatsOutStocks = () => {
     ) => { console.log(jsonData) }, [jsonData])
     return (
         <div className="border-red-400 overflow-auto  border-2 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
-            <h2 className="text-xl font-semibold mb-6 flex items-center justify-center text-red-500 bg-red-100 py-2 px-4 rounded-md">
+            <h2 className="font-semibold mb-6 flex items-center justify-center text-red-500 bg-red-100 py-2 px-4 rounded-md">
                 <Ban className="mr-2 text-red-500" size={22} /> Out-Stocks
                 <span className="mx-4 relative">
                     <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
@@ -119,7 +119,7 @@ const CustomerStatsOutStocks = () => {
                 <span className="ml-auto text-sm">
                     {products &&
                         products.filter((product) => +product?.count === 0).length}{' '}
-                    Product(s)
+                    Item(s)
                 </span>
             </h2>
 
