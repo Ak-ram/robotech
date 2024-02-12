@@ -6,7 +6,7 @@ import { useEffect } from "react";
 export default function Home() {
   return (
     <main>
-      {/* <Banner /> */}
+      <Banner />
       <Products />
     </main>
   );

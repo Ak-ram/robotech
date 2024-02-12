@@ -123,18 +123,19 @@ const Stats = () => {
 
                                     <div className="w-full text-sm text-gray-600">
                                         <div className="bg-black text-white text-sm uppercase flex">
-                                            <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">Category</div>
+                                            <div className="w-1/3 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">Category</div>
                                             <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">Quantity</div>
                                             <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">In Stock</div>
                                             <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">IS Price</div>
                                             <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">Out Stock</div>
                                             <div className="w-1/6 pr-5 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">OS Price</div>
                                         </div>
+
                                         {filteredCategoryStats.map((categoryInfo, index) => (
                                             <div key={index} className="hover:bg-white border-b border-slate-300 bg-white bg-opacity-20 flex items-center">
-                                                <div className="w-1/6 pl-3 flex py-2.5 whitespace-nowrap">
+                                                <div className="w-1/3  pl-3 flex py-2.5">
                                                     <img className="w-6 h-6 mr-2 rounded" src={categoryInfo.inStockProducts[0]?.image1} alt="" />
-                                                    <span className="text-sm font-medium">{categoryInfo.categoryName.slice(0, 1).toUpperCase() + categoryInfo.categoryName.slice(1)}</span>
+                                                    <span className="text-sm overflow-auto  whitespace-nowrap font-medium">{categoryInfo.categoryName.slice(0, 1).toUpperCase() + categoryInfo.categoryName.slice(1)}</span>
                                                 </div>
                                                 <div className="w-1/6 text-center py-2.5 whitespace-nowrap">{categoryInfo.quantity}</div>
                                                 <div className={`w-1/6 ${categoryInfo.inStockLength >= 10 ? "text-green-500" : categoryInfo.inStockLength > 5 ? 'text-orange-400' : 'text-yellow-500'} text-center py-2.5 whitespace-nowrap`}>{categoryInfo.inStockLength}</div>
@@ -189,7 +190,7 @@ const Stats = () => {
                                         <span className="text-green-500 text-2xl font-bold"><DollarSign size={32} /></span>
                                     </div>
                                     <div>
-                                    <FormattedPrice amount={+totalAvailablePrice} className="text-xl font-bold text-green-700" />
+                                        <FormattedPrice amount={+totalAvailablePrice} className="text-xl font-bold text-green-700" />
                                         <p className="text-sm text-green-700">Total Available Price</p>
                                     </div>
                                 </div>

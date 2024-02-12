@@ -34,7 +34,7 @@ export default function RootLayout({
         )}
       >
         <Layout>
-        {/* <Announcement/> */}
+        <Announcement/>
 
           <Navbar />
           {children}
