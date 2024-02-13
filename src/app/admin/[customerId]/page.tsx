@@ -10,7 +10,7 @@ import Loading from "@/components/Loading";
 import LoadingScreen from "@/components/LoadingScreen";
 import FormattedPrice from "@/components/FormattedPrice";
 import toast from "react-hot-toast";
-
+import { Printer } from "lucide-react";
 const CustomerPage = () => {
   const router = useRouter();
   const searchPar = useSearchParams();
@@ -121,10 +121,10 @@ const CustomerPage = () => {
                 ))}
                 <button
                   onClick={() => toast.error("still working on it...")}
-                  className={`py-3 px-5 rounded focus:outline-none bg-rose-200 text-rose-700 hover:bg-rose-500 hover:text-white transition duration-300
-                    `}
+                  className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-rose-200 text-rose-700 hover:bg-rose-500 hover:text-white transition duration-300`}
                 >
                   Print Bill
+                  <Printer className=""/>
                 </button>
               </div>
             </section>
