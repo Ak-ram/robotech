@@ -1,15 +1,15 @@
-
-'use client'
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { updateJsonFile } from '@/helpers/updateJSONData';
-import OrderModel from '@/components/orderModel';
-import CustomerPageAddProducts from '@/components/CustomerPageAddProducts';
-import CustomerPageAddCourses from '@/components/CustomerPageAddCourses';
-import CustomerPageAddPrintServices from '@/components/CustomerPageAddPrintServices';
-import Loading from '@/components/Loading';
-import LoadingScreen from '@/components/LoadingScreen';
-import FormattedPrice from '@/components/FormattedPrice';
+"use client";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { updateJsonFile } from "@/helpers/updateJSONData";
+import OrderModel from "@/components/orderModel";
+import CustomerPageAddProducts from "@/components/CustomerPageAddProducts";
+import CustomerPageAddCourses from "@/components/CustomerPageAddCourses";
+import CustomerPageAddPrintServices from "@/components/CustomerPageAddPrintServices";
+import Loading from "@/components/Loading";
+import LoadingScreen from "@/components/LoadingScreen";
+import FormattedPrice from "@/components/FormattedPrice";
+import toast from "react-hot-toast";
 
 const CustomerPage = () => {
   const router = useRouter();
@@ -17,16 +17,40 @@ const CustomerPage = () => {
   const customerId = searchPar?.get("id");
   const data = searchPar?.get("data");
 
-  const initialCustomerData = typeof data === 'string' ? JSON.parse(data) : null;
+  const initialCustomerData =
+    typeof data === "string" ? JSON.parse(data) : null;
   const [customerData, setCustomerData] = useState(initialCustomerData);
   const [currentTab, setCurrentTab] = useState(0);
 
-
   const tabs = [
-    { content: <CustomerPageAddProducts setCustomerData={setCustomerData} customerData={customerData} />, label: "Product" },
-    { content: <CustomerPageAddCourses setCustomerData={setCustomerData} customerData={customerData} />, label: "Course" },
-    { content: <CustomerPageAddPrintServices setCustomerData={setCustomerData} customerData={customerData} />, label: "Print Service" },
-  ]
+    {
+      content: (
+        <CustomerPageAddProducts
+          setCustomerData={setCustomerData}
+          customerData={customerData}
+        />
+      ),
+      label: "Product",
+    },
+    {
+      content: (
+        <CustomerPageAddCourses
+          setCustomerData={setCustomerData}
+          customerData={customerData}
+        />
+      ),
+      label: "Course",
+    },
+    {
+      content: (
+        <CustomerPageAddPrintServices
+          setCustomerData={setCustomerData}
+          customerData={customerData}
+        />
+      ),
+      label: "Print Service",
+    },
+  ];
   return (
     <div className="m-8">
       {/* <h1 className="text-4xl font-semibold mb-6 text-center">Customer ID: {customerId}</h1> */}
@@ -42,24 +66,34 @@ const CustomerPage = () => {
             </div>
             <div>
               <p className="text-gray-600 mb-2">Age:</p>
-              <p className="font-semibold">{customerData.age ? `${customerData.age} Year(s)` : "No Age"}</p>
+              <p className="font-semibold">
+                {customerData.age ? `${customerData.age} Year(s)` : "No Age"}
+              </p>
             </div>
             <div>
               <p className="text-gray-600 mb-2">Phone No.:</p>
-              <p className="font-semibold">{customerData.phone || 'No Phone'}</p>
+              <p className="font-semibold">
+                {customerData.phone || "No Phone"}
+              </p>
             </div>
             <div>
               <p className="text-gray-600 mb-2">Address:</p>
-              <p className="font-semibold">{customerData.address || "No Address"}</p>
+              <p className="font-semibold">
+                {customerData.address || "No Address"}
+              </p>
             </div>
 
             <div>
               <p className="text-gray-600 mb-2">Education:</p>
-              <p className="font-semibold">{customerData.faculty || "No Education"}</p>
+              <p className="font-semibold">
+                {customerData.faculty || "No Education"}
+              </p>
             </div>
             <div>
               <p className="text-gray-600 mb-2">ID:</p>
-              <p className="font-semibold text-gray-500 text-xs">{customerId}</p>
+              <p className="font-semibold text-gray-500 text-xs">
+                {customerId}
+              </p>
             </div>
           </div>
 
@@ -76,11 +110,22 @@ const CustomerPage = () => {
                   <button
                     key={index}
                     onClick={() => setCurrentTab(index)}
-                    className={`py-3 px-5 rounded focus:outline-none ${currentTab === index ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300'}`}
+                    className={`py-3 px-5 rounded focus:outline-none ${
+                      currentTab === index
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300"
+                    }`}
                   >
                     Sell {tab.label}
                   </button>
                 ))}
+                <button
+                  onClick={() => toast.error("still working on it...")}
+                  className={`py-3 px-5 rounded focus:outline-none bg-rose-200 text-rose-700 hover:bg-rose-500 hover:text-white transition duration-300
+                    `}
+                >
+                  Print Bill
+                </button>
               </div>
             </section>
           </div>
@@ -91,4 +136,3 @@ const CustomerPage = () => {
 };
 
 export default CustomerPage;
-
