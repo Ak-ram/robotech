@@ -61,7 +61,7 @@ const AdminComponent = () => {
     e.preventDefault();
 
     // Check if the entered password matches the pre-defined password
-    const preDefinedPassword = "((*))";
+    const preDefinedPassword = process.env.NEXT_PUBLIC_STATS_AUTH_PASSWORD;
     if (password === preDefinedPassword) {
       setIsPasswordEntered(true);
       // sessionStorage.setItem("isPasswordEntered", "true");
