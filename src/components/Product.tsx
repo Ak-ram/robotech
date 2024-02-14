@@ -232,8 +232,8 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                 <p className="flex  items-center justify-start w-full text-black font-semibold">
                   {item?.previousPrice > item?.price ? <del><FormattedPrice className={'text-base  text-zinc-500'} amount={item?.previousPrice} /></del>
                     : null}
-                  {prefix === 'print' ? <span className="text-lg">{item?.unit} / </span> : null}
                   <FormattedPrice className={'text-xl'} amount={item?.price} />
+                  {prefix === 'print' ? <span className="text-lg">/{item?.unit?.toLowerCase()} </span> : null}
                 </p>
                 <div className="flex gap-2  w-full items-center justify-between mt-2">
 

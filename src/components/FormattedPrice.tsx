@@ -8,14 +8,14 @@ type Props = {
 const FormattedPrice = ({ amount, className }: Props) => {
   const formattedAmount = new Number(amount).toLocaleString("en-EG", {
     style: "currency",
-    currency: "EGP",
     currencyDisplay: "symbol",
+    currency: "EGP",
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
     useGrouping: true,
   });
   return (
-    <span className={cn("", className)}>
+    <span className={cn("", className)} style={{direction:'ltr'}}>
       {formattedAmount}
     </span>
   );
