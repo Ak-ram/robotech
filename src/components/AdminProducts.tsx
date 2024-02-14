@@ -9,7 +9,7 @@ import Loading from "./Loading";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import FormattedPrice from "./FormattedPrice";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
   const [toggleNewCat, setToggleNewCat] = useState<boolean>(true);
@@ -31,7 +31,7 @@ const AdminComponent = () => {
     // brand: "",
     isNew: false,
     quantity: 1,
-    externalLink: '',
+    externalLink: "",
     category: selectedCat,
   });
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<
@@ -68,7 +68,7 @@ const AdminComponent = () => {
       id: uuidv4(),
       title: "",
       price: "",
-      previousPrice: '',
+      previousPrice: "",
       description: "",
       count: 1,
       image1: "",
@@ -122,7 +122,7 @@ const AdminComponent = () => {
 
     if (editIndex !== null) {
       let updatedData = [...jsonData];
-      console.log(updatedData)
+      console.log(updatedData);
       if (editIndex === -1) {
         updatedData[sectionIndex][selectedCat!].push(editedItem);
       } else {
@@ -166,7 +166,7 @@ const AdminComponent = () => {
   const handleAddCategory = async () => {
     if (newCategory.trim() !== "") {
       const updatedData = [...jsonData];
-      console.log(jsonData)
+      console.log(jsonData);
       const newCategoryName = newCategory.toLowerCase();
 
       if (!updatedData[selectedSectionIndex!][newCategoryName]) {
@@ -196,16 +196,15 @@ const AdminComponent = () => {
   };
 
   const handleDeleteCategory = async () => {
-
-
     const confirmDelete = window.confirm(
       `Are you sure you want to delete this category?`
     );
 
-
-
-
-    if (selectedCat !== null && selectedSectionIndex !== null && confirmDelete) {
+    if (
+      selectedCat !== null &&
+      selectedSectionIndex !== null &&
+      confirmDelete
+    ) {
       const updatedData = [...jsonData];
       delete updatedData[selectedSectionIndex][selectedCat];
 
@@ -234,12 +233,10 @@ const AdminComponent = () => {
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
         {/* <Stats /> */}
         <div className="overflow-x-auto">
-
           {selectedSectionIndex !== null &&
-            jsonData[selectedSectionIndex] &&
-            selectedCat ? (
+          jsonData[selectedSectionIndex] &&
+          selectedCat ? (
             <div key={selectedSectionIndex} className="mt-5">
-
               <span className="my-3 block flex items-center justify-end text-end text-sm">
                 {jsonData.length > 0 && (
                   <div className="flex-1 flex items-center gap-2">
@@ -280,15 +277,23 @@ const AdminComponent = () => {
 
                     <div>
                       <span
-
-                        className={`${toggleNewCat ? "flex items-center" : "hidden"} mt-2`}
+                        className={`${
+                          toggleNewCat ? "flex items-center" : "hidden"
+                        } mt-2`}
                       >
                         Category not exist ?{" "}
-                        <span onClick={() => setToggleNewCat(false)} className="cursor-pointer text-blue-400">
+                        <span
+                          onClick={() => setToggleNewCat(false)}
+                          className="cursor-pointer text-blue-400"
+                        >
                           add category
                         </span>
                       </span>
-                      <div className={`${toggleNewCat ? "hidden" : "flex items-center"}`}>
+                      <div
+                        className={`${
+                          toggleNewCat ? "hidden" : "flex items-center"
+                        }`}
+                      >
                         <input
                           type="text"
                           placeholder="New Category"
@@ -312,28 +317,26 @@ const AdminComponent = () => {
                     </div>
                   </div>
                 )}
-                Count: {" "}
-                <span className="font-bold ml-1">{jsonData[selectedSectionIndex][selectedCat!]?.length} Product(s)</span>
-
+                Count:{" "}
+                <span className="font-bold ml-1">
+                  {jsonData[selectedSectionIndex][selectedCat!]?.length}{" "}
+                  Product(s)
+                </span>
                 {selectedSectionIndex !== null &&
                   jsonData[selectedSectionIndex] &&
                   selectedCat && (
-                    <span onClick={handleAddItemClick} className="cursor-pointer inline-flex items-center justify-end w-fit mr-2 ml-3 py-2 px-3 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded">
-                      <Plus className="inline-block w-5 h-5 mr-1"
-                        size={20} />
+                    <span
+                      onClick={handleAddItemClick}
+                      className="cursor-pointer inline-flex items-center justify-end w-fit mr-2 ml-3 py-2 px-3 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded"
+                    >
+                      <Plus className="inline-block w-5 h-5 mr-1" size={20} />
                       New
                     </span>
-
                   )}
               </span>
               <div className="flex w-full  flex-col gap-3 border-2 rounded border-zinc-400">
-
-                <div
-                  className="flex items-center text-white bg-zinc-900 px-5 py-3 rounded "
-                >
-                  <div className="  rounded-sm">
-                    Image
-                  </div>
+                <div className="flex items-center text-white bg-zinc-900 px-5 py-3 rounded ">
+                  <div className="  rounded-sm">Image</div>
                   <div className="ml-4 flex-1 flex items-center gap-2">
                     <p className="text-sm">Product Name</p>
                     <span className="relative">
@@ -345,26 +348,29 @@ const AdminComponent = () => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="pl-2 pr-10 py-1 border border-slate-300 rounded bg-white text-black text-sm focus:outline-none focus:border-blue-500"
                       />
-
                     </span>
                   </div>
                   <div className="text-xs sm:text-sm">Price</div>
                   <div className="text-xs sm:text-sm ml-8">Actions</div>
                 </div>
                 <div className="max-h-[500px] p-3 overflow-auto ">
-                  {jsonData[selectedSectionIndex][selectedCat!]?.filter(product => product.title.toLowerCase().includes(searchTerm.toLowerCase())).map(
-                    (product: any, itemIndex: number) => (
+                  {jsonData[selectedSectionIndex][selectedCat!]
+                    ?.filter((product) =>
+                      product.title
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase())
+                    )
+                    .map((product: any, itemIndex: number) => (
                       <div
                         key={product.id}
                         // href={`/product/${product.id}`}
                         className={`${cn(
                           +product.count === 0
-                            ? 'bg-red-200 animate-pulse'
-                            : 'bg-gray-200 hover:bg-white',
-                          'text-xs font-medium'
+                            ? "bg-red-200 animate-pulse"
+                            : "bg-gray-200 hover:bg-white",
+                          "text-xs font-medium"
                         )} flex group items-start hover:no-underline my-2 p-2 rounded `}
                       >
-
                         <div className="w-10 h-10 min-w-[2.5rem]  rounded-sm">
                           <img
                             className="w-full h-full object-cover rounded-sm"
@@ -373,22 +379,26 @@ const AdminComponent = () => {
                           />
                         </div>
                         <div className="ml-4 flex-1">
-                          <p className="text-sm text-gray-800 font-bold">{product.title}
-
+                          <p className="text-sm text-gray-800 font-bold">
+                            {product.title}
                           </p>
                           <span
                             className={cn(
                               +product.count === 0
-                                ? 'text-red-500'
+                                ? "text-red-500"
                                 : +product.count > 10
-                                  ? 'text-green-500'
-                                  : 'text-orange-500',
-                              'text-xs font-medium'
+                                ? "text-green-500"
+                                : "text-orange-500",
+                              "text-xs font-medium"
                             )}
                           >
-                            {product.count === 0 ? 'Out of Stock' : parseInt(product.count,10) + ' in Stock'}
+                            {product.count === 0
+                              ? "Out of Stock"
+                              : parseInt(product.count, 10) + " in Stock"}
                           </span>
-                          <span className="opacity-0 transition text-sm font-semibold group-hover:opacity-100 ml-2 italic">#{product?.id}</span>
+                          <span className="opacity-0 transition text-sm font-semibold group-hover:opacity-100 ml-2 italic">
+                            #{product?.id}
+                          </span>
                         </div>
                         <div className="font-bold text-xs sm:text-sm text-zinc-700 pl-1.5">
                           <FormattedPrice amount={product.price} />
@@ -405,10 +415,7 @@ const AdminComponent = () => {
                           <button
                             className="mr-1"
                             onClick={() =>
-                              handleRemoveItem(
-                                selectedSectionIndex,
-                                itemIndex
-                              )
+                              handleRemoveItem(selectedSectionIndex, itemIndex)
                             }
                           >
                             <Trash size={16} />
@@ -531,8 +538,6 @@ const AdminComponent = () => {
               {editIndex !== null && (
                 <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                   <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
-
-
                     <h2 className="font-bold mb-2 text-center text-lg">
                       {editIndex === -1 ? "Add Product" : "Edit Product"}
                     </h2>
@@ -540,21 +545,22 @@ const AdminComponent = () => {
                     <div className="">
                       {Object.entries({
                         // id: 'ID',
-                        title: 'Title',
-                        description: 'Description',
-                        price: 'Price',
-                        previousPrice: 'Previous Price',
-                        count: 'Count',
+                        title: "Title",
+                        description: "Description",
+                        price: "Price",
+                        previousPrice: "Previous Price",
+                        count: "Count",
                         // brand: 'Brand',
-                        image1: 'Image1',
-                        image2: 'Image2',
-                        image3: 'Image3',
+                        image1: "Image1",
+                        image2: "Image2",
+                        image3: "Image3",
                         externalLink: "External Link",
                       }).map(([key, placeholder], index) => (
                         <div key={key} className={`flex-col mb-2 lg:pr-4`}>
-
-                          <span className="font-bold text-sm mb-2 inline-block ml-1">{placeholder}</span>
-                          {key === 'description' ? (
+                          <span className="font-bold text-sm mb-2 inline-block ml-1">
+                            {placeholder}
+                          </span>
+                          {key === "description" ? (
                             <textarea
                               placeholder={placeholder}
                               className={`border border-gray-300 rounded outline-none w-full p-2 `}
@@ -563,7 +569,7 @@ const AdminComponent = () => {
                             />
                           ) : (
                             <input
-                              type="text"
+                              type={key === "count" ? "number" : "text"} // Corrected the syntax
                               placeholder={placeholder}
                               className={`border border-gray-300 rounded outline-none w-full p-2 `}
                               value={editedItem[key]}
@@ -572,7 +578,6 @@ const AdminComponent = () => {
                           )}
                         </div>
                       ))}
-
                     </div>
                     <div className="flex">
                       <button
@@ -592,12 +597,12 @@ const AdminComponent = () => {
                     </div>
                   </div>
                 </div>
-
               )}
             </div>
-          ) : <Loading />}
+          ) : (
+            <Loading />
+          )}
         </div>
-
       </div>
       <Toaster
         position="bottom-right"
