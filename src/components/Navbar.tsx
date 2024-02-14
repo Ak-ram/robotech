@@ -1,19 +1,26 @@
-
-'use client'
-import { useState, useEffect, ChangeEvent } from 'react';
+"use client";
+import { useState, useEffect, ChangeEvent } from "react";
 import Link from "next/link";
 import Logo from "./Logo";
-import { AlignJustify, Heart, Link2, PhoneCall, Search, ShoppingBagIcon, ShoppingBasket, X } from "lucide-react";
+import {
+  AlignJustify,
+  Heart,
+  Link2,
+  PhoneCall,
+  Search,
+  ShoppingBagIcon,
+  ShoppingBasket,
+  X,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/constants/data";
 import { useSelector } from "react-redux";
 import { ProductType, StateProps } from "../../type";
-import FormattedPrice from './FormattedPrice';
-import WhatsApp from './WhatsApp';
-import SearchComponent from './SearchComponent';
+import FormattedPrice from "./FormattedPrice";
+import WhatsApp from "./WhatsApp";
+import SearchComponent from "./SearchComponent";
 
 // Define the type for product items
-
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -24,7 +31,6 @@ const Navbar = () => {
   const [totalAmt, setTotalAmt] = useState(0);
   const [rowPrice, setRowPrice] = useState(0);
   const [openSidebar, setOpenSidebar] = useState(false);
-
 
   useEffect(() => {
     let amt = 0;
@@ -40,7 +46,6 @@ const Navbar = () => {
     setRowPrice(rowAmt);
   }, [productData]);
 
-
   const [flashAnimation, setFlashAnimation] = useState(false);
 
   useEffect(() => {
@@ -55,33 +60,42 @@ const Navbar = () => {
     return () => clearTimeout(timeoutId);
   }, [totalAmt]);
 
-
-
   return (
     <div className="py-2 sm:py-4 bg-white/80 text-zinc-800 sticky top-0 z-10  backdrop-blur-2xl">
       <div className="w-[98%] relative mx-auto order-first flex-nowrap max-w-screen-xl mx-auto h-full flex items-center px-4 xl:px-0">
         {/* Logo */}
 
-        <span onTouchEnd={() => setOpenSidebar(true)}
-          onClick={() => setOpenSidebar(true)} className='md:hidden h-full '>
-
+        <span
+          onTouchEnd={() => setOpenSidebar(true)}
+          onClick={() => setOpenSidebar(true)}
+          className="md:hidden h-full "
+        >
           <AlignJustify />
         </span>
 
         <Logo />
         {/* Navigation */}
-        <ul className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"} bg-white flex px-2 -ml-6 absolute md:relative top-0 w-[250px] border-gray-400 border-r md:border-0 z-50 transition transform  md:bg-transparent md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}>
-          <X className='ml-auto cursor-pointer text-black m-2 md:hidden' onClick={() => setOpenSidebar(false)} />
-          {navigation.map((item,index) => (
+        <ul
+          className={`${
+            openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+          } bg-white flex px-2 -ml-6 absolute md:relative top-0 w-[250px] border-gray-400 border-r md:border-0 z-50 transition transform  md:bg-transparent md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}
+        >
+          <X
+            className="ml-auto cursor-pointer text-black m-2 md:hidden"
+            onClick={() => setOpenSidebar(false)}
+          />
+          {navigation.map((item, index) => (
             <Link href={item?.href} key={`${item.title}_${index}`}>
               <li
-                className={`mt-2 hover:text-designColor cursor-pointer duration-200 relative overflow-hidden group ${item.href === pathname && "text-designColor font-bold"
-                  }`}
+                className={`mt-2 hover:text-designColor cursor-pointer duration-200 relative overflow-hidden group ${
+                  item.href === pathname && "text-designColor font-bold"
+                }`}
               >
                 {item?.title}
                 <span
-                  className={`hidden md:block absolute h-[2px] w-full bg-designColor left-0 bottom-0 -translate-x-[100%] z-10 translate-y-[1px] group-hover:translate-x-0 transition-transform duration-500 ${item.href === pathname && "translate-x-0 bg-designColor"
-                    }`}
+                  className={`hidden md:block absolute h-[2px] w-full bg-designColor left-0 bottom-0 -translate-x-[100%] z-10 translate-y-[1px] group-hover:translate-x-0 transition-transform duration-500 ${
+                    item.href === pathname && "translate-x-0 bg-designColor"
+                  }`}
                 />
               </li>
             </Link>
@@ -90,14 +104,21 @@ const Navbar = () => {
 
         {/* icons */}
         <div className="w-[70%] justify-end md:w-fit md:justify-start ml-auto flex items-center gap-x-5">
-
-          <div className='border-l border-r px-3 hidden lg:flex items-center text-xs gap-2 text-gray/80'>
-            <PhoneCall className='text-gray/80 md:w-6 md:h-6' />
-            <div className='flex flex-col gap-2'>
-              <span><span className='font-bold '>Support </span>(+20) 11 0207 1544 </span>
+          <div className="border-l border-r px-3 hidden lg:flex items-center text-xs gap-2 text-gray/80">
+            <PhoneCall className="text-gray/80 md:w-6 md:h-6" />
+            <div className="flex flex-col gap-2">
+              <span>
+                <span className="font-bold ">Support </span>(+20) 11 0207 1544{" "}
+              </span>
               <span>robotechspace8@gmail.com</span>
             </div>
           </div>
+          <Link
+            href={"/search"}
+            className="text-designColor cursor-pointer duration-200 relative group"
+          >
+            <Search className="w-7 h-7 xs:w-8 xs:h-8" />
+          </Link>
           <Link
             href={"/wishlist"}
             className="text-designColor cursor-pointer duration-200 relative group"
@@ -107,35 +128,37 @@ const Navbar = () => {
               {favoriteData ? favoriteData.length : 0}
             </span>
           </Link>
+
           <Link
             href={"/cart"}
-            className={`${flashAnimation ? "animate-pulse" : ""
-              } text-designColor cursor-pointer duration-200 relative group`}
-          >            <ShoppingBasket className="w-7 h-7 xs:w-8 xs:h-8" />
+            className={`${
+              flashAnimation ? "animate-pulse" : ""
+            } text-designColor cursor-pointer duration-200 relative group`}
+          >
+            {" "}
+            <ShoppingBasket className="w-7 h-7 xs:w-8 xs:h-8" />
             <span className="absolute top-0 -left-1  bg-black text-white w-4 h-4 xs:w-5 xs:h-5  rounded-full  flex items-center justify-center group-hover: sm:font-bold ">
               {productData ? productData.length : 0}
             </span>
           </Link>
-          <span
-            className="-ml-3 hidden xs:flex font-semibold  flex-col justify-center items-center -gap-2"
-          >
-            <span className=''>({productData ? productData.length.toLocaleString('ar') : 0}) items</span>
-            <FormattedPrice className='text-sm' amount={totalAmt} />
+
+          <span className="-ml-3 hidden xs:flex font-semibold  flex-col justify-center items-center -gap-2">
+            <span className="">
+              ({productData ? productData.length.toLocaleString("ar") : 0})
+              items
+            </span>
+            <FormattedPrice className="text-sm" amount={totalAmt} />
           </span>
-
-
         </div>
-
       </div>
-      <div className='mt-3 md:h-[1px] w-full bg-gray-900 opacity-20'></div>
-{/*      
+      <div className="mt-3 md:h-[1px] w-full bg-gray-900 opacity-20"></div>
+      {/*      
        <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
         <span className='md:block hidden mt-4 font-bold'>Look for specific Product ? </span>
          <SearchComponent /> 
 
       </div> */}
     </div>
-
   );
 };
 
