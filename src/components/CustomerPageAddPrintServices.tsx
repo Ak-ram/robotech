@@ -189,14 +189,14 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
                 </p>
                 <p className="text-gray-600 mb-2">
                   Service price:{" "}
-                  <FormattedPrice amount={service["piecePrice"]} />
+                  <FormattedPrice amount={+service["piecePrice"]} />
                 </p>
                 <p className="text-gray-600 mb-2">
-                  Discound: <FormattedPrice amount={service["discount"]!} />
+                  Discound: <FormattedPrice amount={+service["discount"]!} />
                 </p>
                 <p className="text-gray-600 mb-2">
                   Sub-total price:{" "}
-                  <FormattedPrice amount={service["subtotal"]!} />
+                  <FormattedPrice amount={+service["subtotal"]!} />
                 </p>
               </div>
               <div className="flex flex-col gap-2">

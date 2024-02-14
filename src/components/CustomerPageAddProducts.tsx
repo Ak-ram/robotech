@@ -141,9 +141,9 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                         >
                             <p className="text-gray-600 mb-2">Transaction date: {product["date"]}</p>
                             <p className="text-gray-600 mb-2">Product name: {product["productName"]}</p>
-                            <p className="text-gray-600 mb-2">Product price: <FormattedPrice amount={product["piecePrice"]} /></p>
-                            <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={product["discount"]!} /></p>
-                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={product["subtotal"]!} /></p>
+                            <p className="text-gray-600 mb-2">Product price: <FormattedPrice amount={+product["piecePrice"]} /></p>
+                            <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={+product["discount"]!} /></p>
+                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={+product["subtotal"]!} /></p>
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex-1">

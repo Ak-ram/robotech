@@ -133,9 +133,9 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                         >
                             <p className="text-gray-600 mb-2">Transaction date: {course["date"]}</p>
                             <p className="text-gray-600 mb-2">Course name: {course["productName"]}</p>
-                            <p className="text-gray-600 mb-2">Course price: <FormattedPrice amount={course["piecePrice"]} /></p>
-                            <p className="text-gray-600 mb-2">Discound: <FormattedPrice amount={course["discount"]!} /></p>
-                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={course["subtotal"]!} /></p>
+                            <p className="text-gray-600 mb-2">Course price: <FormattedPrice amount={+course["piecePrice"]} /></p>
+                            <p className="text-gray-600 mb-2">Discound:  <FormattedPrice amount={+course["discount"]!} /></p>
+                            <p className="text-gray-600 mb-2">Sub-total price: <FormattedPrice amount={+course["subtotal"]!} /></p>
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex-1">
