@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
-import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
+import { Edit, Edit2, Redo, ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
 import { getPrintServices } from "@/helpers/getPrintServices";
 
@@ -38,58 +38,11 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
     fetchData();
   }, []);
 
-  const handleRemoveTransaction = async (transactionIndex) => {
-    const existingCustomerIndex = jsonArray.findIndex(
-      (customer) => customer.id === customerData.id
-    );
 
-    if (existingCustomerIndex !== -1) {
-      const existingCustomer = jsonArray[existingCustomerIndex];
-      if (
-        existingCustomer.transactions &&
-        existingCustomer.transactions.printServices
-      ) {
-        const updatedTransactions =
-          existingCustomer.transactions.printServices.filter(
-            (_, index) => index !== transactionIndex
-          );
 
-        const subtotalToRemove =
-          existingCustomer.transactions.printServices[transactionIndex]
-            ?.subtotal || 0;
 
-        // Update the total purchase transactions
-        existingCustomer.total_purchase_transactions -= subtotalToRemove;
+  
 
-        existingCustomer.transactions.printServices = updatedTransactions;
-
-        jsonArray[existingCustomerIndex] = existingCustomer;
-
-        try {
-          await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
-
-          // Update the customerData state after removing the transaction
-          setCustomerData(existingCustomer);
-
-          // Update the state variables for immediate UI update
-          const updatedCustomer = {
-            ...updatedCustomerData,
-            transactions: {
-              ...updatedCustomerData.transactions,
-              printServices: updatedTransactions,
-            },
-          };
-          setUpdatedCustomerData(updatedCustomer);
-
-          toast.success(`Transaction removed successfully`);
-        } catch (error) {
-          toast.error((error as Error).message);
-        }
-      }
-    } else {
-      console.error("Customer not found for ID:", customerData.id);
-    }
-  };
   const handleAddOrder = async () => {
     // Validate order details if needed
     const existingCustomerIndex = jsonArray.findIndex(
@@ -198,6 +151,9 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
                   Sub-total price:{" "}
                   <FormattedPrice amount={+service["subtotal"]!} />
                 </p>
+                {service?.isReturned && (
+                  <p className="text-gray-600 mb-2">Returned</p>
+                )}
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex-1">
@@ -215,11 +171,12 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
                     size={20}
                   />
                 </div>
-                <Trash
-                  onClick={() => handleRemoveTransaction(index)} // Call handleRemoveTransaction with the index of the transaction
-                  className="ml-auto mr-2 cursor-pointer text-red-600"
-                  size={20}
-                />{" "}
+                <span title="مرتجع">
+                  <Redo
+                    className="ml-auto mr-2 cursor-not-allowed text-red-600"
+                    size={20}
+                  />
+                </span>
               </div>
               {showBill && selectedService && (
                 <Bill
