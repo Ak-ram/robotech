@@ -128,12 +128,12 @@ const Navbar = () => {
 
       </div>
       <div className='mt-3 md:h-[1px] w-full bg-gray-900 opacity-20'></div>
-     
+{/*      
        <div className='flex items-center w-[95%] gap-2 md:w-[80%] mx-auto'>
         <span className='md:block hidden mt-4 font-bold'>Look for specific Product ? </span>
          <SearchComponent /> 
 
-      </div>
+      </div> */}
     </div>
 
   );

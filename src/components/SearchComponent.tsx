@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import FormattedPrice from "./FormattedPrice";
 import { Search } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { ProductType } from "../../type";
 import { getProducts } from "@/helpers/getProducts";
+import Product from "./Product";
 
 const SearchComponent = (className) => {
   const [res, setRes] = useState<ProductType[]>([]);
@@ -74,15 +77,16 @@ const SearchComponent = (className) => {
 
   return (
     <>
-      <div className="mt-2 border-t md:border-none border-gray-700 md:mt-0 relative flex-1 relative flex justify-center items-center">
+      <div className="mt-2 w-full border-t md:border-none border-gray-700 md:mt-0 relative flex-1 relative  justify-center items-center">
         <Search className="text-zinc-500 absolute top-7 sm:top-8 left-2 md:w-6 md:h-6" />
         <input
           onInput={(e: ChangeEvent<HTMLInputElement>) => {
             searching(e.target.value);
           }}
           onKeyDown={(e) => handleKeyDown(e)}
-          className={`shadow-lg text-lg !text-black outline-none sm:h-14 pl-10 border rounded-md pr-20 py-2 md:py-3 mr-auto mt-4 w-full ${inputError ? "border-red-500" : ""
-            }`}
+          className={`shadow-lg text-lg !text-black outline-none sm:h-14 pl-10 border rounded-md pr-20 py-2 md:py-3 mr-auto mt-4 w-full ${
+            inputError ? "border-red-500" : ""
+          }`}
           type="text"
           placeholder="Search..."
         />
@@ -96,46 +100,10 @@ const SearchComponent = (className) => {
             Result: {res?.length !== products?.length ? res?.length : 0}
           </span>
         )}
-        {res.length > 0 && (
-          <ul
-            className={`max-h-[50vh] overflow-auto ${isInput ? "block py-1 lg:py-3 " : "hidden p-0 "
-              } shadow-lg mx-0 top-11 w-full border shadow-md border-zinc-400 z-100 absolute bg-white mt-5 rounded-lg`}
-          >
-            {res.length > 0 &&
-              res.map((item, index) => (
-                <li
-                  key={`${item.title}_${item.id}`}
-                  className={`${isInput ? 'py-1 border-b' : 'p-0 border-0'
-                    } hover:bg-zinc-100 cursor-pointer hover:bg-slate-200 rounded-sm my-1 ${
-                    selectedSuggestion === index ? 'bg-gray-200' : ''
-                    }`}
-                >
-                  <Link
-                    className="flex items-center font-bold justify-between px-3"
-                    href={{
-                      pathname: `/id_${item?.id}`,
-                      query: { id: item?.id, prefix: item?.category },
-                    }}
-                  >
-                    <span className="flex-col flex">
-                      <span className="text-sm mb-2 text-blue-400">
-                        {item.title}
-                      </span>
-                      <span className="text-xs font-bold">
-                        <FormattedPrice amount={item?.price} />
-                      </span>
-                    </span>
-                    <img
-                      className="w-16 h-16 hidden sm:inline-block rounded-md"
-                      src={item.image1}
-                      width={70}
-                      height={70}
-                    />
-                  </Link>
-                </li>
-              ))}
-          </ul>
-        )}
+        {res.length > 0 && <div className="">
+          
+          <Product products={res} categoryName="" prefix="" />
+          </div>}
       </div>
     </>
   );
