@@ -525,11 +525,22 @@ const TransactionAnalyzer = ({ customers }) => {
 
       customers.forEach(customer => {
         const transactions = customer.transactions;
+                const customerName = customer.fullName; // Assuming fullName as the customer name field
+                const customerId = customer.id; // Assuming fullName as the customer name field
+                const wholesalePrice = customer.wholesalePrice; // Assuming fullName as the customer name field
+               
         transactions.products.forEach(transaction => {
           const transactionDate = new Date(transaction.date);
           const dayKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}-${transactionDate.getDate()}`;
           const monthKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}`;
           const yearKey = `${transactionDate.getFullYear()}`;
+
+          //  Add customerName to the transaction
+          transaction.customerName = customerName;
+          transaction.customerId = customerId;
+          transaction.wholesalePrice = wholesalePrice;
+
+
 
           if (!dailyTransactions[dayKey]) {
             dailyTransactions[dayKey] = [];
@@ -831,7 +842,7 @@ const TransactionAnalyzer = ({ customers }) => {
               </div>
               <div className="flex  flex-col justify-center items-center">
                 <span className='text-xs font-semibold'>Discount</span>
-                <FormattedPrice className='text-xs font-semibold' amount={+transaction.discount} />
+                <FormattedPrice className='text-xs font-semibold' amount={+transaction.discount || 0} />
               </div>
               <div className="flex  flex-col justify-center items-center">
                 <span className='text-xs font-semibold'>Total</span>
