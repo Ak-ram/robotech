@@ -13,6 +13,7 @@ export interface ProductType {
   category: string;
   quantity: number;
   externalLink: string;
+  unit: string;
 }
 
 export interface CourseType {

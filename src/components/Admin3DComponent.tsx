@@ -20,7 +20,9 @@ const Admin3DComponent = () => {
     image3: "",
     brand: "",
     quantity: 1,
-    externalLink:''
+    externalLink:'',
+    unit:''
+
   });
 
   useEffect(() => {
@@ -49,7 +51,9 @@ const Admin3DComponent = () => {
       image3: "",
       brand: "",
       quantity: 1,
-      externalLink:''
+      externalLink:'',
+      unit:''
+
     });
   };
 
@@ -83,7 +87,8 @@ const Admin3DComponent = () => {
       !editedItem.price ||
       !editedItem.description ||
       !editedItem.image1 ||
-      !editedItem.brand
+      !editedItem.brand ||
+      !editedItem.unit
     ) {
       toast.error("All fields are required");
       return;
@@ -155,7 +160,7 @@ const Admin3DComponent = () => {
                   Title
                 </th>
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  PPM
+                  PP Unit
                 </th>
                 {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Previous Price
@@ -258,11 +263,11 @@ const Admin3DComponent = () => {
               />
             </div>
             <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">PPM</span>
+              <span className="text-sm font-bold my-2 -ml-2">PP Unit</span>
 
               <input
                 type="text"
-                placeholder="Price Per Minute"
+                placeholder="Price Per Unit"
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.price}
                 onChange={(e) => {
@@ -347,6 +352,17 @@ const Admin3DComponent = () => {
                 onChange={(e) => handleInputChange(e, "count")}
               />
             </div>   */}
+               <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">Per Unit</span>
+
+              <input
+                type="text"
+                placeholder="gram / minute..."
+                className="p-2 w-full border border-gray-300 rounded"
+                value={editedItem.unit}
+                onChange={(e) => handleInputChange(e, "unit")}
+              />
+            </div>
             <div className="w-full mb-2 lg:pr-4">
               <span className="text-sm font-bold my-2 -ml-2">Printing Type</span>
 
