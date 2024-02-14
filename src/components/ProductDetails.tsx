@@ -32,7 +32,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                             ) : (
                                 <>
                                     <FormattedPrice className="text-xl font-bold" amount={product?.price!} />
-                                    <span className="text-xl font-bold"> / Minute</span>
+                                    <span className="text-xl font-bold"> / {product?.unit.toLowerCase()}</span>
                                 </>
                             )}
                         </p>
