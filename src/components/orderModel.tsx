@@ -195,10 +195,8 @@ const OrderModel = ({
       }
     }
 
-    
-      // Proceed with adding order
-      handleAddOrder(newOrder.productId);
-    
+    // Proceed with adding order
+    handleAddOrder(newOrder.productId);
   };
 
   return (

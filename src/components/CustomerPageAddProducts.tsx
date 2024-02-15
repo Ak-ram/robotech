@@ -126,14 +126,16 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
   };
 
   const handleAddOrder = async (productId) => {
-    if(lastOrderId === productId){
+    if (lastOrderId === productId) {
       toast.error(
-        "Sorry, you cannot add the same order twice in a row. Please try adding a different order."
+        "Sorry, you cannot add the same order twice in a row. Please try later or adding a different order."
       );
       return;
     }
     setLastOrderId(productId);
-
+    setTimeout(() => {
+      setLastOrderId("");
+    }, 20000);
     // Validate order details if needed
     const existingCustomerIndex = jsonArray.findIndex(
       (customer) => customer.id === customerData.id
