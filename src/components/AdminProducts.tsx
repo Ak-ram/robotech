@@ -394,7 +394,7 @@ const AdminComponent = () => {
                           >
                             {product.count === 0
                               ? "Out of Stock"
-                              : parseInt(product.count, 10) + " in Stock"}
+                              : product.count + " in Stock"}
                           </span>
                           <span className="opacity-0 transition text-sm font-semibold group-hover:opacity-100 ml-2 italic">
                             #{product?.id}
