@@ -11,7 +11,6 @@ import Bill from "./Bill";
 const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
-  const [canRefund, setCanRefund] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
   const [list, setList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -123,7 +122,6 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         }
       }
     }
-    handleRefundProductCount(product);
   };
 
   const handleAddOrder = async () => {
@@ -175,10 +173,8 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         });
         toast.success(`Item Added/Updated successfully`);
         toast.loading(`Be patient, changes take a few moments to be reflected`);
-        setCanRefund(false);
         setTimeout(() => {
           toast.dismiss();
-          setCanRefund(true);
         }, 5 * 1000 * 60);
       } catch (error) {
         toast.error((error as Error).message);
@@ -259,11 +255,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 </div>
 
                 <span
-                  onClick={() =>
-                    canRefund
-                      ? handleRefundOrder(product)
-                      : toast.error("can't refund now")
-                  }
+                  onClick={() => handleRefundOrder(product)}
                   className="flex gap-1 text-red-600  cursor-pointer items-center justify-center"
                 >
                   Refund
