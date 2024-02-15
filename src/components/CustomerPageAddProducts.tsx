@@ -47,15 +47,15 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
       const updatedProducts = customerData.transactions.products.filter(
         (p) => p !== product
       );
-  
+
       // Calculate the refund amount
       const refundAmount = product.subtotal;
-  
+
       // Update the total purchase transactions for the customer
       const existingCustomerIndex = jsonArray.findIndex(
         (customer) => customer.id === customerData.id
       );
-  
+
       if (existingCustomerIndex !== -1) {
         const existingCustomer = { ...jsonArray[existingCustomerIndex] }; // Make a copy to avoid mutation
         // Subtract the refund amount from total_purchase_transactions
@@ -64,7 +64,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         existingCustomer.transactions.products = updatedProducts;
         // Update the JSON file with the modified JSON array
         jsonArray[existingCustomerIndex] = existingCustomer;
-  
+
         try {
           // Update the JSON file with the modified JSON array
           await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
@@ -79,7 +79,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
       }
     }
   };
-  
+
   // const handleRefundOrder = async (product) => {
   //   // Confirm with the user before proceeding with the refund
   //   if (window.confirm("Are you sure you want to refund this product?")) {
@@ -247,10 +247,10 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
                 <span
                   onClick={() => handleRefundOrder(product)}
-                  className="flex gap-1 text-red-600 items-center justify-center"
+                  className="flex gap-1 text-red-600  cursor-pointer items-center justify-center"
                 >
                   Refund
-                  <Redo className="ml-auto mr-2 cursor-pointer" size={20} />
+                  <Redo className="ml-auto mr-2" size={20} />
                 </span>
               </div>
               {showBill && selectedProduct && (
