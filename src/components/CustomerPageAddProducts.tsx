@@ -14,6 +14,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
   const [list, setList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [lastOrderId, setLastOrderId] = useState("");
 
   const [jsonArray, setJsonArray] = useState<any[]>([]);
   const [categoriesArray, setCategoriesArray] = useState<any[]>([]);
@@ -124,7 +125,15 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
     }
   };
 
-  const handleAddOrder = async () => {
+  const handleAddOrder = async (productId) => {
+    if(lastOrderId === productId){
+      toast.error(
+        "Sorry, you cannot add the same order twice in a row. Please try adding a different order."
+      );
+      return;
+    }
+    setLastOrderId(productId);
+
     // Validate order details if needed
     const existingCustomerIndex = jsonArray.findIndex(
       (customer) => customer.id === customerData.id

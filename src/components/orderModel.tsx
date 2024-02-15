@@ -106,7 +106,6 @@ const OrderModel = ({
     CourseType | ProductType | null
   >(null);
   const [categoriesList, setCategoriesList] = useState<any[][]>([[]]);
-  const [lastOrderId, setLastOrderId] = useState("");
 
   useEffect(() => {
     // Fetch categories data
@@ -196,20 +195,12 @@ const OrderModel = ({
       }
     }
 
-    if (newOrder.productId === lastOrderId) {
-      toast.error(
-        "Sorry, you cannot add the same order twice in a row. Please try adding a different order."
-      );
-    } else {
-      setLastOrderId(newOrder.productId);
+    
       // Proceed with adding order
-      handleAddOrder();
-    }
+      handleAddOrder(newOrder.productId);
+    
   };
-  useEffect(() => {
-    console.log("newOrder.productId", newOrder.productId);
-    console.log("lastOrderId", lastOrderId);
-  }, [lastOrderId]);
+
   return (
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 z-100 flex items-center justify-center">
