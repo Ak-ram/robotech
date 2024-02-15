@@ -69,18 +69,14 @@ const CustomerStatsInStocks = () => {
 
     const handleSave = async () => {
         if (editedProduct) {
-            console.log("Edited Product:", editedProduct);
             setIsEditPopupOpen(false);
             setEditedProduct(null);
-
             // Check if jsonData is not empty and it contains the necessary data structure
             if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
                 let updatedData = [...jsonData];
-
                 // Use map to update the array
                 updatedData[0][editedProduct.category] = updatedData[0][editedProduct.category].map(product => {
-                    if (+product.id === +editedProduct.id) {
-                        console.log("done", editedProduct);
+                    if (product.id === editedProduct.id) {
                         return editedProduct;
                     } else {
                         return product; // Return other products unchanged
@@ -88,10 +84,9 @@ const CustomerStatsInStocks = () => {
                 });
 
                 // Update the state with the modified data
-                setJsonData(updatedData);
-
                 await updateJsonFile("robotech/pages/categories.json", jsonData);
-
+                setJsonData(updatedData);
+                console.log(updatedData)
 
             } else {
                 console.error("jsonData is empty or does not contain the expected structure.");
