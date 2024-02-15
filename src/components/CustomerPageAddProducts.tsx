@@ -41,11 +41,76 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
     fetchData();
   }, []);
 
+  // const handleRefundOrder = async (product) => {
+  //   // Confirm with the user before proceeding with the refund
+  //   if (window.confirm("Are you sure you want to refund this product?")) {
+  //     // Remove the refunded product from the products array
+  //     const updatedProducts = customerData.transactions.products.filter(
+  //       (p) => p !== product
+  //     );
+
+  //     // Update the total purchase transactions for the customer
+  //     const existingCustomerIndex = jsonArray.findIndex(
+  //       (customer) => customer.id === customerData.id
+  //     );
+  //     if (existingCustomerIndex !== -1) {
+  //       const existingCustomer = jsonArray[existingCustomerIndex];
+  //       // Recalculate total purchase transactions excluding refunded product
+  //       existingCustomer.total_purchase_transactions -= product.subtotal;
+  //       // Update the transactions array with the updated products
+  //       existingCustomer.transactions.products = updatedProducts;
+  //       jsonArray[existingCustomerIndex] = existingCustomer;
+  //     }
+
+  //     // Update the JSON file with the modified JSON array
+  //     try {
+  //       await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
+  //       setCustomerData(existingCustomer);
+
+  //       // Display success message
+  //       toast.success(`Product refunded successfully`);
+  //     } catch (error) {
+  //       // Display error message if update fails
+  //       toast.error((error as Error).message);
+  //     }
+  //   }
+  // };
   const handleRefundOrder = async (product) => {
-    setIsRefund(!product.isRefund);
-    product.isRefund = !product.isRefund;
-    console.log(product);
+    // Confirm with the user before proceeding with the refund
+    if (window.confirm("Are you sure you want to refund this product?")) {
+      // Remove the refunded product from the products array
+      const updatedProducts = customerData.transactions.products.filter(
+        (p) => p !== product
+      );
+  
+      // Update the total purchase transactions for the customer
+      const existingCustomerIndex = jsonArray.findIndex(
+        (customer) => customer.id === customerData.id
+      );
+  
+      if (existingCustomerIndex !== -1) {
+        const existingCustomer = { ...jsonArray[existingCustomerIndex] }; // Make a copy to avoid mutation
+        // Recalculate total purchase transactions excluding refunded product
+        existingCustomer.total_purchase_transactions -= product.subtotal;
+        // Update the transactions array with the updated products
+        existingCustomer.transactions.products = updatedProducts;
+        jsonArray[existingCustomerIndex] = existingCustomer;
+  
+        // Update the JSON file with the modified JSON array
+        try {
+          await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
+          // Update the customerData state with the modified data
+          setCustomerData(existingCustomer);
+          // Display success message
+          toast.success(`Product refunded successfully`);
+        } catch (error) {
+          // Display error message if update fails
+          toast.error((error as Error).message);
+        }
+      }
+    }
   };
+  
   const handleAddOrder = async () => {
     // Validate order details if needed
     const existingCustomerIndex = jsonArray.findIndex(
@@ -174,25 +239,15 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                     size={20}
                   />
                 </div>
-                {isRefund ? (
-                  <span className="flex text-green-600 gap-1 items-center justify-center">
-                    بيع مره اخرى{" "}
-                    <Check
-                      onClick={() => handleRefundOrder(product)}
-                      className="ml-auto mr-2 cursor-not-allowed "
-                      size={20}
-                    />
-                  </span>
-                ) : (
-                  <span className="flex gap-1 text-red-600 items-center justify-center">
-                    ارجاع
-                    <Redo
-                      onClick={() => handleRefundOrder(product)}
-                      className="ml-auto mr-2 cursor-not-allowed"
-                      size={20}
-                    />
-                  </span>
-                )}
+
+                <span className="flex gap-1 text-red-600 items-center justify-center">
+                  ارجاع
+                  <Redo
+                    onClick={() => handleRefundOrder(product)}
+                    className="ml-auto mr-2 cursor-pointer"
+                    size={20}
+                  />
+                </span>
               </div>
               {showBill && selectedProduct && (
                 <Bill
