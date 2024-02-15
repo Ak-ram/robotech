@@ -322,7 +322,7 @@ const CustomSelect = ({ options, onSelect, newOrder, setNewOrder, setSelectedIte
             productName: option?.title,
             piecePrice: +option?.price!,
             wholesalePrice: +option.wholesalePrice || 0,
-            isReturned : false,
+            isRefund : false,
             discount: +option.discount || 0, // Set discount to 0 as default value
 
             date: new Date().toLocaleDateString('en-US', {
@@ -392,7 +392,7 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
             piecePrice: +option.price,
             discount: +option.discount || 0,
             wholesalePrice: +option.wholesalePrice || 0,
-            isReturned : false,
+            isRefund : false,
             date: new Date().toLocaleDateString('en-US', {
                 weekday: 'short',
                 year: 'numeric',
