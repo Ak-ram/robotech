@@ -131,6 +131,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
       toast.error(
         "Sorry, you cannot add the same order twice in a row. Please try later or adding a different order."
       );
+      setShowAddOrderModal(false)
       return;
     }
     setLastOrderId(productId);
