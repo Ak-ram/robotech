@@ -11,12 +11,12 @@ import Bill from "./Bill";
 const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
-  const [isRefund, setIsRefund] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
   const [list, setList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [jsonArray, setJsonArray] = useState<any[]>([]);
+  const [categoriesArray, setCategoriesArray] = useState<any[]>([]);
   const [newOrder, setNewOrder] = useState({
     productName: "",
     quantity: 1,
@@ -31,8 +31,14 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchJsonData("robotech/pages/customers.json");
-        setJsonArray(data);
+        const cusomterData = await fetchJsonData(
+          "robotech/pages/customers.json"
+        );
+        const categoriesData = await fetchJsonData(
+          "robotech/pages/categories.json"
+        );
+        setJsonArray(cusomterData);
+        setCategoriesArray(categoriesData);
       } catch (error) {
         new Error((error as Error).message);
       }
@@ -79,6 +85,25 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
   //     }
   //   }
   // };
+  const handleRefundProductCount = async (product) => {
+    const updatedData = [...categoriesArray];
+    const category = updatedData[0][product.productCategory];
+    if (category) {
+      const productIndex = category.findIndex(
+        (item) => item.id === product.productId
+      );
+      if (productIndex !== -1) {
+        updatedData[0][product.productCategory][productIndex].count +=
+          product.quantity;
+        setCategoriesArray(updatedData);
+        await updateJsonFile("robotech/pages/categories.json", updatedData);
+      } else {
+        console.log("Product not found in category");
+      }
+    } else {
+      console.log("Category not found");
+    }
+  };
 
   const handleRefundOrder = async (product) => {
     // Confirm with the user before proceeding with the refund
@@ -110,12 +135,9 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
           );
 
         try {
-          // Update the JSON file with the modified JSON array
           jsonArray[existingCustomerIndex] = existingCustomer;
           await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
-          // Update the customerData state with the modified data
           setCustomerData(existingCustomer);
-          // Display success message
           toast.success(`Product refunded successfully`);
         } catch (error) {
           // Display error message if update fails
@@ -123,6 +145,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         }
       }
     }
+    handleRefundProductCount(product);
   };
 
   const handleAddOrder = async () => {

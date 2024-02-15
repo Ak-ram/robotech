@@ -319,7 +319,10 @@ const CustomSelect = ({ options, onSelect, newOrder, setNewOrder, setSelectedIte
 
         setNewOrder({
             ...newOrder,
+            productId: option?.id,
             productName: option?.title,
+            productCategory: option?.category || "",
+
             piecePrice: +option?.price!,
             wholesalePrice: +option.wholesalePrice || 0,
             isRefund : false,
@@ -388,7 +391,9 @@ const OrderModel = ({ newOrder, setNewOrder, handleAddOrder, setShowAddOrderModa
         setSelectedItem(option);
         setNewOrder({
             ...newOrder,
+            productId: option?.id,
             productName: option.title,
+            productCategory: option?.category || "",
             piecePrice: +option.price,
             discount: +option.discount || 0,
             wholesalePrice: +option.wholesalePrice || 0,
