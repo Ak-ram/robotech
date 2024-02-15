@@ -129,7 +129,7 @@ const SearchComponent = () => {
               <select
                 value={selectedCategory || ""}
                 onChange={handleCategoryChange}
-                className="border rounded-md px-2 py-1  w-[90%] mx-auto"
+                className="border rounded-md px-2 py-1  w-[90%]"
               >
                 <option value="">All</option>
                 {/* Add category options dynamically */}
