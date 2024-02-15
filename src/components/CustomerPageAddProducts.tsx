@@ -108,7 +108,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         //   product.quantity;
         // setCategoriesArray(updatedData);
         // console.log(product.quantity)
-        // await updateJsonFile("robotech/pages/categories.json", updatedData);
+        await updateJsonFile("robotech/pages/categories.json", updatedData);
       } else {
         console.log("Product not found in category");
       }
