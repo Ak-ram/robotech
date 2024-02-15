@@ -152,12 +152,32 @@ const AdminComponent = () => {
     toast.success(`The cancellation process was successful.`);
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    key: string
-  ) => {
-    setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
-  };
+// Function to handle input change
+// const handleInputChange = (
+//   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+//   key: string
+// ) => {
+//   setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
+// };
+
+
+const handleInputChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  key: string
+) => {
+  const { name, value } = e.target;
+  // Validate input value for numeric characters only
+  if (
+    (key === "count" || key === 'price' || key === 'previousPrice') && 
+    !/^\d*\.?\d*$/.test(value)
+  ) {
+    // If input value contains non-numeric characters, do not update state
+    return;
+  }
+  // Update state with the new input value
+  setEditedItem((prev) => ({ ...prev, [key]: value }));
+};
+
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewCategory(e.target.value);
@@ -569,7 +589,8 @@ const AdminComponent = () => {
                             />
                           ) : (
                             <input
-                              type={key === "count" ? "number" : "text"} // Corrected the syntax
+                              // type={key === "count" ? "number" : "text"} 
+                              type={"text"} 
                               placeholder={placeholder}
                               className={`border border-gray-300 rounded outline-none w-full p-2 `}
                               value={editedItem[key]}
