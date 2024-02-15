@@ -213,7 +213,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         setTimeout(() => {
           toast.dismiss();
           setCanRefund(true);
-        }, 20000);
+        }, 60000);
       } catch (error) {
         toast.error((error as Error).message);
       }

@@ -152,14 +152,6 @@ const AdminComponent = () => {
     toast.success(`The cancellation process was successful.`);
   };
 
-// Function to handle input change
-// const handleInputChange = (
-//   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-//   key: string
-// ) => {
-//   setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
-// };
-
 
 const handleInputChange = (
   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
