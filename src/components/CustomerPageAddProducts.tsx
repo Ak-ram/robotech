@@ -86,36 +86,36 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
   //     }
   //   }
   // };
-  const handleRefundProductCount = async (product) => {
-    const updatedData = [...categoriesArray];
-    const category = updatedData[0][product.productCategory];
-    if (category) {
-      const productIndex = category.findIndex(
-        (item) => item.id === product.productId
-      );
-      if (productIndex !== -1) {
+  // const handleRefundProductCount = async (product) => {
+  //   const updatedData = [...categoriesArray];
+  //   const category = updatedData[0][product.productCategory];
+  //   if (category) {
+  //     const productIndex = category.findIndex(
+  //       (item) => item.id === product.productId
+  //     );
+  //     if (productIndex !== -1) {
         
-        let obj = updatedData[0][product.productCategory].find(item => item.id === product.productId)
-        let updatedObject = { ...obj, count: `${(+obj?.count - +product?.quantity)}` };
-        updatedData[0][product.productCategory].map(product => {
-            if (product.id === product.productId) {
-                return updatedObject;
-            }
-            return product;
-        });
-        console.log('new',updatedData)
-        // updatedData[0][product.productCategory][productIndex].count +=
-        //   product.quantity;
-        // setCategoriesArray(updatedData);
-        // console.log(product.quantity)
-        // await updateJsonFile("robotech/pages/categories.json", updatedData);
-      } else {
-        console.log("Product not found in category");
-      }
-    } else {
-      console.log("Category not found");
-    }
-  };
+  //       let obj = updatedData[0][product.productCategory].find(item => item.id === product.productId)
+  //       let updatedObject = { ...obj, count: `${(+obj?.count + +product?.quantity)}` };
+  //       updatedData[0][product.productCategory].map(product => {
+  //           if (product.id === product.productId) {
+  //               return updatedObject;
+  //           }
+  //           return product;
+  //       });
+  //       console.log('new',updatedData)
+  //       // updatedData[0][product.productCategory][productIndex].count +=
+  //       //   product.quantity;
+  //       // setCategoriesArray(updatedData);
+  //       // console.log(product.quantity)
+  //       // await updateJsonFile("robotech/pages/categories.json", updatedData);
+  //     } else {
+  //       console.log("Product not found in category");
+  //     }
+  //   } else {
+  //     console.log("Category not found");
+  //   }
+  // };
 
   const handleRefundOrder = async (product) => {
     // Confirm with the user before proceeding with the refund
@@ -157,7 +157,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         }
       }
     }
-    handleRefundProductCount(product);
+    // handleRefundProductCount(product);
   };
 
   const handleAddOrder = async () => {
