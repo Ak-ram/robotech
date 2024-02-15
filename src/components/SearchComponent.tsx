@@ -1,6 +1,13 @@
 "use client";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Dot, HelpCircle, Loader, Loader2, Search, SquareDot } from "lucide-react";
+import {
+  Dot,
+  HelpCircle,
+  Loader,
+  Loader2,
+  Search,
+  SquareDot,
+} from "lucide-react";
 import { getProducts } from "@/helpers/getProducts";
 import Product from "./Product";
 import { ProductType } from "../../type";
@@ -32,7 +39,7 @@ const SearchComponent = () => {
 
     setProducts(allProducts);
     setRes(filteredResults);
-   setLoading(false); // Set loading back to false after fetching data
+    setLoading(false); // Set loading back to false after fetching data
   };
 
   useEffect(() => {
@@ -94,27 +101,30 @@ const SearchComponent = () => {
         <div className="bg-white p-4 mt-5 rounded-[.5rem] shadow-lg">
           <h3 className="text-blue-500 font-bold">Filters</h3>
           <div className="flex flex-wrap sm:px-4 justify-between">
-            <div className="flex mt-2 ">
-              <label className="mr-2">Price Range:</label>
-              <input
-                type="number"
-                min="0"
-                max="2000"
-                value={priceRange[0]}
-                onChange={(e) => handlePriceRangeChange(e, 0)}
-                className="border rounded-md px-2 py-1 mr-2 w-[90%] mx-auto"
-              />
-              -
-              <input
-                type="number"
-                min="0"
-                max="1000"
-                value={priceRange[1]}
-                onChange={(e) => handlePriceRangeChange(e, 1)}
-                className="border rounded-md px-2 py-1 ml-2 mr-2  w-[90%] mx-auto"
-              />
+            <div className="flex mt-2 items-center flex-wrap max-w-[400px] w-full">
+              <label className="mr-2 mb-1">Price Range:</label>
+              <div className="flex gap-2 items-center w-full">
+                from
+                <input
+                  type="number"
+                  min="0"
+                  max="2000"
+                  value={priceRange[0]}
+                  onChange={(e) => handlePriceRangeChange(e, 0)}
+                  className="border rounded-md px-2 py-1 w-[90%] mx-auto"
+                />
+                to
+                <input
+                  type="number"
+                  min="0"
+                  max="1000"
+                  value={priceRange[1]}
+                  onChange={(e) => handlePriceRangeChange(e, 1)}
+                  className="border rounded-md px-2 py-1 ml-2 mr-2  w-[90%] mx-auto"
+                />
+              </div>
             </div>
-            <div className="flex mt-2">
+            <div className="flex w-full flex-wrap max-w-[300px] mt-2">
               <label className="mr-2">Category:</label>
               <select
                 value={selectedCategory || ""}
@@ -135,21 +145,25 @@ const SearchComponent = () => {
           </div>
         </div>
         {loading ? (
-         <div className="min-h-[400px] mt-2 flex items-center justify-center rounded-lg p-6">
-         <div className="flex items-center space-x-2">
-           <Loader2 className="animate-spin text-blue-500" size={30} />
-           <span className="text-gray-600 font-semibold text-lg">Loading...</span>
-         </div>
-       </div>
+          <div className="min-h-[400px] mt-2 flex items-center justify-center rounded-lg p-6">
+            <div className="flex items-center space-x-2">
+              <Loader2 className="animate-spin text-blue-500" size={30} />
+              <span className="text-gray-600 font-semibold text-lg">
+                Loading...
+              </span>
+            </div>
+          </div>
         ) : res.length > 0 ? (
           <div className="min-h-[400px] ">
             <Product products={res} categoryName="" prefix="" />
           </div>
         ) : (
           <div className="flex min-h-[400px] items-center justify-center">
-          <HelpCircle className="text-rose-600" size={30}/>
-          <p className="text-lg text-rose-600 font-bold ml-2">No results found</p>
-        </div>
+            <HelpCircle className="text-rose-600" size={30} />
+            <p className="text-lg text-rose-600 font-bold ml-2">
+              No results found
+            </p>
+          </div>
         )}
       </div>
     </>
