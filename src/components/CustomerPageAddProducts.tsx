@@ -11,6 +11,7 @@ import Bill from "./Bill";
 const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
+  const [canRefund, setCanRefund] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
   const [list, setList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -93,10 +94,21 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         (item) => item.id === product.productId
       );
       if (productIndex !== -1) {
-        updatedData[0][product.productCategory][productIndex].count +=
-          product.quantity;
-        setCategoriesArray(updatedData);
-        await updateJsonFile("robotech/pages/categories.json", updatedData);
+        
+        let obj = updatedData[0][product.productCategory].find(item => item.id === product.productId)
+        let updatedObject = { ...obj, count: `${(+obj?.count - +product?.quantity)}` };
+        updatedData[0][product.productCategory].map(product => {
+            if (product.id === product.productId) {
+                return updatedObject;
+            }
+            return product;
+        });
+        console.log('new',updatedData)
+        // updatedData[0][product.productCategory][productIndex].count +=
+        //   product.quantity;
+        // setCategoriesArray(updatedData);
+        // console.log(product.quantity)
+        // await updateJsonFile("robotech/pages/categories.json", updatedData);
       } else {
         console.log("Product not found in category");
       }
@@ -200,7 +212,8 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 
         setTimeout(() => {
           toast.dismiss();
-        }, 10000);
+          setCanRefund(true);
+        }, 20000);
       } catch (error) {
         toast.error((error as Error).message);
       }
@@ -340,7 +353,11 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                 </div>
 
                 <span
-                  onClick={() => handleRefundOrder(product)}
+                  onClick={() =>
+                    canRefund
+                      ? handleRefundOrder(product)
+                      : toast.error("can't refund now")
+                  }
                   className="flex gap-1 text-red-600  cursor-pointer items-center justify-center"
                 >
                   Refund
