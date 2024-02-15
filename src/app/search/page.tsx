@@ -1,14 +1,13 @@
 import Container from "@/components/Container";
 import PrintServices from "@/components/PrintServices";
 import SearchComponent from "@/components/SearchComponent";
-import SearchPage from "@/components/SearchPage";
 import { Printer, Search, SearchCheck, SearchX } from "lucide-react";
 import React from "react";
 const page = async () => {
   return (
     <Container className="py-10">
       <div className="border-b w-full border-gray-400 pb-4 flex items-center justify-between">
-        <div className="space-x-4 w-[90%] mx-auto">
+        <div className="space-x-4 sm:w-[90%] mx-auto">
           {/* Lucide Printer icon */}
           <div className="flex items-center space-x-4">
             {/* Lucide Printer icon */}

@@ -74,7 +74,7 @@ const SearchComponent = () => {
           <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
         </div>
       )} */}
-      <div className="mt-2  w-full border-t md:border-none border-gray-700 md:mt-0 relative flex-1 relative  justify-center items-center">
+      <div className="mt-2 !ml-0  border-t md:border-none border-gray-700 md:mt-0 relative flex-1 relative  justify-center items-center">
         <Search className="text-zinc-500 absolute top-7 sm:top-8 left-2 md:w-6 md:h-6" />
         <input
           onInput={(e: ChangeEvent<HTMLInputElement>) => {
@@ -93,8 +93,8 @@ const SearchComponent = () => {
         )}
         <div className="bg-white p-4 mt-5 rounded-[.5rem] shadow-lg">
           <h3 className="text-blue-500 font-bold">Filters</h3>
-          <div className="flex justify-between">
-            <div className="flex mt-2 px-4">
+          <div className="flex flex-wrap sm:px-4 justify-between">
+            <div className="flex mt-2 ">
               <label className="mr-2">Price Range:</label>
               <input
                 type="number"
@@ -102,7 +102,7 @@ const SearchComponent = () => {
                 max="2000"
                 value={priceRange[0]}
                 onChange={(e) => handlePriceRangeChange(e, 0)}
-                className="border rounded-md px-2 py-1 mr-2"
+                className="border rounded-md px-2 py-1 mr-2 w-[90%] mx-auto"
               />
               -
               <input
@@ -111,7 +111,7 @@ const SearchComponent = () => {
                 max="1000"
                 value={priceRange[1]}
                 onChange={(e) => handlePriceRangeChange(e, 1)}
-                className="border rounded-md px-2 py-1 ml-2 mr-2"
+                className="border rounded-md px-2 py-1 ml-2 mr-2  w-[90%] mx-auto"
               />
             </div>
             <div className="flex mt-2">
@@ -119,7 +119,7 @@ const SearchComponent = () => {
               <select
                 value={selectedCategory || ""}
                 onChange={handleCategoryChange}
-                className="border rounded-md px-2 py-1"
+                className="border rounded-md px-2 py-1  w-[90%] mx-auto"
               >
                 <option value="">All</option>
                 {/* Add category options dynamically */}
