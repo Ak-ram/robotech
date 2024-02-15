@@ -304,4 +304,3 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
 };
 
 export default CustomerPageAddProducts;
-
