@@ -83,47 +83,47 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
   const handleRefundOrder = async (product) => {
     // Confirm with the user before proceeding with the refund
     if (window.confirm("Are you sure you want to refund this product?")) {
-      // Remove the refunded product from the products array
-      const updatedProducts = customerData.transactions.products.filter(
-        (p) => p !== product
-      );
-  
-      // Calculate the refund amount
-      const refundAmount = product.subtotal;
-  
-      // Update the total purchase transactions for the customer
-      const existingCustomerIndex = jsonArray.findIndex(
-        (customer) => customer.id === customerData.id
-      );
-  
-      if (existingCustomerIndex !== -1) {
-        const existingCustomer = { ...jsonArray[existingCustomerIndex] }; // Make a copy to avoid mutation
-        // Subtract the refund amount from total_purchase_transactions
-        existingCustomer.total_purchase_transactions -= refundAmount;
-        // Update the transactions array with the updated products
-        existingCustomer.transactions.products = updatedProducts;
-        // Recalculate total purchase transactions based on remaining transactions
-        existingCustomer.total_purchase_transactions = existingCustomer.transactions.products.reduce(
-          (total, transaction) => total + transaction.subtotal,
-          0
+        // Remove the refunded product from the products array
+        const updatedProducts = customerData.transactions.products.filter(
+            (p) => p !== product
         );
-  
-        try {
-          // Update the JSON file with the modified JSON array
-          jsonArray[existingCustomerIndex] = existingCustomer;
-          await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
-          // Update the customerData state with the modified data
-          setCustomerData(existingCustomer);
-          // Display success message
-          toast.success(`Product refunded successfully`);
-        } catch (error) {
-          // Display error message if update fails
-          toast.error((error as Error).message);
+
+        // Calculate the refund amount
+        const refundAmount = product.subtotal;
+
+        // Update the total purchase transactions for the customer
+        const existingCustomerIndex = jsonArray.findIndex(
+            (customer) => customer.id === customerData.id
+        );
+
+        if (existingCustomerIndex !== -1) {
+            const existingCustomer = { ...jsonArray[existingCustomerIndex] }; // Make a copy to avoid mutation
+            // Subtract the refund amount from total_purchase_transactions
+            existingCustomer.total_purchase_transactions -= refundAmount;
+            // Update the transactions array with the updated products
+            existingCustomer.transactions.products = updatedProducts;
+            // Recalculate total purchase transactions based on remaining transactions
+            existingCustomer.total_purchase_transactions = existingCustomer.transactions.products.reduce(
+                (total, transaction) => total + transaction.subtotal,
+                0
+            );
+
+            try {
+                // Update the JSON file with the modified JSON array
+                jsonArray[existingCustomerIndex] = existingCustomer;
+                await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
+                // Update the customerData state with the modified data
+                setCustomerData(existingCustomer);
+                // Display success message
+                toast.success(`Product refunded successfully`);
+            } catch (error) {
+                // Display error message if update fails
+                toast.error((error as Error).message);
+            }
         }
-      }
     }
-  };
-  
+};
+
   const handleAddOrder = async () => {
     // Validate order details if needed
     const existingCustomerIndex = jsonArray.findIndex(
