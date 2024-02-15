@@ -136,7 +136,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
     setLastOrderId(productId);
     setTimeout(() => {
       setLastOrderId("");
-    }, 20000);
+    }, 5 * 1000 * 60);
     // Validate order details if needed
     const existingCustomerIndex = jsonArray.findIndex(
       (customer) => customer.id === customerData.id
