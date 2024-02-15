@@ -123,6 +123,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         }
       }
     }
+    handleRefundProductCount(product)
   };
 
   const handleAddOrder = async (productId) => {
@@ -186,7 +187,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
         toast.loading(`Be patient, changes take a few moments to be reflected`);
         setTimeout(() => {
           toast.dismiss();
-        }, 5 * 1000 * 60);
+        }, 5000);
       } catch (error) {
         toast.error((error as Error).message);
       }
