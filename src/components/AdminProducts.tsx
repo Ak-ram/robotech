@@ -10,6 +10,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import FormattedPrice from "./FormattedPrice";
 import { v4 as uuidv4 } from "uuid";
+import CustomSelect from "./CustomSelectbox";
 const AdminComponent = () => {
   const [jsonData, setJsonData] = useState<any[]>([]);
   const [toggleNewCat, setToggleNewCat] = useState<boolean>(true);
@@ -153,22 +154,22 @@ const AdminComponent = () => {
   };
 
 
-const handleInputChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  key: string
-) => {
-  const { name, value } = e.target;
-  // Validate input value for numeric characters only
-  if (
-    (key === "count" || key === 'price' || key === 'previousPrice') && 
-    !/^\d*\.?\d*$/.test(value)
-  ) {
-    // If input value contains non-numeric characters, do not update state
-    return;
-  }
-  // Update state with the new input value
-  setEditedItem((prev) => ({ ...prev, [key]: value }));
-};
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    key: string
+  ) => {
+    const { name, value } = e.target;
+    // Validate input value for numeric characters only
+    if (
+      (key === "count" || key === 'price' || key === 'previousPrice') &&
+      !/^\d*\.?\d*$/.test(value)
+    ) {
+      // If input value contains non-numeric characters, do not update state
+      return;
+    }
+    // Update state with the new input value
+    setEditedItem((prev) => ({ ...prev, [key]: value }));
+  };
 
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -237,17 +238,15 @@ const handleInputChange = (
       }
     }
   };
-  const handleImageChange = (index: number, imageUrl: string | null) => {
-    setEditedItem((prev) => ({ ...prev, [`image${index}`]: imageUrl }));
-  };
+
   return (
     <>
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
         {/* <Stats /> */}
         <div className="overflow-x-auto">
           {selectedSectionIndex !== null &&
-          jsonData[selectedSectionIndex] &&
-          selectedCat ? (
+            jsonData[selectedSectionIndex] &&
+            selectedCat ? (
             <div key={selectedSectionIndex} className="mt-5">
               <span className="my-3 block flex items-center justify-end text-end text-sm">
                 {jsonData.length > 0 && (
@@ -255,7 +254,8 @@ const handleInputChange = (
                     {/* <label htmlFor="sectionDropdown" className="font-bold mb-2">
                 Select Category:
               </label> */}
-                    <select
+                    <CustomSelect selectedCat={selectedCat} setSelectedCat={setSelectedCat} setSelectedSectionIndex={setSelectedSectionIndex} jsonData={jsonData} />
+                    {/* <select
                       id="sectionDropdown"
                       className="my-2 appearance-none block bg-white border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                       value={selectedCat !== null ? selectedCat : ""}
@@ -277,7 +277,7 @@ const handleInputChange = (
                           </option>
                         ))
                       )}
-                    </select>
+                    </select> */}
                     {selectedCat && (
                       <button
                         className="text-xs rounded-md absolute top-5 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
@@ -289,9 +289,8 @@ const handleInputChange = (
 
                     <div>
                       <span
-                        className={`${
-                          toggleNewCat ? "flex items-center" : "hidden"
-                        } mt-2`}
+                        className={`${toggleNewCat ? "flex items-center" : "hidden"
+                          } mt-2`}
                       >
                         Category not exist ?{" "}
                         <span
@@ -302,9 +301,8 @@ const handleInputChange = (
                         </span>
                       </span>
                       <div
-                        className={`${
-                          toggleNewCat ? "hidden" : "flex items-center"
-                        }`}
+                        className={`${toggleNewCat ? "hidden" : "flex items-center"
+                          }`}
                       >
                         <input
                           type="text"
@@ -399,8 +397,8 @@ const handleInputChange = (
                               +product.count === 0
                                 ? "text-red-500"
                                 : +product.count > 10
-                                ? "text-green-500"
-                                : "text-orange-500",
+                                  ? "text-green-500"
+                                  : "text-orange-500",
                               "text-xs font-medium"
                             )}
                           >
@@ -437,116 +435,7 @@ const handleInputChange = (
                     ))}
                 </div>
               </div>
-              {/* <table className="min-w-full border border-gray-300 text-sm">
-                  <thead>
-                    <tr className="bg-zinc-800 text-white ">
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Id
-                      </th>
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Title
-                      </th>
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Price
-                      </th>
-                      {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Previous Price
-                      </th> 
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Image1
-                      </th>
-                      {/* <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Image2
-                      </th>
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Image3
-                      </th>
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Description
-                      </th>
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Count
-                      </th>
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Brand
-                      </th> *
-                      <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {jsonData[selectedSectionIndex][selectedCat!]?.map(
-                      (item: any, itemIndex: number) => (
-                        <tr key={itemIndex} className="hover:bg-slate-100">
-                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                            {item.id}
-                          </td>
-                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                            {item.title}
-                          </td>
-                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                            {item.price}
-                          </td>
-                          {/* <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                            {item.previousPrice}
-                          </td> 
-                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                            <img
-                              src={item.image1}
-                              alt={`Item ${item.id}`}
-                              width="70"
-                            />
-                          </td>
-                          {/* <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2"> 
-                          <img
-                              src={item.image2}
-                              alt={`Item ${item.id}`}
-                              width="70"
-                            />
-                          </td>
-                           <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                            <img
-                              src={item.image3}
-                              alt={`Item ${item.id}`}
-                              width="70"
-                            />
-                          </td>  
-                           <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses order px-4 py-2">
-                            {item.description}
-                          </td>
-                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                            {item.count}
-                          </td>
-                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                            {item.brand}
-                          </td>
-                          <td className=" font-semibold text-center max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
-                            <button
-                              className="mr-1"
-                              onClick={() =>
-                                handleEditClick(selectedSectionIndex, itemIndex)
-                              }
-                            >
-                              <Edit size={16} />
-                            </button>
-                            <button
-                              className="mr-1"
-                              onClick={() =>
-                                handleRemoveItem(
-                                  selectedSectionIndex,
-                                  itemIndex
-                                )
-                              }
-                            >
-                              <Trash size={16} />
-                            </button>
-                          </td>
-                        </tr>
-                      )
-                    )}
-                  </tbody>
-                </table> */}
+
               {editIndex !== null && (
                 <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                   <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
@@ -582,7 +471,7 @@ const handleInputChange = (
                           ) : (
                             <input
                               // type={key === "count" ? "number" : "text"} 
-                              type={"text"} 
+                              type={"text"}
                               placeholder={placeholder}
                               className={`border border-gray-300 rounded outline-none w-full p-2 `}
                               value={editedItem[key]}
