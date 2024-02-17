@@ -84,9 +84,8 @@ const CustomerStatsInStocks = () => {
                 });
 
                 // Update the state with the modified data
-                await updateJsonFile("robotech/pages/categories.json", jsonData);
+                // await updateJsonFile("robotech/pages/categories.json", jsonData);
                 setJsonData(updatedData);
-                console.log(updatedData)
 
             } else {
                 console.error("jsonData is empty or does not contain the expected structure.");

@@ -253,7 +253,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
               <div className="flex flex-col gap-2">
                 <div className="flex-1">
                   <Edit2
-                    className="cursor-not-allowed text-blue-600"
+                    className="ml-auto cursor-not-allowed text-blue-600"
                     size={20}
                   />
                   {/* ADD BILL HERE */}
@@ -262,7 +262,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
                       setShowBill(true);
                       setSelectedProduct(product);
                     }}
-                    className="my-2 cursor-pointer text-blue-600"
+                    className="my-2 ml-auto cursor-pointer text-blue-600"
                     size={20}
                   />
                 </div>
