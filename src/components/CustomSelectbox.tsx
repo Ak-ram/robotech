@@ -21,9 +21,13 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
       const categoryIndex = Object.keys(updatedData[selectedSectionIndex]).findIndex(category => category === editedCategory);
       if (categoryIndex !== -1) {
         const newCategoryName = newCategoryValue.trim();
-        updatedData[selectedSectionIndex][newCategoryName] = updatedData[selectedSectionIndex][editedCategory];
+        let updateProductsCat = updatedData[selectedSectionIndex][editedCategory].map(item=> {
+          item.category = newCategoryName
+          return item
+        })
+        updatedData[selectedSectionIndex][newCategoryName] = updateProductsCat;
         delete updatedData[selectedSectionIndex][editedCategory];
-  
+        
         console.log("Updated Data:", updatedData); // Log updated data before submission
   
         try {
