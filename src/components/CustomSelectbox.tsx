@@ -109,6 +109,7 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
                           <input
                             type="text"
                             value={newCategoryValue}
+                            placeholder={editedCategory}
                             onChange={(e) => setNewCategoryValue(e.target.value)}
                             className="border border-gray-300 rounded outline-none p-1"
                           />
