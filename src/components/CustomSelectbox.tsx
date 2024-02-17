@@ -54,7 +54,7 @@ const CustomSelect = ({ jsonData,selectedCat,setSelectedCat,setSelectedSectionIn
           </svg>
         </div>
         {isOpen && (
-          <div className="absolute z-100 h-[200px] overflow-auto top-full left-0 bg-white border border-gray-300 rounded-b-md overflow-hidden shadow-md">
+          <div className="absolute z-100 h-[200px] overflow-scroll w-full top-full left-0 bg-white border border-gray-300 rounded-b-md overflow-hidden shadow-md">
             {jsonData.flatMap((section, sectionIndex) =>
               Object.keys(section).map((item) => {
                 const newIndex = sectionIndex + 1;
