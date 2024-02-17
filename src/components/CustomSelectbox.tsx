@@ -6,7 +6,7 @@ const CustomSelect = ({ jsonData,selectedCat,setSelectedCat,setSelectedSectionIn
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="relative inline-block w-full">
+    <div className="relative inline-block w-[50%] ">
       {/* Hidden original select box */}
       <select
         id="sectionDropdown"
@@ -34,7 +34,7 @@ const CustomSelect = ({ jsonData,selectedCat,setSelectedCat,setSelectedSectionIn
 
       {/* Custom select box */}
       <div
-        className="relative flex flex-col items-start w-full bg-white border border-gray-300 rounded-md p-2 space-y-2 cursor-pointer"
+        className="relative flex flex-col items-start bg-white border border-gray-300 rounded-md p-2 space-y-2 cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex justify-between items-center w-full">
@@ -54,7 +54,7 @@ const CustomSelect = ({ jsonData,selectedCat,setSelectedCat,setSelectedSectionIn
           </svg>
         </div>
         {isOpen && (
-          <div className="absolute z-100 top-full left-0 w-full bg-white border border-gray-300 rounded-b-md overflow-hidden shadow-md">
+          <div className="absolute z-100 h-[200px] overflow-auto top-full left-0 bg-white border border-gray-300 rounded-b-md overflow-hidden shadow-md">
             {jsonData.flatMap((section, sectionIndex) =>
               Object.keys(section).map((item) => {
                 const newIndex = sectionIndex + 1;

@@ -243,7 +243,7 @@ const AdminComponent = () => {
     <>
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
         {/* <Stats /> */}
-        <div className="overflow-x-auto">
+        <div className="">
           {selectedSectionIndex !== null &&
             jsonData[selectedSectionIndex] &&
             selectedCat ? (
