@@ -41,7 +41,7 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
         <div className="cursor-pointer flex justify-between items-center w-full">
           <span>{selectedCat || "Select an option"}</span>
           <svg
-            className={`w-6 h-6 transition-transform ${isOpen ? "transform rotate-180" : ""
+            className={`w-4 h-4 transition-transform ${isOpen ? "transform rotate-180" : ""
               }`}
             fill="none"
             strokeLinecap="round"
