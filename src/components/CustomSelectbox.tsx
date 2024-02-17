@@ -70,7 +70,7 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
                   <div
                     key={`${newIndex}-${item}`}
                     onClick={(e) => e.stopPropagation()}
-                    className={`p-2 gap-2 flex items-center ${selectedCat === item ? "bg-blue-500 text-white" : "hover:bg-gray-200"}`}
+                    className={`p-2 gap-2 flex items-center`}
                   >
                     {editedCategory === item ? (
                       <>
@@ -78,8 +78,9 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
                           onSubmit={(e) => {
                             e.preventDefault();
                             handleSubmitCategory();
+                            setEditedCategory('')
                           }}
-                          className="flex items-center"
+                          className="flex w-full items-center"
                         >
                           <input
                             type="text"
@@ -87,7 +88,7 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
                             onChange={(e) => setNewCategoryValue(e.target.value)}
                             className="border border-gray-300 rounded outline-none p-1"
                           />
-                          <button type="submit" className="cursor-pointer text-blue-500">
+                          <button type="submit" className="ml-auto cursor-pointer text-blue-500">
                             <Save size={15} />
                           </button>
                         </form>
