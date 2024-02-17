@@ -1,10 +1,18 @@
-import { Edit } from 'lucide-react';
+import { Edit, Save } from 'lucide-react';
 import { useState } from 'react';
-
-// Define your component here
 
 const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectionIndex }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [editedCategory, setEditedCategory] = useState("");
+
+  const handleEditCategory = (categoryName) => {
+    setEditedCategory(categoryName);
+  };
+
+  const handleSaveCategory = () => {
+    setSelectedCat(editedCategory);
+    setIsOpen(false); // Close the dropdown after saving
+  };
 
   return (
     <div className="relative inline-block w-[50%] ">
@@ -36,13 +44,12 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
       {/* Custom select box */}
       <div
         className="relative flex flex-col items-start bg-white border border-gray-300 rounded-md p-2 space-y-2 "
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen(true)}
       >
         <div className="cursor-pointer flex justify-between items-center w-full">
           <span>{selectedCat || "Select an option"}</span>
           <svg
-            className={`w-4 h-4 transition-transform ${isOpen ? "transform rotate-180" : ""
-              }`}
+            className={`w-4 h-4 transition-transform ${isOpen ? "transform rotate-180" : ""}`}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -61,16 +68,33 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
                 return (
                   <div
                     key={`${newIndex}-${item}`}
-                    className={`p-2 gap-2 flex items-center ${selectedCat === item ? "bg-blue-500 text-white" : "hover:bg-gray-200"
-                      }`}
-              
+                    className={`p-2 gap-2 flex items-center ${selectedCat === item ? "bg-blue-500 text-white" : "hover:bg-gray-200"}`}
                   >
-                    <span className='flex-1 cursor-pointer' onClick={() => {
-                      setSelectedCat(item);
-                      setSelectedSectionIndex(newIndex);
-                      setIsOpen(false); // Close the dropdown after selecting an option
-                    }}>{item}</span>
-                    <span className='cursor-pointer'><Edit size={15} /></span>
+                    {editedCategory === item ? (
+                      <>
+                        <input
+  type="text"
+  value={editedCategory}
+  onChange={(e) => {
+    e.stopPropagation(); // Stop the event propagation
+    setEditedCategory(e.target.value);
+  }}
+  className="border border-gray-300 rounded outline-none p-1"
+/>
+
+
+                        <Save size={15} className="cursor-pointer text-blue-500" onClick={handleSaveCategory} />
+                      </>
+                    ) : (
+                      <>
+                        <span className='flex-1 cursor-pointer' onClick={() => {
+                          setSelectedCat(item);
+                          setSelectedSectionIndex(newIndex);
+                          // setIsOpen(false); // Close the dropdown after selecting an option
+                        }}>{item}</span>
+                        <Edit size={15} className="cursor-pointer text-blue-500" onClick={() => handleEditCategory(item)} />
+                      </>
+                    )}
                   </div>
                 );
               })
