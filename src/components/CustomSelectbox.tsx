@@ -1,3 +1,4 @@
+import { updateJsonFile } from '@/helpers/updateJSONData';
 import { Edit, Save } from 'lucide-react';
 import { useState } from 'react';
 
@@ -10,10 +11,33 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
     setEditedCategory(categoryName);
   };
 
-  const handleSubmitCategory = () => {
-    setSelectedCat(editedCategory);
-    setIsOpen(false); // Close the dropdown after saving
+  const handleSubmitCategory = async () => {
+    if (!newCategoryValue.trim()) return; // Prevent saving empty category name
+  
+    const updatedData = [...jsonData];
+    const selectedSectionIndex = updatedData.findIndex(section => section[selectedCat]);
+  
+    if (selectedSectionIndex !== -1) {
+      const categoryIndex = Object.keys(updatedData[selectedSectionIndex]).findIndex(category => category === editedCategory);
+      if (categoryIndex !== -1) {
+        const newCategoryName = newCategoryValue.trim();
+        updatedData[selectedSectionIndex][newCategoryName] = updatedData[selectedSectionIndex][editedCategory];
+        delete updatedData[selectedSectionIndex][editedCategory];
+  
+        console.log("Updated Data:", updatedData); // Log updated data before submission
+  
+        try {
+          await updateJsonFile("robotech/pages/categories.json", updatedData);
+          setEditedCategory(""); // Reset edited category
+          setSelectedCat(newCategoryName); // Update selected category
+          setIsOpen(false); // Close the dropdown after saving
+        } catch (error) {
+          console.error("Error updating JSON file:", error);
+        }
+      }
+    }
   };
+  
 
   return (
     <div className="relative inline-block w-[50%]">
