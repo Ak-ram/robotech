@@ -4,18 +4,19 @@ import { useState } from 'react';
 const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectionIndex }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editedCategory, setEditedCategory] = useState("");
+  const [newCategoryValue, setNewCategoryValue] = useState("");
 
   const handleEditCategory = (categoryName) => {
     setEditedCategory(categoryName);
   };
 
-  const handleSaveCategory = () => {
+  const handleSubmitCategory = () => {
     setSelectedCat(editedCategory);
     setIsOpen(false); // Close the dropdown after saving
   };
 
   return (
-    <div className="relative inline-block w-[50%] ">
+    <div className="relative inline-block w-[50%]">
       {/* Hidden original select box */}
       <select
         id="sectionDropdown"
@@ -43,8 +44,8 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
 
       {/* Custom select box */}
       <div
-        className="relative flex flex-col items-start bg-white border border-gray-300 rounded-md p-2 space-y-2 "
-        onClick={() => setIsOpen(true)}
+        className="relative flex flex-col items-start bg-white border border-gray-300 rounded-md p-2 space-y-2"
+        onClick={() => setIsOpen(!isOpen)}
       >
         <div className="cursor-pointer flex justify-between items-center w-full">
           <span>{selectedCat || "Select an option"}</span>
@@ -68,31 +69,45 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
                 return (
                   <div
                     key={`${newIndex}-${item}`}
+                    onClick={(e) => e.stopPropagation()}
                     className={`p-2 gap-2 flex items-center ${selectedCat === item ? "bg-blue-500 text-white" : "hover:bg-gray-200"}`}
                   >
                     {editedCategory === item ? (
                       <>
-                        <input
-  type="text"
-  value={editedCategory}
-  onChange={(e) => {
-    e.stopPropagation(); // Stop the event propagation
-    setEditedCategory(e.target.value);
-  }}
-  className="border border-gray-300 rounded outline-none p-1"
-/>
-
-
-                        <Save size={15} className="cursor-pointer text-blue-500" onClick={handleSaveCategory} />
+                        <form
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            handleSubmitCategory();
+                          }}
+                          className="flex items-center"
+                        >
+                          <input
+                            type="text"
+                            value={newCategoryValue}
+                            onChange={(e) => setNewCategoryValue(e.target.value)}
+                            className="border border-gray-300 rounded outline-none p-1"
+                          />
+                          <button type="submit" className="cursor-pointer text-blue-500">
+                            <Save size={15} />
+                          </button>
+                        </form>
                       </>
                     ) : (
                       <>
-                        <span className='flex-1 cursor-pointer' onClick={() => {
-                          setSelectedCat(item);
-                          setSelectedSectionIndex(newIndex);
-                          // setIsOpen(false); // Close the dropdown after selecting an option
-                        }}>{item}</span>
-                        <Edit size={15} className="cursor-pointer text-blue-500" onClick={() => handleEditCategory(item)} />
+                        <span
+                          className="flex-1 cursor-pointer"
+                          onClick={() => {
+                            setSelectedCat(item);
+                            setSelectedSectionIndex(newIndex);
+                          }}
+                        >
+                          {item}
+                        </span>
+                        <Edit
+                          size={15}
+                          className="cursor-pointer text-blue-500"
+                          onClick={() => handleEditCategory(item)}
+                        />
                       </>
                     )}
                   </div>
