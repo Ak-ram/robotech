@@ -2,10 +2,13 @@ import { getProducts } from "@/helpers/getProducts";
 import { useEffect, useState } from "react";
 import { ChevronDown, ExternalLink, ShoppingCart } from 'lucide-react';
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/proSlice";
 
 const ProductSlider = () => {
     const [products, setProducts] = useState<any[]>([]);
     const [visibleProducts, setVisibleProducts] = useState<number>(9); // Initial number of visible products
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -29,27 +32,32 @@ const ProductSlider = () => {
     return (
         <div className="h-full rounded-lg overflow-hidden w-full bg-gray-100 shadow-lg">
             <div className="px-4 py-3 bg-gradient-to-r from-blue-400 to-blue-600 text-white">
-                {/* <h2 className="text-xl font-semibold">Featured Products</h2> */}
+                <h2 className="text-xl font-semibold">Featured Products</h2>
             </div>
             <div className="max-h-[280px] h-full overflow-auto grid grid-cols-3 gap-3 px-5 py-4">
                 {products.slice(0, visibleProducts).map(product => (
-                    <Link key={product.id} href={{
-                        pathname: `/id_${product?.id}`,
-                        query: {
-                            id: product?.id,
-                            prefix: (product?.category),
-                        },
-                    }} className="block overflow-hidden rounded-lg border border-blue-400 hover:shadow-lg transform transition duration-300">
+                    <div key={product.id} className="block overflow-hidden h-20  rounded-lg border border-blue-400 hover:shadow-lg transform transition duration-300">
                         <img src={product.image1} alt={product.title} className="h-full w-full object-cover" />
                         <div className="absolute h-full items-center justify-center flex bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-2 opacity-0 transition duration-300 hover:opacity-100">
-                            <button className="flex items-center justify-center h-7 w-7 text-white bg-blue-500  rounded-md mr-1 hover:bg-blue-600">
+                            <Link href={{
+                                pathname: `/id_${product?.id}`,
+                                query: {
+                                    id: product?.id,
+                                    prefix: (product?.category),
+                                },
+                            }} className="flex items-center justify-center h-7 w-7 text-white bg-blue-500  rounded-md mr-1 hover:bg-blue-600">
+                                <ExternalLink size={16} className="" />
+
+                            </Link>
+                            <button onClick={() => {
+                                dispatch(addToCart(product));
+                                // toast.success(`${item?.title} is added to Cart!`);
+                            }} className="flex items-center justify-center h-7 w-7 text-white bg-blue-500  rounded-md hover:bg-blue-600">
                                 <ShoppingCart size={16} className="" />
-                            </button>
-                            <button className="flex items-center justify-center h-7 w-7 text-white bg-blue-500  rounded-md hover:bg-blue-600">
-                            <ExternalLink size={16} className="" />
+
                             </button>
                         </div>
-                    </Link>
+                    </div>
                 ))}
             </div>
             <button onClick={handleShowMore} className="flex items-center justify-center text-sm text-gray-600 hover:text-gray-900 mx-auto mt-4 mb-2">
