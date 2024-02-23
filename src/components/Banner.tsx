@@ -143,13 +143,8 @@
 // };
 
 // export default Banner;
-
-
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import Slider, { Settings } from "react-slick";
-import Image from "next/image";
-import { Clock, Smartphone, Map, MailPlus, RefreshCcw, ExternalLink } from "lucide-react";
 import { getSlidesData } from "@/helpers/getSlidesData";
 import ProductSlider from "./ProductSlider";
 
@@ -160,7 +155,6 @@ const Banner: React.FC<BannerProps> = () => {
   const [slides, setSlides] = useState<any[]>([]);
 
   const settings: Settings = {
-    // dots: true,
     infinite: true,
     autoplay: true,
     slidesToShow: 1,
@@ -175,31 +169,22 @@ const Banner: React.FC<BannerProps> = () => {
       <div
         style={{
           top: "80%",
-          left: "67%",
-          userSelect: 'none'
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          userSelect: "none",
         }}
-        className="absolute  translate-x[-50%] translate-y[-50%]"
+        className="absolute flex items-center gap-3"
       >
-        <ul
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            gap: 3,
-            userSelect: 'all'
-          }}
-          className="justify-center bg-white"
-        >
-          {dots}
-        </ul>
+        {dots}
       </div>
     ),
     customPaging: (i: number) => (
       <div
-        className={`${i === dotActive ? 'items-center justify-center text-designColor border-designColor md:bg-transparent bg-designColor w-[18px] h-[6px] md:w-fit md:h-fit' : "text-slate-500 border-slate-500 w-[6px] h-[6px] bg-black md:bg-transparent  md:w-fit md:h-fit"} rounded-full md:rounded-none cursor-pointer flex text-sm font-bold border-b pb-1 md:mx-1 select-none`}
-      ><Link href={slides[i]?.link_url! || ''} className="hidden md:flex items-center gap-1">
-          <ExternalLink size={15} />{slides[i]?.link_text}</Link>
-      </div>
+        className={`${i === dotActive
+            ? "bg-blue-500 w-4 h-4 rounded-full"
+            : "bg-gray-300 w-4 h-4 rounded-full"
+          } cursor-pointer`}
+      />
     ),
   };
 
@@ -220,29 +205,27 @@ const Banner: React.FC<BannerProps> = () => {
   }, []);
 
   return (
-    <div className="lg:min-h-[400px] relative flex gap-3 mt-2 p-5 bg-white rounded-lg w-[97%] mx-auto">
-      <div className="w-[70%] border rounded-lg  border-slate-200">
-        <Slider {...settings} >
-          {slides &&
-            slides.map((slide, index) => (
-              <div
-                key={slide?.id}
-                className={`${dotActive === index ? "z-10" : "z-0"} w-full lg:h-[450px] relative transition-all duration-500 ease-in-out`}
-              >
-                <div className=" flex items-center justify-center lg:inline-block h-[200px] lg:h-full bg-white z-0 relative">
-                  <img
-                    src={slide?.image}
-                    width={200}
-                    height={200}
-                    alt="sliderone"
-                    className={`rounded-3xl object-contain w-full h-full transform transition-transform duration-500 ease-in-out ${dotActive === index ? 'translate-x-0' : '-translate-x-full'}`}
-                  />
-                </div>
+    <div className="relative flex gap-3 mt-2 p-5 bg-white rounded-lg w-[97%] mx-auto">
+      <div className="w-[70%] border rounded-lg border-slate-200">
+        <Slider {...settings}>
+          {slides.map((slide, index) => (
+            <div
+              key={slide?.id}
+              className={`${dotActive === index ? "z-10" : "z-0"
+                } w-full relative`}
+            >
+              <div className="flex items-center justify-center h-full">
+                <img
+                  src={slide?.image || "https://via.placeholder.com/800x400"}
+                  alt={`Slide ${index}`}
+                  className="object-cover w-full h-full"
+                />
               </div>
-            ))}
+            </div>
+          ))}
         </Slider>
       </div>
-      <div className="w-[28%] ">
+      <div className="w-[28%]">
         <ProductSlider />
       </div>
     </div>
