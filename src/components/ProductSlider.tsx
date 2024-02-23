@@ -1,11 +1,11 @@
 import { getProducts } from "@/helpers/getProducts";
 import { useEffect, useState } from "react";
-import { ShoppingCart } from 'lucide-react';
+import { ChevronDown, ShoppingCart } from 'lucide-react';
 import Link from "next/link";
 
 const ProductSlider = () => {
     const [products, setProducts] = useState<any[]>([]);
-    const [visibleProducts, setVisibleProducts] = useState<number>(6); // Initial number of visible products
+    const [visibleProducts, setVisibleProducts] = useState<number>(9); // Initial number of visible products
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -27,12 +27,12 @@ const ProductSlider = () => {
     };
 
     return (
-        <div className="max-h-[450px] rounded-lg overflow-auto  w-full bg-gray-100 py-10">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-semibold text-gray-800">Featured Products</h2>
+        <div className="max-h-[450px] h-full rounded-lg overflow-auto  w-full bg-gray-100 ">
+            <div className="">
+                <div className="bg-gray-800 text-white mb-3 px-4 py-3">
+                    <h2 className="text-xl font-semibold">Featured Products</h2>
                 </div>
-                <div className=" grid grid-cols-3 gap-3">
+                <div className=" grid grid-cols-3 gap-3 px-5">
                     {products.slice(0, visibleProducts).map(product => (
                         <Link key={product.id} href={{
                             pathname: `/id_${product?.id}`,
@@ -40,14 +40,16 @@ const ProductSlider = () => {
                                 id: product?.id,
                                 prefix: (product?.category),
                             },
-                        }} className="block w-full overflow-hidden rounded-lg border border-blue-400 mb-4">
-                            <img src={product.image1} alt={product.title} className="mx-auto h-20 w-20 object-contain" />
+                        }} className="block overflow-hidden h-20 w-20 rounded-lg border border-blue-400 mb-2">
+                            <img src={product.image1} alt={product.title} className="h-full w-full object-contain" />
                         </Link>
                     ))}
                 </div>
-                <button onClick={handleShowMore} className="flex items-center text-sm text-gray-600 hover:text-gray-900">
+                <button onClick={handleShowMore} className="flex items-center text-sm text-gray-600 hover:text-gray-900 mx-auto mt-4 mb-2">
                     Show More
+                    <ChevronDown size={16} className="text-slate-400" />
                 </button>
+
             </div>
         </div>
     );
