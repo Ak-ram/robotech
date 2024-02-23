@@ -160,7 +160,7 @@ const Banner: React.FC<BannerProps> = () => {
   const [slides, setSlides] = useState<any[]>([]);
 
   const settings: Settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
     autoplay: true,
     slidesToShow: 1,
@@ -220,14 +220,14 @@ const Banner: React.FC<BannerProps> = () => {
   }, []);
 
   return (
-    <div className="lg:min-h-[500px] relative flex gap-3 mt-2">
-      <div className="w-[70%]">
+    <div className="lg:min-h-[400px] relative flex gap-3 mt-2 p-5 bg-white rounded-lg w-[97%] mx-auto">
+      <div className="w-[70%] border rounded-lg  border-slate-200">
         <Slider {...settings} >
           {slides &&
             slides.map((slide, index) => (
               <div
                 key={slide?.id}
-                className={`${dotActive === index ? "z-10" : "z-0"} w-full pb-5 lg:h-[450px] relative transition-all duration-500 ease-in-out`}
+                className={`${dotActive === index ? "z-10" : "z-0"} w-full lg:h-[450px] relative transition-all duration-500 ease-in-out`}
               >
                 <div className=" flex items-center justify-center lg:inline-block h-[200px] lg:h-full bg-white z-0 relative">
                   <img
@@ -242,7 +242,7 @@ const Banner: React.FC<BannerProps> = () => {
             ))}
         </Slider>
       </div>
-      <div className="w-[28%]">
+      <div className="w-[28%] ">
         <ProductSlider />
       </div>
     </div>
