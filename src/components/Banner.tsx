@@ -205,8 +205,8 @@ const Banner: React.FC<BannerProps> = () => {
   }, []);
 
   return (
-    <div className="relative flex gap-3 mt-2 p-5 bg-white rounded-lg w-[97%] mx-auto">
-      <div className="w-[70%] border  overflow-hidden  rounded-lg border-slate-200">
+    <div className="relative flex gap-3 mt-2 lg:p-5 bg-white rounded-lg w-[97%] mx-auto">
+      <div className="lg:w-[70%] lg:border  overflow-hidden  rounded-lg border-slate-200">
         <Slider {...settings}>
           {slides.map((slide, index) => (
             <div
@@ -225,7 +225,7 @@ const Banner: React.FC<BannerProps> = () => {
           ))}
         </Slider>
       </div>
-      <div className="w-[28%]">
+      <div className="hidden lg:block lg:w-[28%]">
         <ProductSlider />
       </div>
     </div>
