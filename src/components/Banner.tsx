@@ -206,7 +206,7 @@ const Banner: React.FC<BannerProps> = () => {
 
   return (
     <div className="relative flex gap-3 mt-2 p-5 bg-white rounded-lg w-[97%] mx-auto">
-      <div className="w-[70%] border rounded-lg border-slate-200">
+      <div className="w-[70%] border  overflow-hidden  rounded-lg border-slate-200">
         <Slider {...settings}>
           {slides.map((slide, index) => (
             <div
