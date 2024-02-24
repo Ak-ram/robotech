@@ -147,6 +147,8 @@ import React, { useState, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
 import { getSlidesData } from "@/helpers/getSlidesData";
 import ProductSlider from "./ProductSlider";
+import Link from "next/link";
+
 
 interface BannerProps { }
 
@@ -155,6 +157,7 @@ const Banner: React.FC<BannerProps> = () => {
   const [slides, setSlides] = useState<any[]>([]);
 
   const settings: Settings = {
+    dots: true,
     infinite: true,
     autoplay: true,
     slidesToShow: 1,
@@ -169,22 +172,33 @@ const Banner: React.FC<BannerProps> = () => {
       <div
         style={{
           top: "80%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          userSelect: "none",
+          left: "67%",
+          userSelect: 'none'
         }}
-        className="absolute flex items-center gap-3"
+        className="absolute translate-x[-50%] translate-y[-50%]"
       >
-        {dots}
+        <ul
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: 3,
+            userSelect: 'all'
+          }}
+          className="justify-center"
+        >
+          {dots}
+        </ul>
       </div>
     ),
     customPaging: (i: number) => (
       <div
-        className={`${i === dotActive
-            ? "bg-blue-500 w-4 h-4 rounded-full"
-            : "bg-gray-300 w-4 h-4 rounded-full"
-          } cursor-pointer`}
-      />
+        className={`${i === dotActive ? 'bg-designColor w-6 h-2 ' : "w-2 h-2 border border-zinc-400"} rounded-full cursor-pointer`}
+      >
+        <span className="hidden md:flex items-center gap-1">
+
+        </span>
+      </div>
     ),
   };
 
