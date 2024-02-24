@@ -91,7 +91,7 @@ const CustomerStatsOutStocks = () => {
                 // Update the state with the modified data
                 setJsonData(updatedData);
                 console.log(updatedData)
-                await updateJsonFile("robotech/pages/categories.json", jsonData);
+                // await updateJsonFile("robotech/pages/categories.json", jsonData);
 
 
             } else {
