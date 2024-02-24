@@ -71,7 +71,7 @@ const CustomerStatsOutStocks = () => {
         if (editedProduct) {
             console.log("editedProduct.category:", editedProduct.category);
             console.log("jsonData[0] keys:", Object.keys(jsonData[0]));
-                        setIsEditPopupOpen(false);
+            setIsEditPopupOpen(false);
             setEditedProduct(null);
 
             // Check if jsonData is not empty and it contains the necessary data structure
@@ -90,8 +90,8 @@ const CustomerStatsOutStocks = () => {
 
                 // Update the state with the modified data
                 setJsonData(updatedData);
-console.log(updatedData)
-                // await updateJsonFile("robotech/pages/categories.json", jsonData);
+                console.log(updatedData)
+                await updateJsonFile("robotech/pages/categories.json", jsonData);
 
 
             } else {
