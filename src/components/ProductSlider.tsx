@@ -26,7 +26,7 @@ const ProductSlider = () => {
     }, []);
 
     const handleShowMore = () => {
-        setVisibleProducts(prevCount => prevCount + 3); // Increase the number of visible products by 3
+        setVisibleProducts(prevCount => prevCount + 3);
     };
 
     return (
