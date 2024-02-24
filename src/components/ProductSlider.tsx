@@ -33,10 +33,11 @@ const ProductSlider = () => {
             <div className="px-4 py-3 bg-gradient-to-r from-blue-400 to-blue-600 text-white">
                 <h2 className="text-xl font-semibold">Featured Products</h2>
             </div>
-            <div className="max-h-[370px] h-full overflow-auto grid grid-cols-3 gap-x-3 px-5 py-4">
+            <div className="max-h-[370px] h-full overflow-auto grid grid-cols-3 gap-3 px-5 py-4">
                 {products.slice(0, visibleProducts).map(product => (
                     <div key={product.id} className="block overflow-hidden h-20  rounded-lg border border-blue-400 hover:shadow-lg transform transition duration-300">
                         <img src={product.image1} alt={product.title} className="h-full w-full object-cover" />
+                        <span>{product.date}</span>
                         <div className="absolute h-full items-center justify-center flex bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-2 opacity-0 transition duration-300 hover:opacity-100">
                             <Link href={{
                                 pathname: `/id_${product?.id}`,
