@@ -7,7 +7,7 @@ import { addToCart } from "@/redux/proSlice";
 
 const ProductSlider = () => {
     const [products, setProducts] = useState<any[]>([]);
-    const [visibleProducts, setVisibleProducts] = useState<number>(9); // Initial number of visible products
+    const [visibleProducts, setVisibleProducts] = useState<number>(12); // Initial number of visible products
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -33,7 +33,7 @@ const ProductSlider = () => {
             <div className="px-4 py-3 bg-gradient-to-r from-blue-400 to-blue-600 text-white">
                 <h2 className="text-xl font-semibold">Featured Products</h2>
             </div>
-            <div className="max-h-[370px] h-full overflow-auto grid grid-cols-3 gap-3 px-5 py-4">
+            <div className="max-h-[370px] h-full overflow-auto grid grid-cols-3 gap-x-3 px-5 py-4">
                 {products.slice(0, visibleProducts).map(product => (
                     <div key={product.id} className="block overflow-hidden h-20  rounded-lg border border-blue-400 hover:shadow-lg transform transition duration-300">
                         <img src={product.image1} alt={product.title} className="h-full w-full object-cover" />
