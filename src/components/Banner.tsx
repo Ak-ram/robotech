@@ -14,11 +14,14 @@ const Banner: React.FC<BannerProps> = () => {
     dots: true,
     infinite: true,
     autoplay: true,
+    autoplaySpeed: 3000, // Autoplay speed of 3 seconds
+    pauseOnHover: true, // Pause autoplay on hover
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false,
+    arrows: true,
     fade: true,
     speed: 1000,
+    adaptiveHeight: true, 
     beforeChange: (prev: number, next: number) => {
       setDotActive(next);
     },
@@ -74,7 +77,7 @@ const Banner: React.FC<BannerProps> = () => {
 
   return (
     <div className="relative flex gap-3 mt-2 lg:p-5 bg-white rounded-lg w-[97%] mx-auto">
-      <div className="lg:w-[70%] overflow-hidden  rounded-lg">
+      <div className="lg:w-[70%] overflow-hidden  rounded-lg ">
         <Slider {...settings}>
           {slides.map((slide, index) => (
             <div
