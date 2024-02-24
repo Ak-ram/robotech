@@ -84,7 +84,7 @@ const CustomerStatsInStocks = () => {
                 });
 
                 // Update the state with the modified data
-                // await updateJsonFile("robotech/pages/categories.json", jsonData);
+                await updateJsonFile("robotech/pages/categories.json", jsonData);
                 setJsonData(updatedData);
 
             } else {
@@ -94,8 +94,7 @@ const CustomerStatsInStocks = () => {
     };
 
 
-    useEffect((
-    ) => { console.log(jsonData) }, [jsonData])
+
     return (
         <div className=" border-green-400  border-2 bg-white my-5 px-3 py-6 rounded-lg shadow-md animate-fade-in">
             <h2 className="whitespace-nowrap font-semibold mb-6 flex items-center justify-center text-green-500 bg-green-100 py-2 px-4 rounded-md">
