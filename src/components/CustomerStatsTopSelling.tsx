@@ -1,6 +1,6 @@
 import { Activity, Briefcase, Book } from "lucide-react"
 
-const CustomerStatsTopSelling = ({customers}) => {
+const CustomerStatsTopSelling = ({ customers }) => {
 
 
     const getMostSellingProduct = () => {
@@ -94,35 +94,53 @@ const CustomerStatsTopSelling = ({customers}) => {
             </h2>
 
             <div className="top-selling-products grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+
+
+
                 <div className="top-selling-product mb-3 py-3 px-2 rounded-md border border-gray-200">
                     <h3 className="top-selling-title text-lg font-semibold mb-3 flex items-center">
                         <Briefcase className="mr-2 text-yellow-500" size={20} /> Product:
                     </h3>
                     <div className="top-selling-details flex items-center justify-between">
-                        <div className="product-name overflow-hidden whitespace-nowrap text-ellipsis pl-3">{mostSellingProductData.mostSellingProduct}</div>
-                        <div className="sold-count text-zinc-500 text-sm font-semibold">Sold {mostSellingProductData.sellingTimes} times</div>
+                        <div className="service-name ml-5">{mostSellingProductData.mostSellingProduct || 'No Selling Products'}</div>
+                        <div className="sold-count text-zinc-500 text-sm font-semibold">
+                            {
+                                mostSellingProductData.sellingTimes ? `Sold ${mostSellingProductData.sellingTimes} times` : ''
+                            }
+                        </div>
                     </div>
                 </div>
+
 
                 <div className="top-selling-service mb-3 py-3 px-2 rounded-md border border-gray-200">
                     <h3 className="top-selling-title text-lg font-semibold mb-3 flex items-center">
                         <Briefcase className="mr-2 text-yellow-500" size={20} /> Service:
                     </h3>
                     <div className="top-selling-details flex items-center justify-between">
-                        <div className="service-name">{mostSellingServiceData.mostSellingService}</div>
-                        <div className="sold-count text-zinc-500 text-sm font-semibold">Sold {mostSellingServiceData.sellingTimes} times</div>
+                        <div className="service-name  ml-5">{mostSellingServiceData.mostSellingService || 'No Selling Services'}</div>
+                        <div className="sold-count text-zinc-500 text-sm font-semibold">
+                            {
+                                mostSellingServiceData.mostSellingService ? `Sold ${mostSellingServiceData.sellingTimes} times` : ''
+                            }
+                        </div>
                     </div>
                 </div>
 
                 <div className="top-selling-course mb-3 py-3 px-2 rounded-md border border-gray-200">
                     <h3 className="top-selling-title text-lg font-semibold mb-3 flex items-center">
-                        <Book className="mr-2 text-purple-500" size={20} /> Course:
+                        <Book className="mr-2 text-indigo-500" size={20} /> Course:
                     </h3>
                     <div className="top-selling-details flex items-center justify-between">
-                        <div className="course-name">{mostSellingCourseData.mostSellingCourse}</div>
-                        <div className="sold-count text-zinc-500 text-sm font-semibold">Sold {mostSellingCourseData.sellingTimes} times</div>
+                        <div className="course-name ml-5">{mostSellingCourseData.mostSellingCourse || 'No Selling Courses'}</div>
+                        <div className="sold-count text-zinc-500 text-sm font-semibold">
+                            {
+                                mostSellingCourseData.mostSellingCourse ? `Sold ${mostSellingCourseData.sellingTimes} times` : ''
+                            }
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     )

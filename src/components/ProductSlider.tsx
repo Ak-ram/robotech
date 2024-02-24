@@ -19,7 +19,6 @@ const ProductSlider = () => {
                 console.error('Error fetching products:', error);
             }
         };
-
         if (typeof window !== 'undefined') {
             fetchProducts();
         }
