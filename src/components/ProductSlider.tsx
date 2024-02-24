@@ -29,11 +29,11 @@ const ProductSlider = () => {
     };
 
     return (
-        <div className="h-full rounded-lg overflow-hidden w-full bg-gray-100 shadow-lg">
+        <div className="h-full relative rounded-lg overflow-hidden w-full bg-gray-100 shadow-lg">
             <div className="px-4 py-3 bg-gradient-to-r from-blue-400 to-blue-600 text-white">
                 <h2 className="text-xl font-semibold">Featured Products</h2>
             </div>
-            <div className="max-h-[330px] h-full overflow-auto grid grid-cols-3 gap-3 px-5 py-4">
+            <div className="max-h-[370px] h-full overflow-auto grid grid-cols-3 gap-3 px-5 py-4">
                 {products.slice(0, visibleProducts).map(product => (
                     <div key={product.id} className="block overflow-hidden h-20  rounded-lg border border-blue-400 hover:shadow-lg transform transition duration-300">
                         <img src={product.image1} alt={product.title} className="h-full w-full object-cover" />
@@ -56,10 +56,10 @@ const ProductSlider = () => {
                     </div>
                 ))}
             </div>
-            <button onClick={handleShowMore} className="flex mt-2 items-center justify-center text-sm text-gray-600 hover:text-gray-900 mx-auto mb-2">
-                Show More
-                <ChevronDown size={16} className="text-slate-400" />
-            </button>
+            <button onClick={handleShowMore} className="flex absolute bottom-2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-2 items-center justify-center text-sm text-gray-600 hover:text-gray-900 mx-auto mb-2">
+  Show More
+  <ChevronDown size={16} className="text-slate-400" />
+</button>
         </div>
     );
 }
