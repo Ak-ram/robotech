@@ -18,7 +18,7 @@ const Banner: React.FC<BannerProps> = () => {
     pauseOnHover: true, // Pause autoplay on hover
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: true,
+    arrows: false,
     fade: true,
     speed: 1000,
     adaptiveHeight: true, 
@@ -76,8 +76,8 @@ const Banner: React.FC<BannerProps> = () => {
   }, []);
 
   return (
-    <div className="relative flex gap-3 mt-2 lg:p-5 bg-white rounded-lg w-[97%] mx-auto">
-      <div className="lg:w-[70%] overflow-hidden  rounded-lg ">
+    <div className="relative flex gap-3 mt-2 md:p-5 bg-transparent md:bg-white rounded-lg w-[97%] mx-auto">
+      <div className="md:w-[70%] overflow-hidden  rounded-lg ">
         <Slider {...settings}>
           {slides.map((slide, index) => (
             <div
@@ -96,7 +96,7 @@ const Banner: React.FC<BannerProps> = () => {
           ))}
         </Slider>
       </div>
-      <div className="hidden lg:block lg:w-[28%]">
+      <div className="hidden md:block md:w-[28%]">
         <ProductSlider />
       </div>
     </div>
