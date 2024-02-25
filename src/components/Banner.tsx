@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
 import { getSlidesData } from "@/helpers/getSlidesData";
 import ProductSlider from "./ProductSlider";
+import Link from "next/link";
 
 
 interface BannerProps { }
@@ -86,11 +87,13 @@ const Banner: React.FC<BannerProps> = () => {
                 } w-full relative`}
             >
               <div className="flex items-center justify-center h-full">
+                <Link href={slide?.link_url}>
                 <img
                   src={slide?.image || "https://via.placeholder.com/800x400"}
                   alt={`Slide ${index}`}
                   className="object-contian border border-designColor/40 overflow-hidden "
                 />
+                </Link>
               </div>
             </div>
           ))}
