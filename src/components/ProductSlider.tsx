@@ -50,11 +50,9 @@ const ProductSlider = () => {
         appendDots: (dots: any) => (
             <div
                 style={{
-                    top: "80%",
-                    left: "67%",
-                    userSelect: 'none'
+            
                 }}
-                className="absolute translate-x[-50%] translate-y[-50%]"
+                className="absolute"
             >
                 <ul
                     style={{
@@ -64,7 +62,7 @@ const ProductSlider = () => {
                         gap: 3,
                         userSelect: 'all'
                     }}
-                    className="justify-center"
+                    className="justify-center pb-5"
                 >
                     {dots}
                 </ul>
@@ -82,7 +80,7 @@ const ProductSlider = () => {
     };
 
     return (
-        <div className="relative border rounded-xl h-[97%] border-slate-300">
+        <div className="relative border h-[97%] border-slate-300">
 
             <Slider {...settings} initialSlide={currentIndex}>
                 {Array.from({ length: Math.ceil(products.length / productsPerPage) }).map((_, slideIndex) => (

@@ -89,7 +89,7 @@ const Banner: React.FC<BannerProps> = () => {
                 <img
                   src={slide?.image || "https://via.placeholder.com/800x400"}
                   alt={`Slide ${index}`}
-                  className="object-cover w-full h-full"
+                  className="object-contian border border-designColor/40 overflow-hidden "
                 />
               </div>
             </div>
