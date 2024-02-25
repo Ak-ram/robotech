@@ -1,13 +1,17 @@
+import React, { useState, useEffect } from "react";
+import Slider, { Settings } from "react-slick";
 import { getProducts } from "@/helpers/getProducts";
-import { useEffect, useState } from "react";
-import { ChevronDown, ExternalLink, ShoppingCart } from 'lucide-react';
+import { ChevronDown, Hand, HandMetal } from 'lucide-react';
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/proSlice";
 
 const ProductSlider = () => {
     const [products, setProducts] = useState<any[]>([]);
-    const [visibleProducts, setVisibleProducts] = useState<number>(12); // Initial number of visible products
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const productsPerPage = 12; // Number of products per slide
+    const [dotActive, setDotActive] = useState<number>(0);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -24,43 +28,91 @@ const ProductSlider = () => {
         }
     }, []);
 
-    const handleShowMore = () => {
-        setVisibleProducts(prevCount => prevCount + 3);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const nextIndex = (currentIndex + 1) % Math.ceil(products.length / productsPerPage);
+            setCurrentIndex(nextIndex);
+        }, 5 * 60 * 1000); // 5 minutes in milliseconds
+
+        return () => clearTimeout(timer);
+    }, [currentIndex, products.length]);
+
+    const settings: Settings = {
+        dots: true,
+        infinite: true,
+        autoplay: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        beforeChange: (prev: number, next: number) => {
+            setDotActive(next);
+        },
+        appendDots: (dots: any) => (
+            <div
+                style={{
+            
+                }}
+                className="absolute"
+            >
+                <ul
+                    style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 3,
+                        userSelect: 'all'
+                    }}
+                    className="justify-center pb-5"
+                >
+                    {dots}
+                </ul>
+            </div>
+        ),
+        customPaging: (i: number) => (
+            <div
+                className={`${i === dotActive ? 'bg-slate-800 w-3 h-1 lg:w-5 lg:h-2 ' : "h-1 w-1 lg:w-2 lg:h-2 border border-zinc-400"} rounded-full cursor-pointer`}
+            >
+                <span className="hidden md:flex items-center gap-1">
+
+                </span>
+            </div>
+        ),
     };
 
     return (
-        <div className="h-full relative rounded-lg overflow-hidden w-full bg-gray-100 shadow-lg">
-            <div className="px-4 py-3 bg-gradient-to-r from-blue-400 to-blue-600 text-white">
-                <h2 className="text-xl font-semibold">Featured Products</h2>
-            </div>
-            <div className="max-h-[370px] h-full overflow-auto grid grid-cols-3 gap-3 px-5 py-4">
-                {products.slice(0, visibleProducts).map(product => (
-                    <div key={product.id} className="block overflow-hidden h-20  rounded-lg border border-blue-400 hover:shadow-lg transform transition duration-300">
-                        <img src={product.image1} alt={product.title} className="h-full w-full object-cover" />
-                        <span>{product.date}</span>
-                        <div className="absolute h-full items-center justify-center flex bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-2 opacity-0 transition duration-300 hover:opacity-100">
-                            <Link href={{
-                                pathname: `/id_${product?.id}`,
-                                query: {
-                                    id: product?.id,
-                                    prefix: (product?.category),
-                                },
-                            }} className="flex items-center justify-center h-7 w-7 text-white bg-blue-500  rounded-md mr-1 hover:bg-blue-600">
-                                <ExternalLink size={16} className="" />
-                            </Link>
-                            <button onClick={() => {
-                                dispatch(addToCart(product));
-                            }} className="flex items-center justify-center h-7 w-7 text-white bg-blue-500  rounded-md hover:bg-blue-600">
-                                <ShoppingCart size={16} className="" />
-                            </button>
+        <div className="relative border h-[97%] border-slate-300">
+
+            <Slider {...settings} initialSlide={currentIndex}>
+                {Array.from({ length: Math.ceil(products.length / productsPerPage) }).map((_, slideIndex) => (
+                    <div key={slideIndex}>
+                        <div className="grid grid-cols-3 gap-3 p-4 relative">
+
+
+                            {products
+                                .slice(slideIndex * productsPerPage, (slideIndex + 1) * productsPerPage)
+                                .map((product, index) => (
+                                    <Link
+                                        href={{
+                                            pathname: `/id_${product?.id}`,
+                                            query: {
+                                                id: product?.id,
+                                                prefix: (product?.category),
+                                            },
+                                        }}
+                                        key={index}
+                                        className="block border border-gray-300 px-1 hover:border-orange-400 rounded-lg overflow-hidden"
+                                    >
+                                        <img
+                                            className="w-18 h-18 lg:w-20 lg:h-20 object-contain mx-auto transition duration-300 transform hover:scale-105"
+                                            src={product.image1}
+                                            alt={product.title}
+                                        />
+                                    </Link>
+                                ))}
                         </div>
                     </div>
                 ))}
-            </div>
-            <button onClick={handleShowMore} className="flex absolute bottom-2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-2 items-center justify-center text-sm text-gray-600 hover:text-gray-900 mx-auto mb-2">
-  Show More
-  <ChevronDown size={16} className="text-slate-400" />
-</button>
+            </Slider>
         </div>
     );
 }

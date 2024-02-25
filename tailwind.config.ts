@@ -17,9 +17,20 @@ const config: Config = {
       },
       zIndex: {
         '100': '100',
-      }
+      },
+      animation: {
+        wave: 'wave 1.5s infinite', // Define the wave animation
+      },
+      keyframes: {
+        wave: {
+          '0%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(-30px)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
     },
   },
   plugins: [],
 };
+
 export default config;
