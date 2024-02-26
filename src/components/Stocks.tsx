@@ -95,7 +95,7 @@ const Stocks = () => {
   }, [show]);
 
   return (
-    <div className="bg-white rounded-lg mb-5 overflow-hidden">
+    <div className={`${!show ? "border border-blue-300 border-dashed" : ""} bg-white rounded-lg mb-5 overflow-hidden`}>
       <div
         className="flex items-center p-5 justify-between cursor-pointer"
         onClick={() => setShow(!show)}
@@ -104,7 +104,7 @@ const Stocks = () => {
             {show ? "Click to Collapse" : "Click to Expand"}
         </h3>
         <ChevronDown
-          className={`transform transition-transform duration-300 ${
+          className={`transform text-blue-300 transition-transform duration-300 ${
             show ? "rotate-180" : ""
           }`}
           size={25}

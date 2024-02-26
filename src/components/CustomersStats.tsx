@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerData } from "@/helpers/getCustomerData";
-import { Activity, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X, Download, Ban } from "lucide-react";
+import { Activity, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X, Download, Ban, ChevronDown } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
 import CustomerStatsChart from "./CustomerStatsChart";
@@ -78,8 +78,10 @@ const CustomersStats = () => {
 
             <div className={`${isShow ? "block" : "hidden"} z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
                 <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
+                   
                     <div className="flex-1 "> <X className="ml-auto cursor-pointer" onClick={() => setIsShow(false)} />
                         {/* <ApexChartComp categoryStats={categoryStats} /> */}
+                        
                         <CustomerStatsChart customers={customers} />
                     </div>
                 </div>
@@ -98,7 +100,7 @@ const CustomersStats = () => {
 
 
             <div className="flex flex-col">
-                <Stocks/>
+                <Stocks />
 
 
                 <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
