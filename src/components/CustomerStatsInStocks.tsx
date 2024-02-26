@@ -66,32 +66,72 @@ const CustomerStatsInStocks = () => {
         fetchData();
     }, []);
 
-
     const handleSave = async () => {
         if (editedProduct) {
             setIsEditPopupOpen(false);
             setEditedProduct(null);
-            // Check if jsonData is not empty and it contains the necessary data structure
+            
+            // Update the state immediately with the modified product
+            setProducts(prevProducts => {
+                return prevProducts.map(product => {
+                    if (product.id === editedProduct.id) {
+                        return editedProduct;
+                    } else {
+                        return product;
+                    }
+                });
+            });
+    
+            // Update the JSON file
             if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
                 let updatedData = [...jsonData];
-                // Use map to update the array
                 updatedData[0][editedProduct.category] = updatedData[0][editedProduct.category].map(product => {
                     if (product.id === editedProduct.id) {
                         return editedProduct;
                     } else {
-                        return product; // Return other products unchanged
+                        return product;
                     }
                 });
-
-                // Update the state with the modified data
-                await updateJsonFile("robotech/pages/categories.json", jsonData);
-                setJsonData(updatedData);
-
+    
+                try {
+                    // Update the JSON file
+                    await updateJsonFile("robotech/pages/categories.json", jsonData);
+                    setJsonData(updatedData);
+                } catch (error) {
+                    console.error("Error updating JSON file:", error);
+                }
             } else {
                 console.error("jsonData is empty or does not contain the expected structure.");
             }
         }
     };
+    
+
+    // const handleSave = async () => {
+    //     if (editedProduct) {
+    //         setIsEditPopupOpen(false);
+    //         setEditedProduct(null);
+    //         // Check if jsonData is not empty and it contains the necessary data structure
+    //         if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
+    //             let updatedData = [...jsonData];
+    //             // Use map to update the array
+    //             updatedData[0][editedProduct.category] = updatedData[0][editedProduct.category].map(product => {
+    //                 if (product.id === editedProduct.id) {
+    //                     return editedProduct;
+    //                 } else {
+    //                     return product; // Return other products unchanged
+    //                 }
+    //             });
+
+    //             // Update the state with the modified data
+    //             await updateJsonFile("robotech/pages/categories.json", jsonData);
+    //             setJsonData(updatedData);
+
+    //         } else {
+    //             console.error("jsonData is empty or does not contain the expected structure.");
+    //         }
+    //     }
+    // };
 
 
 
