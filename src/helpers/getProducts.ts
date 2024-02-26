@@ -1,23 +1,3 @@
-// export const getProducts = async () => {
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/categories.json`,
-//     {
-//       cache: "no-cache",
-//     }
-//   );
-
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch courses");
-//   }
-//   let result = await res.json()
-//   let newArray = [];
-//   result.forEach(obj => {
-//     Object.keys(obj).forEach(key => {
-//       newArray = newArray.concat(obj[key]);
-//     });
-//   });
-//   return newArray;
-// };
 // Function to update local storage with the latest data
 const updateLocalStorage = async () => {
   try {
@@ -42,7 +22,6 @@ const updateLocalStorage = async () => {
 
     // Cache the fetched data in local storage
     localStorage.setItem("cachedProducts", JSON.stringify(newArray));
-    console.log('new request: local storage updated')
   } catch (error) {
     console.error("Error updating local storage:", error);
   }
@@ -56,7 +35,6 @@ export const getProducts = async (): Promise<any[]> => {
   // Check if data is already cached in local storage
   const cachedData = localStorage.getItem("cachedProducts");
   if (cachedData) {
-    console.log('no caching')
     return JSON.parse(cachedData);
   }
 
