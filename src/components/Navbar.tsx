@@ -142,12 +142,12 @@ const Navbar = () => {
             </span>
           </Link>
 
-          <span className="-ml-3 hidden xs:flex font-semibold  flex-col justify-center items-center -gap-2">
-            <span className="">
+          <span className="-ml-3 flex font-semibold  flex-col justify-center items-center -gap-2">
+            <span className="text-xs xs:text-sm">
               ({productData ? productData.length.toLocaleString("ar") : 0})
               items
             </span>
-            <FormattedPrice className="text-sm" amount={totalAmt} />
+            <FormattedPrice className="text-xs xs:text-sm" amount={totalAmt} />
           </span>
         </div>
       </div>
