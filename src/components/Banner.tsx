@@ -15,14 +15,14 @@ const Banner: React.FC<BannerProps> = () => {
     dots: true,
     infinite: true,
     autoplay: true,
-    autoplaySpeed: 3000, // Autoplay speed of 3 seconds
+    autoplaySpeed: 7000, // Autoplay speed of 3 seconds
     pauseOnHover: true, // Pause autoplay on hover
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
     fade: true,
     speed: 1000,
-    adaptiveHeight: true, 
+    // adaptiveHeight: true, 
     beforeChange: (prev: number, next: number) => {
       setDotActive(next);
     },
@@ -84,14 +84,14 @@ const Banner: React.FC<BannerProps> = () => {
             <div
               key={slide?.id}
               className={`${dotActive === index ? "z-10" : "z-0"
-                } w-full relative`}
+                } relative`}
             >
-              <div className="flex items-center justify-center h-full">
-                <Link href={slide?.link_url}>
+              <div className="w-full flex items-center justify-center h-full">
+                <Link href={slide?.link_url} className="w-full">
                 <img
                   src={slide?.image || "https://via.placeholder.com/800x400"}
                   alt={`Slide ${index}`}
-                  className="object-contian border border-designColor/40 overflow-hidden "
+                  className="object-contian w-full border border-designColor/40 overflow-hidden "
                 />
                 </Link>
               </div>

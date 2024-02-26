@@ -5,9 +5,8 @@ import { getProducts } from "@/helpers/getProducts";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 
-const CustomerStatsInStocks = () => {
+const CustomerStatsInStocks = ({instock,setInstock}) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [products, setProducts] = useState<ProductType[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
     const [editedProduct, setEditedProduct] = useState<ProductType | null>(null);
@@ -35,21 +34,6 @@ const CustomerStatsInStocks = () => {
 
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const allProducts = await getProducts();
-                setProducts(allProducts);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-
-        if (typeof window !== "undefined") {
-            fetchData();
-        }
-    }, []);
-
 
 
     useEffect(() => {
@@ -65,33 +49,113 @@ const CustomerStatsInStocks = () => {
 
         fetchData();
     }, []);
-
-
     const handleSave = async () => {
         if (editedProduct) {
             setIsEditPopupOpen(false);
+            
+            // Update the state immediately with the modified product
+             setInstock(prevProducts => {
+                return prevProducts.map(product => {
+                    if (product.id === editedProduct.id) {
+                        return editedProduct;
+                    } else {
+                        return product;
+                    }
+                });
+            });
             setEditedProduct(null);
-            // Check if jsonData is not empty and it contains the necessary data structure
+            // Update the JSON file in the background
             if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
                 let updatedData = [...jsonData];
-                // Use map to update the array
                 updatedData[0][editedProduct.category] = updatedData[0][editedProduct.category].map(product => {
                     if (product.id === editedProduct.id) {
                         return editedProduct;
                     } else {
-                        return product; // Return other products unchanged
+                        return product;
                     }
                 });
-
-                // Update the state with the modified data
-                await updateJsonFile("robotech/pages/categories.json", jsonData);
+    
+                // No need to await, updating JSON file in the background
+                updateJsonFile("robotech/pages/categories.json", updatedData)
+                    .then(() => console.log("JSON file updated successfully"))
+                    .catch(error => console.error("Error updating JSON file:", error));
+    
+                // Update the state with the new JSON data
                 setJsonData(updatedData);
-
             } else {
                 console.error("jsonData is empty or does not contain the expected structure.");
             }
         }
     };
+    
+    // const handleSave = async () => {
+    //     if (editedProduct) {
+    //         setIsEditPopupOpen(false);
+    //         setEditedProduct(null);
+            
+    //         // Update the state immediately with the modified product
+    //         setInstock(prevProducts => {
+    //             return prevProducts.map(product => {
+    //                 if (product.id === editedProduct.id) {
+    //                     return editedProduct;
+    //                 } else {
+    //                     return product;
+    //                 }
+    //             });
+    //         });
+    
+    //         // Update the JSON file
+    //         if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
+    //             let updatedData = [...jsonData];
+    //             updatedData[0][editedProduct.category] = updatedData[0][editedProduct.category].map(product => {
+    //                 if (product.id === editedProduct.id) {
+    //                     return editedProduct;
+    //                 } else {
+    //                     return product;
+    //                 }
+    //             });
+    
+    //             try {
+    //                 // Update the JSON file
+    //                 await updateJsonFile("robotech/pages/categories.json", jsonData);
+    //                 setJsonData(updatedData);
+    //             } catch (error) {
+    //                 console.error("Error updating JSON file:", error);
+    //             }
+    //         } else {
+    //             console.error("jsonData is empty or does not contain the expected structure.");
+    //         }
+    //     }
+    // };
+    
+    
+    
+
+    // const handleSave = async () => {
+    //     if (editedProduct) {
+    //         setIsEditPopupOpen(false);
+    //         setEditedProduct(null);
+    //         // Check if jsonData is not empty and it contains the necessary data structure
+    //         if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
+    //             let updatedData = [...jsonData];
+    //             // Use map to update the array
+    //             updatedData[0][editedProduct.category] = updatedData[0][editedProduct.category].map(product => {
+    //                 if (product.id === editedProduct.id) {
+    //                     return editedProduct;
+    //                 } else {
+    //                     return product; // Return other products unchanged
+    //                 }
+    //             });
+
+    //             // Update the state with the modified data
+    //             await updateJsonFile("robotech/pages/categories.json", jsonData);
+    //             setJsonData(updatedData);
+
+    //         } else {
+    //             console.error("jsonData is empty or does not contain the expected structure.");
+    //         }
+    //     }
+    // };
 
 
 
@@ -100,26 +164,25 @@ const CustomerStatsInStocks = () => {
             <h2 className="whitespace-nowrap font-semibold mb-6 flex items-center justify-center text-green-500 bg-green-100 py-2 px-4 rounded-md">
                 <CheckCheck className="mr-2 text-green-500" size={22} /> In-Stocks
                 <span className="mx-4 relative">
-                    <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
+                    <Search className="w-5 h-5 text-gray-500 absolute top-1.5 right-3" />
                     <input
                         type="text"
                         placeholder="Product Name..."
                         value={searchQuery}
                         onChange={handleSearchInputChange}
-                        className="pl-2 pr-10  placeholder-green-300 py-1 text-sm border border-green-200 rounded focus:outline-none focus:border-green-500"
+                        className="pl-2 pr-10 w-[180px] placeholder-green-300 py-1 text-sm border border-green-200 rounded focus:outline-none focus:border-green-500"
                     />
                 </span>
                 <span className="ml-auto text-sm">
-                    {products &&
-                        products.filter((product) => +product?.count > 0).length}{' '}
+                    {instock &&
+                        instock.length}{' '}
                     Items(s)
                 </span>
             </h2>
 
             <div className="mb-3 h-[380px] overflow-auto py-3 px-2 rounded-md">
-                {products &&
-                    products
-                        .filter((product) => +product?.count > 0)
+                {instock &&
+                    instock
                         .filter((product) =>
                             product.title.toLowerCase().includes(searchQuery.toLowerCase())
                         )

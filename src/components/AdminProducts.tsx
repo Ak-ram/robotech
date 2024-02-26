@@ -30,6 +30,7 @@ const AdminComponent = () => {
     image2: "",
     image3: "",
     // brand: "",
+    wholesalePrice: 0,
     isNew: false,
     quantity: 1,
     externalLink: "",
@@ -79,6 +80,7 @@ const AdminComponent = () => {
       isNew: false,
       quantity: 1,
       category: selectedCat,
+      wholesalePrice:0
     });
   };
 
