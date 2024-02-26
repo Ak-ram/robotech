@@ -85,7 +85,7 @@ const Navbar = () => {
             onClick={() => setOpenSidebar(false)}
           />
           {navigation.map((item, index) => (
-            <Link href={item?.href} key={`${item.title}_${index}`}>
+            <Link href={item?.href} key={`${item.title}_${index}`} onClick={()=> setOpenSidebar(false)}>
               <li
                 className={`mt-2 hover:text-designColor cursor-pointer duration-200 relative overflow-hidden group ${
                   item.href === pathname && "text-designColor font-bold"
@@ -124,7 +124,7 @@ const Navbar = () => {
             className="text-designColor cursor-pointer duration-200 relative group"
           >
             <Heart className="w-7 h-7 xs:w-8 xs:h-8" />
-            <span className="absolute top-0 -left-1 bg-black text-white w-4 h-4 xs:w-5 xs:h-5  rounded-full  flex items-center justify-center group-hover: sm:font-bold ">
+            <span className="absolute text-sm top-0 -left-1 bg-black text-white w-4 h-4 xs:w-5 xs:h-5  rounded-full  flex items-center justify-center group-hover: sm:font-bold ">
               {favoriteData ? favoriteData.length : 0}
             </span>
           </Link>
@@ -137,7 +137,7 @@ const Navbar = () => {
           >
             {" "}
             <ShoppingBasket className="w-7 h-7 xs:w-8 xs:h-8" />
-            <span className="absolute top-0 -left-1  bg-black text-white w-4 h-4 xs:w-5 xs:h-5  rounded-full  flex items-center justify-center group-hover: sm:font-bold ">
+            <span className="text-sm absolute top-0 -left-1  bg-black text-white w-4 h-4 xs:w-5 xs:h-5  rounded-full  flex items-center justify-center group-hover: sm:font-bold ">
               {productData ? productData.length : 0}
             </span>
           </Link>

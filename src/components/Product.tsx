@@ -93,7 +93,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
   return (
     <div className={`flex-1 pt-5`}>
-      <nav aria-label="Page navigation example" className="mx-2 sm:mx-4 flex relative flex-wrap items-center justify-end">
+      <nav aria-label="Page navigation example" className="mx-2 px-3 sm:mx-4 flex relative flex-wrap items-center justify-end">
         {/* Filter Icon */}
         <div className="mr-2">
           <button
@@ -101,7 +101,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
             className="flex items-center px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700"
           >
             <Filter className="w-5 h-5 mr-1" />
-            <span className="hidden sm:inline">Filter</span>
+            <span className="inline">Filter</span>
           </button>
         </div>
 
@@ -169,13 +169,13 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
 
 
-      <div className="m-auto pb-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
+      <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
         {/* Use handleSorting function to get sorted products */}
         {handleSorting().slice(perPage.start, perPage.end).map((item) => (
           <div
           title={item?.title}
             key={`${item.id}_${item.title}`}
-            className="p-0 w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden rounded-md"
+            className="p-0 flex xs:block w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden xs:rounded-md"
           >
 
             <Link
@@ -186,7 +186,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-48 lg:h-68 overflow-hidden rounded-xl"
+              className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden rounded-xl"
             >
               <img
                 className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
@@ -212,7 +212,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   : null}
             </Link>
 
-            <div className="group w-[60%] flex justify-center w-full items-start flex-col">
+            <div className="group border-l border-slate-200 xs:border-0 w-[60%] flex justify-center w-full items-start flex-col">
               {/* <div className="absolute top-4 right-2 flex items-center space-x-2">
 
                         <ShoppingCart
@@ -224,15 +224,15 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                         />
                       </div> */}
               {/* <div className="py-3 px-10 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 translate-y-full transition-all group-hover:translate-y-0 w-full absolute"> */}
-              <div className="py-3  transition-all px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 border-t border-slate-300 rounded transition-all w-full ">
+              <div className="py-3  transition-all px-3 xs:px-5 xs:backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 xs:border-t border-slate-300 rounded transition-all w-full ">
                 <p
-                  className="pr-2 text-xl whitespace-nowrap text-ellipsis overflow-hidden duration-300 font-bold">
+                  className="pr-2 text-zinc-500 xs:text-black text-sm xs:text-xl xs:whitespace-nowrap text-ellipsis overflow-hidden duration-300 font-semibold xs:font-bold">
                   {item?.title}
                 </p>
-                <p className="flex  items-center justify-start w-full text-black font-semibold">
-                  {item?.previousPrice > item?.price ? <del><FormattedPrice className={'text-base  text-zinc-500'} amount={item?.previousPrice} /></del>
+                <p className="flex mt-1 items-center justify-start w-full text-black font-semibold">
+                  {typeof item?.previousPrice === 'number' && item?.previousPrice > item?.price ? <del><FormattedPrice className={'mr-2 text-sm xs:text-base  text-zinc-500'} amount={+item?.previousPrice} /></del>
                     : null}
-                  <FormattedPrice className={'text-xl'} amount={item?.price} />
+                  <FormattedPrice className={'text-sm xs:text-xl'} amount={item?.price} />
                   {prefix === 'print' ? <span className="text-lg">/{item?.unit?.toLowerCase()} </span> : null}
                 </p>
                 <div className="flex gap-2  w-full items-center justify-between mt-2">
@@ -244,7 +244,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                     <span onClick={() => {
                       dispatch(addToCart(item));
                       // toast.success(`${item?.title} is added to Cart!`);
-                    }} className="flex cursor-pointer gap-2 font-semibold items-center text-gray-600 bg-designColor/30 px-2 py-1 rounded">
+                    }} className="hidden xs:flex cursor-pointer gap-2 font-semibold items-center text-gray-600 bg-designColor/30 px-2 py-1 rounded">
                       Add to cart
                       <ShoppingBasketIcon
 
@@ -257,7 +257,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
                   ) : (
                     <>
-                      <span className="cursor-not-allowed flex gap-2 font-semibold items-center text-red-400 bg-red-100 px-2 py-1 rounded">
+                      <span className="hidden xs:flex cursor-not-allowed gap-2 font-semibold items-center text-red-400 bg-red-100 px-2 py-1 rounded">
                         Out of stock
                         <Ban
                           className=" ustify-center rounded flex items-center gap-1 font-semibold text-rose-400 bg-white rounded-sm  duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
@@ -278,7 +278,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       //   toast.success(`${item?.title} added to favorites!`);
                       // }
                     }}
-                    className="text-zinc-500  cursor-pointer duration-200 hover:text-black"
+                    className="text-zinc-500 hidden xs:block  cursor-pointer duration-200 hover:text-black"
                   /> : null
                   }
 

@@ -14,7 +14,7 @@ const Categories = ({ categories, setCategoryName, openSidebar, setOpenSidebar, 
   };
 
   return (
-    <div className={`flex ${openSidebar ? "w-[320px] py-3 md:px-3  pt-0" : "w-0 "} rounded-lg overflow-hidden ease-in-out duration-500 transition-all border-t-0 `}>
+    <div className={`flex ${openSidebar ? "w-[320px] py-3  pt-0" : "w-0 "} rounded-lg overflow-hidden ease-in-out duration-500 transition-all border-t-0 `}>
       <div className="flex-grow lg:flex-grow-0 bg-white rounded-lg shadow-md">
         <div className="flex flex-col h-full p-3 overflow-y-auto">
           <X className="cursor-pointer mr-2 text-slate-700 self-end" onClick={closeSidebar} />
