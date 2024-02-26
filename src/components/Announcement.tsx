@@ -31,18 +31,19 @@ const Announcement = () => {
     }, []);
     let announcement = closed ? null : <div className="items-start sm:items-center  bg-blue-500 text-white py-3 px-2 sm:px-5 flex">
         <div className="container w-[90%] mx-auto sm:gap-3 flex flex-col items-start sm:flex-row sm:items-center">
-            <p className="flex flex-nowrap gap-1 items-center overflow-auto w-[99%]  text-xs sm:text-sm font-semibold">
-            <Feather  width={25} height={25} className=" hidden xs:inline-block"/>
+            <Link href={data[0]?.link_url! || ''}
+                className="flex flex-nowrap hover:underline gap-1 items-center overflow-auto w-[99%]  text-xs sm:text-sm font-semibold">
+                <Feather width={25} height={25} className=" hidden xs:inline-block" />
                 {data.length > 0 && data[0].body}
-            </p>
-            {data.length > 0 && (
+
+            </Link>
+            {/* {data.length > 0 && (
                 <Link href={data[0].link_url} className="flex items-end gap-1 flex-nowrap whitespace-nowrap font-bold text-xs sm:text-sm mt-2 sm:mt-0 underline hover:text-gray-200">
                     {data[0].link_text}
-                    <ChevronRight size={16}/>
                 </Link>
-            )}
+            )} */}
         </div>
-        <span className="hover:text-white text-white/80 cursor-pointer mt-2 sm:mt-0 ml-3" onClick={() => setClosing(true)}><X className="" size={20}/></span>
+        <span className="hover:text-white text-white/80 cursor-pointer mt-2 sm:mt-0 ml-3" onClick={() => setClosing(true)}><X className="" size={20} /></span>
     </div>
     return (
         announcement

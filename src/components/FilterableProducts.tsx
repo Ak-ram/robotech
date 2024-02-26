@@ -79,7 +79,7 @@ function FilterableProducts({ categories }) {
 
   return (
     <div className='mt-3 md:mt-0'>
-      <div className='relative flex md:gap-2 overflow-auto m-auto '>
+      <div className={`relative flex ${openSidebar ? "gap-2" : "gap-0"} overflow-auto m-auto `}>
         <Categories products={products} setOpenSidebar={setOpenSidebar} openSidebar={openSidebar} setCategoryName={setCategoryName} categories={categories} />
         <div className='flex-1 bg-white pt-5 md:rounded-xl'>
           {openSidebar ? null :
