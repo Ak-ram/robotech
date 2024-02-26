@@ -5,7 +5,7 @@ import { getProducts } from "@/helpers/getProducts";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 
-const CustomerStatsInStocks = () => {
+const CustomerStatsInStocks = ({instock}) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [products, setProducts] = useState<ProductType[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null);
@@ -152,16 +152,15 @@ const CustomerStatsInStocks = () => {
                     />
                 </span>
                 <span className="ml-auto text-sm">
-                    {products &&
-                        products.filter((product) => +product?.count > 0).length}{' '}
+                    {instock &&
+                        instock.length}{' '}
                     Items(s)
                 </span>
             </h2>
 
             <div className="mb-3 h-[380px] overflow-auto py-3 px-2 rounded-md">
-                {products &&
-                    products
-                        .filter((product) => +product?.count > 0)
+                {instock &&
+                    instock
                         .filter((product) =>
                             product.title.toLowerCase().includes(searchQuery.toLowerCase())
                         )

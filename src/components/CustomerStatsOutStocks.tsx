@@ -5,9 +5,9 @@ import { getProducts } from "@/helpers/getProducts";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 
-const CustomerStatsOutStocks = () => {
+const CustomerStatsOutStocks = ({outstock}) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [products, setProducts] = useState<ProductType[]>([]);
+    // const [products, setProducts] = useState<ProductType[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
     const [editedProduct, setEditedProduct] = useState<ProductType | null>(null);
@@ -35,20 +35,20 @@ const CustomerStatsOutStocks = () => {
 
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const allProducts = await getProducts();
-                setProducts(allProducts);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const allProducts = await getProducts();
+    //             setProducts(allProducts);
+    //         } catch (error) {
+    //             console.error("Error fetching data:", error);
+    //         }
+    //     };
 
-        if (typeof window !== "undefined") {
-            fetchData();
-        }
-    }, []);
+    //     if (typeof window !== "undefined") {
+    //         fetchData();
+    //     }
+    // }, []);
 
 
 
@@ -73,15 +73,15 @@ const CustomerStatsOutStocks = () => {
             setEditedProduct(null);
             
             // Update the state immediately with the modified product
-            setProducts(prevProducts => {
-                return prevProducts.map(product => {
-                    if (product.id === editedProduct.id) {
-                        return editedProduct;
-                    } else {
-                        return product;
-                    }
-                });
-            });
+            // setProducts(prevProducts => {
+            //     return prevProducts.map(product => {
+            //         if (product.id === editedProduct.id) {
+            //             return editedProduct;
+            //         } else {
+            //             return product;
+            //         }
+            //     });
+            // });
     
             // Update the JSON file
             if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
@@ -124,17 +124,15 @@ const CustomerStatsOutStocks = () => {
                     />
                 </span>
                 <span className="ml-auto text-sm">
-                    {products &&
-                        products.filter((product) => +product?.count === 0).length}{' '}
+                    {outstock &&
+                        outstock.length}{' '}
                     Item(s)
                 </span>
             </h2>
 
             <div className="mb-3 h-[380px] overflow-auto py-3 px-2 rounded-md">
-                {products &&
-                    products
-                        .filter((product) => +product?.count === 0)
-                        .filter((product) =>
+                {outstock &&
+                    outstock.filter((product) =>
                             product.title.toLowerCase().includes(searchQuery.toLowerCase())
                         )
                         .map((product) => (
