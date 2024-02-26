@@ -54,7 +54,7 @@ const CustomerStatsInStocks = ({instock,setInstock}) => {
             setIsEditPopupOpen(false);
             
             // Update the state immediately with the modified product
-            setInstock(prevProducts => {
+             setInstock(prevProducts => {
                 return prevProducts.map(product => {
                     if (product.id === editedProduct.id) {
                         return editedProduct;
@@ -63,7 +63,6 @@ const CustomerStatsInStocks = ({instock,setInstock}) => {
                     }
                 });
             });
-            
             setEditedProduct(null);
             // Update the JSON file in the background
             if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {

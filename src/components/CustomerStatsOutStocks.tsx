@@ -70,7 +70,7 @@ const CustomerStatsOutStocks = ({outstock,setOutstock}) => {
         if (editedProduct) {
             setIsEditPopupOpen(false);    
             // Update the state immediately with the modified product
-            setOutstock(prevProducts => {
+             setOutstock(prevProducts => {
                 return prevProducts.map(product => {
                     if (product.id === editedProduct.id) {
                         return editedProduct;

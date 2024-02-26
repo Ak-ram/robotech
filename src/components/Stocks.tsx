@@ -27,6 +27,10 @@ const Stocks = () => {
         }
     }, [instock,outstock]);
 
+
+
+   
+
     return (<>
         <div className="flex gap-2">
             <div className="flex-1">
