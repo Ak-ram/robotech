@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { Clock, Calendar, Package, Banknote, User, ArrowDown, ArrowUp } from 'lucide-react';
+import { Clock, Calendar, Package, Banknote, User, ArrowDown, ArrowUp, TrendingUp, TrendingDown, Diff } from 'lucide-react';
 import FormattedPrice from './FormattedPrice';
 import Link from 'next/link';
 
@@ -20,7 +20,6 @@ const TransactionAnalyzer = ({ customers }) => {
         const transactions = customer.transactions;
         const customerName = customer.fullName; // Assuming fullName as the customer name field
         const customerId = customer.id; // Assuming fullName as the customer name field
-        const wholesalePrice = customer.wholesalePrice; // Assuming fullName as the customer name field
 
         transactions.products.forEach(transaction => {
           const transactionDate = new Date(transaction.date);
@@ -31,8 +30,6 @@ const TransactionAnalyzer = ({ customers }) => {
           //  Add customerName to the transaction
           transaction.customerName = customerName;
           transaction.customerId = customerId;
-          transaction.wholesalePrice = wholesalePrice;
-
 
 
           if (!dailyTransactions[dayKey]) {
@@ -231,72 +228,84 @@ const TransactionAnalyzer = ({ customers }) => {
 
   const renderTransactions = useCallback((period) => {
     const renderTransactionsByPeriod = (transactions) => {
-      console.log('akram', transactions)
-      return transactions.map((transaction, index) => (
-        <Link href={{
-          pathname: `admin/id_${transaction?.customerId}`,
-          query: {
-            id: transaction?.customerId,
-            data: JSON.stringify(customers.find(customer => customer.id === transaction?.customerId))
-          },
-        }} key={index} className="flex hover:bg-slate-100 border border-slate-200 rounded p-3 mb-2 items-center gap-3">
-          <User size={25} className='text-blue-400' />
-          <div className='flex-1 flex gap-4 justify-between items-center'>
-            <div className='flex flex-col  font-semibold'>
-              <span className='text-blue-400 '>{transaction.customerName}</span>
+      
+      return transactions.map((transaction, index) => {
+        // console.log(transaction)
+        return (
+          <Link href={{
+            pathname: `admin/id_${transaction?.customerId}`,
+            query: {
+              id: transaction?.customerId,
+              data: JSON.stringify(customers.find(customer => customer.id === transaction?.customerId))
+            },
+          }} key={index} className="flex hover:bg-slate-100 border border-slate-200 rounded p-3 mb-2 items-center gap-3">
+            <User size={25} className='text-blue-400' />
+            <div className='flex-1 flex gap-4 justify-between items-center'>
+              <div className='flex flex-col  font-semibold'>
+                <span className='text-blue-400 '>{transaction.customerName}</span>
+  
+                <span className='flex-1'>{transaction.productName}</span>
+              </div>
+  
+              <div className='ml-auto flex gap-4'>
+  
+                <div className="flex flex-col justify-center items-center">
+                  <span className='text-xs font-semibold'>Buy</span>
+  
+                  <FormattedPrice className='text-xs font-semibold' amount={+transaction?.wholesalePrice! || 0 } />
+                </div>
+                <div className="flex  flex-col justify-center items-center">
+                  <span className='text-xs font-semibold'>Sell</span>
+                  <FormattedPrice className='text-xs font-semibold' amount={+transaction.piecePrice} />
+                </div>
+                <div className="flex  flex-col justify-center items-center">
+                  <span className='text-xs font-semibold'>Quantity</span>
+                  <span className='text-xs font-semibold'>{+transaction.quantity} </span>
+                </div>
+                <div className="flex  flex-col justify-center items-center">
+                  <span className='text-xs font-semibold whitespace-nowrap'>Pre-Discount</span>
+                  <FormattedPrice className='text-xs font-semibold' amount={+transaction.quantity * +transaction.piecePrice} />
+                </div>
+                <div className="flex  flex-col justify-center items-center">
+                  <span className='text-xs font-semibold'>Discount</span>
+                  <FormattedPrice className='text-xs font-semibold' amount={+transaction.discount || 0} />
+                </div>
+                <div className="flex  flex-col justify-center items-center">
+                  <span className='text-xs font-semibold'>Total</span>
+                  <FormattedPrice className='text-xs font-semibold' amount={+transaction.subtotal} />
+                </div>
+                {/* {transaction?.wholesalePrice && +transaction?.wholesalePrice !== 0 ? */}
+                {transaction?.wholesalePrice ? (
+  <>
+    {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal ? (
+      <div className='flex  flex-col items-center'>
+        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
+        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
+      </div>
+    ) : null}
 
-              <span className='flex-1'>{transaction.productName}</span>
+    {+transaction.wholesalePrice && Math.abs((+transaction.wholesalePrice * +transaction.quantity) - +transaction.subtotal) < 0.01 ? (
+      <div className='flex  flex-col items-center'>
+        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
+        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
+      </div>
+    ) : null}
+
+    {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal ? (
+      <div className='flex  flex-col items-center'>
+        <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
+        <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
+      </div>
+    ) : null}
+  </>
+) : null}
+
+              </div>
             </div>
-
-            <div className='ml-auto flex gap-4'>
-
-              <div className="flex flex-col justify-center items-center">
-                <span className='text-xs font-semibold'>Buy</span>
-
-                <FormattedPrice className='text-xs font-semibold' amount={transaction?.wholesalePrice && +transaction?.wholesalePrice || 0} />
-              </div>
-              <div className="flex  flex-col justify-center items-center">
-                <span className='text-xs font-semibold'>Sell</span>
-                <FormattedPrice className='text-xs font-semibold' amount={+transaction.piecePrice} />
-              </div>
-              <div className="flex  flex-col justify-center items-center">
-                <span className='text-xs font-semibold'>Quantity</span>
-                <span className='text-xs font-semibold'>{+transaction.quantity} </span>
-              </div>
-              <div className="flex  flex-col justify-center items-center">
-                <span className='text-xs font-semibold whitespace-nowrap'>Pre-Discount</span>
-                <FormattedPrice className='text-xs font-semibold' amount={+transaction.quantity * +transaction.piecePrice} />
-              </div>
-              <div className="flex  flex-col justify-center items-center">
-                <span className='text-xs font-semibold'>Discount</span>
-                <FormattedPrice className='text-xs font-semibold' amount={+transaction.discount || 0} />
-              </div>
-              <div className="flex  flex-col justify-center items-center">
-                <span className='text-xs font-semibold'>Total</span>
-                <FormattedPrice className='text-xs font-semibold' amount={+transaction.subtotal} />
-              </div>
-              {transaction?.wholesalePrice && +transaction?.wholesalePrice !== 0 ?
-                <>
-
-                  {+transaction?.wholesalePrice && (+transaction?.wholesalePrice * +transaction?.quantity) < +transaction.subtotal ?
-                    <div className='flex  flex-col items-center'>
-                      <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <ArrowUp size={16} /></span>
-                      <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction?.wholesalePrice * +transaction?.quantity))} />
-                    </div> : null
-                  }
-                  {+transaction?.wholesalePrice && (+transaction?.wholesalePrice * +transaction?.quantity) > +transaction.subtotal ?
-                    <div className='flex  flex-col items-center'>
-                      <span className='text-xs flex items-center text-red-400 font-semibold'><ArrowDown size={16} />Loss</span>
-                      <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction?.wholesalePrice * +transaction?.quantity) - (+transaction.subtotal))} />
-                    </div> : null
-                  }
-                </> : null
-              }
-            </div>
-          </div>
-
-        </Link>
-      ));
+  
+          </Link>
+        )
+      });
     };
 
     switch (period) {
