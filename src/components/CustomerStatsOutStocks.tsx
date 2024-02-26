@@ -153,13 +153,13 @@ const CustomerStatsOutStocks = ({outstock,setOutstock}) => {
             <h2 className="font-semibold mb-6 flex items-center justify-center text-red-500 bg-red-100 py-2 px-4 rounded-md">
                 <Ban className="mr-2 text-red-500" size={22} /> Out-Stocks
                 <span className="mx-4 relative">
-                    <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
+                    <Search className="w-5 h-5 text-gray-500 absolute top-1.5 right-3" />
                     <input
                         type="text"
                         placeholder="Product Name..."
                         value={searchQuery}
                         onChange={handleSearchInputChange}
-                        className="pl-2 pr-10  placeholder-red-300 py-1 text-sm border border-red-200 rounded focus:outline-none focus:border-red-500"
+                        className="pl-2 w-[180px] pr-10  placeholder-red-300 py-1 text-sm border border-red-200 rounded focus:outline-none focus:border-red-500"
                     />
                 </span>
                 <span className="ml-auto text-sm">

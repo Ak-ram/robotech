@@ -164,13 +164,13 @@ const CustomerStatsInStocks = ({instock,setInstock}) => {
             <h2 className="whitespace-nowrap font-semibold mb-6 flex items-center justify-center text-green-500 bg-green-100 py-2 px-4 rounded-md">
                 <CheckCheck className="mr-2 text-green-500" size={22} /> In-Stocks
                 <span className="mx-4 relative">
-                    <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
+                    <Search className="w-5 h-5 text-gray-500 absolute top-1.5 right-3" />
                     <input
                         type="text"
                         placeholder="Product Name..."
                         value={searchQuery}
                         onChange={handleSearchInputChange}
-                        className="pl-2 pr-10  placeholder-green-300 py-1 text-sm border border-green-200 rounded focus:outline-none focus:border-green-500"
+                        className="pl-2 pr-10 w-[180px] placeholder-green-300 py-1 text-sm border border-green-200 rounded focus:outline-none focus:border-green-500"
                     />
                 </span>
                 <span className="ml-auto text-sm">
