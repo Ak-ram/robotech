@@ -106,6 +106,8 @@ const CustomerStatsInStocks = () => {
         }
     };
     
+    
+    
 
     // const handleSave = async () => {
     //     if (editedProduct) {

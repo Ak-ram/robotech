@@ -69,36 +69,44 @@ const CustomerStatsOutStocks = () => {
 
     const handleSave = async () => {
         if (editedProduct) {
-            console.log("editedProduct.category:", editedProduct.category);
-            console.log("jsonData[0] keys:", Object.keys(jsonData[0]));
             setIsEditPopupOpen(false);
             setEditedProduct(null);
-
-            // Check if jsonData is not empty and it contains the necessary data structure
-            if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
-                let updatedData = [...jsonData];
-
-                // Use map to update the array
-                updatedData[0][editedProduct.category] = updatedData[0][editedProduct.category].map(product => {
-                    if (+product.id === +editedProduct.id) {
-                        console.log("done", editedProduct);
+            
+            // Update the state immediately with the modified product
+            setProducts(prevProducts => {
+                return prevProducts.map(product => {
+                    if (product.id === editedProduct.id) {
                         return editedProduct;
                     } else {
-                        return product; // Return other products unchanged
+                        return product;
                     }
                 });
-
-                // Update the state with the modified data
-                setJsonData(updatedData);
-                console.log(updatedData)
-                // await updateJsonFile("robotech/pages/categories.json", jsonData);
-
-
+            });
+    
+            // Update the JSON file
+            if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
+                let updatedData = [...jsonData];
+                updatedData[0][editedProduct.category] = updatedData[0][editedProduct.category].map(product => {
+                    if (product.id === editedProduct.id) {
+                        return editedProduct;
+                    } else {
+                        return product;
+                    }
+                });
+    
+                try {
+                    // Update the JSON file
+                    await updateJsonFile("robotech/pages/categories.json", jsonData);
+                    setJsonData(updatedData);
+                } catch (error) {
+                    console.error("Error updating JSON file:", error);
+                }
             } else {
                 console.error("jsonData is empty or does not contain the expected structure.");
             }
         }
     };
+    
 
 
     return (
