@@ -249,28 +249,28 @@ const TransactionAnalyzer = ({ customers }) => {
   
               <div className='ml-auto flex gap-4'>
   
-                <div className="flex flex-col justify-center items-center">
+                <div title='السعر اللى اشتريت بيه' className="flex flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Buy</span>
   
                   <FormattedPrice className='text-xs font-semibold' amount={+transaction?.wholesalePrice! || 0 } />
                 </div>
-                <div className="flex  flex-col justify-center items-center">
+                <div title='السعر اللى هتبيع بيه' className="flex  flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Sell</span>
                   <FormattedPrice className='text-xs font-semibold' amount={+transaction.piecePrice} />
                 </div>
-                <div className="flex  flex-col justify-center items-center">
+                <div title='عدد القطع المباعه' className="flex  flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Quantity</span>
                   <span className='text-xs font-semibold'>{+transaction.quantity} </span>
                 </div>
-                <div className="flex  flex-col justify-center items-center">
+                <div title='السعر قبل الخصم' className="flex  flex-col justify-center items-center">
                   <span className='text-xs font-semibold whitespace-nowrap'>Pre-Discount</span>
                   <FormattedPrice className='text-xs font-semibold' amount={+transaction.quantity * +transaction.piecePrice} />
                 </div>
-                <div className="flex  flex-col justify-center items-center">
+                <div title='قيمه الخصم' className="flex  flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Discount</span>
                   <FormattedPrice className='text-xs font-semibold' amount={+transaction.discount || 0} />
                 </div>
-                <div className="flex  flex-col justify-center items-center">
+                <div title='صافى المبلغ او الفلوس الي انت اخذتها من العميل' className="flex  flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Total</span>
                   <FormattedPrice className='text-xs font-semibold' amount={+transaction.subtotal} />
                 </div>
@@ -278,21 +278,21 @@ const TransactionAnalyzer = ({ customers }) => {
                 {transaction?.wholesalePrice ? (
   <>
     {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal ? (
-      <div className='flex  flex-col items-center'>
+      <div title='كسبان' className='flex  flex-col items-center'>
         <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
         <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
       </div>
     ) : null}
 
     {+transaction.wholesalePrice && Math.abs((+transaction.wholesalePrice * +transaction.quantity) - +transaction.subtotal) < 0.01 ? (
-      <div className='flex  flex-col items-center'>
+      <div title='كلون' className='flex  flex-col items-center'>
         <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
         <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
       </div>
     ) : null}
 
     {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal ? (
-      <div className='flex  flex-col items-center'>
+      <div title='خسران' className='flex  flex-col items-center'>
         <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
         <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
       </div>
