@@ -61,7 +61,6 @@ const Stocks = () => {
   const [outstock, setOutstock] = useState<ProductType[]>([]);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,13 +85,7 @@ const Stocks = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (show) {
-      contentRef.current!.style.maxHeight = `${contentRef.current!.scrollHeight}px`;
-    } else {
-      contentRef.current!.style.maxHeight = "0px";
-    }
-  }, [show]);
+
 
   return (
     <div className={`${!show ? "border border-blue-300 border-dashed" : ""} bg-white rounded-lg mb-5 overflow-hidden`}>
@@ -101,18 +94,16 @@ const Stocks = () => {
         onClick={() => setShow(!show)}
       >
         <h3 className="transform  transition-transform duration-500 font-semibold text-blue-400">
-            {show ? "Click to Collapse" : "Click to Expand"}
+          {show ? "Click to Collapse" : "Click to Expand"}
         </h3>
         <ChevronDown
-          className={`transform text-blue-300 transition-transform duration-300 ${
-            show ? "rotate-180" : ""
-          }`}
+          className={`transform text-blue-300 transition-transform duration-300 ${show ? "rotate-180" : ""
+            }`}
           size={25}
         />
       </div>
-      <div
+      {show && <div
         className="transition-all px-5 duration-500 overflow-hidden"
-        ref={contentRef}
       >
         {loading ? (
           <div>Loading...</div>
@@ -132,7 +123,7 @@ const Stocks = () => {
             </div>
           </div>
         )}
-      </div>
+      </div>}
     </div>
   );
 };

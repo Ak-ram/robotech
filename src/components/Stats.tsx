@@ -83,7 +83,7 @@ const Stats = () => {
         categoryInfo.categoryName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     return (
-        <div className="container mx-auto">
+        <div className=" mx-auto">
 
             <section className={` ${!show ? "border border-indigo-300 border-dashed" : ""} bg-white rounded-lg p-5`}>
                 <div
@@ -105,10 +105,10 @@ const Stats = () => {
                     </div></div>
                     <div className="flex justify-start flex-wrap gap-2">
                         <div className="flex gap-2  flex-1">
-                            <div className="-my-2 overflow-x-auto ">
+                            <div className="-my-2 flex-1 overflow-x-auto ">
                                 <div className="py-2 px-3">
-                                    <div className="shadow-xl border border-slate-400 overflow-hidden sm:rounded-lg">
-                                        <div className="flex justify-between items-center gap-2 bg-white p-3 border-b  border-gray-400">
+                                    <div className="shadow-xl border border-slate-300 overflow-hidden sm:rounded-lg">
+                                        <div className="flex justify-between items-center gap-2 bg-white p-3 border-b  border-slate-300">
 
                                             <span className="relative">
                                                 <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
@@ -135,19 +135,18 @@ const Stats = () => {
 
                                         <div className="w-full text-sm text-gray-600">
                                             <div className="bg-black text-white text-sm uppercase flex">
-                                                <div className="w-1/3 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">Category</div>
+                                                <div className="w-2/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">Category</div>
                                                 <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">Quantity</div>
                                                 <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">In Stock</div>
                                                 <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">IS Price</div>
                                                 <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">Out Stock</div>
-                                                <div className="w-1/6 pr-5 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">OS Price</div>
+                                                <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">OS Price</div>
                                             </div>
 
                                             {filteredCategoryStats.map((categoryInfo, index) => (
                                                 <div key={index} className="hover:bg-white border-b border-slate-300 bg-white bg-opacity-20 flex items-center">
-                                                    <div className="w-1/3  pl-3 flex py-2.5">
-                                                        <img className="w-6 h-6 mr-2 rounded" src={categoryInfo.inStockProducts[0]?.image1} alt="" />
-                                                        <span className="text-sm overflow-auto  whitespace-nowrap font-medium">{categoryInfo.categoryName.slice(0, 1).toUpperCase() + categoryInfo.categoryName.slice(1)}</span>
+                                                    <div className="w-2/6 pl-3 flex py-2.5">
+                                                        <span className="text-sm overflow-auto  font-medium">{categoryInfo.categoryName.slice(0, 1).toUpperCase() + categoryInfo.categoryName.slice(1)}</span>
                                                     </div>
                                                     <div className="w-1/6 text-center py-2.5 whitespace-nowrap">{categoryInfo.quantity}</div>
                                                     <div className={`w-1/6 ${categoryInfo.inStockLength >= 10 ? "text-green-500" : categoryInfo.inStockLength > 5 ? 'text-orange-400' : 'text-yellow-500'} text-center py-2.5 whitespace-nowrap`}>{categoryInfo.inStockLength}</div>
@@ -168,8 +167,8 @@ const Stats = () => {
                                     </div>
                                 </div>
                             </div>
-                            <section className="rounded-lg flex-1 border border-gray-300 p-5 bg-white">
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <section className="rounded-lg w-[400px] border border-gray-300 p-5 bg-white">
+                                <div className="grid lg:grid-cols-2 gap-4">
                                     <div className="flex items-center justify-center p-6 rounded-lg bg-blue-50">
                                         <div className="mr-2">
                                             <ShoppingCart size={32} className="text-blue-500" />
