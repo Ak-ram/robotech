@@ -5,7 +5,7 @@ import { getProducts } from "@/helpers/getProducts";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 
-const CustomerStatsOutStocks = ({outstock}) => {
+const CustomerStatsOutStocks = ({outstock,setOutstock}) => {
     const [searchQuery, setSearchQuery] = useState('');
     // const [products, setProducts] = useState<ProductType[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null);
@@ -73,15 +73,15 @@ const CustomerStatsOutStocks = ({outstock}) => {
             setEditedProduct(null);
             
             // Update the state immediately with the modified product
-            // setProducts(prevProducts => {
-            //     return prevProducts.map(product => {
-            //         if (product.id === editedProduct.id) {
-            //             return editedProduct;
-            //         } else {
-            //             return product;
-            //         }
-            //     });
-            // });
+            setOutstock(prevProducts => {
+                return prevProducts.map(product => {
+                    if (product.id === editedProduct.id) {
+                        return editedProduct;
+                    } else {
+                        return product;
+                    }
+                });
+            });
     
             // Update the JSON file
             if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {

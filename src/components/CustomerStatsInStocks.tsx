@@ -5,9 +5,8 @@ import { getProducts } from "@/helpers/getProducts";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 
-const CustomerStatsInStocks = ({instock}) => {
+const CustomerStatsInStocks = ({instock,setInstock}) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [products, setProducts] = useState<ProductType[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
     const [editedProduct, setEditedProduct] = useState<ProductType | null>(null);
@@ -35,21 +34,6 @@ const CustomerStatsInStocks = ({instock}) => {
 
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const allProducts = await getProducts();
-                setProducts(allProducts);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-
-        if (typeof window !== "undefined") {
-            fetchData();
-        }
-    }, []);
-
 
 
     useEffect(() => {
@@ -72,7 +56,7 @@ const CustomerStatsInStocks = ({instock}) => {
             setEditedProduct(null);
             
             // Update the state immediately with the modified product
-            setProducts(prevProducts => {
+            setInstock(prevProducts => {
                 return prevProducts.map(product => {
                     if (product.id === editedProduct.id) {
                         return editedProduct;

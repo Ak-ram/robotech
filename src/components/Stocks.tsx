@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import CustomerStatsInStocks from "./CustomerStatsInStocks";
 import CustomerStatsOutStocks from "./CustomerStatsOutStocks";
 import { getProducts } from "@/helpers/getProducts";
-import { instanceOf } from "prop-types";
 import { ProductType } from "../../type";
 
 const Stocks = () => {
@@ -26,15 +25,15 @@ const Stocks = () => {
         if (typeof window !== "undefined") {
             fetchData();
         }
-    }, []);
+    }, [instock,outstock]);
 
     return (<>
         <div className="flex gap-2">
             <div className="flex-1">
-                <CustomerStatsInStocks instock={instock}/>
+                <CustomerStatsInStocks setInstock={setInstock} instock={instock}/>
             </div>
             <div className="flex-1">
-                <CustomerStatsOutStocks outstock={outstock}/>
+                <CustomerStatsOutStocks setOutstock={setOutstock} outstock={outstock}/>
             </div>
         </div>
     </>)
