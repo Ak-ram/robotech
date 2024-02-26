@@ -15,7 +15,7 @@ const Banner: React.FC<BannerProps> = () => {
     dots: true,
     infinite: true,
     autoplay: true,
-    autoplaySpeed: 3000, // Autoplay speed of 3 seconds
+    autoplaySpeed: 7000, // Autoplay speed of 3 seconds
     pauseOnHover: true, // Pause autoplay on hover
     slidesToShow: 1,
     slidesToScroll: 1,
