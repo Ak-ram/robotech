@@ -66,12 +66,11 @@ const CustomerStatsOutStocks = ({outstock,setOutstock}) => {
         fetchData();
     }, [jsonData]);
 
-
     const handleSave = async () => {
         if (editedProduct) {
             setIsEditPopupOpen(false);
             setEditedProduct(null);
-            
+    
             // Update the state immediately with the modified product
             setOutstock(prevProducts => {
                 return prevProducts.map(product => {
@@ -83,7 +82,7 @@ const CustomerStatsOutStocks = ({outstock,setOutstock}) => {
                 });
             });
     
-            // Update the JSON file
+            // Update the JSON file in the background
             if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
                 let updatedData = [...jsonData];
                 updatedData[0][editedProduct.category] = updatedData[0][editedProduct.category].map(product => {
@@ -94,18 +93,59 @@ const CustomerStatsOutStocks = ({outstock,setOutstock}) => {
                     }
                 });
     
-                try {
-                    // Update the JSON file
-                    await updateJsonFile("robotech/pages/categories.json", jsonData);
-                    setJsonData(updatedData);
-                } catch (error) {
-                    console.error("Error updating JSON file:", error);
-                }
+                // No need to await, updating JSON file in the background
+                updateJsonFile("robotech/pages/categories.json", updatedData)
+                    .then(() => console.log("JSON file updated successfully"))
+                    .catch(error => console.error("Error updating JSON file:", error));
+    
+                // Update the state with the new JSON data
+                setJsonData(updatedData);
             } else {
                 console.error("jsonData is empty or does not contain the expected structure.");
             }
         }
     };
+    
+
+    // const handleSave = async () => {
+    //     if (editedProduct) {
+    //         setIsEditPopupOpen(false);
+    //         setEditedProduct(null);
+            
+    //         // Update the state immediately with the modified product
+    //         setOutstock(prevProducts => {
+    //             return prevProducts.map(product => {
+    //                 if (product.id === editedProduct.id) {
+    //                     return editedProduct;
+    //                 } else {
+    //                     return product;
+    //                 }
+    //             });
+    //         });
+    
+    //         // Update the JSON file
+    //         if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
+    //             let updatedData = [...jsonData];
+    //             updatedData[0][editedProduct.category] = updatedData[0][editedProduct.category].map(product => {
+    //                 if (product.id === editedProduct.id) {
+    //                     return editedProduct;
+    //                 } else {
+    //                     return product;
+    //                 }
+    //             });
+    
+    //             try {
+    //                 // Update the JSON file
+    //                 await updateJsonFile("robotech/pages/categories.json", jsonData);
+    //                 setJsonData(updatedData);
+    //             } catch (error) {
+    //                 console.error("Error updating JSON file:", error);
+    //             }
+    //         } else {
+    //             console.error("jsonData is empty or does not contain the expected structure.");
+    //         }
+    //     }
+    // };
     
 
 
