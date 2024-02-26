@@ -68,9 +68,7 @@ const CustomerStatsOutStocks = ({outstock,setOutstock}) => {
 
     const handleSave = async () => {
         if (editedProduct) {
-            setIsEditPopupOpen(false);
-            setEditedProduct(null);
-    
+            setIsEditPopupOpen(false);    
             // Update the state immediately with the modified product
             setOutstock(prevProducts => {
                 return prevProducts.map(product => {
@@ -81,7 +79,8 @@ const CustomerStatsOutStocks = ({outstock,setOutstock}) => {
                     }
                 });
             });
-    
+            setEditedProduct(null);
+
             // Update the JSON file in the background
             if (jsonData.length > 0 && Array.isArray(jsonData[0][editedProduct.category])) {
                 let updatedData = [...jsonData];
