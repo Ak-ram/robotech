@@ -66,7 +66,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                             <Wallet2 className="w-4 h-4 mr-2" />
                             Previous Price:{" "}
                             <FormattedPrice className="mx-1"
-                                amount={product?.previousPrice!} /> from this product.
+                                amount={product?.previousPrice!} />
                         </div>
 
                         <div className="flex items-center text-sm font-medium text-gray-600">
@@ -156,7 +156,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
 
             </div>
 
-            {products?.filter((item: ProductType) => item?.id !== product?.id).length &&
+            {products?.filter((item: ProductType) => item?.id !== product?.id).length !== 0 &&
                 <>
                     <div className="mt-5 pb-5 border-b space-y-2">
                         <h3 className="text-gray-600">You May also love:</h3>

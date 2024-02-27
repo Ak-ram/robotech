@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
-import { AlertCircle, Ban, Filter, Heart, ShoppingBasket, ShoppingBasketIcon, ShoppingCart, SortAsc } from "lucide-react";
+import { AlertCircle, Ban, Filter, GitCompareArrows, Heart, ShoppingBasket, ShoppingBasketIcon, ShoppingCart, SortAsc } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, addToFavorite } from "@/redux/proSlice";
+import { addToCart, addToFavorite,addToCompare } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { calculatePercentage } from "@/helpers";
 import Loading from "./Loading";
@@ -259,7 +259,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   ) : (
                     <>
                       <span className="text-xs xs:text-base flex cursor-not-allowed gap-2 font-semibold items-center text-red-400 bg-red-100 px-2 py-1 rounded">
-                      <span className="text-sm xs:text-base inline">Out of stock</span>
+                        <span className="text-sm xs:text-base inline">Out of stock</span>
                         <Ban
                           className=" ustify-center rounded flex items-center gap-1 font-semibold text-rose-400 bg-white rounded-sm  duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
                         />
@@ -270,7 +270,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   <div className="flex gap-1">
 
                     {prefix !== 'print' ? <Heart
-                      fill={isFavorite(item.id) ? "red" : "black"}
+                      fill={isFavorite(item.id) ? "red" : "#222"}
                       onClick={() => {
                         dispatch(addToFavorite(item));
                         // if (isFavorite(item?.id)) {
@@ -291,6 +291,16 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       </span>
 
                     }
+                     <span onClick={() => {
+                        dispatch(addToCompare(item));
+                        // if (isFavorite(item?.id)) {
+                        //   toast.error(`${item?.title} removed from favorites!`);
+                        // } else {
+                        //   toast.success(`${item?.title} added to favorites!`);
+                        // }
+                      }} title="Add to compare page" className="cursor-pointer">
+                        <GitCompareArrows size={23} className="text-slate-600 hover:text-blue-500 w-5 xs:w-fit mr-2" />
+                      </span>
                   </div>
 
 
