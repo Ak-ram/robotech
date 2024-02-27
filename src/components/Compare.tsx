@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
 import FormattedPrice from "@/components/FormattedPrice";
-import { Link2, Link2Icon, X } from "lucide-react";
+import { Check, Link2, Link2Icon, X } from "lucide-react";
 import Link from 'next/link'
 import { deleteCompare } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
@@ -16,57 +16,58 @@ const Compare = () => {
     const dispatch = useDispatch();
     return (
         <Container>
-            
+
+
+
             {compareData.length > 0 ? (
-                <div className="my-5 grid grid-cols-1 gap-4 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {compareData.map((item: ProductType) => (
-                        <div key={item?.id} className="border border-gray-200 rounded-md overflow-hidden">
-                            <div className="flex h-20 items-center justify-between bg-gray-100 px-4 py-2">
-                                <p className="text-sm font-semibold text-gray-700">{item?.title}</p>
-                                <div className="flex items-center gap-2">
-                                    <Link className="hover:text-designColor" href={{
-                                        pathname: `/id_${item?.id}`,
-                                        query: {
-                                            id: item?.id,
-                                            prefix: (item?.category),
-                                        },
-                                    }}>
-                                        <Link2Icon />
-                                    </Link>
-                                    <X
-                                        onClick={() => {
-                                            dispatch(deleteCompare(item));
-                                            toast.success(`${item?.title} is removed from compare page!`);
-                                        }}
-                                        className="w-5 h-5 hover:text-red-600 cursor-pointer duration-200"
-                                    />
-                                </div>
-                            </div>
-                            <div className="py-2">
-                                <div className="aspect-w-1 w-full h-48 bg-white aspect-h-1">
-                                    <img
-                                        src={item?.image1}
-                                        alt="product image"
-                                        className="object-contain w-full h-44 rounded-md"
-                                    />
-                                </div>
-                            </div>
-                            <div className="flex h-20 justify-between items-center px-4 py-2 bg-gray-100">
-                            <p className="text-sm text-gray-600 overflow-hidden text-ellipsis w-44 whitespace-nowrap">{item?.description}</p>
-                                <FormattedPrice amount={item?.price} />
-                            </div>
+                <div className="w-full max-h-[400px] my-3 overflow-auto">
+                    <div className="bg-gray-800 uppercase text-gray-400">
+                        <div className="flex">
+                            <div className="p-3 flex-1 text-left text-sm tracking-wider text-center">Title</div>
+                            <div className="p-3 w-1/6 text-left text-sm tracking-wider text-center">Previous Price</div>
+                            <div className="p-3 w-1/6 text-left text-sm tracking-wider text-center">Price</div>
+                            {/* Additional Headers */}
+                            <div className="p-3 w-1/6 text-left text-sm tracking-wider text-center">Category</div>
+                            <div className="p-3 w-1/6 text-left text-sm tracking-wider text-center">Availability</div>
+                            <div className="p-3 w-1/6 text-left text-sm tracking-wider text-center">Link</div>
                         </div>
-                    ))}
+                    </div>
+                    <div className="bg-gray-800 text-white">
+                        {compareData.map((product, index) => (
+                            <div key={index} className="flex hover:bg-opacity-50 bg-black bg-opacity-20">
+                                <div className="p-3  flex items-center justify-start gap-2 flex-1 whitespace-nowrap">
+                                    <img src={product.image1!} className="w-8 h-8 rounded-md" alt={product.title} />
+
+                                    <span className="text-sm font-medium">{product.title}</span>
+                                </div>
+                                <div className="p-3 w-1/6 whitespace-nowrap  flex items-center justify-center"><FormattedPrice amount={product.previousPrice} /></div>
+                                <div className="p-3 w-1/6 whitespace-nowrap  flex items-center justify-center"><FormattedPrice amount={product.price} /></div>
+
+                                {/* Additional Columns */}
+
+                                <div className="p-3 w-1/6 whitespace-nowrap  flex items-center justify-center">{product.category}</div>
+                                <div className="p-3 w-1/6 whitespace-nowrap flex items-center justify-center">{product?.count > 0 ? <Check className="text-green-500" /> : <X className="text-rose-500" />}</div>
+                                <div className="p-3 w-1/6 whitespace-nowrap  flex items-center justify-center">
+                                    <Link href={`/id_${product.id}`} className="hover:text-designColor">
+                                        <Link2Icon />
+
+                                    </Link>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             ) : (
                 <div className="py-10 flex flex-col items-center justify-center gap-4">
-                    <Image src={FavImg} alt="ShortLogo" width={200} height={200} />
                     <p className="text-lg font-bold">Your Compare Page List is Empty</p>
-                    <Link href={"/"} className="text-sm uppercase font-semibold underline underline-offset-2 hover:text-designColor duration-200 cursor-pointer">
+                    <Link href="/" className="text-sm uppercase font-semibold underline underline-offset-2 hover:text-designColor duration-200 cursor-pointer">
                         Compare Products ?
                     </Link>
                 </div>
             )}
+
+
+
             <Toaster
                 position="bottom-right"
                 toastOptions={{
