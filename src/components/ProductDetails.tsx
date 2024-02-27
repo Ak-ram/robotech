@@ -1,7 +1,7 @@
 import React from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon, Paintbrush, ShoppingBag } from "lucide-react";
+import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon, Paintbrush, ShoppingBag, AlertCircle } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
 import { ProductType } from "../../type";
@@ -14,7 +14,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
         const phoneNumber = "201102071544";
         const message = "Hi Robotech, I need some help.";
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        
+
         // Check if window object is defined (to prevent errors during server-side rendering)
         if (typeof window !== 'undefined') {
             // Open WhatsApp link in a new tab
@@ -25,7 +25,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
             // You might want to handle this case differently based on your requirements.
         }
     };
-    
+
     return (
         <div className="bg-white p-6 rounded lg:col-span-2 lg:row-span-2 lg:row-end-2">
             <h1 className="text-3xl font-bold text-gray-900">{product?.title}</h1>
@@ -36,13 +36,13 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                         <p className="">
                             {product?.price > 0 && prefix !== "print" ? (
                                 <>
-                                    <FormattedPrice className="text-xl font-bold" amount={product?.price!} />
-                                    <span className="text-xl font-bold"> / Piece</span>
+                                    <FormattedPrice className="xs:text-xl font-bold" amount={product?.price!} />
+                                    <span className="xs:text-xl font-bold"> / Piece</span>
                                 </>
                             ) : (
                                 <>
-                                    <FormattedPrice className="text-xl font-bold" amount={product?.price!} />
-                                    <span className="text-xl font-bold"> / {product?.unit.toLowerCase()}</span>
+                                    <FormattedPrice className="xs:text-xl font-bold" amount={product?.price!} />
+                                    <span className="xs:text-xl font-bold"> / {product?.unit.toLowerCase()}</span>
                                 </>
                             )}
                         </p>
@@ -53,7 +53,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                             toast.success(`${product?.title} successfully added to the basket`);
                         }}
                         type="button"
-                        className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-white bg-gray-900 border border-transparent rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                        className="inline-flex items-center justify-center px-1 py-1 xs:px-3 xs:py-2 text-xs xs:text-sm font-bold text-white bg-gray-900 border border-transparent rounded xs:rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                     >
                         <ShoppingBag size={18} className="mr-2 text-bold" />
                         Add to cart
@@ -66,7 +66,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                             <Wallet2 className="w-4 h-4 mr-2" />
                             Previous Price:{" "}
                             <FormattedPrice className="mx-1"
-                                amount={product?.previousPrice!} /> from this product.
+                                amount={product?.previousPrice!} />
                         </div>
 
                         <div className="flex items-center text-sm font-medium text-gray-600">
@@ -93,6 +93,14 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                         Newly added
                     </div>
 
+                    {
+                        product?.count < 3 && product?.count > 0 && <div className="flex items-center justify-start text-sm font-medium text-rose-600">
+                            <AlertCircle className="w-4 h-4 mr-2" />
+                            Hurry to buy! Limited stock!🏃‍♂️
+                        </div>
+                    }
+
+
                     {product?.colors && (
                         <div className="text-sm font-medium text-gray-600">
                             <div className="flex items-center">
@@ -103,11 +111,11 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                                 {product.colors.split("|").map((color, index) => (
                                     <div key={index} className={`flex justify-center gap-1 items-center`}>
                                         <span
-                                            style={{ backgroundColor: color.toLowerCase().trim(),opacity: 0.9 }}
+                                            style={{ backgroundColor: color.toLowerCase().trim(), opacity: 0.9 }}
                                             className={`block  w-[14px] h-[14px] rounded`}
                                         ></span>
                                         <span className={`capitalize`}
-                                            style={{ color: color.toLowerCase().trim() ,opacity: 0.9}}
+                                            style={{ color: color.toLowerCase().trim(), opacity: 0.9 }}
                                         >
                                             {color}
                                         </span>
@@ -148,7 +156,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
 
             </div>
 
-            {products?.filter((item: ProductType) => item?.id !== product?.id).length &&
+            {products?.filter((item: ProductType) => item?.id !== product?.id).length !== 0 &&
                 <>
                     <div className="mt-5 pb-5 border-b space-y-2">
                         <h3 className="text-gray-600">You May also love:</h3>
@@ -160,9 +168,9 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                                         id: item?.id,
                                         prefix: (prefix === "print" ? prefix : item?.category),
                                     },
-                                }} key={`${item?.id}_${item?.title}`} className="overflow-hidden  pl-2 flex items-center text-sm font-medium text-blue-500">
+                                }} key={`${item?.id}_${item?.title}`} className="overflow-hidden text-blue-500 pl-2 flex items-center ">
                                     <Link2Icon className="w-4 h-4 mr-2" />
-                                    <span className="whitespace-nowrap text-ellipsis min-w-[250px] overflow-hidden">{item?.title}</span>
+                                    <span className="whitespace-nowrap text-xs xs:text-sm font-medium  text-ellipsis min-w-[200px]  overflow-hidden">{item?.title}</span>
                                 </Link>
 
                             ))

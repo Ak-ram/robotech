@@ -116,7 +116,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   {/* Product Title */}
                   <li className="text-left">
                     <div className="">
-                      <a href="#" className="py-1 text-blue-600 overflow-hidden text-sm text-ellipsis whitespace-nowrap block  rounded-md font-medium focus:text-blue-900 focus:shadow hover:text-blue-800" aria-current="page">
+                      <a href="#" className="py-1 text-blue-600 overflow-hidden text-sm text-ellipsis whitespace-nowrap block w-44 rounded-md font-medium focus:text-blue-900 focus:shadow hover:text-blue-800" aria-current="page">
                         {product?.title?.toLowerCase()}
                       </a>
                     </div>

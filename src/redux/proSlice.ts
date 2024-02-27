@@ -6,6 +6,7 @@ interface StoreState {
   userInfo: null | string;
   orderData: ProductType[];
   favoriteData: ProductType[];
+  compareData: ProductType[];
 }
 
 const initialState: StoreState = {
@@ -13,6 +14,7 @@ const initialState: StoreState = {
   userInfo: null,
   orderData: [],
   favoriteData: [],
+  compareData: [],
 };
 
 export const proSlice = createSlice({
@@ -69,6 +71,7 @@ export const proSlice = createSlice({
         state.favoriteData.push(action.payload);
       }
     },
+
     deleteFavorite: (state, action) => {
       state.favoriteData = state.favoriteData.filter(
         (item) => !(item.id === action.payload.id && item.title === action.payload.title)
@@ -76,6 +79,27 @@ export const proSlice = createSlice({
     },
     resetFavorite: (state) => {
       state.favoriteData = [];
+    },
+    addToCompare: (state, action) => {
+      const existingProduct = state.compareData.find(
+        (item: ProductType) => item?.id === action.payload.id && item?.title === action.payload.title
+      );
+      if (existingProduct) {
+        state.compareData = state.compareData.filter(
+          (item) => !(item.id === action.payload.id && item.title === action.payload.title)
+        );
+      } else {
+        state.compareData.push(action.payload);
+      }
+    },
+    
+    deleteCompare: (state, action) => {
+      state.compareData = state.compareData.filter(
+        (item) => !(item.id === action.payload.id && item.title === action.payload.title)
+      );
+    },
+    resetCompare: (state) => {
+      state.compareData = [];
     },
     addUser: (state, action) => {
       state.userInfo = action.payload;
@@ -110,7 +134,10 @@ export const {
   addOrder,
   resetOrder,
   addToFavorite,
+  addToCompare,
   deleteFavorite,
+  deleteCompare,
   resetFavorite,
+  resetCompare,
 } = proSlice.actions;
 export default proSlice.reducer;

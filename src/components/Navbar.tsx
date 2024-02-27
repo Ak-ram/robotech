@@ -4,6 +4,7 @@ import Link from "next/link";
 import Logo from "./Logo";
 import {
   AlignJustify,
+  GitCompareArrows,
   Heart,
   Link2,
   PhoneCall,
@@ -24,7 +25,7 @@ import SearchComponent from "./SearchComponent";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const { productData, favoriteData } = useSelector(
+  const { productData, favoriteData,compareData } = useSelector(
     (state: StateProps) => state.pro
   );
 
@@ -120,6 +121,15 @@ const Navbar = () => {
             <Search className="w-7 h-7 xs:w-8 xs:h-8" />
           </Link>
           <Link
+            href={"/compare"}
+            className="text-designColor cursor-pointer duration-200 relative group"
+          >
+            <GitCompareArrows className="w-7 h-7 xs:w-8 xs:h-8" />
+            <span className="absolute text-sm top-0 -left-1 bg-black text-white w-4 h-4 xs:w-5 xs:h-5  rounded-full  flex items-center justify-center group-hover: sm:font-bold ">
+              {compareData ? compareData.length : 0}
+            </span>
+          </Link>
+          <Link
             href={"/wishlist"}
             className="text-designColor cursor-pointer duration-200 relative group"
           >
@@ -142,7 +152,7 @@ const Navbar = () => {
             </span>
           </Link>
 
-          <span className="-ml-3 flex font-semibold  flex-col justify-center items-center -gap-2">
+          <span className="hidden xs:inline -ml-3 flex font-semibold  flex-col justify-center items-center -gap-2">
             <span className="text-xs xs:text-sm">
               ({productData ? productData.length.toLocaleString("ar") : 0})
               items

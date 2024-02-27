@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
-import { Ban, Filter, Heart, ShoppingBasket, ShoppingBasketIcon, ShoppingCart, SortAsc } from "lucide-react";
+import { AlertCircle, Ban, Filter, GitCompareArrows, Heart, ShoppingBasket, ShoppingBasketIcon, ShoppingCart, SortAsc } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, addToFavorite } from "@/redux/proSlice";
+import { addToCart, addToFavorite, addToCompare } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { calculatePercentage } from "@/helpers";
 import Loading from "./Loading";
@@ -24,12 +24,14 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   });
   const [sortingOption, setSortingOption] = useState("price"); // Default sorting option
   const [sortingOrder, setSortingOrder] = useState("asc"); // Default sorting order
-  const { favoriteData } = useSelector((state: StateProps) => state.pro);
+  const { favoriteData, compareData } = useSelector((state: StateProps) => state.pro);
 
   const isFavorite = (productId: any) => {
     return favoriteData.some((favoriteItem) => favoriteItem.id === productId);
   };
-
+  const isCompare = (productId: any) => {
+    return compareData.some((compareItem) => compareItem.id === productId);
+  };
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -173,7 +175,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
         {/* Use handleSorting function to get sorted products */}
         {handleSorting().slice(perPage.start, perPage.end).map((item) => (
           <div
-          title={item?.title}
+            title={item?.title}
             key={`${item.id}_${item.title}`}
             className="p-0 flex xs:block w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden xs:rounded-md"
           >
@@ -186,7 +188,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden rounded-xl"
+              className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden"
             >
               <img
                 className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
@@ -206,7 +208,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
               {
                 item.price < item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
-                  <span className="absolute -top-2 -left-2 m-2 rounded-full bg-black px-2 text-center  md: font-medium text-white">
+                  <span className="absolute text-xs xs:text-base xs:-top-2 xs:-left-2 top-1 left-1 m-2 rounded bg-black px-2 text-center  md: font-medium text-white">
                     {calculatePercentage(item?.price, item?.previousPrice)}% OFF
                   </span>
                   : null}
@@ -235,7 +237,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   <FormattedPrice className={'text-sm xs:text-xl'} amount={item?.price} />
                   {prefix === 'print' ? <span className="text-lg">/{item?.unit?.toLowerCase()} </span> : null}
                 </p>
-                <div className="flex gap-2  w-full items-center justify-between mt-2">
+                <div className="flex  w-full items-center justify-end gap-1 xs:justify-between mt-2">
 
 
 
@@ -244,8 +246,9 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                     <span onClick={() => {
                       dispatch(addToCart(item));
                       // toast.success(`${item?.title} is added to Cart!`);
-                    }} className="hidden xs:flex cursor-pointer gap-2 font-semibold items-center text-gray-600 bg-designColor/30 px-2 py-1 rounded">
-                      Add to cart
+                    }} className=" flex cursor-pointer gap-2 font-semibold items-center text-gray-600 xs:bg-designColor/30 xs:px-2 xs:py-1 rounded">
+                      {/* <span className="text-sm xs:text-base xs:hidden">Buy</span> */}
+                      <span className="hidden xs:inline text-sm xs:text-base inline">Add to cart</span>
                       <ShoppingBasketIcon
 
                         className=" ustify-center rounded flex items-center gap-1 font-semibold text-designColor rounded  duration-300 bg-white text-blue-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
@@ -257,8 +260,8 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
                   ) : (
                     <>
-                      <span className="hidden xs:flex cursor-not-allowed gap-2 font-semibold items-center text-red-400 bg-red-100 px-2 py-1 rounded">
-                        Out of stock
+                      <span className="text-xs xs:text-base flex cursor-not-allowed gap-2 font-semibold items-center text-red-400 bg-red-100 px-2 py-1 rounded">
+                        <span className="text-sm xs:text-base inline">Out of stock</span>
                         <Ban
                           className=" ustify-center rounded flex items-center gap-1 font-semibold text-rose-400 bg-white rounded-sm  duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
                         />
@@ -266,21 +269,43 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                     </>
                   )}
 
+                  <div className="flex gap-1">
+
+                    {prefix !== 'print' ? <Heart
+                      fill={isFavorite(item.id) ? "red" : "#222"}
+                      onClick={() => {
+                        dispatch(addToFavorite(item));
+                        // if (isFavorite(item?.id)) {
+                        //   toast.error(`${item?.title} removed from favorites!`);
+                        // } else {
+                        //   toast.success(`${item?.title} added to favorites!`);
+                        // }
+                      }}
+                      className="text-zinc-500 block w-5 xs:w-fit cursor-pointer duration-200 hover:text-black"
+                    /> : null
+                    }
 
 
-                  {prefix !== 'print' ? <Heart
-                    fill={isFavorite(item.id) ? "red" : "black"}
-                    onClick={() => {
-                      dispatch(addToFavorite(item));
+                    {
+                      item?.count < 3 && item?.count > 0 &&
+                      <span title="Hurry to buy! Limited stock!🏃‍♂️">
+                        <AlertCircle size={23} className="text-rose-600 w-5 xs:w-fit mr-2" />
+                      </span>
+
+                    }
+                    <span onClick={() => {
+                      dispatch(addToCompare(item));
                       // if (isFavorite(item?.id)) {
                       //   toast.error(`${item?.title} removed from favorites!`);
                       // } else {
                       //   toast.success(`${item?.title} added to favorites!`);
                       // }
-                    }}
-                    className="text-zinc-500 hidden xs:block  cursor-pointer duration-200 hover:text-black"
-                  /> : null
-                  }
+                    }} title="Add to compare page" className="cursor-pointer">
+                      <GitCompareArrows
+                        size={23} className={`${isCompare(item.id) ? "text-blue-500" : "text-slate-400"} w-5 xs:w-fit mr-2`} />
+                    </span>
+                  </div>
+
 
                 </div>
               </div>
@@ -290,7 +315,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
           // )) 
         ))}
       </div>
-      
+
     </div>
   );
 };

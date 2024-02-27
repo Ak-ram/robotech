@@ -26,8 +26,6 @@ const Cart = () => {
   const [isCheckout, setIsCheckout] = useState(false);
   const [rowPrice, setRowPrice] = useState(0);
   const { productData } = useSelector((state: StateProps) => state.pro);
-  const [isVodafoneCashOpened, setIsVodafoneCashOpened] = useState(false);
-  const [isCashOnDeliveryOpened, setIsCashOnDeliveryOpened] = useState(false);
   const [currentMethod, setCurrentMethod] = useState('vodafoneCash');
   const dispatch = useDispatch();
   const router = useRouter();
@@ -138,7 +136,6 @@ const Cart = () => {
     let token = response.token;
     secondStep(token)
   };
-  // console.log('cart', productData)
   const handleDecreasement = (item: ProductType) => {
     if (item?.quantity > 1) {
       dispatch(decreaseQuantity(item)) &&

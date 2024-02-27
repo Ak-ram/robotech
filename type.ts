@@ -55,5 +55,6 @@ export interface StateProps {
       order: ProductType[];
     };
     favoriteData: ProductType[];
+    compareData: ProductType[];
   };
 }

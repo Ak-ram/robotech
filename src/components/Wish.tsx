@@ -37,7 +37,7 @@ const Wish = () => {
                                             dispatch(deleteFavorite(item));
                                             toast.success(`${item?.title} is removed from Wishlist!`);
                                         }}
-                                        className="w-4 h-4 hover:text-red-600 cursor-pointer duration-200"
+                                        className="w-5 h-5 hover:text-red-600 cursor-pointer duration-200"
                                     />
                                 </div>
                             </div>
@@ -51,7 +51,7 @@ const Wish = () => {
                                 </div>
                             </div>
                             <div className="flex h-20 justify-between items-center px-4 py-2 bg-gray-100">
-                                <p className="text-sm text-gray-600">{item?.description}</p>
+                                <p className="text-sm text-gray-600 overflow-hidden text-ellipsis w-44 whitespace-nowrap">{item?.description}</p>
                                 <FormattedPrice amount={item?.price} />
                             </div>
                         </div>
