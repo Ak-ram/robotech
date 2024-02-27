@@ -94,9 +94,9 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                     </div>
 
                     {
-                        product?.count < 3 && product?.count > 0 && <div className="flex items-center text-sm font-medium text-rose-600">
+                        product?.count < 3 && product?.count > 0 && <div className="flex items-center justify-start text-sm font-medium text-rose-600">
                             <AlertCircle className="w-4 h-4 mr-2" />
-                            Hurry to buy! Limited stock! <span className="hidden xs:block">Grab it before it's gone! 🏃‍♂️</span>
+                            Hurry to buy! Limited stock!🏃‍♂️
                         </div>
                     }
 
