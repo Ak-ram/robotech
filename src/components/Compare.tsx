@@ -25,12 +25,12 @@ const Compare = () => {
         setExpandedProduct(productId === expandedProduct ? null : productId);
     };
     return (
-        <Container>
+        <Container className="overflow-auto">
 
 
 
             {compareData.length > 0 ? (
-                <div className="w-full max-h-[400px] my-3 overflow-auto">
+                <div className="w-full min-w-[75rem] max-h-[400px] my-3 overflow-auto">
                     <div className="bg-gray-800 uppercase text-gray-400">
                         <div className="flex">
                             <div className="p-3 flex-1 text-left text-sm tracking-wider text-center">Title</div>

@@ -152,7 +152,7 @@ const Navbar = () => {
             </span>
           </Link>
 
-          <span className="-ml-3 flex font-semibold  flex-col justify-center items-center -gap-2">
+          <span className="hidden xs:inline -ml-3 flex font-semibold  flex-col justify-center items-center -gap-2">
             <span className="text-xs xs:text-sm">
               ({productData ? productData.length.toLocaleString("ar") : 0})
               items
