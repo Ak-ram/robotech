@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AlertCircle, Ban, Filter, GitCompareArrows, Heart, ShoppingBasket, ShoppingBasketIcon, ShoppingCart, SortAsc } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, addToFavorite,addToCompare } from "@/redux/proSlice";
+import { addToCart, addToFavorite, addToCompare } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { calculatePercentage } from "@/helpers";
 import Loading from "./Loading";
@@ -24,12 +24,14 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   });
   const [sortingOption, setSortingOption] = useState("price"); // Default sorting option
   const [sortingOrder, setSortingOrder] = useState("asc"); // Default sorting order
-  const { favoriteData } = useSelector((state: StateProps) => state.pro);
+  const { favoriteData, compareData } = useSelector((state: StateProps) => state.pro);
 
   const isFavorite = (productId: any) => {
     return favoriteData.some((favoriteItem) => favoriteItem.id === productId);
   };
-
+  const isCompare = (productId: any) => {
+    return compareData.some((compareItem) => compareItem.id === productId);
+  };
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -291,16 +293,17 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       </span>
 
                     }
-                     <span onClick={() => {
-                        dispatch(addToCompare(item));
-                        // if (isFavorite(item?.id)) {
-                        //   toast.error(`${item?.title} removed from favorites!`);
-                        // } else {
-                        //   toast.success(`${item?.title} added to favorites!`);
-                        // }
-                      }} title="Add to compare page" className="cursor-pointer">
-                        <GitCompareArrows size={23} className="text-slate-600 hover:text-blue-500 w-5 xs:w-fit mr-2" />
-                      </span>
+                    <span onClick={() => {
+                      dispatch(addToCompare(item));
+                      // if (isFavorite(item?.id)) {
+                      //   toast.error(`${item?.title} removed from favorites!`);
+                      // } else {
+                      //   toast.success(`${item?.title} added to favorites!`);
+                      // }
+                    }} title="Add to compare page" className="cursor-pointer">
+                      <GitCompareArrows
+                        size={23} className={`${isCompare(item.id) ? "text-blue-500" : "text-slate-400"} w-5 xs:w-fit mr-2`} />
+                    </span>
                   </div>
 
 
