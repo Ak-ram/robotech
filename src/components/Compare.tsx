@@ -44,7 +44,7 @@ const Compare = () => {
                     <div className="bg-gray-800 text-white">
                         {compareData.map((product, index) => (
                             <React.Fragment key={index}>
-                                <div className="flex hover:bg-opacity-50 bg-black bg-opacity-20" onClick={() => toggleDescription(product.id)}>
+                                <div className="flex hover:bg-opacity-50 bg-black bg-opacity-20 cursor-pointer" onClick={() => toggleDescription(product.id)}>
                                     <div className="p-3  flex items-center justify-start gap-2 flex-1 whitespace-nowrap">
                                         <img src={product.image1!} className="w-8 h-8 rounded-md" alt={product.title} />
                                         <span className="text-sm font-medium">{product.title}</span>
@@ -58,11 +58,13 @@ const Compare = () => {
                                     <div className="p-3 w-1/6 whitespace-nowrap text-sm  flex items-center justify-center">{product.category}</div>
                                     <div className="p-3 w-1/6 whitespace-nowrap text-sm flex items-center justify-center">{product?.count > 0 ? <Check className="text-green-500" /> : <X className="text-rose-500" />}</div>
                                     <div className="p-3 w-1/6 whitespace-nowrap text-sm gap-1 flex items-center justify-center">
-                                        <Link href={`/id_${product.id}`} className="hover:text-designColor">
+                                        <Link onClick={e => e.stopPropagation()} href={`/id_${product.id}`} className="hover:text-designColor">
                                             <Link2Icon size={19} />
                                         </Link>
                                         <Heart
-                                            onClick={() => {
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+
                                                 dispatch(addToFavorite(product));
                                                 if (isFavorite(product?.id)) {
                                                     toast.error(`${product?.title} removed from favorites!`);
@@ -73,7 +75,8 @@ const Compare = () => {
                                             size={19}
                                             className={`block w-5 xs:w-fit cursor-pointer duration-200 hover:text-rose-400 ${isFavorite(product.id) ? 'text-rose-400' : "text-zinc-500 "}`}
                                         />
-                                        <Trash className="text-rose-400 cursor-pointer ml-4" size={18} onClick={() => {
+                                        <Trash className="text-rose-400 cursor-pointer ml-4" size={18} onClick={(e) => {
+                                            e.stopPropagation()
                                             dispatch(deleteCompare(product));
                                             toast.success(`${product?.title} is removed from Compare Table!`);
                                         }} />
