@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
 import FormattedPrice from "@/components/FormattedPrice";
-import { Check, Heart, Link2, Link2Icon, Trash, X } from "lucide-react";
+import { ArrowUpDown, Check, ChevronsUpDown, Heart, Link2, Link2Icon, Trash, X } from "lucide-react";
 import Link from 'next/link'
 import { addToFavorite, deleteCompare } from "@/redux/proSlice";
 import toast, { Toaster } from "react-hot-toast";
@@ -44,10 +44,12 @@ const Compare = () => {
                     <div className="bg-gray-800 text-white">
                         {compareData.map((product, index) => (
                             <React.Fragment key={index}>
-                                <div className="flex hover:bg-opacity-50 bg-black bg-opacity-20 cursor-pointer" onClick={() => toggleDescription(product.id)}>
+                                <div className="flex hover:bg-opacity-50 bg-black bg-opacity-20" 
+                                // onClick={() => toggleDescription(product.id)}
+                                >
                                     <div className="p-3  flex items-center justify-start gap-2 flex-1 whitespace-nowrap">
                                         <img src={product.image1!} className="w-8 h-8 rounded-md" alt={product.title} />
-                                        <span className="text-sm font-medium">{product.title}</span>
+                                        <span title={product.title} className="text-sm w-[130px] whitespace-wrap font-medium">{product.title}</span>
                                     </div>
                                     <div className="p-3 text-sm w-1/6 whitespace-nowrap  flex items-center justify-center">
                                         {product.previousPrice > 0 ? <FormattedPrice className=" text-sm" amount={product.previousPrice} /> : "Not Provided"}
@@ -57,7 +59,13 @@ const Compare = () => {
                                     </div>
                                     <div className="p-3 w-1/6 whitespace-nowrap text-sm  flex items-center justify-center">{product.category}</div>
                                     <div className="p-3 w-1/6 whitespace-nowrap text-sm flex items-center justify-center">{product?.count > 0 ? <Check className="text-green-500" /> : <X className="text-rose-500" />}</div>
-                                    <div className="p-3 w-1/6 whitespace-nowrap text-sm gap-1 flex items-center justify-center">
+                                    <div className="p-3 w-1/6 whitespace-nowrap text-sm gap-2 flex items-center justify-center">
+                                        
+                                    <ChevronsUpDown className="text-zinc-400 cursor-pointer ml-4" size={18} onClick={(e) => {
+                                            e.stopPropagation()
+                                            toggleDescription(product.id)
+                                        }} />
+
                                         <Link onClick={e => e.stopPropagation()} href={`/id_${product.id}`} className="hover:text-designColor">
                                             <Link2Icon size={19} />
                                         </Link>
