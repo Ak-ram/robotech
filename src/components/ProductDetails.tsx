@@ -36,13 +36,13 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                         <p className="">
                             {product?.price > 0 && prefix !== "print" ? (
                                 <>
-                                    <FormattedPrice className="text-xl font-bold" amount={product?.price!} />
-                                    <span className="text-xl font-bold"> / Piece</span>
+                                    <FormattedPrice className="xs:text-xl font-bold" amount={product?.price!} />
+                                    <span className="xs:text-xl font-bold"> / Piece</span>
                                 </>
                             ) : (
                                 <>
-                                    <FormattedPrice className="text-xl font-bold" amount={product?.price!} />
-                                    <span className="text-xl font-bold"> / {product?.unit.toLowerCase()}</span>
+                                    <FormattedPrice className="xs:text-xl font-bold" amount={product?.price!} />
+                                    <span className="xs:text-xl font-bold"> / {product?.unit.toLowerCase()}</span>
                                 </>
                             )}
                         </p>
@@ -53,7 +53,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                             toast.success(`${product?.title} successfully added to the basket`);
                         }}
                         type="button"
-                        className="inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-white bg-gray-900 border border-transparent rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                        className="inline-flex items-center justify-center px-1 py-1 xs:px-3 xs:py-2 text-xs xs:text-sm font-bold text-white bg-gray-900 border border-transparent rounded xs:rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                     >
                         <ShoppingBag size={18} className="mr-2 text-bold" />
                         Add to cart
@@ -96,7 +96,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                     {
                         product?.count < 3 && product?.count > 0 && <div className="flex items-center text-sm font-medium text-rose-600">
                             <AlertCircle className="w-4 h-4 mr-2" />
-                            Hurry! Only a few left in stock! Grab it before it's gone! 🏃‍♂️
+                            Hurry to buy! Limited stock! <span className="hidden xs:block">Grab it before it's gone! 🏃‍♂️</span>
                         </div>
                     }
 
@@ -168,9 +168,9 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                                         id: item?.id,
                                         prefix: (prefix === "print" ? prefix : item?.category),
                                     },
-                                }} key={`${item?.id}_${item?.title}`} className="overflow-hidden  pl-2 flex items-center text-sm font-medium text-blue-500">
+                                }} key={`${item?.id}_${item?.title}`} className="overflow-hidden text-blue-500 pl-2 flex items-center ">
                                     <Link2Icon className="w-4 h-4 mr-2" />
-                                    <span className="whitespace-nowrap text-ellipsis min-w-[250px] overflow-hidden">{item?.title}</span>
+                                    <span className="whitespace-nowrap text-xs xs:text-sm font-medium  text-ellipsis min-w-[200px]  overflow-hidden">{item?.title}</span>
                                 </Link>
 
                             ))

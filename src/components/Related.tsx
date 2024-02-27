@@ -12,8 +12,8 @@ const Related = ({ prefix, products, product }) => {
     }, [product, products]);
 
     return (
-        <div className="bg-white p-5">
-        <h3 className="text-2xl font-bold">Related Products</h3>
+        <div className="bg-white ">
+        <h3 className="text-2xl font-bold p-5">Related Products</h3>
             <Product categoryName={prefix!} prefix={'pr'} products={filteration} />
         </div>
     );
