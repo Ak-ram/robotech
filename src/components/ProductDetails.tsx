@@ -1,7 +1,7 @@
 import React from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon, Paintbrush, ShoppingBag } from "lucide-react";
+import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon, Paintbrush, ShoppingBag, AlertCircle } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
 import { ProductType } from "../../type";
@@ -14,7 +14,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
         const phoneNumber = "201102071544";
         const message = "Hi Robotech, I need some help.";
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        
+
         // Check if window object is defined (to prevent errors during server-side rendering)
         if (typeof window !== 'undefined') {
             // Open WhatsApp link in a new tab
@@ -25,7 +25,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
             // You might want to handle this case differently based on your requirements.
         }
     };
-    
+
     return (
         <div className="bg-white p-6 rounded lg:col-span-2 lg:row-span-2 lg:row-end-2">
             <h1 className="text-3xl font-bold text-gray-900">{product?.title}</h1>
@@ -93,6 +93,14 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                         Newly added
                     </div>
 
+                    {
+                        product?.count < 3 && product?.count > 0 && <div className="flex items-center text-sm font-medium text-rose-600">
+                            <AlertCircle className="w-4 h-4 mr-2" />
+                            Hurry! Only a few left in stock! Grab it before it's gone! 🏃‍♂️
+                        </div>
+                    }
+
+
                     {product?.colors && (
                         <div className="text-sm font-medium text-gray-600">
                             <div className="flex items-center">
@@ -103,11 +111,11 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                                 {product.colors.split("|").map((color, index) => (
                                     <div key={index} className={`flex justify-center gap-1 items-center`}>
                                         <span
-                                            style={{ backgroundColor: color.toLowerCase().trim(),opacity: 0.9 }}
+                                            style={{ backgroundColor: color.toLowerCase().trim(), opacity: 0.9 }}
                                             className={`block  w-[14px] h-[14px] rounded`}
                                         ></span>
                                         <span className={`capitalize`}
-                                            style={{ color: color.toLowerCase().trim() ,opacity: 0.9}}
+                                            style={{ color: color.toLowerCase().trim(), opacity: 0.9 }}
                                         >
                                             {color}
                                         </span>
