@@ -14,8 +14,18 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
         const phoneNumber = "201102071544";
         const message = "Hi Robotech, I need some help.";
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappLink, '_blank');
+        
+        // Check if window object is defined (to prevent errors during server-side rendering)
+        if (typeof window !== 'undefined') {
+            // Open WhatsApp link in a new tab
+            window.open(whatsappLink, '_blank');
+        } else {
+            // Handle server-side rendering or non-browser environment gracefully
+            console.error("Window object is not defined. Unable to open WhatsApp link.");
+            // You might want to handle this case differently based on your requirements.
+        }
     };
+    
     return (
         <div className="bg-white p-6 rounded lg:col-span-2 lg:row-span-2 lg:row-end-2">
             <h1 className="text-3xl font-bold text-gray-900">{product?.title}</h1>

@@ -3,12 +3,15 @@ import Image from "next/image";
 import whatsappImg from "@/assets/whatsapp.png";
 
 const WhatsApp = () => {
-    const openWhatsApp = () => {
+  const openWhatsApp = () => {
+    if (typeof window !== 'undefined') {
         const phoneNumber = "201102071544";
         const message = "Hi Robotech, I need some help.";
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappLink, '_blank');
-    };
+    }
+};
+
 
 
   return (
