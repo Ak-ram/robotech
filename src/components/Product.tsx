@@ -186,7 +186,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden rounded-xl"
+              className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden"
             >
               <img
                 className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
@@ -206,7 +206,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
               {
                 item.price < item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
-                  <span className="absolute -top-2 -left-2 m-2 rounded-full bg-black px-2 text-center  md: font-medium text-white">
+                  <span className="absolute text-xs xs:text-base xs:-top-2 xs:-left-2 top-1 left-1 m-2 rounded bg-black px-2 text-center  md: font-medium text-white">
                     {calculatePercentage(item?.price, item?.previousPrice)}% OFF
                   </span>
                   : null}
