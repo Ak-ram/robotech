@@ -32,8 +32,16 @@ const VodafoneCash = ({ totalAmt, productData }) => {
         const phoneNumber = "201102071544";
         const message = "Hello, I want to inquire about Vodafone Cash payment.";
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappLink, '_blank');
+        
+        if (typeof window !== 'undefined') {
+            // Execute only in the browser environment
+            window.open(whatsappLink, '_blank');
+        } else {
+            // Handle non-browser environment (optional)
+            console.error("Cannot open WhatsApp in non-browser environment.");
+        }
     };
+    
 
     return (
         <>

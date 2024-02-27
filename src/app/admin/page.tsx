@@ -10,17 +10,20 @@ const Page: React.FC<RouteProps> = () => {
   const [isLargeScreen, setIsLargeScreen] = useState<boolean>(true);
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 870px)'); // Adjust threshold as needed
-    const handleChange = () => setIsLargeScreen(!mq.matches);
-    
-    setIsLargeScreen(!mq.matches); // Set initial state
-    
-    mq.addEventListener('change', handleChange);
+    if (typeof window !== 'undefined') {
+        const mq = window.matchMedia('(max-width: 870px)'); // Adjust threshold as needed
+        const handleChange = () => setIsLargeScreen(!mq.matches);
+        
+        setIsLargeScreen(!mq.matches); // Set initial state
+        
+        mq.addEventListener('change', handleChange);
 
-    return () => {
-      mq.removeEventListener('change', handleChange);
-    };
-  }, []);
+        return () => {
+            mq.removeEventListener('change', handleChange);
+        };
+    }
+}, []);
+
 
   if (!isLargeScreen) {
     return (

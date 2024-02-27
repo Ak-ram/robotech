@@ -9,8 +9,16 @@ const page = () => {
     const phoneNumber = "201102071544";
     const message = "Hi Robotech, I need some help.";
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappLink, '_blank');
+    
+    // Check if window is defined (client-side) before opening a new window
+    if (typeof window !== 'undefined') {
+        window.open(whatsappLink, '_blank');
+    } else {
+        // Handle server-side rendering case (optional)
+        console.warn("Window object is not defined. Unable to open WhatsApp.");
+    }
 };
+
   return (
     <Container className="flex items-center justify-center py-20">
       <ConfettiComponent />
