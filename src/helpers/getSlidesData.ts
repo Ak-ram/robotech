@@ -20,10 +20,10 @@ const updateSlidesLocalStorage = async () => {
     console.error("Error updating slides data in local storage:", error);
   }
 };
-
+if (typeof window !== 'undefined') {
 // Call the updateSlidesLocalStorage function when the page is about to unload (refresh or navigate away)
 window.addEventListener("beforeunload", updateSlidesLocalStorage);
-
+}
 // Function to fetch slides data (with caching)
 export const getSlidesData = async () => {
   // Check if data is already cached in local storage
