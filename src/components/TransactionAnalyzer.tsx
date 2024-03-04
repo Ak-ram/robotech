@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { Clock, Calendar, Package, Banknote, User, ArrowDown, ArrowUp, TrendingUp, TrendingDown, Diff } from 'lucide-react';
 import FormattedPrice from './FormattedPrice';
 import Link from 'next/link';
+import RevenueCharts from './RevenuCharts';
 
 const TransactionAnalyzer = ({ customers }) => {
   const [dailySells, setDailySells] = useState({});
@@ -185,7 +185,7 @@ const TransactionAnalyzer = ({ customers }) => {
         revenue: revenue,
       }));
   }, [dailyRevenue]);
-  
+
   const monthlyRevenueData = useMemo(() => {
     return Object.entries(monthlyRevenue)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -194,7 +194,7 @@ const TransactionAnalyzer = ({ customers }) => {
         revenue: revenue,
       }));
   }, [monthlyRevenue]);
-  
+
   const yearlyRevenueData = useMemo(() => {
     return Object.entries(yearlyRevenue)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -203,7 +203,7 @@ const TransactionAnalyzer = ({ customers }) => {
         revenue: revenue,
       }));
   }, [yearlyRevenue]);
-  
+
   const calculateTotalRevenue = useMemo(() => {
     let total = 0;
     customers.forEach(customer => {
@@ -228,7 +228,7 @@ const TransactionAnalyzer = ({ customers }) => {
 
   const renderTransactions = useCallback((period) => {
     const renderTransactionsByPeriod = (transactions) => {
-      
+
       return transactions.map((transaction, index) => {
         // console.log(transaction)
         return (
@@ -243,16 +243,16 @@ const TransactionAnalyzer = ({ customers }) => {
             <div className='flex-1 flex gap-4 justify-between items-center'>
               <div className='flex flex-col  font-semibold'>
                 <span className='text-blue-400 '>{transaction.customerName}</span>
-  
+
                 <span className='flex-1'>{transaction.productName}</span>
               </div>
-  
+
               <div className='ml-auto flex gap-4'>
-  
+
                 <div title='السعر اللى اشتريت بيه' className="flex flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Buy</span>
-  
-                  <FormattedPrice className='text-xs font-semibold' amount={+transaction?.wholesalePrice! || 0 } />
+
+                  <FormattedPrice className='text-xs font-semibold' amount={+transaction?.wholesalePrice! || 0} />
                 </div>
                 <div title='السعر اللى هتبيع بيه' className="flex  flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Sell</span>
@@ -276,33 +276,33 @@ const TransactionAnalyzer = ({ customers }) => {
                 </div>
                 {/* {transaction?.wholesalePrice && +transaction?.wholesalePrice !== 0 ? */}
                 {transaction?.wholesalePrice ? (
-  <>
-    {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal ? (
-      <div title='كسبان' className='flex  flex-col items-center'>
-        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
-      </div>
-    ) : null}
+                  <>
+                    {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal ? (
+                      <div title='كسبان' className='flex  flex-col items-center'>
+                        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
+                      </div>
+                    ) : null}
 
-    {+transaction.wholesalePrice && Math.abs((+transaction.wholesalePrice * +transaction.quantity) - +transaction.subtotal) < 0.01 ? (
-      <div title='كلون' className='flex  flex-col items-center'>
-        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
-      </div>
-    ) : null}
+                    {+transaction.wholesalePrice && Math.abs((+transaction.wholesalePrice * +transaction.quantity) - +transaction.subtotal) < 0.01 ? (
+                      <div title='كلون' className='flex  flex-col items-center'>
+                        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
+                      </div>
+                    ) : null}
 
-    {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal ? (
-      <div title='خسران' className='flex  flex-col items-center'>
-        <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
-      </div>
-    ) : null}
-  </>
-) : null}
+                    {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal ? (
+                      <div title='خسران' className='flex  flex-col items-center'>
+                        <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
+                      </div>
+                    ) : null}
+                  </>
+                ) : null}
 
               </div>
             </div>
-  
+
           </Link>
         )
       });
@@ -446,44 +446,7 @@ const TransactionAnalyzer = ({ customers }) => {
         </div>
       )}
       {/* Render Revenue Charts */}
-      <div className="mt-8 ">
-        <h3 className="text-lg font-semibold mb-4">Revenue Overview</h3>
-        <div className='flex p-6 bg-white rounded overflow-auto'>
-          <div className=''>
-            <h4 className="text-md font-semibold mb-2 text-indigo-500">Daily Revenue</h4>
-            <LineChart width={380} height={300} data={dailyRevenueData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <CartesianGrid stroke="#eee" />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="revenue" stroke="#8884d8" />
-            </LineChart>
-          </div>
-          <div>
-            <h4 className="text-md font-semibold mb-2 text-green-500">Monthly Revenue</h4>
-            <LineChart width={380} height={300} data={monthlyRevenueData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <CartesianGrid stroke="#eee" />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="revenue" stroke="#82ca9d" />
-            </LineChart>
-          </div>
-          <div>
-            <h4 className="text-md font-semibold mb-2 text-orange-500">Yearly Revenue</h4>
-            <LineChart width={380} height={300} data={yearlyRevenueData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <CartesianGrid stroke="#eee" />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="revenue" stroke="#ffc658" />
-            </LineChart>
-          </div>
-        </div>
-      </div>
+      <RevenueCharts dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
     </div>
   );
 

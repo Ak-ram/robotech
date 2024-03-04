@@ -5,7 +5,7 @@ import { getCourses } from "@/helpers/getCourses";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
-import { Edit, Edit2, ScrollText, Trash } from "lucide-react";
+import { Check, Edit, Edit2, Redo, ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
 
 const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
@@ -14,13 +14,17 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
   const [list, setList] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [lastOrderId, setLastOrderId] = useState("");
 
   const [jsonArray, setJsonArray] = useState<any[]>([]);
+  const [categoriesArray, setCategoriesArray] = useState<any[]>([]);
   const [newOrder, setNewOrder] = useState({
     productName: "",
     quantity: 1,
     date: "",
     discount: 0,
+    subtotal: 0,
+    piecePrice: 0,
   });
   useEffect(() => {
     setUpdatedCustomerData(customerData);
@@ -28,8 +32,14 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchJsonData("robotech/pages/customers.json");
-        setJsonArray(data);
+        const cusomterData = await fetchJsonData(
+          "robotech/pages/customers.json"
+        );
+        const categoriesData = await fetchJsonData(
+          "robotech/pages/categories.json"
+        );
+        setJsonArray(cusomterData);
+        setCategoriesArray(categoriesData);
       } catch (error) {
         new Error((error as Error).message);
       }
@@ -38,7 +48,20 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     fetchData();
   }, []);
 
-  const handleAddOrder = async () => {
+
+  
+  const handleAddOrder = async (courseId) => {
+    if (lastOrderId === courseId) {
+      toast.error(
+        "Sorry, you cannot add the same order twice in a row. Please try later or adding a different order."
+      );
+      setShowAddOrderModal(false)
+      return;
+    }
+    setLastOrderId(courseId);
+    setTimeout(() => {
+      setLastOrderId("");
+    }, 5 * 1000 * 60);
     // Validate order details if needed
     const existingCustomerIndex = jsonArray.findIndex(
       (customer) => customer.id === customerData.id
@@ -58,16 +81,19 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
       }
 
       existingCustomer.transactions.courses.push(newOrder);
-      // Update the total purchase transactions
-      existingCustomer.total_purchase_transactions +=
-        existingCustomer.transactions.courses.reduce(
-          (total, transaction) => total + transaction.subtotal,
-          0
-        );
-      jsonArray[existingCustomerIndex] = existingCustomer;
 
       // Update the JSON file with the modified JSON array
       try {
+        // Calculate the total purchase transactions
+        existingCustomer.total_purchase_transactions =
+          existingCustomer.transactions.courses.reduce(
+            (total, transaction) => total + transaction.subtotal,
+            0
+          );
+
+        jsonArray[existingCustomerIndex] = existingCustomer;
+        console.log(newOrder);
+        // Update the JSON file with the modified JSON array
         setShowAddOrderModal(false);
         await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
 
@@ -79,10 +105,11 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
           quantity: 1,
           date: "",
           discount: 0,
+          subtotal: 0,
+          piecePrice: 0,
         });
         toast.success(`Item Added/Updated successfully`);
         toast.loading(`Be patient, changes take a few moments to be reflected`);
-
         setTimeout(() => {
           toast.dismiss();
         }, 5000);
@@ -115,7 +142,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
     <>
       <div className="max-w-3xl mx-auto my-8">
         <button
-          className="mb-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+          className={`mb-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300`}
           onClick={() => setShowAddOrderModal(true)}
         >
           Add Course
@@ -126,14 +153,14 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
           .map((course, index) => (
             <div
               key={index}
-              className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4"
+              className={`bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4`}
             >
               <div className="flex-1">
                 <p className="text-gray-600 mb-2">
                   Transaction date: {course["date"]}
                 </p>
                 <p className="text-gray-600 mb-2">
-                  Course name: {course["productName"]}
+                Course name: {course["productName"]}
                 </p>
                 <p className="text-gray-600 mb-2">
                   Course price:{" "}
@@ -150,7 +177,7 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
               <div className="flex flex-col gap-2">
                 <div className="flex-1">
                   <Edit2
-                    className="cursor-not-allowed text-blue-600"
+                    className="ml-auto cursor-not-allowed text-blue-600"
                     size={20}
                   />
                   {/* ADD BILL HERE */}
@@ -159,14 +186,12 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
                       setShowBill(true);
                       setSelectedCourse(course);
                     }}
-                    className="my-2 cursor-pointer text-blue-600"
+                    className="my-2 ml-auto cursor-pointer text-blue-600"
                     size={20}
                   />
                 </div>
-                <Trash
-                  className="ml-auto mr-2 cursor-not-allowed text-red-600"
-                  size={20}
-                />
+
+               
               </div>
               {showBill && selectedCourse && (
                 <Bill
