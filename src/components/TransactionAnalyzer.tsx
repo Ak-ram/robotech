@@ -53,6 +53,9 @@ const TransactionAnalyzer = ({ customers }) => {
           const dayKey = `${courseTransactionDate.getFullYear()}-${courseTransactionDate.getMonth() + 1}-${courseTransactionDate.getDate()}`;
           const monthKey = `${courseTransactionDate.getFullYear()}-${courseTransactionDate.getMonth() + 1}`;
           const yearKey = `${courseTransactionDate.getFullYear()}`;
+          //  Add customerName to the transaction
+          course.customerName = customerName;
+          course.customerId = customerId;
 
           if (!dailyTransactions[dayKey]) {
             dailyTransactions[dayKey] = [];
@@ -75,6 +78,9 @@ const TransactionAnalyzer = ({ customers }) => {
           const dayKey = `${printServiceTransactionDate.getFullYear()}-${printServiceTransactionDate.getMonth() + 1}-${printServiceTransactionDate.getDate()}`;
           const monthKey = `${printServiceTransactionDate.getFullYear()}-${printServiceTransactionDate.getMonth() + 1}`;
           const yearKey = `${printServiceTransactionDate.getFullYear()}`;
+          //  Add customerName to the transaction
+          printService.customerName = customerName;
+          printService.customerId = customerId;
 
           if (!dailyTransactions[dayKey]) {
             dailyTransactions[dayKey] = [];
