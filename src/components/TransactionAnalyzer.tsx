@@ -137,7 +137,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       yearlyRevenue[yearKey] += parseInt(transaction.subtotal);
     });
-
+   
     customer.transactions.courses.forEach(course => {
       const courseTransactionDate = new Date(course.date);
       const dayKey = `${courseTransactionDate.getFullYear()}-${courseTransactionDate.getMonth() + 1}-${courseTransactionDate.getDate()}`;
