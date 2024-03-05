@@ -340,66 +340,32 @@ const TransactionAnalyzer = ({ customers }) => {
                     ) : null}
                   </>
                 ) : null} */}
-               {transaction.wholesalePrice !== undefined && (
-  <>
-    {/* {(+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal && (
-      <div title='كسبان' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
-      </div>
-    )} */}
-  {((+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal || !transaction.wholesalePrice) && (
-      <div title='كسبان' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
-      </div>
-    )}
-    {Math.abs((+transaction.wholesalePrice * +transaction.quantity) - +transaction.subtotal) < 0.01 && (
-      <div title='كلون' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
-      </div>
-    )}
+                {transaction.wholesalePrice !== undefined && (
+                  <>
+                    {((+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal || !transaction.wholesalePrice) && (
+                      <div title='كسبان' className='flex flex-col items-center'>
+                        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
+                      </div>
+                    )}
+                    {Math.abs((+transaction.wholesalePrice * +transaction.quantity) - +transaction.subtotal) < 0.01 && (
+                      <div title='كلون' className='flex flex-col items-center'>
+                        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
+                      </div>
+                    )}
 
-    {(+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal && (
-      <div title='خسران' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
-      </div>
-    )}
+                    {(+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal && (
+                      <div title='خسران' className='flex flex-col items-center'>
+                        <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
+                      </div>
+                    )}
 
-    {/* {!transaction.wholesalePrice && (
-      <div title='كسبان' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={+transaction.subtotal} />
-      </div>
-    )} */}
-  </>
-)} 
-{/* {transaction.wholesalePrice !== undefined && (
-  <>
-    {((+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal || !transaction.wholesalePrice) && (
-      <div title='كسبان' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
-      </div>
-    )}
 
-    {((+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal && !transaction.wholesalePrice) && (
-      <div title='خسران' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
-      </div>
-    )}
+                  </>
+                )}
 
-    {Math.abs((+transaction.wholesalePrice * +transaction.quantity) - +transaction.subtotal) < 0.01 && (
-      <div title='كلون' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
-      </div>
-    )}
-  </>
-)} */}
               </div>
             </div>
 
