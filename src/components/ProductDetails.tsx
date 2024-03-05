@@ -107,15 +107,15 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                                 <Paintbrush className="w-4 h-4 mr-2" />
                                 Print Colors:
                             </div>
-                            <div className="pl-3 mt-3 flex items-center w-full gap-6">
+                            <div className="pl-3 mt-3 flex flex-wrap items-center w-full gap-6">
                                 {product.colors.split("|").map((color, index) => (
                                     <div key={index} className={`flex justify-center gap-1 items-center`}>
                                         <span
                                             style={{ backgroundColor: color.toLowerCase().trim(), opacity: 0.9 }}
-                                            className={`block  w-[14px] h-[14px] rounded`}
+                                            className={`block border shadow w-[14px] h-[14px] rounded`}
                                         ></span>
                                         <span className={`capitalize`}
-                                            style={{ color: color.toLowerCase().trim(), opacity: 0.9 }}
+                                            style={{ color: color.toLowerCase().trim() === 'white' ? 'black' : color.toLowerCase().trim(), opacity: 0.9 }}
                                         >
                                             {color}
                                         </span>
@@ -156,7 +156,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
 
             </div>
 
-            {products?.filter((item: ProductType) => item?.id !== product?.id).length !== 0 &&
+            {products && products?.filter((item: ProductType) => item?.id !== product?.id).length !== 0 &&
                 <>
                     <div className="mt-5 pb-5 border-b space-y-2">
                         <h3 className="text-gray-600">You May also love:</h3>

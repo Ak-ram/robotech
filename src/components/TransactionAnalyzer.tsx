@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { Clock, Calendar, Package, Banknote, User, ArrowDown, ArrowUp, TrendingUp, TrendingDown, Diff } from 'lucide-react';
 import FormattedPrice from './FormattedPrice';
 import Link from 'next/link';
+import RevenueCharts from './RevenuCharts';
 
 const TransactionAnalyzer = ({ customers }) => {
   const [dailySells, setDailySells] = useState({});
@@ -53,6 +53,9 @@ const TransactionAnalyzer = ({ customers }) => {
           const dayKey = `${courseTransactionDate.getFullYear()}-${courseTransactionDate.getMonth() + 1}-${courseTransactionDate.getDate()}`;
           const monthKey = `${courseTransactionDate.getFullYear()}-${courseTransactionDate.getMonth() + 1}`;
           const yearKey = `${courseTransactionDate.getFullYear()}`;
+          //  Add customerName to the transaction
+          course.customerName = customerName;
+          course.customerId = customerId;
 
           if (!dailyTransactions[dayKey]) {
             dailyTransactions[dayKey] = [];
@@ -75,6 +78,9 @@ const TransactionAnalyzer = ({ customers }) => {
           const dayKey = `${printServiceTransactionDate.getFullYear()}-${printServiceTransactionDate.getMonth() + 1}-${printServiceTransactionDate.getDate()}`;
           const monthKey = `${printServiceTransactionDate.getFullYear()}-${printServiceTransactionDate.getMonth() + 1}`;
           const yearKey = `${printServiceTransactionDate.getFullYear()}`;
+          //  Add customerName to the transaction
+          printService.customerName = customerName;
+          printService.customerId = customerId;
 
           if (!dailyTransactions[dayKey]) {
             dailyTransactions[dayKey] = [];
@@ -106,8 +112,11 @@ const TransactionAnalyzer = ({ customers }) => {
   };
 
   const dailyRevenue = {};
+  const dailyProfits = {};
   const monthlyRevenue = {};
+  const monthlyProfits = {};
   const yearlyRevenue = {};
+  const yearlyProfits = {};
 
   customers.forEach(customer => {
     customer.transactions.products.forEach(transaction => {
@@ -119,17 +128,26 @@ const TransactionAnalyzer = ({ customers }) => {
       if (!dailyRevenue[dayKey]) {
         dailyRevenue[dayKey] = 0;
       }
+      if (!dailyProfits[dayKey]) {
+        dailyProfits[dayKey] = 0;
+      }
       dailyRevenue[dayKey] += parseInt(transaction.subtotal);
+      // dailyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
+      dailyProfits[dayKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
 
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
       monthlyRevenue[monthKey] += parseInt(transaction.subtotal);
+      // monthlyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
+      monthlyProfits[dayKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
       yearlyRevenue[yearKey] += parseInt(transaction.subtotal);
+      // yearlyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
+      yearlyProfits[dayKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
     });
 
     customer.transactions.courses.forEach(course => {
@@ -142,16 +160,23 @@ const TransactionAnalyzer = ({ customers }) => {
         dailyRevenue[dayKey] = 0;
       }
       dailyRevenue[dayKey] += parseInt(course.subtotal);
+      // dailyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
+      dailyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
 
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
       monthlyRevenue[monthKey] += parseInt(course.subtotal);
+      // monthlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
+      monthlyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
       yearlyRevenue[yearKey] += parseInt(course.subtotal);
+      // yearlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
+      yearlyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
+
     });
 
     customer.transactions.printServices.forEach(printService => {
@@ -164,16 +189,20 @@ const TransactionAnalyzer = ({ customers }) => {
         dailyRevenue[dayKey] = 0;
       }
       dailyRevenue[dayKey] += parseInt(printService.subtotal);
-
+      // dailyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
+      dailyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
       monthlyRevenue[monthKey] += parseInt(printService.subtotal);
-
+      // monthlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
+      monthlyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
       yearlyRevenue[yearKey] += parseInt(printService.subtotal);
+      // yearlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
+      yearlyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
     });
   });
 
@@ -185,7 +214,14 @@ const TransactionAnalyzer = ({ customers }) => {
         revenue: revenue,
       }));
   }, [dailyRevenue]);
-  
+  const dailyProfitsData = useMemo(() => {
+    return Object.entries(dailyProfits)
+      .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+      .map(([day, revenue]) => ({
+        name: day,
+        revenue: revenue,
+      }));
+  }, [dailyProfits]);
   const monthlyRevenueData = useMemo(() => {
     return Object.entries(monthlyRevenue)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -194,7 +230,14 @@ const TransactionAnalyzer = ({ customers }) => {
         revenue: revenue,
       }));
   }, [monthlyRevenue]);
-  
+  const monthlyProfitsData = useMemo(() => {
+    return Object.entries(monthlyProfits)
+      .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+      .map(([month, revenue]) => ({
+        name: month,
+        revenue: revenue,
+      }));
+  }, [monthlyProfits]);
   const yearlyRevenueData = useMemo(() => {
     return Object.entries(yearlyRevenue)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -203,7 +246,16 @@ const TransactionAnalyzer = ({ customers }) => {
         revenue: revenue,
       }));
   }, [yearlyRevenue]);
-  
+  const yearlyProfitsData = useMemo(() => {
+    return Object.entries(yearlyProfits)
+      .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+      .map(([year, revenue]) => ({
+        name: year,
+        revenue: revenue,
+      }));
+  }, [yearlyProfits]);
+
+
   const calculateTotalRevenue = useMemo(() => {
     let total = 0;
     customers.forEach(customer => {
@@ -215,20 +267,9 @@ const TransactionAnalyzer = ({ customers }) => {
   }, [customers]);
 
 
-
-  // const calculateTotalRevenue = () => {
-  //   let total = 0;
-  //   customers.forEach(customer => {
-  //     customer.transactions.products.forEach(transaction => {
-  //       total += parseInt(transaction.subtotal);
-  //     });
-  //   });
-  //   return total;
-  // }
-
   const renderTransactions = useCallback((period) => {
     const renderTransactionsByPeriod = (transactions) => {
-      
+
       return transactions.map((transaction, index) => {
         // console.log(transaction)
         return (
@@ -243,16 +284,16 @@ const TransactionAnalyzer = ({ customers }) => {
             <div className='flex-1 flex gap-4 justify-between items-center'>
               <div className='flex flex-col  font-semibold'>
                 <span className='text-blue-400 '>{transaction.customerName}</span>
-  
+
                 <span className='flex-1'>{transaction.productName}</span>
               </div>
-  
+
               <div className='ml-auto flex gap-4'>
-  
+
                 <div title='السعر اللى اشتريت بيه' className="flex flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Buy</span>
-  
-                  <FormattedPrice className='text-xs font-semibold' amount={+transaction?.wholesalePrice! || 0 } />
+
+                  <FormattedPrice className='text-xs font-semibold' amount={+transaction?.wholesalePrice! || 0} />
                 </div>
                 <div title='السعر اللى هتبيع بيه' className="flex  flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Sell</span>
@@ -272,37 +313,61 @@ const TransactionAnalyzer = ({ customers }) => {
                 </div>
                 <div title='صافى المبلغ او الفلوس الي انت اخذتها من العميل' className="flex  flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Total</span>
-                  <FormattedPrice className='text-xs font-semibold' amount={+transaction.subtotal} />
+                  <FormattedPrice className='text-xs font-semibold' amount={+transaction.subtotal > 0 ? +transaction?.subtotal:0} />
                 </div>
                 {/* {transaction?.wholesalePrice && +transaction?.wholesalePrice !== 0 ? */}
-                {transaction?.wholesalePrice ? (
+                {/* {transaction?.wholesalePrice ? (
+                  <>
+                    {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal ? (
+                      <div title='كسبان' className='flex  flex-col items-center'>
+                        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
+                      </div>
+                    ) : null}
+
+                    {+transaction.wholesalePrice && Math.abs((+transaction.wholesalePrice * +transaction.quantity) - +transaction.subtotal) < 0.01 ? (
+                      <div title='كلون' className='flex  flex-col items-center'>
+                        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
+                      </div>
+                    ) : null}
+
+                    {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal ? (
+                      <div title='خسران' className='flex  flex-col items-center'>
+                        <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
+                      </div>
+                    ) : null}
+                  </>
+                ) : null} */}
+              {transaction.wholesalePrice !== undefined && (
   <>
-    {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal ? (
-      <div title='كسبان' className='flex  flex-col items-center'>
+    {((+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal) && (
+      <div title='كسبان' className='flex flex-col items-center'>
         <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
         <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
       </div>
-    ) : null}
+    )}
 
-    {+transaction.wholesalePrice && Math.abs((+transaction.wholesalePrice * +transaction.quantity) - +transaction.subtotal) < 0.01 ? (
-      <div title='كلون' className='flex  flex-col items-center'>
-        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
-      </div>
-    ) : null}
-
-    {+transaction.wholesalePrice && (+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal ? (
-      <div title='خسران' className='flex  flex-col items-center'>
+    {((+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal) && (
+      <div title='خسران' className='flex flex-col items-center'>
         <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
         <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
       </div>
-    ) : null}
+    )}
+
+    {((+transaction.wholesalePrice * +transaction.quantity) >= +transaction.subtotal && (+transaction.wholesalePrice * +transaction.quantity) <= +transaction.subtotal) && (
+      <div title='كلون' className='flex flex-col items-center'>
+        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
+        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={0} />
+      </div>
+    )}
   </>
-) : null}
+)}
 
               </div>
             </div>
-  
+
           </Link>
         )
       });
@@ -446,44 +511,7 @@ const TransactionAnalyzer = ({ customers }) => {
         </div>
       )}
       {/* Render Revenue Charts */}
-      <div className="mt-8 ">
-        <h3 className="text-lg font-semibold mb-4">Revenue Overview</h3>
-        <div className='flex p-6 bg-white rounded overflow-auto'>
-          <div className=''>
-            <h4 className="text-md font-semibold mb-2 text-indigo-500">Daily Revenue</h4>
-            <LineChart width={380} height={300} data={dailyRevenueData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <CartesianGrid stroke="#eee" />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="revenue" stroke="#8884d8" />
-            </LineChart>
-          </div>
-          <div>
-            <h4 className="text-md font-semibold mb-2 text-green-500">Monthly Revenue</h4>
-            <LineChart width={380} height={300} data={monthlyRevenueData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <CartesianGrid stroke="#eee" />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="revenue" stroke="#82ca9d" />
-            </LineChart>
-          </div>
-          <div>
-            <h4 className="text-md font-semibold mb-2 text-orange-500">Yearly Revenue</h4>
-            <LineChart width={380} height={300} data={yearlyRevenueData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <CartesianGrid stroke="#eee" />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="revenue" stroke="#ffc658" />
-            </LineChart>
-          </div>
-        </div>
-      </div>
+      <RevenueCharts monthlyProfitsData={monthlyProfitsData} yearlyProfitsData={yearlyProfitsData} dailyProfitsData={dailyProfitsData} dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
     </div>
   );
 

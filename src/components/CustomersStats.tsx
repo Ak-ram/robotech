@@ -15,6 +15,8 @@ import Stocks from "./Stocks";
 const CustomersStats = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [show, setShow] = useState(false);
+
     const [customers, setCustomers] = useState<any[]>([]);
     const [highestTotalPurchase, setHighestTotalPurchase] = useState<number | null>(null);
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -78,10 +80,10 @@ const CustomersStats = () => {
 
             <div className={`${isShow ? "block" : "hidden"} z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`}>
                 <div className={`bg-white min-w-[40rem] p-8 rounded-lg shadow-md`}>
-                   
+
                     <div className="flex-1 "> <X className="ml-auto cursor-pointer" onClick={() => setIsShow(false)} />
                         {/* <ApexChartComp categoryStats={categoryStats} /> */}
-                        
+
                         <CustomerStatsChart customers={customers} />
                     </div>
                 </div>
@@ -102,10 +104,22 @@ const CustomersStats = () => {
             <div className="flex flex-col">
                 <Stocks />
 
-
-                <h1 className="text-xl text-gray-950 font-medium mb-3 text-center">Customers Stats</h1>
-
-                <div className="py-2 -my-2 align-middle">
+                <div className={`${!show ? "border border-blue-300 border-dashed" : ""} bg-white rounded-lg mb-5 overflow-hidden`}>
+                <div
+                    className="flex items-center p-5 justify-between cursor-pointer"
+                    onClick={() => setShow(!show)}
+                >
+                    <h3 className="transform  transition-transform duration-500 font-semibold text-blue-400">
+                        {show ? "Click to Collapse" : "Click to Expand"}
+                    </h3>
+                    <ChevronDown
+                        className={`transform text-blue-300 transition-transform duration-300 ${show ? "rotate-180" : ""
+                            }`}
+                        size={25}
+                    />
+                </div>
+                {show && 
+                <div className="p-5 my-2 align-middle">
                     <div className="shadow overflow-hidden sm:rounded-lg">
                         <div className="flex justify-between items-center gap-2 bg-gray-800 p-3 border-b  border-gray-700">
 
@@ -194,7 +208,8 @@ const CustomersStats = () => {
                     </div>
 
                 </div>
-
+                }
+</div>
             </div>
 
             {/* Display additional statistics */}
