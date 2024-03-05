@@ -112,8 +112,11 @@ const TransactionAnalyzer = ({ customers }) => {
   };
 
   const dailyRevenue = {};
+  const dailyProfits = {};
   const monthlyRevenue = {};
+  const monthlyProfits = {};
   const yearlyRevenue = {};
+  const yearlyProfits = {};
 
   customers.forEach(customer => {
     customer.transactions.products.forEach(transaction => {
@@ -125,17 +128,24 @@ const TransactionAnalyzer = ({ customers }) => {
       if (!dailyRevenue[dayKey]) {
         dailyRevenue[dayKey] = 0;
       }
+      if (!dailyProfits[dayKey]) {
+        dailyProfits[dayKey] = 0;
+      }
       dailyRevenue[dayKey] += parseInt(transaction.subtotal);
+      dailyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
 
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
       monthlyRevenue[monthKey] += parseInt(transaction.subtotal);
+      monthlyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
       yearlyRevenue[yearKey] += parseInt(transaction.subtotal);
+      yearlyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
+
     });
    
     customer.transactions.courses.forEach(course => {
@@ -148,16 +158,20 @@ const TransactionAnalyzer = ({ customers }) => {
         dailyRevenue[dayKey] = 0;
       }
       dailyRevenue[dayKey] += parseInt(course.subtotal);
+      dailyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
 
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
       monthlyRevenue[monthKey] += parseInt(course.subtotal);
+      monthlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
       yearlyRevenue[yearKey] += parseInt(course.subtotal);
+      yearlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
+
     });
 
     customer.transactions.printServices.forEach(printService => {
@@ -170,16 +184,20 @@ const TransactionAnalyzer = ({ customers }) => {
         dailyRevenue[dayKey] = 0;
       }
       dailyRevenue[dayKey] += parseInt(printService.subtotal);
+      dailyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
 
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
       monthlyRevenue[monthKey] += parseInt(printService.subtotal);
+      monthlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
       yearlyRevenue[yearKey] += parseInt(printService.subtotal);
+      yearlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
+
     });
   });
 
@@ -191,7 +209,14 @@ const TransactionAnalyzer = ({ customers }) => {
         revenue: revenue,
       }));
   }, [dailyRevenue]);
-
+  const dailyProfitsData = useMemo(() => {
+    return Object.entries(dailyProfits)
+      .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+      .map(([day, revenue]) => ({
+        name: day,
+        revenue: revenue,
+      }));
+  }, [dailyProfits]);
   const monthlyRevenueData = useMemo(() => {
     return Object.entries(monthlyRevenue)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -200,7 +225,14 @@ const TransactionAnalyzer = ({ customers }) => {
         revenue: revenue,
       }));
   }, [monthlyRevenue]);
-
+  const monthlyProfitsData = useMemo(() => {
+    return Object.entries(monthlyProfits)
+      .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+      .map(([month, revenue]) => ({
+        name: month,
+        revenue: revenue,
+      }));
+  }, [monthlyProfits]);
   const yearlyRevenueData = useMemo(() => {
     return Object.entries(yearlyRevenue)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -209,7 +241,14 @@ const TransactionAnalyzer = ({ customers }) => {
         revenue: revenue,
       }));
   }, [yearlyRevenue]);
-
+  const yearlyProfitsData = useMemo(() => {
+    return Object.entries(yearlyProfits)
+      .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
+      .map(([year, revenue]) => ({
+        name: year,
+        revenue: revenue,
+      }));
+  }, [yearlyProfits]);
   const calculateTotalRevenue = useMemo(() => {
     let total = 0;
     customers.forEach(customer => {
@@ -452,7 +491,7 @@ const TransactionAnalyzer = ({ customers }) => {
         </div>
       )}
       {/* Render Revenue Charts */}
-      <RevenueCharts dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
+      <RevenueCharts monthlyProfitsData={monthlyProfitsData} yearlyProfitsData={yearlyProfitsData} dailyProfitsData={dailyProfitsData} dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
     </div>
   );
 
