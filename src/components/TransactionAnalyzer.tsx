@@ -138,16 +138,22 @@ const TransactionAnalyzer = ({ customers }) => {
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
+      if (!monthlyProfits[monthKey]) {
+        monthlyProfits[monthKey] = 0;
+      }
       monthlyRevenue[monthKey] += parseInt(transaction.subtotal);
       // monthlyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
-      monthlyProfits[dayKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
+      monthlyProfits[monthKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
+      if (!yearlyProfits[yearKey]) {
+        yearlyProfits[yearKey] = 0;
+      }
       yearlyRevenue[yearKey] += parseInt(transaction.subtotal);
       // yearlyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
-      yearlyProfits[dayKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
+      yearlyProfits[yearKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
     });
 
     customer.transactions.courses.forEach(course => {
@@ -159,6 +165,9 @@ const TransactionAnalyzer = ({ customers }) => {
       if (!dailyRevenue[dayKey]) {
         dailyRevenue[dayKey] = 0;
       }
+      if (!dailyProfits[dayKey]) {
+        dailyProfits[dayKey] = 0;
+      }
       dailyRevenue[dayKey] += parseInt(course.subtotal);
       // dailyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
       dailyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
@@ -166,16 +175,24 @@ const TransactionAnalyzer = ({ customers }) => {
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
+      if (!monthlyProfits[monthKey]) {
+        monthlyProfits[monthKey] = 0;
+      }
       monthlyRevenue[monthKey] += parseInt(course.subtotal);
       // monthlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
-      monthlyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
+      // monthlyProfits[monthKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
+      monthlyProfits[monthKey] += parseInt(course.subtotal);
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
+      if (!yearlyProfits[yearKey]) {
+        yearlyProfits[yearKey] = 0;
+      }
       yearlyRevenue[yearKey] += parseInt(course.subtotal);
       // yearlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
-      yearlyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
+      // yearlyProfits[yearKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
+      yearlyProfits[yearKey] += parseInt(course.subtotal);
 
     });
 
@@ -188,21 +205,33 @@ const TransactionAnalyzer = ({ customers }) => {
       if (!dailyRevenue[dayKey]) {
         dailyRevenue[dayKey] = 0;
       }
+      if (!dailyProfits[dayKey]) {
+        dailyProfits[dayKey] = 0;
+      }
       dailyRevenue[dayKey] += parseInt(printService.subtotal);
       // dailyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
       dailyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
+      
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
+      if (!monthlyProfits[monthKey]) {
+        monthlyProfits[monthKey] = 0;
+      }
       monthlyRevenue[monthKey] += parseInt(printService.subtotal);
       // monthlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
-      monthlyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
+      // monthlyProfits[monthKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
+      monthlyProfits[monthKey] += parseInt(printService.subtotal);
+      
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
+      if (!yearlyProfits[yearKey]) {
+        yearlyProfits[yearKey] = 0;
+      }
       yearlyRevenue[yearKey] += parseInt(printService.subtotal);
       // yearlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
-      yearlyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
+      yearlyProfits[yearKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
     });
   });
 
@@ -548,7 +577,7 @@ const TransactionAnalyzer = ({ customers }) => {
         </div>
       )}
       {/* Render Revenue Charts */}
-      <RevenueCharts monthlyProfitsData={monthlyProfitsData} yearlyProfitsData={yearlyProfitsData} dailyProfitsData={dailyProfitsData} dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
+      <RevenueCharts  monthlyProfitsData={monthlyProfitsData} yearlyProfitsData={yearlyProfitsData} dailyProfitsData={dailyProfitsData} dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
     </div>
   );
 

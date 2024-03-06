@@ -85,7 +85,6 @@ import { LineChart, XAxis, CartesianGrid, Tooltip, Legend, YAxis, Line } from "r
     };
   });
   
-
   const monthlyCombinedData = monthlyRevenueData.map((dataPoint, index) => {
     const revenue = Math.max(0, dataPoint.revenue); // Set negative revenue to zero
     return {
