@@ -138,16 +138,22 @@ const TransactionAnalyzer = ({ customers }) => {
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
+      if (!monthlyProfits[monthKey]) {
+        monthlyProfits[monthKey] = 0;
+      }
       monthlyRevenue[monthKey] += parseInt(transaction.subtotal);
       // monthlyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
-      monthlyProfits[dayKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
+      monthlyProfits[monthKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
+      if (!yearlyProfits[yearKey]) {
+        yearlyProfits[yearKey] = 0;
+      }
       yearlyRevenue[yearKey] += parseInt(transaction.subtotal);
       // yearlyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
-      yearlyProfits[dayKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
+      yearlyProfits[yearKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
     });
 
     customer.transactions.courses.forEach(course => {
@@ -159,6 +165,9 @@ const TransactionAnalyzer = ({ customers }) => {
       if (!dailyRevenue[dayKey]) {
         dailyRevenue[dayKey] = 0;
       }
+      if (!dailyProfits[dayKey]) {
+        dailyProfits[dayKey] = 0;
+      }
       dailyRevenue[dayKey] += parseInt(course.subtotal);
       // dailyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
       dailyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
@@ -166,16 +175,24 @@ const TransactionAnalyzer = ({ customers }) => {
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
+      if (!monthlyProfits[monthKey]) {
+        monthlyProfits[monthKey] = 0;
+      }
       monthlyRevenue[monthKey] += parseInt(course.subtotal);
       // monthlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
-      monthlyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
+      // monthlyProfits[monthKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
+      monthlyProfits[monthKey] += parseInt(course.subtotal);
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
+      if (!yearlyProfits[yearKey]) {
+        yearlyProfits[yearKey] = 0;
+      }
       yearlyRevenue[yearKey] += parseInt(course.subtotal);
       // yearlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
-      yearlyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
+      // yearlyProfits[yearKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
+      yearlyProfits[yearKey] += parseInt(course.subtotal);
 
     });
 
@@ -188,21 +205,33 @@ const TransactionAnalyzer = ({ customers }) => {
       if (!dailyRevenue[dayKey]) {
         dailyRevenue[dayKey] = 0;
       }
+      if (!dailyProfits[dayKey]) {
+        dailyProfits[dayKey] = 0;
+      }
       dailyRevenue[dayKey] += parseInt(printService.subtotal);
       // dailyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
       dailyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
+      
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
+      if (!monthlyProfits[monthKey]) {
+        monthlyProfits[monthKey] = 0;
+      }
       monthlyRevenue[monthKey] += parseInt(printService.subtotal);
       // monthlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
-      monthlyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
+      // monthlyProfits[monthKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
+      monthlyProfits[monthKey] += parseInt(printService.subtotal);
+      
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
+      if (!yearlyProfits[yearKey]) {
+        yearlyProfits[yearKey] = 0;
+      }
       yearlyRevenue[yearKey] += parseInt(printService.subtotal);
       // yearlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
-      yearlyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
+      yearlyProfits[yearKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
     });
   });
 
@@ -260,6 +289,16 @@ const TransactionAnalyzer = ({ customers }) => {
     let total = 0;
     customers.forEach(customer => {
       customer.transactions.products.forEach(transaction => {
+        total += parseInt(transaction.subtotal);
+      });
+    });
+    customers.forEach(customer => {
+      customer.transactions.courses.forEach(transaction => {
+        total += parseInt(transaction.subtotal);
+      });
+    });
+    customers.forEach(customer => {
+      customer.transactions.printServices.forEach(transaction => {
         total += parseInt(transaction.subtotal);
       });
     });
@@ -419,7 +458,16 @@ const TransactionAnalyzer = ({ customers }) => {
               </div>
               <div>
                 <h4 className="text-md font-semibold mb-2">Daily Revenue</h4>
-                {Object.entries(dailyRevenue).map(([day, revenue]) => (
+                {Object.entries(dailyRevenue)
+                .sort(([dayA]: [string, any], [dayB]: [string, any]) => {
+                  // Convert dates to Date objects
+                  const dateA = new Date(dayA);
+                  const dateB = new Date(dayB);
+                  // Compare dates
+                  return dateB.getTime() - dateA.getTime();
+                })
+                
+                .map(([day, revenue]) => (
                   <p key={day} className="flex items-center my-2">
                     <Clock className="w-5 h-5 mr-2 text-blue-500" />{day}
                     <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
@@ -433,7 +481,16 @@ const TransactionAnalyzer = ({ customers }) => {
                 <p className="text-md font-semibold">Monthly Revenue</p>
               </div>
               <div>
-                {Object.entries(monthlyRevenue).map(([month, revenue]) => (
+                {Object.entries(monthlyRevenue)
+                .sort(([monthA]: [string, any], [monthB]: [string, any]) => {
+                  // Convert dates to Date objects
+                  const dateA = new Date(monthA);
+                  const dateB = new Date(monthB);
+                  // Compare dates
+                  return dateB.getTime() - dateA.getTime();
+                })
+                 
+                .map(([month, revenue]) => (
                   <p key={month} className="flex items-center my-2">
                     <Calendar className="w-5 h-5 mr-2 text-blue-500" />{month}
                     <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
@@ -447,7 +504,16 @@ const TransactionAnalyzer = ({ customers }) => {
                 <p className="text-md font-semibold">Yearly Revenue</p>
               </div>
               <div>
-                {Object.entries(yearlyRevenue).map(([year, revenue]) => (
+                {Object.entries(yearlyRevenue)
+                .sort(([yearA]: [string, any], [yearB]: [string, any]) => {
+                  // Convert dates to Date objects
+                  const dateA = new Date(yearA);
+                  const dateB = new Date(yearB);
+                  // Compare dates
+                  return dateB.getTime() - dateA.getTime();
+                })
+                
+                .map(([year, revenue]) => (
                   <p key={year} className="flex items-center my-2">
                     <Package className="w-5 h-5 mr-2 text-blue-500" />{year}
                     <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
@@ -511,7 +577,7 @@ const TransactionAnalyzer = ({ customers }) => {
         </div>
       )}
       {/* Render Revenue Charts */}
-      <RevenueCharts monthlyProfitsData={monthlyProfitsData} yearlyProfitsData={yearlyProfitsData} dailyProfitsData={dailyProfitsData} dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
+      <RevenueCharts  monthlyProfitsData={monthlyProfitsData} yearlyProfitsData={yearlyProfitsData} dailyProfitsData={dailyProfitsData} dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
     </div>
   );
 

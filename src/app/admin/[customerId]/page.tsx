@@ -1,14 +1,9 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { updateJsonFile } from "@/helpers/updateJSONData";
-import OrderModel from "@/components/orderModel";
+import {  useState } from "react";
 import CustomerPageAddProducts from "@/components/CustomerPageAddProducts";
 import CustomerPageAddCourses from "@/components/CustomerPageAddCourses";
 import CustomerPageAddPrintServices from "@/components/CustomerPageAddPrintServices";
-import Loading from "@/components/Loading";
-import LoadingScreen from "@/components/LoadingScreen";
-import FormattedPrice from "@/components/FormattedPrice";
 import toast from "react-hot-toast";
 import { Printer } from "lucide-react";
 const CustomerPage = () => {
@@ -53,8 +48,6 @@ const CustomerPage = () => {
   ];
   return (
     <div className="m-8">
-      {/* <h1 className="text-4xl font-semibold mb-6 text-center">Customer ID: {customerId}</h1> */}
-
       {customerData && (
         <div className="bg-white p-8 rounded-lg shadow-md">
           <h2 className="text-3xl font-semibold mb-8">Customer Information</h2>

@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
-import { Check, X, Trash, Edit, Plus, List, Grid } from "lucide-react";
+import { Check, X, Plus } from "lucide-react";
 
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from 'uuid';
 import { CourseType, ProductType } from "../../type";
 import Link from 'next/link'
-import SearchComponent from "./SearchComponent";
 import { formatFullName } from "@/lib/utils";
 const AdminCustomers = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -104,22 +103,14 @@ const AdminCustomers = () => {
             setError((error as Error).message);
         }
     };
-    const [isGridView, setGridView] = useState(true);
 
-    // Toggle between grid and list views
-    const toggleView = () => {
-        setGridView(!isGridView);
-    };
 
     const handleEditClick = (index: number) => {
         setEditIndex(index);
         setEditedItem({ ...jsonArray[index] });
         setSearchTerm('');
     };
-    function handleClick(event) {
-        event.stopPropagation();
-        // Handle the click event for the nested element
-    }
+   
     const handleEditSubmit = async () => {
         // Check for empty fields
         if (
@@ -194,7 +185,7 @@ const AdminCustomers = () => {
     };
 
     return (
-        <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
+        <div className={`min-h-[400px] lg:p-3 w-full bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
 
             {!jsonArray && <h2 className="font-bold mb-4">Current Customer data:</h2>}
 
@@ -215,21 +206,13 @@ const AdminCustomers = () => {
                         <Plus size={18} className="mr-1" />
                         Add Customer
                     </button>
-
-                    {/* Toggle Button for Grid and List View */}
-                    <button
-                        className={`text-gray-600 hover:text-blue-500 transition-colors duration-300 ${isGridView ? "opacity-50" : ""
-                            }`}
-                        onClick={toggleView}
-                    >
-                        {isGridView ? <List size={20} /> : <Grid size={20} />}
-                    </button>
+                    
                 </div>
 
 
             </div>
             {searchTerm.length >= 3 && jsonArray.length !== 0 && (
-                <div className={isGridView ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-4"}>
+                <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" }>
                     {jsonArray
                         .filter((item) => {
                             const fullName = item.fullName.toLowerCase();
@@ -249,9 +232,9 @@ const AdminCustomers = () => {
                                         id: item?.id,
                                         data: JSON.stringify(item)
                                     },
-                                }} className={`${isLinkDisabled ? 'cursor-wait text-gray-500' : ''} ${isGridView ? "hover:scale-105" : ""} block`}>
+                                }} className={`${isLinkDisabled ? 'cursor-wait text-gray-500' : ''}  block`}>
 
-                                    <span className="block font-bold mb-2 text-xl">{formatFullName(item.fullName)}</span>
+                                    <span className="block font-bold mb-2 text-xl rtl" dir="rtl">{item.fullName}</span>
                                     <span className="block text-gray-600 mb-2">Phone: {item.phone}</span>
                                     <span className="block text-gray-600 mb-2">Age: {item.age}</span>
                                 </Link>
