@@ -263,6 +263,16 @@ const TransactionAnalyzer = ({ customers }) => {
         total += parseInt(transaction.subtotal);
       });
     });
+    customers.forEach(customer => {
+      customer.transactions.courses.forEach(transaction => {
+        total += parseInt(transaction.subtotal);
+      });
+    });
+    customers.forEach(customer => {
+      customer.transactions.printServices.forEach(transaction => {
+        total += parseInt(transaction.subtotal);
+      });
+    });
     return total;
   }, [customers]);
 
@@ -419,7 +429,16 @@ const TransactionAnalyzer = ({ customers }) => {
               </div>
               <div>
                 <h4 className="text-md font-semibold mb-2">Daily Revenue</h4>
-                {Object.entries(dailyRevenue).map(([day, revenue]) => (
+                {Object.entries(dailyRevenue)
+                .sort(([dayA]: [string, any], [dayB]: [string, any]) => {
+                  // Convert dates to Date objects
+                  const dateA = new Date(dayA);
+                  const dateB = new Date(dayB);
+                  // Compare dates
+                  return dateB.getTime() - dateA.getTime();
+                })
+                
+                .map(([day, revenue]) => (
                   <p key={day} className="flex items-center my-2">
                     <Clock className="w-5 h-5 mr-2 text-blue-500" />{day}
                     <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
@@ -433,7 +452,16 @@ const TransactionAnalyzer = ({ customers }) => {
                 <p className="text-md font-semibold">Monthly Revenue</p>
               </div>
               <div>
-                {Object.entries(monthlyRevenue).map(([month, revenue]) => (
+                {Object.entries(monthlyRevenue)
+                .sort(([monthA]: [string, any], [monthB]: [string, any]) => {
+                  // Convert dates to Date objects
+                  const dateA = new Date(monthA);
+                  const dateB = new Date(monthB);
+                  // Compare dates
+                  return dateB.getTime() - dateA.getTime();
+                })
+                 
+                .map(([month, revenue]) => (
                   <p key={month} className="flex items-center my-2">
                     <Calendar className="w-5 h-5 mr-2 text-blue-500" />{month}
                     <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
@@ -447,7 +475,16 @@ const TransactionAnalyzer = ({ customers }) => {
                 <p className="text-md font-semibold">Yearly Revenue</p>
               </div>
               <div>
-                {Object.entries(yearlyRevenue).map(([year, revenue]) => (
+                {Object.entries(yearlyRevenue)
+                .sort(([yearA]: [string, any], [yearB]: [string, any]) => {
+                  // Convert dates to Date objects
+                  const dateA = new Date(yearA);
+                  const dateB = new Date(yearB);
+                  // Compare dates
+                  return dateB.getTime() - dateA.getTime();
+                })
+                
+                .map(([year, revenue]) => (
                   <p key={year} className="flex items-center my-2">
                     <Package className="w-5 h-5 mr-2 text-blue-500" />{year}
                     <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>

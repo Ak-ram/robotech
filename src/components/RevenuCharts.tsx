@@ -1,7 +1,6 @@
-
 // import { LineChart, XAxis, CartesianGrid, Tooltip, Legend, YAxis, Line } from "recharts";
 
-// const RevenueCharts = ({ dailyProfitsData, dailyRevenueData,monthlyProfitsData,yearlyProfitsData, monthlyRevenueData, yearlyRevenueData }) => {
+//  const RevenueCharts = ({ dailyProfitsData, dailyRevenueData,monthlyProfitsData,yearlyProfitsData, monthlyRevenueData, yearlyRevenueData }) => {
 //   const combinedData = dailyProfitsData.map((dataPoint, index) => ({
 //     name: dataPoint.name,
 //     profit: dataPoint.revenue,
@@ -77,23 +76,34 @@
 import { LineChart, XAxis, CartesianGrid, Tooltip, Legend, YAxis, Line } from "recharts";
 
  const RevenueCharts = ({ dailyProfitsData, dailyRevenueData,monthlyProfitsData,yearlyProfitsData, monthlyRevenueData, yearlyRevenueData }) => {
-  const combinedData = dailyProfitsData.map((dataPoint, index) => ({
-    name: dataPoint.name,
-    profit: dataPoint.revenue,
-    revenue: dailyRevenueData[index].revenue,
-  }));
+  const combinedData = dailyProfitsData.map((dataPoint, index) => {
+    const revenue = Math.max(0, dailyRevenueData[index].revenue); // Set negative revenue to zero
+    return {
+      name: dataPoint.name,
+      profit: dataPoint.revenue,
+      revenue: revenue,
+    };
+  });
+  
 
-  const monthlyCombinedData = monthlyRevenueData.map((dataPoint, index) => ({
-    name: dataPoint.name,
-    profit: monthlyProfitsData[index].revenue,
-    revenue: dataPoint.revenue,
-  }));
-
-  const yearlyCombinedData = yearlyRevenueData.map((dataPoint, index) => ({
-    name: dataPoint.name,
-    profit: yearlyProfitsData[index].revenue,
-    revenue: dataPoint.revenue,
-  }));
+  const monthlyCombinedData = monthlyRevenueData.map((dataPoint, index) => {
+    const revenue = Math.max(0, dataPoint.revenue); // Set negative revenue to zero
+    return {
+      name: dataPoint.name,
+      profit: monthlyProfitsData[index].revenue,
+      revenue: revenue,
+    };
+  });
+  
+  const yearlyCombinedData = yearlyRevenueData.map((dataPoint, index) => {
+    const revenue = Math.max(0, dataPoint.revenue); // Set negative revenue to zero
+    return {
+      name: dataPoint.name,
+      profit: yearlyProfitsData[index].revenue,
+      revenue: revenue,
+    };
+  });
+  
 
   return (
     <div className="mt-8">
@@ -110,6 +120,7 @@ import { LineChart, XAxis, CartesianGrid, Tooltip, Legend, YAxis, Line } from "r
             <Legend />
             <Line type="monotone" dataKey="revenue" stroke="#8884d8" name="Daily Revenue" />
             <Line type="monotone" dataKey="profit" stroke="#82ca9d" name="Daily Profits" />
+            
           </LineChart>
         </div>
       </div>
