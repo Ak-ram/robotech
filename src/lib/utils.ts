@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export function formatFullName(fullName:string) {
   const words = fullName.split(' ');
 
-  if (words.length < 3) {
+  if (words.length < 4) {
       return  words.map(name => name.charAt(0).toUpperCase() + name.slice(1)).join(' '); // Return the original full name if it has less than three parts
   }
 
