@@ -45,25 +45,13 @@ To set up the Robotech Space E-commerce Website locally, follow these steps:
    npm install
    ```
 
-3. Configure the environment variables:
-   
-   - Create a `.env` file in the root directory.
-   - Add the following environment variables and replace the values with your configuration:
-
-     ```
-     NEXT_PUBLIC_API_URL=API_URL
-     NEXT_PUBLIC_EMAILJS_SERVICE_ID=EMAILJS_SERVICE_ID
-     NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=EMAILJS_TEMPLATE_ID
-     NEXT_PUBLIC_EMAILJS_USER_ID=EMAILJS_USER_ID
-     ```
-
-4. Run the development server:
+3. Run the development server:
 
    ```shell
    npm run dev
    ```
 
-5. Access the website locally by opening your web browser and visiting `http://localhost:3000`.
+4. Access the website locally by opening your web browser and visiting `http://localhost:3000`.
 
 ## Contributing 🤝
 
