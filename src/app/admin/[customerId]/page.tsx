@@ -130,13 +130,7 @@ const CustomerPage = () => {
                   Print Bill
                   <Printer className="" />
                 </button>:null}
-                <button
-                  onClick={() => printBill()}
-                  className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-blue-200 text-blue-700 hover:bg-blue-500 hover:text-white transition duration-300`}
-                >
-                  Print Bill
-                  <Printer className="" />
-                </button>
+               
               </div>
             </section>
           </div>

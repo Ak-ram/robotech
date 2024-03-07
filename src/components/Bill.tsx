@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DoorClosed, Eraser, X } from "lucide-react";
+import { DoorClosed, Eraser, Printer, X } from "lucide-react";
 import DetailedLogo from '@/assets/DetailedLogo.png';
 import Image from "next/image";
 import FormattedPrice from "./FormattedPrice";
@@ -39,22 +39,16 @@ const Bill: React.FC<BillProps> = ({ setBillData = () => { }, transactionData, s
         minute: '2-digit',
         second: '2-digit',
     })
-    const handleResetBill = () => {
-        const confirmDelete = window.confirm(
-            `Are you sure you want to reset all bill data?`
-        );
-        if (confirmDelete) {
-            setBillData([]);
-            toast.success('Bill Data Reset Successfully')
-            setShowBill(false)
-        }
-    }
+
     const handlePrint = () => {
         setPrintMode(true);
         setTimeout(() => {
             window.print();
             setPrintMode(false);
+            setBillData([]);
+            setShowBill(false)
         }, 100);
+
     };
     return (
         <>
@@ -69,11 +63,7 @@ const Bill: React.FC<BillProps> = ({ setBillData = () => { }, transactionData, s
                 <div className="bg-white w-full max-w-screen-md mx-auto p-6 md:p-8 rounded-lg shadow-md">
                     {!printMode && (
                         <div className="icons-handler flex items-center justify-between">
-                            <Eraser
-                                className="cursor-pointer text-rose-600"
-                                size="24"
-                                onClick={() => handleResetBill()}
-                            />
+
                             <X
                                 className="cursor-pointer ml-auto text-gray-600"
                                 size="24"
@@ -145,7 +135,9 @@ const Bill: React.FC<BillProps> = ({ setBillData = () => { }, transactionData, s
                                 </div>
                             </div>
                         </div>
-                        <button className="icons-handler" onClick={handlePrint}>Print</button>
+                        <button className={`icons-handler py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-blue-200 text-blue-700 hover:bg-blue-500 hover:text-white transition duration-300`}
+                            onClick={handlePrint}> Print
+                            <Printer className="" /></button>
                     </div>
                 </div>
             </div>
