@@ -133,7 +133,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       dailyRevenue[dayKey] += parseInt(transaction.subtotal);
       // dailyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
-      dailyProfits[dayKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
+      dailyProfits[dayKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice * transaction.quantity || 0)).toString());
 
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
@@ -143,7 +143,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       monthlyRevenue[monthKey] += parseInt(transaction.subtotal);
       // monthlyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
-      monthlyProfits[monthKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
+      monthlyProfits[monthKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice * transaction.quantity || 0)).toString());
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
@@ -153,7 +153,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       yearlyRevenue[yearKey] += parseInt(transaction.subtotal);
       // yearlyProfits[dayKey] += parseInt(transaction.subtotal - (transaction.wholesalePrice || 0));
-      yearlyProfits[yearKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice || 0)).toString());
+      yearlyProfits[yearKey] += parseInt((transaction.subtotal - (transaction.wholesalePrice * transaction.quantity || 0)).toString());
     });
 
     customer.transactions.courses.forEach(course => {
@@ -170,7 +170,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       dailyRevenue[dayKey] += parseInt(course.subtotal);
       // dailyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
-      dailyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
+      dailyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice * course.quantity  || 0)).toString());
 
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
@@ -180,8 +180,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       monthlyRevenue[monthKey] += parseInt(course.subtotal);
       // monthlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
-      // monthlyProfits[monthKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
-      monthlyProfits[monthKey] += parseInt(course.subtotal);
+      monthlyProfits[monthKey] += parseInt((course.subtotal - (course.wholesalePrice * course.quantity  || 0)).toString());
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
@@ -191,8 +190,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       yearlyRevenue[yearKey] += parseInt(course.subtotal);
       // yearlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
-      // yearlyProfits[yearKey] += parseInt((course.subtotal - (course.wholesalePrice || 0)).toString());
-      yearlyProfits[yearKey] += parseInt(course.subtotal);
+      yearlyProfits[yearKey] += parseInt((course.subtotal - (course.wholesalePrice * course.quantity || 0)).toString());
 
     });
 
@@ -210,7 +208,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       dailyRevenue[dayKey] += parseInt(printService.subtotal);
       // dailyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
-      dailyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
+      dailyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice * printService.quantity || 0)).toString());
 
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
@@ -220,8 +218,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       monthlyRevenue[monthKey] += parseInt(printService.subtotal);
       // monthlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
-      // monthlyProfits[monthKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
-      monthlyProfits[monthKey] += parseInt(printService.subtotal);
+     monthlyProfits[monthKey] += parseInt((printService.subtotal - (printService.wholesalePrice  * printService.quantity || 0)).toString());
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
@@ -352,7 +349,8 @@ const TransactionAnalyzer = ({ customers }) => {
                 </div>
                 <div title='صافى المبلغ او الفلوس الي انت اخذتها من العميل' className="flex  flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Total</span>
-                  <FormattedPrice className='text-xs font-semibold' amount={+transaction.subtotal > 0 ? +transaction?.subtotal : 0} />
+                  {/* <FormattedPrice className='text-xs font-semibold' amount={+transaction.subtotal > 0 ? +transaction?.subtotal : 0} /> */}
+                  <FormattedPrice className='text-xs font-semibold' amount={+transaction?.subtotal} />
                 </div>
                 {/* {transaction?.wholesalePrice && +transaction?.wholesalePrice !== 0 ? */}
                 {/* {transaction?.wholesalePrice ? (
@@ -473,7 +471,7 @@ const TransactionAnalyzer = ({ customers }) => {
                       <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
                       <span>Revenue: <FormattedPrice amount={revenue as number} /></span>
                       {dailyProfits[day] && (
-                        <span className="ml-3">Profit: <FormattedPrice amount={dailyProfits[day] as number} /></span>
+                        <span className="ml-3">Outcome: <FormattedPrice amount={dailyProfits[day] as number} /></span>
                       )}
                     </p>
                   ))}
@@ -501,7 +499,7 @@ const TransactionAnalyzer = ({ customers }) => {
                       <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
                       <span>Revenue: <FormattedPrice amount={revenue as number} /></span>
                       {monthlyProfits[day] && (
-                        <span className="ml-3">Profit: <FormattedPrice amount={monthlyProfits[day] as number} /></span>
+                        <span className="ml-3">Outcome: <FormattedPrice amount={monthlyProfits[day] as number} /></span>
                       )}
                     </p>
                   ))}
@@ -529,7 +527,7 @@ const TransactionAnalyzer = ({ customers }) => {
                       <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
                       <span>Revenue: <FormattedPrice amount={revenue as number} /></span>
                       {yearlyProfits[day] && (
-                        <span className="ml-3">Profit: <FormattedPrice amount={yearlyProfits[day] as number} /></span>
+                        <span className="ml-3">Outcome: <FormattedPrice amount={yearlyProfits[day] as number} /></span>
                       )}
                     </p>
                   ))}
