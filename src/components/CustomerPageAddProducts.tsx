@@ -47,37 +47,67 @@ const CustomerPageAddProducts = ({ billData,setBillData,customerData, setCustome
 
     fetchData();
   }, []);
-
   const handleRefundProductCount = async (product) => {
-    const updatedData = [...categoriesArray];
-    const category = updatedData[0][product.productCategory];
-    if (category) {
-      const productIndex = category.findIndex(
-        (item) => item.id === product.productId
-      );
-      if (productIndex !== -1) {
-        let obj = updatedData[0][product.productCategory].find(
+    try {
+      const updatedData = [...categoriesArray];
+      const category = updatedData[0][product.productCategory];
+      if (category) {
+        const productIndex = category.findIndex(
           (item) => item.id === product.productId
         );
-        let updatedObject = {
-          ...obj,
-          count: `${+obj?.count + +product?.quantity}`,
-        };
-        updatedData[0][product.productCategory].map((product) => {
-          if (product.id === product.productId) {
-            return updatedObject;
-          }
-          return product;
-        });
+        if (productIndex !== -1) {
+          const updatedCategory = [...category]; // Create a copy of the category array
+          const refundedProduct = updatedCategory[productIndex];
+          refundedProduct.count = Number(refundedProduct.count) + Number(product.quantity); // Increment the count by refunded quantity
+          updatedCategory[productIndex] = refundedProduct; // Update the product in the category array
   
-        await updateJsonFile("robotech/pages/categories.json", updatedData);
+          updatedData[0][product.productCategory] = updatedCategory; // Update the category array in the updatedData
+  
+          await updateJsonFile("robotech/pages/categories.json", updatedData);
+          console.log("Product count updated successfully");
+        } else {
+          console.log("Product not found in category");
+        }
       } else {
-        console.log("Product not found in category");
+        console.log("Category not found");
       }
-    } else {
-      console.log("Category not found");
+    } catch (error) {
+      console.error("Error updating product count:", error);
     }
   };
+  
+  
+  
+  // const handleRefundProductCount = async (product) => {
+  //   const updatedData = [...categoriesArray];
+  //   const category = updatedData[0][product.productCategory];
+  //   if (category) {
+  //     const productIndex = category.findIndex(
+  //       (item) => item.id === product.productId
+  //     );
+  //     if (productIndex !== -1) {
+  //       let obj = updatedData[0][product.productCategory].find(
+  //         (item) => item.id === product.productId
+  //       );
+  //       let updatedObject = {
+  //         ...obj,
+  //         count: `${+obj?.count + +product?.quantity}`,
+  //       };
+  //       updatedData[0][product.productCategory].map((product) => {
+  //         if (product.id === product.productId) {
+  //           return updatedObject;
+  //         }
+  //         return product;
+  //       });
+  
+  //       await updateJsonFile("robotech/pages/categories.json", updatedData);
+  //     } else {
+  //       console.log("Product not found in category");
+  //     }
+  //   } else {
+  //     console.log("Category not found");
+  //   }
+  // };
 
   const handleRefundOrder = async (product) => {
     // Confirm with the user before proceeding with the refund
@@ -248,11 +278,6 @@ const CustomerPageAddProducts = ({ billData,setBillData,customerData, setCustome
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex-1">
-                  <Edit2
-                    className="ml-auto cursor-not-allowed text-blue-600"
-                    size={20}
-                  />
-                  {/* ADD BILL HERE */}
                   <ScrollText
                     onClick={() => {
                       setShowBill(true);
@@ -273,7 +298,7 @@ const CustomerPageAddProducts = ({ billData,setBillData,customerData, setCustome
               </div>
               {showBill && selectedProduct && (
                 <Bill
-                  transactionData={selectedProduct}
+                  transactionData={[selectedProduct]}
                   setShowBill={setShowBill}
                 />
               )}
