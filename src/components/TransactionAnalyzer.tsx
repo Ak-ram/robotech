@@ -211,7 +211,7 @@ const TransactionAnalyzer = ({ customers }) => {
       dailyRevenue[dayKey] += parseInt(printService.subtotal);
       // dailyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
       dailyProfits[dayKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
-      
+
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
       }
@@ -222,7 +222,7 @@ const TransactionAnalyzer = ({ customers }) => {
       // monthlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
       // monthlyProfits[monthKey] += parseInt((printService.subtotal - (printService.wholesalePrice || 0)).toString());
       monthlyProfits[monthKey] += parseInt(printService.subtotal);
-      
+
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
       }
@@ -352,7 +352,7 @@ const TransactionAnalyzer = ({ customers }) => {
                 </div>
                 <div title='صافى المبلغ او الفلوس الي انت اخذتها من العميل' className="flex  flex-col justify-center items-center">
                   <span className='text-xs font-semibold'>Total</span>
-                  <FormattedPrice className='text-xs font-semibold' amount={+transaction.subtotal > 0 ? +transaction?.subtotal:0} />
+                  <FormattedPrice className='text-xs font-semibold' amount={+transaction.subtotal > 0 ? +transaction?.subtotal : 0} />
                 </div>
                 {/* {transaction?.wholesalePrice && +transaction?.wholesalePrice !== 0 ? */}
                 {/* {transaction?.wholesalePrice ? (
@@ -379,30 +379,30 @@ const TransactionAnalyzer = ({ customers }) => {
                     ) : null}
                   </>
                 ) : null} */}
-              {transaction.wholesalePrice !== undefined && (
-  <>
-    {((+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal) && (
-      <div title='كسبان' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
-      </div>
-    )}
+                {transaction.wholesalePrice !== undefined && (
+                  <>
+                    {((+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal) && (
+                      <div title='كسبان' className='flex flex-col items-center'>
+                        <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
+                      </div>
+                    )}
 
-    {((+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal) && (
-      <div title='خسران' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
-      </div>
-    )}
+                    {((+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal) && (
+                      <div title='خسران' className='flex flex-col items-center'>
+                        <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
+                      </div>
+                    )}
 
-    {((+transaction.wholesalePrice * +transaction.quantity) >= +transaction.subtotal && (+transaction.wholesalePrice * +transaction.quantity) <= +transaction.subtotal) && (
-      <div title='كلون' className='flex flex-col items-center'>
-        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
-        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={0} />
-      </div>
-    )}
-  </>
-)}
+                    {((+transaction.wholesalePrice * +transaction.quantity) >= +transaction.subtotal && (+transaction.wholesalePrice * +transaction.quantity) <= +transaction.subtotal) && (
+                      <div title='كلون' className='flex flex-col items-center'>
+                        <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
+                        <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={0} />
+                      </div>
+                    )}
+                  </>
+                )}
 
               </div>
             </div>
@@ -457,23 +457,28 @@ const TransactionAnalyzer = ({ customers }) => {
                   <FormattedPrice amount={calculateTotalRevenue} /></p>
               </div>
               <div>
-                <h4 className="text-md font-semibold mb-2">Daily Revenue</h4>
+                <h4 className="text-md font-semibold mb-2">Daily Revenue and Profits</h4>
                 {Object.entries(dailyRevenue)
-                .sort(([dayA]: [string, any], [dayB]: [string, any]) => {
-                  // Convert dates to Date objects
-                  const dateA = new Date(dayA);
-                  const dateB = new Date(dayB);
-                  // Compare dates
-                  return dateB.getTime() - dateA.getTime();
-                })
-                
-                .map(([day, revenue]) => (
-                  <p key={day} className="flex items-center my-2">
-                    <Clock className="w-5 h-5 mr-2 text-blue-500" />{day}
-                    <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
-                    <FormattedPrice amount={revenue as number} /></p>
-                ))}
+                  .sort(([dayA]: [string, any], [dayB]: [string, any]) => {
+                    // Convert dates to Date objects
+                    const dateA = new Date(dayA);
+                    const dateB = new Date(dayB);
+                    // Compare dates
+                    return dateB.getTime() - dateA.getTime();
+                  })
+                  .map(([day, revenue]) => (
+                    <p key={day} className="flex items-center my-2">
+                      <Clock className="w-5 h-5 mr-2 text-blue-500" />
+                      {day}
+                      <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
+                      <span>Revenue: <FormattedPrice amount={revenue as number} /></span>
+                      {dailyProfits[day] && (
+                        <span className="ml-3">Profit: <FormattedPrice amount={dailyProfits[day] as number} /></span>
+                      )}
+                    </p>
+                  ))}
               </div>
+
             </div>
             <div className="bg-white rounded-lg p-4 mb-4">
               <div className="flex items-center mb-4">
@@ -482,44 +487,54 @@ const TransactionAnalyzer = ({ customers }) => {
               </div>
               <div>
                 {Object.entries(monthlyRevenue)
-                .sort(([monthA]: [string, any], [monthB]: [string, any]) => {
-                  // Convert dates to Date objects
-                  const dateA = new Date(monthA);
-                  const dateB = new Date(monthB);
-                  // Compare dates
-                  return dateB.getTime() - dateA.getTime();
-                })
-                 
-                .map(([month, revenue]) => (
-                  <p key={month} className="flex items-center my-2">
-                    <Calendar className="w-5 h-5 mr-2 text-blue-500" />{month}
-                    <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
-                    <FormattedPrice amount={revenue as number} /></p>
-                ))}
+                  .sort(([dayA]: [string, any], [dayB]: [string, any]) => {
+                    // Convert dates to Date objects
+                    const dateA = new Date(dayA);
+                    const dateB = new Date(dayB);
+                    // Compare dates
+                    return dateB.getTime() - dateA.getTime();
+                  })
+                  .map(([day, revenue]) => (
+                    <p key={day} className="flex items-center my-2">
+                      <Clock className="w-5 h-5 mr-2 text-blue-500" />
+                      {day}
+                      <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
+                      <span>Revenue: <FormattedPrice amount={revenue as number} /></span>
+                      {monthlyProfits[day] && (
+                        <span className="ml-3">Profit: <FormattedPrice amount={monthlyProfits[day] as number} /></span>
+                      )}
+                    </p>
+                  ))}
               </div>
+
             </div>
             <div className="bg-white rounded-lg p-4">
               <div className="flex items-center mb-4">
                 <Package className="w-6 h-6 mr-2 text-orange-500" />
-                <p className="text-md font-semibold">Yearly Revenue</p>
+                <p className="text-md font-semibold">Yearly Revenue and Profits</p>
               </div>
               <div>
                 {Object.entries(yearlyRevenue)
-                .sort(([yearA]: [string, any], [yearB]: [string, any]) => {
-                  // Convert dates to Date objects
-                  const dateA = new Date(yearA);
-                  const dateB = new Date(yearB);
-                  // Compare dates
-                  return dateB.getTime() - dateA.getTime();
-                })
-                
-                .map(([year, revenue]) => (
-                  <p key={year} className="flex items-center my-2">
-                    <Package className="w-5 h-5 mr-2 text-blue-500" />{year}
-                    <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
-                    <FormattedPrice amount={revenue as number} /></p>
-                ))}
+                  .sort(([dayA]: [string, any], [dayB]: [string, any]) => {
+                    // Convert dates to Date objects
+                    const dateA = new Date(dayA);
+                    const dateB = new Date(dayB);
+                    // Compare dates
+                    return dateB.getTime() - dateA.getTime();
+                  })
+                  .map(([day, revenue]) => (
+                    <p key={day} className="flex items-center my-2">
+                      <Clock className="w-5 h-5 mr-2 text-blue-500" />
+                      {day}
+                      <div className="flex-grow border-t-2 border-dashed border-slate-300 mx-3"></div>
+                      <span>Revenue: <FormattedPrice amount={revenue as number} /></span>
+                      {yearlyProfits[day] && (
+                        <span className="ml-3">Profit: <FormattedPrice amount={yearlyProfits[day] as number} /></span>
+                      )}
+                    </p>
+                  ))}
               </div>
+
             </div>
           </div>
         );
@@ -539,7 +554,7 @@ const TransactionAnalyzer = ({ customers }) => {
           onClick={() => handlePeriodClick('daily')}>
           <Clock className="w-8 h-8 mr-2 text-indigo-500" />
           <div>
-            <h3 className="text-lg text-indigo-600 font-semibold">Daily Sells</h3>
+            <h3 className="text-lg text-indigo-600 font-semibold">Daily Revenue</h3>
             <p className="text-indigo-500">{Object.keys(dailySells).length}</p>
           </div>
         </div>
@@ -547,7 +562,7 @@ const TransactionAnalyzer = ({ customers }) => {
           onClick={() => handlePeriodClick('monthly')}>
           <Calendar className="w-8 h-8 mr-2 text-green-500" />
           <div>
-            <h3 className="text-lg text-green-500  font-semibold">Monthly Sells</h3>
+            <h3 className="text-lg text-green-500  font-semibold">Monthly Revenue</h3>
             <p className="text-green-500 ">{Object.keys(monthlySells).length}</p>
           </div>
         </div>
@@ -555,7 +570,7 @@ const TransactionAnalyzer = ({ customers }) => {
           onClick={() => handlePeriodClick('yearly')}>
           <Package className="w-8 h-8 mr-2 text-orange-500" />
           <div>
-            <h3 className="text-lg text-orange-500 font-semibold">Yearly Sells</h3>
+            <h3 className="text-lg text-orange-500 font-semibold">Yearly Revenue</h3>
             <p className="text-orange-600">{Object.keys(yearlySells).length}</p>
           </div>
         </div>
@@ -577,7 +592,7 @@ const TransactionAnalyzer = ({ customers }) => {
         </div>
       )}
       {/* Render Revenue Charts */}
-      <RevenueCharts  monthlyProfitsData={monthlyProfitsData} yearlyProfitsData={yearlyProfitsData} dailyProfitsData={dailyProfitsData} dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
+      <RevenueCharts monthlyProfitsData={monthlyProfitsData} yearlyProfitsData={yearlyProfitsData} dailyProfitsData={dailyProfitsData} dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
     </div>
   );
 

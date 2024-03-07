@@ -177,10 +177,7 @@ const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomer
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex-1">
-                  <Edit2
-                    className="ml-auto cursor-not-allowed text-blue-600"
-                    size={20}
-                  />
+                
                   {/* ADD BILL HERE */}
                   <ScrollText
                     onClick={() => {
@@ -196,7 +193,7 @@ const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomer
               </div>
               {showBill && selectedCourse && (
                 <Bill
-                  transactionData={selectedCourse}
+                  transactionData={[selectedCourse]}
                   setShowBill={setShowBill}
                 />
               )}

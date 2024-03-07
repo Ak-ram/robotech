@@ -8,7 +8,7 @@ import { Edit, Edit2, Redo, ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
 import { getPrintServices } from "@/helpers/getPrintServices";
 
-const CustomerPageAddPrintServices = ({ billData,setBillData,customerData, setCustomerData }) => {
+const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, setCustomerData }) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
@@ -41,7 +41,7 @@ const CustomerPageAddPrintServices = ({ billData,setBillData,customerData, setCu
 
 
 
-  
+
 
   const handleAddOrder = async () => {
     // Validate order details if needed
@@ -78,7 +78,7 @@ const CustomerPageAddPrintServices = ({ billData,setBillData,customerData, setCu
 
         // Update the customerData state with the new transaction
         setCustomerData(existingCustomer);
-        setBillData([...billData,newOrder])
+        setBillData([...billData, newOrder])
 
         // Reset newOrder fields
         setNewOrder({
@@ -159,10 +159,7 @@ const CustomerPageAddPrintServices = ({ billData,setBillData,customerData, setCu
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex-1">
-                  <Edit2
-                    className="cursor-not-allowed text-blue-600"
-                    size={20}
-                  />
+
                   {/* ADD BILL HERE */}
                   <ScrollText
                     onClick={() => {
@@ -173,16 +170,11 @@ const CustomerPageAddPrintServices = ({ billData,setBillData,customerData, setCu
                     size={20}
                   />
                 </div>
-                <span title="مرتجع">
-                  <Redo
-                    className="ml-auto mr-2 cursor-not-allowed text-red-600"
-                    size={20}
-                  />
-                </span>
+
               </div>
               {showBill && selectedService && (
                 <Bill
-                  transactionData={selectedService}
+                  transactionData={[selectedService]}
                   setShowBill={setShowBill}
                 />
               )}
