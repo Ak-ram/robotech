@@ -1,39 +1,65 @@
-# Robotech 
+# Robotech Space
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Welcome to Robotech Space! This project is an e-commerce website for an electronic component store located in front of Alexandria band in Beni-Suef, Egypt. Below you'll find essential information on the project setup, features, and functionalities.
 
-## Getting Started
+## Project Overview
 
+Robotech Space is built using Next.js, CSS, and Chart.js. It aims to provide users with a seamless shopping experience for electronic components. The website includes various features and pages catering to different aspects of the store's offerings.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Responsive UI Design**: The website is designed to be fully responsive, ensuring optimal viewing and interaction experiences across a wide range of devices.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Pages**:
+   - Shop
+   - Courses
+   - Print Services
+   - About
+   - FAQ
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Wishlist and Comparison**:
+   - Users can add products to their wishlist for future reference.
+   - Comparison functionality allows users to compare between products to make informed decisions.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. **Advanced Search**:
+   - Users can search for products by price, name, and sort them in ascending or descending order.
 
-## Learn More
+5. **Cart and Payment**:
+   - The cart page features an advanced UI and supports two payment methods: Vodafone Cash and cash in-store.
 
-To learn more about Next.js, take a look at the following resources:
+6. **Email Integration**:
+   - Utilizes the EmailJS library to send product data, along with customer information, to Robotech's Gmail for completing the payment process.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+7. **Admin Dashboard**:
+   - Allows administrators to manage products, courses, print services, and shop slides.
+   - Product management includes editing, adding, and deleting products, as well as specifying product stock.
+   - Provides a table UI displaying updated data about each product, with alert colors indicating stock status.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+8. **Customer Management**:
+   - Admins can add customers with their details and view their transaction history.
 
-## Deploy on Vercel
+9. **Super Admin Features**:
+   - Accessible via a specific password.
+   - Provides various statistics about the store, including product stock, wholesale pricing, customer classifications, top-selling products, and profitability.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+10. **Refund Feature**:
+    - Allows for product refunds, adjusting stock accordingly.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Setup Instructions
+
+1. Clone the repository.
+2. Install dependencies using `npm install`.
+3. Set up the required environment variables.
+4. Run the development server with `npm run dev`.
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or pull requests for any improvements or bug fixes.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+Thank you for choosing Robotech Space for your e-commerce needs! If you have any questions or feedback, please don't hesitate to reach out. Happy shopping! 🚀🛒
