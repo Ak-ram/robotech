@@ -394,7 +394,7 @@ const TransactionAnalyzer = ({ customers }) => {
                     )}
 
                     {((+transaction.wholesalePrice * +transaction.quantity) >= +transaction.subtotal && (+transaction.wholesalePrice * +transaction.quantity) <= +transaction.subtotal) && (
-                      <div title='كلون' className='flex flex-col items-center'>
+                      <div title='بدون عائد' className='flex flex-col items-center'>
                         <span className='text-xs flex items-center text-orange-400 font-semibold'>Fair <Diff className='ml-1' size={16} /></span>
                         <FormattedPrice className='text-xs text-orange-400 font-semibold' amount={0} />
                       </div>
