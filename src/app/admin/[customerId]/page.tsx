@@ -1,11 +1,12 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import {  useState } from "react";
+import { useState } from "react";
 import CustomerPageAddProducts from "@/components/CustomerPageAddProducts";
 import CustomerPageAddCourses from "@/components/CustomerPageAddCourses";
 import CustomerPageAddPrintServices from "@/components/CustomerPageAddPrintServices";
 import toast from "react-hot-toast";
 import { Printer } from "lucide-react";
+import Bill from "@/components/Bill";
 const CustomerPage = () => {
   const router = useRouter();
   const searchPar = useSearchParams();
@@ -16,13 +17,16 @@ const CustomerPage = () => {
     typeof data === "string" ? JSON.parse(data) : null;
   const [customerData, setCustomerData] = useState(initialCustomerData);
   const [currentTab, setCurrentTab] = useState(0);
-
+  const [billData, setBillData] = useState<any>([]);
+  const [showBill, setShowBill] = useState(false)
   const tabs = [
     {
       content: (
         <CustomerPageAddProducts
           setCustomerData={setCustomerData}
           customerData={customerData}
+          billData={billData}
+          setBillData={setBillData}
         />
       ),
       label: "Product",
@@ -32,6 +36,8 @@ const CustomerPage = () => {
         <CustomerPageAddCourses
           setCustomerData={setCustomerData}
           customerData={customerData}
+          billData={billData}
+          setBillData={setBillData}
         />
       ),
       label: "Course",
@@ -41,11 +47,17 @@ const CustomerPage = () => {
         <CustomerPageAddPrintServices
           setCustomerData={setCustomerData}
           customerData={customerData}
+          billData={billData}
+          setBillData={setBillData}
         />
       ),
       label: "Print Service",
     },
   ];
+  const printBill = () => {
+    setShowBill(true);
+    toast.success("When you're ready, please click CTRL + P to print.")
+  }
   return (
     <div className="m-8">
       {customerData && (
@@ -103,27 +115,27 @@ const CustomerPage = () => {
                   <button
                     key={index}
                     onClick={() => setCurrentTab(index)}
-                    className={`py-3 px-5 rounded focus:outline-none ${
-                      currentTab === index
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300"
-                    }`}
+                    className={`py-3 px-5 rounded focus:outline-none ${currentTab === index
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300"
+                      }`}
                   >
                     Sell {tab.label}
                   </button>
                 ))}
-                <button
-                  onClick={() => toast.error("still working on it...")}
-                  className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-rose-200 text-rose-700 hover:bg-rose-500 hover:text-white transition duration-300`}
+                {billData.length ? <button
+                  onClick={() => printBill()}
+                  className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-blue-200 text-blue-700 hover:bg-rose-500 hover:text-white transition duration-300`}
                 >
                   Print Bill
-                  <Printer className=""/>
-                </button>
+                  <Printer className="" />
+                </button>:null}
               </div>
             </section>
           </div>
         </div>
       )}
+      {showBill && <Bill setBillData={setBillData} setShowBill={setShowBill} transactionData={billData} />}
     </div>
   );
 };

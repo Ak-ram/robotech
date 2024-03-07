@@ -1,34 +1,60 @@
 import React from "react";
-import { X } from "lucide-react";
+import { DoorClosed, Eraser, X } from "lucide-react";
 import DetailedLogo from '@/assets/DetailedLogo.png';
 import Image from "next/image";
 import FormattedPrice from "./FormattedPrice";
 
-const Bill = ({ transactionData, setShowBill }) => {
-    const { date, productName, quantity, subtotal, piecePrice, discount } = transactionData;
-    console.log(transactionData)
+interface TransactionData {
+    productName: string;
+    quantity: number;
+    date: string;
+    discount: number;
+    piecePrice: number;
+    subtotal: number;
+}
+
+interface BillProps {
+    setBillData?: (data: TransactionData[]) => void;
+    transactionData: TransactionData[];
+    setShowBill: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Bill: React.FC<BillProps> = ({ setBillData = () => { }, transactionData, setShowBill }) => {
     // Add your company data
     const companyData = {
-        name: "Electronic Store",
-        address: "123 Main Street, Cityville",
-        phone: "(555) 123-4567",
+        name: "Robotech Space",
+        address: "In front of Alex Bank, Beni Suef",
+        phone: "01102071544",
     };
+
+    // Calculate total amount
+    const totalAmount = transactionData.reduce((total, transaction) => total + transaction.subtotal, 0);
+    const dating = new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    })
 
     return (
         <>
             <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="bg-white w-full max-w-screen-md mx-auto p-6 md:p-8 rounded-lg shadow-md">
+
                     <X
                         className="cursor-pointer ml-auto text-gray-600"
                         size="24"
-                        onClick={() => setShowBill(false)}
+                        onClick={() => { setShowBill(false); }}
                     />
+
                     <div className="p-4">
                         {/* Logo and Company Information */}
                         <div className="flex items-center justify-between mb-4">
                             <div>
                                 <Image className="mr-2 w-44" src={DetailedLogo} alt="Company Logo" width={70} height={70} />
-
                                 <span className="font-bold text-lg">{companyData.name}</span>
                             </div>
                             <div className="text-right">
@@ -38,42 +64,40 @@ const Bill = ({ transactionData, setShowBill }) => {
                         </div>
 
                         {/* Invoice Details */}
-                        <h2 className="text-xl font-bold mb-4">Invoice</h2>
-                        <div className="mb-4 flex flex-col gap-3">
-                            <p className="font-bold text-zinc-800">
-                                Transaction Date: <span className="font-semibold">{date}</span>
-                            </p>
-                            <p className="font-bold text-zinc-800">
-                                Product Name: <span className="font-semibold">
-                                    {productName}</span>
-                            </p>
-                            <p className="font-bold text-zinc-800">
-                                Quantity: <span className="font-semibold">
-
-                                    {quantity}</span>
-                            </p>
-                            <p className="font-bold text-zinc-800">
-                                Piece Price:  <span className="font-semibold">
-
-                                    <FormattedPrice amount={piecePrice} />
-
-                                </span>
-                            </p>
-                            <p className="font-bold text-zinc-800">
-                                Discount:  <span className="font-semibold">
-
-                                    <FormattedPrice amount={discount} />
-                                </span>
-                            </p>
+                        <div className="mb-4">
+                            <h2 className="text-xl font-bold mb-2">Invoice</h2>
+                            <span className="mb-2 block font-medium text-sm">{dating}</span>
+                            <table className="w-full border-collapse">
+                                <thead>
+                                    <tr className="bg-gray-100">
+                                        <th className="p-3 text-sm text-left">Product Name</th>
+                                        <th className="p-3 text-sm text-left">Quantity</th>
+                                        <th className="p-3 text-sm text-left">Piece Price</th>
+                                        <th className="p-3 text-sm text-left">Discount</th>
+                                        <th className="p-3 text-sm text-left">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {transactionData.map((transaction, index) => (
+                                        <tr key={index} className="border-b">
+                                            <td className="text-sm p-3">{transaction.productName}</td>
+                                            <td className="text-sm p-3">{transaction.quantity}</td>
+                                            <td className="text-sm p-3"><FormattedPrice amount={transaction.piecePrice} /></td>
+                                            <td className="text-sm p-3"><FormattedPrice amount={transaction.discount} /></td>
+                                            <td className="text-sm p-3"><FormattedPrice amount={transaction.subtotal} /></td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
 
-                        {/* Subtotal and Total */}
+                        {/* Total Amount */}
                         <div className="border-t border-gray-300 py-4 mb-4">
-                            <p className="text-sm">
-                                <strong>Subtotal:</strong> <FormattedPrice amount={subtotal} />
+                            <p className="font-bold">
+                                Total Amount: <FormattedPrice amount={totalAmount} />
                             </p>
-                            {/* Add more fields if needed, such as taxes, discounts, etc. */}
                         </div>
+
                         {/* Signature Section */}
                         <div className="my-16">
                             <h3 className="text-lg font-bold mb-2">Signatures</h3>
@@ -88,7 +112,6 @@ const Bill = ({ transactionData, setShowBill }) => {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

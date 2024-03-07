@@ -8,7 +8,7 @@ import { Edit, Edit2, Redo, ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
 import { getPrintServices } from "@/helpers/getPrintServices";
 
-const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
+const CustomerPageAddPrintServices = ({ billData,setBillData,customerData, setCustomerData }) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
@@ -78,6 +78,8 @@ const CustomerPageAddPrintServices = ({ customerData, setCustomerData }) => {
 
         // Update the customerData state with the new transaction
         setCustomerData(existingCustomer);
+        setBillData([...billData,newOrder])
+
         // Reset newOrder fields
         setNewOrder({
           productName: "",

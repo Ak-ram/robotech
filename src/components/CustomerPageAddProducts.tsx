@@ -8,7 +8,7 @@ import FormattedPrice from "./FormattedPrice";
 import { Check, Edit, Edit2, Redo, ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
 
-const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
+const CustomerPageAddProducts = ({ billData,setBillData,customerData, setCustomerData }) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
@@ -69,11 +69,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
           }
           return product;
         });
-        console.log("new", updatedData);
-        // updatedData[0][product.productCategory][productIndex].count +=
-        //   product.quantity;
-        // setCategoriesArray(updatedData);
-        // console.log(product.quantity)
+  
         await updateJsonFile("robotech/pages/categories.json", updatedData);
       } else {
         console.log("Product not found in category");
@@ -137,7 +133,7 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
     setLastOrderId(productId);
     setTimeout(() => {
       setLastOrderId("");
-    }, 5 * 1000 * 60);
+    }, 3 * 1000 * 60);
     // Validate order details if needed
     const existingCustomerIndex = jsonArray.findIndex(
       (customer) => customer.id === customerData.id
@@ -168,13 +164,13 @@ const CustomerPageAddProducts = ({ customerData, setCustomerData }) => {
           );
 
         jsonArray[existingCustomerIndex] = existingCustomer;
-        console.log(newOrder);
         // Update the JSON file with the modified JSON array
         setShowAddOrderModal(false);
         await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
 
         // Update the customerData state with the new transaction
         setCustomerData(existingCustomer);
+        setBillData([...billData,newOrder])
         // Reset newOrder fields
         setNewOrder({
           productName: "",
