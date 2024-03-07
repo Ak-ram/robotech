@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DoorClosed, Eraser, X } from "lucide-react";
 import DetailedLogo from '@/assets/DetailedLogo.png';
 import Image from "next/image";
@@ -19,7 +19,6 @@ interface BillProps {
     transactionData: TransactionData[];
     setShowBill: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 const Bill: React.FC<BillProps> = ({ setBillData = () => { }, transactionData, setShowBill }) => {
     // Add your company data
     const companyData = {
@@ -27,6 +26,7 @@ const Bill: React.FC<BillProps> = ({ setBillData = () => { }, transactionData, s
         address: "In front of Alex Bank, Beni Suef",
         phone: "01102071544",
     };
+    const [printMode, setPrintMode] = useState(false)
 
     // Calculate total amount
     const totalAmount = transactionData.reduce((total, transaction) => total + transaction.subtotal, 0);
@@ -49,22 +49,40 @@ const Bill: React.FC<BillProps> = ({ setBillData = () => { }, transactionData, s
             setShowBill(false)
         }
     }
-
+    const handlePrint = () => {
+        setPrintMode(true);
+        setTimeout(() => {
+            window.print();
+            setPrintMode(false);
+        }, 100);
+    };
     return (
         <>
+            {printMode && (
+                <style>{`
+          .icons-handler {
+            display: none !important;
+          }
+        `}</style>
+            )}
             <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="bg-white w-full max-w-screen-md mx-auto p-6 md:p-8 rounded-lg shadow-md">
-                    <div className="flex w-full items-center justify-between">
-                        <Eraser
-                            className="cursor-pointer text-rose-600"
-                            size="24"
-                            onClick={() => handleResetBill()} />
-                        <X
-                            className="cursor-pointer ml-auto text-gray-600"
-                            size="24"
-                            onClick={() => { setShowBill(false); }}
-                        />
-                    </div>
+                    {!printMode && (
+                        <div className="icons-handler flex items-center justify-between">
+                            <Eraser
+                                className="cursor-pointer text-rose-600"
+                                size="24"
+                                onClick={() => handleResetBill()}
+                            />
+                            <X
+                                className="cursor-pointer ml-auto text-gray-600"
+                                size="24"
+                                onClick={() => {
+                                    setShowBill(false);
+                                }}
+                            />
+                        </div>
+                    )}
                     <div className="p-4">
                         {/* Logo and Company Information */}
                         <div className="flex items-center justify-between mb-4">
@@ -127,6 +145,7 @@ const Bill: React.FC<BillProps> = ({ setBillData = () => { }, transactionData, s
                                 </div>
                             </div>
                         </div>
+                        <button className="icons-handler" onClick={handlePrint}>Print</button>
                     </div>
                 </div>
             </div>
