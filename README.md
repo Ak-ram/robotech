@@ -1,65 +1,89 @@
-# Robotech Space
+# Robotech Space E-commerce Website 🚀
 
-Welcome to Robotech Space! This project is an e-commerce website for an electronic component store located in front of Alexandria band in Beni-Suef, Egypt. Below you'll find essential information on the project setup, features, and functionalities.
+Welcome to the Robotech Space E-commerce Website! This is an electronic component store located in front of Alexandria Band in Beni-Suef, Egypt. This repository contains the source code for the website built with Next.js, CSS, and Chart.js. The website offers several features to enhance the user experience and streamline the shopping process. Below you will find an overview of the project and instructions on how to set it up.
 
-## Project Overview
+## Features ✨
 
-Robotech Space is built using Next.js, CSS, and Chart.js. It aims to provide users with a seamless shopping experience for electronic components. The website includes various features and pages catering to different aspects of the store's offerings.
+1. Responsive UI Design 📱: The website is designed to adapt to different screen sizes, providing an optimal viewing experience on desktop, tablet, and mobile devices.
+2. Pages 📄: The website consists of the following pages:
+   - Shop 🛍️: Browse and purchase electronic components.
+   - Courses 🎓: Access information about available courses.
+   - Print Services 🖨️: Explore print services offered by Robotech Space.
+   - About ℹ️: Learn more about Robotech Space and its mission.
+   - FAQ ❓: Find answers to frequently asked questions.
+3. Wish List and Product Comparison 📝: Users can add products to their wish list for future reference and compare different products on the comparison page.
+4. Advanced Search 🔍: The website includes a powerful search page that allows users to search for products by price, name, and sort them in ascending or descending order.
+5. Cart and Payment Methods 🛒💳: Users can add products to their cart and proceed to checkout using two payment methods: Vodafone Cash and cash payment at the store.
+6. EmailJS Integration ✉️: The website utilizes the EmailJS library to send client product data, including name, cart contents, address, message, and phone number, to Robotech's Gmail account for completing the payment process.
+7. Admin Dashboard 🖥️: The admin dashboard provides administrative control over various aspects of the website:
+   - Product Management 📦: Add, edit, and delete products, specify product stock, and view updated data with informative alert colors indicating product availability.
+   - Course and Print Services Management 🎓🖨️: Control course and print service data.
+   - Shop Slides and Header Advertisements 🖼️: Manage slides in the shop page and control advertisements displayed in the header.
+   - Customer Management 👥: Add and manage customer data, including address, name, ID, faculty, age, and transaction history across courses, products, and print services.
+8. Super Admin Section 🔐: The super admin section is accessible only with a specific password and provides advanced statistics and features:
+   - Products Overview 📊: Display the number of in-stock and out-of-stock products, along with their total price.
+   - Wholesale Pricing 💰: Assign wholesale prices to products.
+   - Customer Analysis 📈: Classify customers based on their transaction history into Premium, Transient, Repeat, and Lead customers.
+   - Top Selling Products 🏆: Identify the top-selling products, services, and courses.
+   - Profit Calculation 💵: Calculate daily, monthly, and yearly profits and visualize them using charts.
+   - Refund Feature ⏪: Enable product refunds, with the corresponding increase in stock.
 
-## Features
+## Getting Started 🚀
 
-1. **Responsive UI Design**: The website is designed to be fully responsive, ensuring optimal viewing and interaction experiences across a wide range of devices.
+To set up the Robotech Space E-commerce Website locally, follow these steps:
 
-2. **Pages**:
-   - Shop
-   - Courses
-   - Print Services
-   - About
-   - FAQ
+1. Clone the repository:
 
-3. **Wishlist and Comparison**:
-   - Users can add products to their wishlist for future reference.
-   - Comparison functionality allows users to compare between products to make informed decisions.
+   ```shell
+   git clone https://github.com/your-username/robotech-space.git
+   ```
 
-4. **Advanced Search**:
-   - Users can search for products by price, name, and sort them in ascending or descending order.
+2. Install the dependencies:
 
-5. **Cart and Payment**:
-   - The cart page features an advanced UI and supports two payment methods: Vodafone Cash and cash in-store.
+   ```shell
+   cd robotech-space
+   npm install
+   ```
 
-6. **Email Integration**:
-   - Utilizes the EmailJS library to send product data, along with customer information, to Robotech's Gmail for completing the payment process.
+3. Configure the environment variables:
+   
+   - Create a `.env` file in the root directory.
+   - Add the following environment variables and replace the values with your configuration:
 
-7. **Admin Dashboard**:
-   - Allows administrators to manage products, courses, print services, and shop slides.
-   - Product management includes editing, adding, and deleting products, as well as specifying product stock.
-   - Provides a table UI displaying updated data about each product, with alert colors indicating stock status.
+     ```
+     NEXT_PUBLIC_API_URL=API_URL
+     NEXT_PUBLIC_EMAILJS_SERVICE_ID=EMAILJS_SERVICE_ID
+     NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=EMAILJS_TEMPLATE_ID
+     NEXT_PUBLIC_EMAILJS_USER_ID=EMAILJS_USER_ID
+     ```
 
-8. **Customer Management**:
-   - Admins can add customers with their details and view their transaction history.
+4. Run the development server:
 
-9. **Super Admin Features**:
-   - Accessible via a specific password.
-   - Provides various statistics about the store, including product stock, wholesale pricing, customer classifications, top-selling products, and profitability.
+   ```shell
+   npm run dev
+   ```
 
-10. **Refund Feature**:
-    - Allows for product refunds, adjusting stock accordingly.
+5. Access the website locally by opening your web browser and visiting `http://localhost:3000`.
 
-## Setup Instructions
+## Contributing 🤝
 
-1. Clone the repository.
-2. Install dependencies using `npm install`.
-3. Set up the required environment variables.
-4. Run the development server with `npm run dev`.
+If you'd like to contribute to this project, please follow the guidelines outlined in the CONTRIBUTING.md file.
 
-## Contributing
-
-Contributions are welcome! Feel free to open issues or pull requests for any improvements or bug fixes.
-
-## License
+## License 📄
 
 This project is licensed under the [MIT License](LICENSE).
 
----
+## Acknowledgements 🙏
 
-Thank you for choosing Robotech Space for your e-commerce needs! If you have any questions or feedback, please don't hesitate to reach out. Happy shopping! 🚀🛒
+We would like to express our gratitude to the following resources and libraries used in this project:
+
+- Next.js: [https://nextjs.org/](https://nextjs.org/)
+- CSS: [https://developer.mozilla.org/en-US/docs/Web/CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- Chart.js: [https://www.chartjs.org/](https://www.chartjs.org/)
+- EmailJS: [https://www.emailjs.com/](https://www.emailjs.com/)
+
+## Contact
+
+For any inquiries or support, please email us at [ashrfakrm64@gmail.com](mailto:ashrfakrm64@gmail.com).
+
+Thank you for using the Robotech Space E-commerce Website! We hope you have a great shopping experience.
