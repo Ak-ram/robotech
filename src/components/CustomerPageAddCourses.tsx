@@ -8,7 +8,7 @@ import FormattedPrice from "./FormattedPrice";
 import { Check, Edit, Edit2, Redo, ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
 
-const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
+const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomerData }) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
@@ -92,13 +92,14 @@ const CustomerPageAddCourses = ({ customerData, setCustomerData }) => {
           );
 
         jsonArray[existingCustomerIndex] = existingCustomer;
-        console.log(newOrder);
         // Update the JSON file with the modified JSON array
         setShowAddOrderModal(false);
         await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
 
         // Update the customerData state with the new transaction
         setCustomerData(existingCustomer);
+        setBillData([...billData,newOrder])
+
         // Reset newOrder fields
         setNewOrder({
           productName: "",
