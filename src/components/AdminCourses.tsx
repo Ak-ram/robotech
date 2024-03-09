@@ -294,10 +294,11 @@ const AdminCourses = () => {
                                 />
                             </div>
                             <div className="w-full mb-2 lg:pr-4">
-                                <span className="text-sm font-bold my-2 -ml-2">Rate</span>
+                            <span className="text-sm font-bold my-2 -ml-2">Rate</span>
 
                                 <input
-                                    type="string"
+                                    type="number"
+                                    max={5}
                                     placeholder="NO. from 1 to 5"
                                     className="p-2 w-full border border-gray-300 rounded"
                                     value={editedItem.rate}

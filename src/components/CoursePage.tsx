@@ -51,14 +51,18 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
         Your browser does not support the video tag.
       </video> */}
             </div>
+            <div className='player-wrapper'>
+
             <ReactPlayer
-              poster={course?.poster}
               url={course?.video}
+              light={course?.poster}
               controls={true}
-              className="w-full p-5"
-              width="100%"
-              height="360"
+              playing
+              className="w-full h-full p-5 react-player "
+              width='100%'
+              height='100%'
             />
+            </div>
             <p className="">{course?.description}</p>
             <ul className="flex gap-4">
               <li className="flex items-center">
@@ -67,19 +71,21 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                   {course?.rate}{" "}
                 </span>
                 <div className="flex items-center justify-center">
-                  {(course?.rate ? Array(+course.rate).fill(null) : []).map(
+                  {(course?.rate ? Array(5).fill(null).map(
                     (_, index) => (
                       <svg
                         key={index}
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
-                        fill="currentColor"
+                        fill={index < course.rate ? "currentColor" : "none"}
+                        stroke="currentColor"
                         className="h-5 w-5 text-purple-500"
                       >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
                     )
-                  )}
+                  ) : [])}
+
                 </div>
               </li>
               <li className="flex">
@@ -122,26 +128,25 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                   dispatch(addToCart(course));
                   toast.success(`${course?.title} is added to Cart!`);
                 }}
-                className="uppercase text-xs font-semibold text-white bg-designColor py-2 px-2 rounded-sm hover:bg-opacity-80 duration-300"
+                className="uppercase text-xs font-semibold text-white bg-designColor py-2 px-2 rounded-md hover:bg-opacity-80 duration-300"
               >
                 Add to Cart
               </button>
             ) : <span className="cursor-not-allowed sm:text-sm text-red-500 font-bold text-xs ">Register Closed</span>}
           </div>
-          <div className="mt-10 bg-white py-2">
-            <nav className="flex flex-wrap gap-4">
+          <div className="mt-10 py-2">
               <span
-                
-                className="font-bold inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out border-b-purple-600 text-purple-600"
+
+                className="font-bold block  bg-white py-4 whitespace-nowrap border-b-2 border-transparent px-3 font-medium text-gray-600 transition-all duration-200 ease-in-out border-b-purple-600 text-purple-600"
               >
                 {" "}
-                Announcements{" "}
+                Course Details{" "}
               </span>
-            </nav>
+           
           </div>
 
           <ul className="mt-2 space-y-4">
-            <li className="text-left">
+            <li className="bg-white text-left">
               <label
                 htmlFor="accordion-1"
                 className="relative flex flex-col rounded-md border border-gray-100 shadow-md"
@@ -150,7 +155,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                   className="peer hidden"
                   type="checkbox"
                   id="accordion-1"
-                  checked
+                  
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +204,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                 </div>
               </label>
             </li>
-            <li className="text-left">
+            <li className="bg-white text-left">
               <label
                 htmlFor="accordion-2"
                 className="relative flex flex-col rounded-md border border-gray-100 shadow-md"
@@ -236,7 +241,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                 </div>
               </label>
             </li>
-            <li className="text-left">
+            <li className="bg-white text-left">
               <label
                 htmlFor="accordion-3"
                 className="relative flex flex-col rounded-md border border-gray-100 shadow-md"
