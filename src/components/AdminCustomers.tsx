@@ -73,31 +73,55 @@ const AdminCustomers = () => {
         setSearchTerm('');
     };
 
-
-    const handleRemoveItem = async (index: number) => {
+    const handleEditClick = (customerId: string) => {
+        const index = jsonArray.findIndex(item => item.id === customerId);
+        setEditIndex(index);
+        setEditedItem({ ...jsonArray[index] });
+        setSearchTerm('');
+    };
+    
+    const handleRemoveItem = async (customerId: string) => {
+        const index = jsonArray.findIndex(item => item.id === customerId);
+        if (index === -1) return; // Customer not found
         const updatedArray = [...jsonArray];
         updatedArray.splice(index, 1);
-
+    
         try {
             await updateJsonFile("robotech/pages/customers.json", updatedArray);
             setJsonArray(updatedArray);
-            toast.success('Question removed successfully')
-            toast.loading(`Be patient, changes takes a few moments to be reflected`);
+            toast.success('Customer removed successfully');
+            toast.loading(`Be patient, changes take a few moments to be reflected`);
             setTimeout(() => {
                 toast.dismiss();
-
             }, 5000);
         } catch (error) {
             setError((error as Error).message);
         }
     };
+    
+    // const handleRemoveItem = async (index: number) => {
+    //     const updatedArray = [...jsonArray];
+    //     updatedArray.splice(index, 1);
 
+    //     try {
+    //         await updateJsonFile("robotech/pages/customers.json", updatedArray);
+    //         setJsonArray(updatedArray);
+    //         toast.success('Question removed successfully')
+    //         toast.loading(`Be patient, changes takes a few moments to be reflected`);
+    //         setTimeout(() => {
+    //             toast.dismiss();
 
-    const handleEditClick = (index: number) => {
-        setEditIndex(index);
-        setEditedItem({ ...jsonArray[index] });
-        setSearchTerm('');
-    };
+    //         }, 5000);
+    //     } catch (error) {
+    //         setError((error as Error).message);
+    //     }
+    // };
+
+    // const handleEditClick = (index: number) => {
+    //     setEditIndex(index);
+    //     setEditedItem({ ...jsonArray[index] });
+    //     setSearchTerm('');
+    // };
 
     const handleEditSubmit = async () => {
         // Check for empty fields
@@ -229,13 +253,13 @@ const AdminCustomers = () => {
                                 <div className="flex justify-end">
                                     <button
                                         className="text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
-                                        onClick={() => handleEditClick(index)}
+                                        onClick={() => handleEditClick(item.id)}
                                     >
                                         Edit
                                     </button>
                                     <button
                                         className="text-red-500 hover:text-red-600 transition-colors duration-300"
-                                        onClick={() => handleRemoveItem(index)}
+                                        onClick={() => handleRemoveItem(item.id)}
                                     >
                                         Remove
                                     </button>
