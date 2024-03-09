@@ -90,7 +90,7 @@ const Stats = () => {
                     onClick={() => setShow(!show)}
                 >
                     <h3 className="transform  transition-transform duration-500 font-semibold text-indigo-500">
-                        {show ? "Categories & Products Stats" : "Click to Expand"}
+                        {show ? "Click to Collapse" : "Expand Categories & Products Stats"}
                     </h3>
                     <ChevronDown
                         className={`text-blue-300 transform transition-transform duration-300 ${show ? "rotate-180" : ""

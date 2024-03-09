@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Clock, Calendar, Package, Banknote, User, ArrowDown, ArrowUp, TrendingUp, TrendingDown, Diff } from 'lucide-react';
+import { Clock, Calendar, Package, Banknote, User, ArrowDown, ArrowUp, TrendingUp, TrendingDown, Diff, ChevronDown } from 'lucide-react';
 import FormattedPrice from './FormattedPrice';
 import Link from 'next/link';
 import RevenueCharts from './RevenuCharts';
@@ -9,6 +9,7 @@ const TransactionAnalyzer = ({ customers }) => {
   const [monthlySells, setMonthlySells] = useState({});
   const [yearlySells, setYearlySells] = useState({});
   const [selectedPeriod, setSelectedPeriod] = useState(null);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const analyzeTransactions = () => {
@@ -170,7 +171,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       dailyRevenue[dayKey] += parseInt(course.subtotal);
       // dailyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
-      dailyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice * course.quantity  || 0)).toString());
+      dailyProfits[dayKey] += parseInt((course.subtotal - (course.wholesalePrice * course.quantity || 0)).toString());
 
       if (!monthlyRevenue[monthKey]) {
         monthlyRevenue[monthKey] = 0;
@@ -180,7 +181,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       monthlyRevenue[monthKey] += parseInt(course.subtotal);
       // monthlyProfits[dayKey] += parseInt(course.subtotal - (course.wholesalePrice || 0));
-      monthlyProfits[monthKey] += parseInt((course.subtotal - (course.wholesalePrice * course.quantity  || 0)).toString());
+      monthlyProfits[monthKey] += parseInt((course.subtotal - (course.wholesalePrice * course.quantity || 0)).toString());
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
@@ -218,7 +219,7 @@ const TransactionAnalyzer = ({ customers }) => {
       }
       monthlyRevenue[monthKey] += parseInt(printService.subtotal);
       // monthlyProfits[dayKey] += parseInt(printService.subtotal - (printService.wholesalePrice || 0));
-     monthlyProfits[monthKey] += parseInt((printService.subtotal - (printService.wholesalePrice  * printService.quantity || 0)).toString());
+      monthlyProfits[monthKey] += parseInt((printService.subtotal - (printService.wholesalePrice * printService.quantity || 0)).toString());
 
       if (!yearlyRevenue[yearKey]) {
         yearlyRevenue[yearKey] = 0;
@@ -546,8 +547,23 @@ const TransactionAnalyzer = ({ customers }) => {
 
 
   return (
-    <div className="overflow-auto mx-auto p-4">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+    // <div className="overflow-auto mx-auto p-4">
+    <div className={`${!show ? "border border-orange-500 border-dashed" : ""} bg-white  rounded-lg mb-5 overflow-hidden`}>
+     <div
+                    className="flex items-center p-5 justify-between cursor-pointer"
+                    onClick={() => setShow(!show)}
+                >
+                    <h3 className="transform  transition-transform duration-500 font-semibold text-orange-500">
+                        {show ? "Click to Collapse" : "Expand Revenue Overview"}
+                    </h3>
+                    <ChevronDown
+                        className={`transform text-orange-500 transition-transform duration-300 ${show ? "rotate-180" : ""
+                            }`}
+                        size={25}
+                    />
+                </div>
+      {show && <>
+      <div className="px-5 grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white border border-indigo-500 rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
           onClick={() => handlePeriodClick('daily')}>
           <Clock className="w-8 h-8 mr-2 text-indigo-500" />
@@ -581,16 +597,18 @@ const TransactionAnalyzer = ({ customers }) => {
           </div>
         </div>
       </div>
-      {selectedPeriod && (
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">{`Transactions for ${selectedPeriod}`}</h2>
-          <div className="bg-white rounded-lg shadow-lg p-4">
-            {renderTransactions(selectedPeriod)}
+        {selectedPeriod && (
+          <div className="mt-8 px-5">
+            <h2 className="text-xl font-semibold mb-4">{`Transactions for ${selectedPeriod}`}</h2>
+            <div className="bg-white rounded-lg shadow-lg p-4">
+              {renderTransactions(selectedPeriod)}
+            </div>
           </div>
-        </div>
-      )}
-      {/* Render Revenue Charts */}
-      <RevenueCharts monthlyProfitsData={monthlyProfitsData} yearlyProfitsData={yearlyProfitsData} dailyProfitsData={dailyProfitsData} dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
+        )}
+        {/* Render Revenue Charts */}
+        <RevenueCharts monthlyProfitsData={monthlyProfitsData} yearlyProfitsData={yearlyProfitsData} dailyProfitsData={dailyProfitsData} dailyRevenueData={dailyRevenueData} monthlyRevenueData={monthlyRevenueData} yearlyRevenueData={yearlyRevenueData} />
+      </>
+      }
     </div>
   );
 
