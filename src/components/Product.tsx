@@ -232,7 +232,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   {item?.title}
                 </p>
                 <p className="flex mt-1 items-center justify-start w-full text-black font-semibold">
-                  {typeof +item?.previousPrice === 'number' && item?.previousPrice > item?.price ? <del><FormattedPrice className={'mr-2 text-sm xs:text-base  text-zinc-500'} amount={+item?.previousPrice} /></del>
+                  {typeof +item?.previousPrice === 'number' && +item?.previousPrice > +item?.price ? <del><FormattedPrice className={'mr-2 text-sm xs:text-base  text-zinc-500'} amount={+item?.previousPrice} /></del>
                     : null}
                   <FormattedPrice className={'text-sm xs:text-xl'} amount={item?.price} />
                   {prefix === 'print' ? <span className="text-lg">/{item?.unit?.toLowerCase()} </span> : null}
@@ -248,7 +248,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       // toast.success(`${item?.title} is added to Cart!`);
                     }} className=" flex cursor-pointer gap-2 font-semibold items-center text-gray-600 xs:bg-designColor/30 xs:px-2 xs:py-1 rounded">
                       {/* <span className="text-sm xs:text-base xs:hidden">Buy</span> */}
-                      <span className="hidden xs:inline text-sm xs:text-base inline">Add to cart</span>
+                      <span className="hidden whitespace-nowrap xs:inline text-sm xs:text-base inline">Order Now</span>
                       <ShoppingBasketIcon
 
                         className=" ustify-center rounded flex items-center gap-1 font-semibold text-designColor rounded  duration-300 bg-white text-blue-500 px-[3px] p-[1px] w-7 h-7 duration-200 "
