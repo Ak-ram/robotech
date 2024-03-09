@@ -51,14 +51,18 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
         Your browser does not support the video tag.
       </video> */}
             </div>
+            <div className='player-wrapper'>
+
             <ReactPlayer
-              poster={course?.poster}
               url={course?.video}
+              light={course?.poster}
               controls={true}
-              className="w-full p-5"
-              width="100%"
-              height="360"
+              playing
+              className="w-full h-full p-5 react-player "
+              width='100%'
+              height='100%'
             />
+            </div>
             <p className="">{course?.description}</p>
             <ul className="flex gap-4">
               <li className="flex items-center">
