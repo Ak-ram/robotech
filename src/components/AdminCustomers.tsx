@@ -10,7 +10,6 @@ const AdminCustomers = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [editIndex, setEditIndex] = useState<number | null>(null);
-    const [isLinkDisabled, setLinkDisabled] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
 
     interface CustomerType {
@@ -53,7 +52,6 @@ const AdminCustomers = () => {
     }, []);
 
     const handleAddItemClick = () => {
-        setLinkDisabled(true); // Disable the link
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
             id: uuidv4(),
@@ -77,7 +75,7 @@ const AdminCustomers = () => {
         const index = jsonArray.findIndex(item => item.id === customerId);
         setEditIndex(index);
         setEditedItem({ ...jsonArray[index] });
-        setSearchTerm('');
+        // setSearchTerm('');
     };
     
     const handleRemoveItem = async (customerId: string) => {
@@ -176,10 +174,7 @@ const AdminCustomers = () => {
             }
         }
 
-        // Enable the link after 10 seconds
-        setTimeout(() => {
-            setLinkDisabled(false);
-        }, 10000);
+      
     };
 
     const handleEditCancel = () => {
@@ -244,7 +239,7 @@ const AdminCustomers = () => {
                                         id: item?.id,
                                         data: JSON.stringify(item)
                                     },
-                                }} className={`${isLinkDisabled ? 'cursor-wait text-gray-500' : ''}  block`}>
+                                }} className={`block`}>
 
                                     <span className="block font-bold mb-2 text-xl rtl" dir="rtl">{item.fullName}</span>
                                     <span className="block text-gray-600 mb-2">Phone: {item.phone}</span>
