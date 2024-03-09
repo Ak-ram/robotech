@@ -232,7 +232,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   {item?.title}
                 </p>
                 <p className="flex mt-1 items-center justify-start w-full text-black font-semibold">
-                  {typeof item?.previousPrice === 'number' && item?.previousPrice > item?.price ? <del><FormattedPrice className={'mr-2 text-sm xs:text-base  text-zinc-500'} amount={+item?.previousPrice} /></del>
+                  {typeof +item?.previousPrice === 'number' && item?.previousPrice > item?.price ? <del><FormattedPrice className={'mr-2 text-sm xs:text-base  text-zinc-500'} amount={+item?.previousPrice} /></del>
                     : null}
                   <FormattedPrice className={'text-sm xs:text-xl'} amount={item?.price} />
                   {prefix === 'print' ? <span className="text-lg">/{item?.unit?.toLowerCase()} </span> : null}
