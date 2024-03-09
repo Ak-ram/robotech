@@ -75,7 +75,6 @@ const Stats = () => {
     const totalProducts = products?.length || 0;
     const totalAvailableProducts = categoryStats.reduce((acc, category) => acc + category.inStockProducts.length, 0);
     const totalUnavailableProducts = categoryStats.reduce((acc, category) => acc + category.outStockProducts.length, 0);
-
     const totalAvailablePrice = categoryStats.reduce((acc, category) => acc + category.inStockProducts.reduce((total, product) => total + +product.price, 0), 0);
     const totalUnavailablePrice = categoryStats.reduce((acc, category) => acc + category.outStockProducts.reduce((total, product) => total + +product.price, 0), 0);
 

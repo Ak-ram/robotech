@@ -6,7 +6,7 @@ type Props = {
 };
 
 const FormattedPrice = ({ amount, className }: Props) => {
-  const formattedAmount = new Number(amount).toLocaleString("en-EG", {
+  const formattedAmount = new Number(amount).toLocaleString("ar-EG", {
     style: "currency",
     currencyDisplay: "symbol",
     currency: "EGP",

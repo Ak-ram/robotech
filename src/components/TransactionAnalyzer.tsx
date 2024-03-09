@@ -380,14 +380,14 @@ const TransactionAnalyzer = ({ customers }) => {
                 {transaction.wholesalePrice !== undefined && (
                   <>
                     {((+transaction.wholesalePrice * +transaction.quantity) < +transaction.subtotal) && (
-                      <div title='كسبان' className='flex flex-col items-center'>
+                      <div title='مكسب' className='flex flex-col items-center'>
                         <span className='text-xs flex items-center text-green-400 font-semibold'>Profit <TrendingUp className='ml-1' size={16} /></span>
                         <FormattedPrice className='text-xs text-green-400 font-semibold' amount={((+transaction.subtotal) - (+transaction.wholesalePrice * +transaction.quantity))} />
                       </div>
                     )}
 
                     {((+transaction.wholesalePrice * +transaction.quantity) > +transaction.subtotal) && (
-                      <div title='خسران' className='flex flex-col items-center'>
+                      <div title='خسارة' className='flex flex-col items-center'>
                         <span className='text-xs flex items-center text-red-400 font-semibold'>Loss <TrendingDown className='ml-1' size={16} /></span>
                         <FormattedPrice className='text-xs text-red-400 font-semibold' amount={((+transaction.wholesalePrice * +transaction.quantity) - (+transaction.subtotal))} />
                       </div>
