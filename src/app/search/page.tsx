@@ -5,7 +5,7 @@ import { Printer, Search, SearchCheck, SearchX } from "lucide-react";
 import React from "react";
 const page = async () => {
   return (
-    <Container className="py-10">
+  <Container className="py-10">
       <div className="border-b w-full border-gray-400 pb-4 flex items-center justify-between">
         <div className="space-x-4 sm:w-[98%] mx-auto">
           {/* Lucide Printer icon */}
