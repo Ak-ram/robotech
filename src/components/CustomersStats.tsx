@@ -110,7 +110,7 @@ const CustomersStats = () => {
                     onClick={() => setShow(!show)}
                 >
                     <h3 className="transform  transition-transform duration-500 font-semibold text-blue-400">
-                        {show ? "Click to Collapse" : "Click to Expand"}
+                        {show ? "Click to Collapse" : "Expand Customer Data"}
                     </h3>
                     <ChevronDown
                         className={`transform text-blue-300 transition-transform duration-300 ${show ? "rotate-180" : ""
@@ -135,7 +135,7 @@ const CustomersStats = () => {
 
                             </span>
                             <div className="flex items-center gap-1">
-
+<span className="text-white text-xs">{filteredCategoryStats?.length} Customer</span>
                                 <span className="text-slate-400 hover:text-white cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-gray-700 block" onClick={handleSortClick}>
                                     {sortOrder === "asc" ? <ArrowDown01 /> : <ArrowUp01 />}
 

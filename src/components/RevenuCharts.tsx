@@ -31,7 +31,7 @@ import { LineChart, XAxis, CartesianGrid, Tooltip, Legend, YAxis, Line } from "r
   
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 px-5">
       <h3 className="text-lg font-semibold mb-4">Revenue Overview</h3>
 
       <div className="flex p-6 bg-white rounded overflow-auto">
