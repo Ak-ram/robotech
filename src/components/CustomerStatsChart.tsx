@@ -25,9 +25,9 @@ const CustomTooltip = ({ active, payload, label }) => {
         <p className="font-semibold">Name: <span>{formatFullName(label)}</span></p>
         <p className="font-semibold">Total Purchases: <FormattedPrice amount={totalPurchase} /></p>
         <p className="font-semibold">Transaction Length: {transactionLength}</p>
-        <p className="font-semibold">Max Product Amount: <FormattedPrice amount={maxProductAmount} /></p>
-        <p className="font-semibold">Max Course Amount: <FormattedPrice amount={maxCourseAmount} /></p>
-        <p className="font-semibold">Max Print Service Amount: <FormattedPrice amount={maxPrintServiceAmount} /></p>
+        <p className="font-semibold">Total purchased products: <FormattedPrice amount={maxProductAmount} /></p>
+        <p className="font-semibold">Total purchased courses: <FormattedPrice amount={maxCourseAmount} /></p>
+        <p className="font-semibold">Total purchased print services: <FormattedPrice amount={maxPrintServiceAmount} /></p>
       </div>
     );
   }
@@ -75,9 +75,9 @@ const CustomerStatsChart = ({ customers }) => {
     return maxTransactionAmounts;
   };
 
+  const filteredCustomers = customers.filter(customer => calculateTransactionLength(customer) > 0);
 
-
-  const chartData = customers.map(customer => ({
+  const chartData = filteredCustomers.map(customer => ({
     name: customer.fullName,
     "اجمالي المشتريات": customer.total_purchase_transactions,
     transactionLength: calculateTransactionLength(customer),
@@ -95,9 +95,9 @@ const CustomerStatsChart = ({ customers }) => {
           <Legend layout="vertical" align="right" verticalAlign="top" />
           <Bar dataKey="اجمالي المشتريات" fill="#8884d8" />
           <Bar dataKey="transactionLength" fill="#82ca9d" />
-          <Bar dataKey="maxTransactionAmounts.products" fill="#ffc658" />
-          <Bar dataKey="maxTransactionAmounts.courses" name="اغلى كورس" fill="#ff7f50" />
-          <Bar dataKey="maxTransactionAmounts.printServices" fill="#8a2be2" />
+          <Bar dataKey="maxTransactionAmounts.products" name="Total purchased products" fill="#ffc658" />
+          <Bar dataKey="maxTransactionAmounts.courses" name="Total purchased courses" fill="#ff7f50" />
+          <Bar dataKey="maxTransactionAmounts.printServices" name="Total purchased print services" fill="#8a2be2" />
         </BarChart>
       </div>
     </>
@@ -105,3 +105,4 @@ const CustomerStatsChart = ({ customers }) => {
 };
 
 export default CustomerStatsChart;
+
