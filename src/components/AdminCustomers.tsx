@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
-import { Check, X, Plus } from "lucide-react";
+import { Check, X, Plus, TrashIcon, Edit, PhoneCall, User } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from 'uuid';
 import { CourseType, ProductType } from "../../type";
 import Link from 'next/link'
+import NoContent from "./NoContent";
 const AdminCustomers = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -77,56 +78,38 @@ const AdminCustomers = () => {
         setEditedItem({ ...jsonArray[index] });
         // setSearchTerm('');
     };
-    
+
     const handleRemoveItem = async (customerId: string) => {
-        const index = jsonArray.findIndex(item => item.id === customerId);
-        if (index === -1) return; // Customer not found
-        const updatedArray = [...jsonArray];
-        updatedArray.splice(index, 1);
-    
-        try {
-            await updateJsonFile("robotech/pages/customers.json", updatedArray);
-            setJsonArray(updatedArray);
-            toast.success('Customer removed successfully');
-            toast.loading(`Be patient, changes take a few moments to be reflected`);
-            setTimeout(() => {
-                toast.dismiss();
-            }, 5000);
-        } catch (error) {
-            setError((error as Error).message);
+      
+        let confirmDel = window.confirm('Deleting this customer will also remove associated data such as transactions, products, courses, and print services purchased, impacting the stats page.')
+        if (confirmDel) {
+            const index = jsonArray.findIndex(item => item.id === customerId);
+            if (index === -1) return; // Customer not found
+            const updatedArray = [...jsonArray];
+            updatedArray.splice(index, 1);
+
+            try {
+                await updateJsonFile("robotech/pages/customers.json", updatedArray);
+                setJsonArray(updatedArray);
+                toast.success('Customer removed successfully');
+                toast.loading(`Be patient, changes take a few moments to be reflected`);
+                setTimeout(() => {
+                    toast.dismiss();
+                }, 5000);
+            } catch (error) {
+                setError((error as Error).message);
+            }
         }
     };
-    
-    // const handleRemoveItem = async (index: number) => {
-    //     const updatedArray = [...jsonArray];
-    //     updatedArray.splice(index, 1);
 
-    //     try {
-    //         await updateJsonFile("robotech/pages/customers.json", updatedArray);
-    //         setJsonArray(updatedArray);
-    //         toast.success('Question removed successfully')
-    //         toast.loading(`Be patient, changes takes a few moments to be reflected`);
-    //         setTimeout(() => {
-    //             toast.dismiss();
-
-    //         }, 5000);
-    //     } catch (error) {
-    //         setError((error as Error).message);
-    //     }
-    // };
-
-    // const handleEditClick = (index: number) => {
-    //     setEditIndex(index);
-    //     setEditedItem({ ...jsonArray[index] });
-    //     setSearchTerm('');
-    // };
 
     const handleEditSubmit = async () => {
         // Check for empty fields
         if (
             !editedItem.id ||
             !editedItem.fullName ||
-            !editedItem.phone
+            !editedItem.phone ||
+            !editedItem.age
         ) {
             toast.error("All fields are required");
             return;
@@ -139,6 +122,18 @@ const AdminCustomers = () => {
             return;
         }
 
+          // Validate Age format
+          if (editedItem.age > 60  ) {
+              toast.error("Max Age is 60");
+              return;
+          }
+  
+          
+          // Validate Age format
+          if (editedItem.age < 10 ) {
+            toast.error("Min Age is 10");
+            return;
+        }
 
         // Validate phone number format
         const phoneRegex = /^(01[0-9]{9})$/;
@@ -174,7 +169,7 @@ const AdminCustomers = () => {
             }
         }
 
-      
+
     };
 
     const handleEditCancel = () => {
@@ -218,7 +213,7 @@ const AdminCustomers = () => {
 
 
             </div>
-            {searchTerm.length >= 3 && jsonArray.length !== 0 && (
+            {searchTerm.length >= 3 && jsonArray.length !== 0 ? (
                 <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
                     {jsonArray
                         .filter((item) => {
@@ -230,7 +225,7 @@ const AdminCustomers = () => {
                         .map((item, index) => (
                             <div
                                 key={index}
-                                className={`border p-4 rounded bg-white shadow-md transition-all duration-300 transform 
+                                className={`border border-zinc-300 p-4 rounded-lg bg-white shadow-md transition-all duration-300 transform 
                             `}
                             >
                                 <Link key={index} href={{
@@ -242,28 +237,32 @@ const AdminCustomers = () => {
                                 }} className={`block`}>
 
                                     <span className="block font-bold mb-2 text-xl rtl" dir="rtl">{item.fullName}</span>
-                                    <span className="block text-gray-600 mb-2">Phone: {item.phone}</span>
-                                    <span className="block text-gray-600 mb-2">Age: {item.age}</span>
+                                    <span className="block text-gray-600 mb-2 flex items-end gap-1" dir="rtl"><PhoneCall className="mb-[1px]" size={14} /> رقم التليفون: {item.phone}</span>
+                                    <span className="block text-gray-600 mb-2 flex items-center gap-1" dir="rtl"><User size={15} /> العمر: {item.age}</span>
                                 </Link>
                                 <div className="flex justify-end">
                                     <button
-                                        className="text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
+                                        className="flex gap-1 items-center  bg-blue-100 py-1 px-2 rounded text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
                                         onClick={() => handleEditClick(item.id)}
                                     >
-                                        Edit
+                                        <Edit size={17} />    Edit
                                     </button>
                                     <button
-                                        className="text-red-500 hover:text-red-600 transition-colors duration-300"
+                                        className="flex gap-1 items-center bg-red-100 py-1 px-2 rounded text-red-500 hover:text-red-600 transition-colors duration-300"
                                         onClick={() => handleRemoveItem(item.id)}
                                     >
-                                        Remove
+                                        <TrashIcon size={17} />  Remove
                                     </button>
                                 </div>
                             </div>
                         ))
                     }
                 </div >
-            )}
+            ) : <div className="bg-white h-[300px] flex items-center justify-center">
+                <div className="text-center">
+                    <h2 className="text-xl font-semibold mb-4">Your Search Result Goes here...</h2>
+                </div>
+            </div>}
 
             {
                 editIndex !== null && (
@@ -304,6 +303,7 @@ const AdminCustomers = () => {
                                         <input
                                             type="number"
                                             placeholder="20"
+                                            
                                             className="p-2 w-full border border-gray-300 rounded"
                                             value={editedItem.age}
                                             onChange={(e) => handleInputChange(e, "age")}
