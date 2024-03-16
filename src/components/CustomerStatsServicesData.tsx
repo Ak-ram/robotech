@@ -182,14 +182,15 @@ const CustomerStatsServicesData = () => {
                             <div className="">
                                 {Object.entries({
                                     title: 'Title',
-                                    description: 'Description',
-                                    price: 'Price',
                                     wholesalePrice: 'Wholesale Price', // Add the Wholesale Price field
-                                    previousPrice: 'Previous Price',
-                                    count: 'Count',
+                                    price: 'Price',
+                                    unit: 'Unit',
                                     image1: 'Image1',
                                     image2: 'Image2',
                                     image3: 'Image3',
+                                    description: 'Description',
+                                    colors: 'Colors',
+                                    brand: 'Brand',
                                     externalLink: "External Link",
                                 }).map(([key, placeholder], index) => (
                                     <div key={key} className={`flex-col mb-2 lg:pr-4`}>
