@@ -4,8 +4,10 @@ import toast, { Toaster } from "react-hot-toast";
 import Link from 'next/link'
 import Bill from "./Bill";
 import { Edit, Trash, TrashIcon } from "lucide-react";
+import { updateJsonFile } from "@/helpers/updateJSONData";
 const AdminBills = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
+    const [billsList, setBillsList] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [showBill, setShowBill] = useState(false);
     const [selectedBill, setSelectedBill] = useState<any>()
@@ -16,6 +18,7 @@ const AdminBills = () => {
             try {
                 const data = await fetchJsonData("robotech/pages/bills.json");
                 setJsonArray(data);
+                setBillsList(data)
             } catch (error) {
                 console.log((error as Error).message);
             }
@@ -30,6 +33,24 @@ const AdminBills = () => {
         const selected = jsonArray.find(bill => bill.id === id);
         setSelectedBill(selected)
         setShowBill(true)
+    }
+    const handleRemoveBill = async (id) => {
+        const confirm = window.confirm('Sure to Remove ?');
+        if (confirm) {
+            const index = billsList.findIndex(item => item.id === id);
+            if (index === -1) return; // Customer not found
+            const updatedArray = [...billsList];
+            updatedArray.splice(index, 1);
+
+            try {
+                setBillsList(updatedArray)
+                await updateJsonFile("robotech/pages/bills.json", updatedArray);
+                toast.success('Bill removed successfully')
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
     }
     return (
         <div className={`min-h-[400px] lg:p-3 w-full bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
@@ -46,9 +67,9 @@ const AdminBills = () => {
                 />
 
             </div>
-            {jsonArray.length !== 0 ? (
+            {billsList.length !== 0 ? (
                 <div className={"flex flex-col gap-2"}>
-                    {jsonArray
+                    {billsList
 
                         .map((item, index) => (
                             <div
@@ -68,7 +89,7 @@ const AdminBills = () => {
                                     </button>
                                     <button
                                         className="flex gap-1 items-center bg-red-100 py-1 px-2 rounded text-red-500 hover:text-red-600 transition-colors duration-300"
-                                    // onClick={() => handleRemoveItem(item.id)}
+                                        onClick={() => handleRemoveBill(item.id)}
                                     >
                                         <TrashIcon size={17} />  Remove
                                     </button>
