@@ -8,6 +8,7 @@ import { ProductType } from "../../type";
 import Link from "next/link";
 import ShareProductOnFacebook from "./ShareProductOnFacebook";
 import ShareProductOnTwitter from "./ShareProductOnTwitter";
+import { isColor } from "@/lib/utils";
 
 const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
     const openWhatsApp = () => {
@@ -101,23 +102,23 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                     }
 
 
-                    {product?.colors && (
+                    {product?.variations && (
                         <div className="text-sm font-medium text-gray-600">
                             <div className="flex items-center">
                                 <Paintbrush className="w-5 h-5 mr-2" />
-                                Print Colors:
+                                Variations List:
                             </div>
                             <div className="pl-3 mt-3 flex flex-wrap items-center w-full gap-6">
-                                {product.colors.split("|").map((color, index) => (
+                                {product.variations.split("|").map((kind, index) => (
                                     <div key={index} className={`flex justify-center gap-1 items-center`}>
                                         <span
-                                            style={{ backgroundColor: color.toLowerCase().trim(), opacity: 0.9 }}
-                                            className={`block border shadow w-[14px] h-[14px] rounded`}
+                                            style={{ backgroundColor: isColor(kind) ? kind.toLowerCase().trim() : 'black', opacity: 0.9 }}
+                                            className={`block border shadow w-[15px] mt-[3px] h-[15px] rounded`}
                                         ></span>
                                         <span className={`capitalize`}
-                                            style={{ color: color.toLowerCase().trim() === 'white' ? 'black' : color.toLowerCase().trim(), opacity: 0.9 }}
+                                            style={{ color: isColor(kind) ? (kind.toLowerCase().trim() === 'white' ? 'black' : kind.toLowerCase().trim()) : 'inherit', opacity: 0.9 }}
                                         >
-                                            {color}
+                                            {kind}
                                         </span>
                                     </div>
                                 ))}

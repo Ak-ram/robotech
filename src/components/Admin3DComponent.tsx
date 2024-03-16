@@ -89,7 +89,6 @@ const Admin3DComponent = () => {
       !editedItem.price ||
       !editedItem.description ||
       !editedItem.image1 ||
-      !editedItem.brand ||
       !editedItem.unit 
     ) {
       toast.error("All fields are required");
@@ -142,7 +141,7 @@ const Admin3DComponent = () => {
     <div
       className={`lg:p-3 min-h-[400px] w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}
     >
-      {!jsonArray && <h2 className="font-bold mb-4">Current Printing data:</h2>}
+      {!jsonArray && <h2 className="font-bold mb-4">Current Service data:</h2>}
       <div className="mb-5 flex items-center justify-end">
         <button
           className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
@@ -249,7 +248,7 @@ const Admin3DComponent = () => {
            <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
         
            <h2 className="font-bold mb-2 text-center text-lg">
-                        {editIndex === -1 ? "Add Print Service" : "Edit Print Service"}
+                        {editIndex === -1 ? "Add Service" : "Edit Service"}
                     </h2>
           <div className="flex flex-col">
          
@@ -258,14 +257,14 @@ const Admin3DComponent = () => {
 
               <input
                 type="text"
-                placeholder="3d Print"
+                placeholder="3d Print, Caramel Macchiato"
                 className="w-full p-2 border border-gray-300 rounded"
                 value={editedItem.title}
                 onChange={(e) => handleInputChange(e, "title")}
               />
             </div>
             <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">PP Unit</span>
+              <span className="text-sm font-bold my-2 -ml-2">Price Per Unit</span>
 
               <input
                 type="text"
@@ -326,21 +325,21 @@ const Admin3DComponent = () => {
 
               <input
                 type="text"
-                placeholder="Print 3d shapes with X material"
+                placeholder="Description..."
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.description}
                 onChange={(e) => handleInputChange(e, "description")}
               />
             </div>
             <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Colors</span>
+              <span className="text-sm font-bold my-2 -ml-2">Variations List</span>
 
               <input
                 type="text"
-                placeholder="colors list, separated by |"
+                placeholder="variations list, separated by |, e.g., Red | Blue | Black"
                 className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.colors}
-                onChange={(e) => handleInputChange(e, "colors")}
+                value={editedItem.variations}
+                onChange={(e) => handleInputChange(e, "variations")}
               />
             </div>
             {/* <div className="w-full mb-2 lg:pr-4">
@@ -366,11 +365,11 @@ const Admin3DComponent = () => {
               />
             </div>
             <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Printing Type</span>
+              <span className="text-sm font-bold my-2 -ml-2">Extra Field</span>
 
               <input
                 type="text"
-                placeholder="Prototype 3d"
+                placeholder="Additional details, like service type, e.g., 3D Prototype."
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.brand}
                 onChange={(e) => handleInputChange(e, "brand")}

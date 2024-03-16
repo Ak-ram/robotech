@@ -43,7 +43,7 @@ const AdminComponent = () => {
   }, []);
   const sidebarItems: SidebarItem[] = [
     { id: 1, icon: <LayoutList />, label: "Products", content: <AdminProducts /> },
-    { id: 2, icon: <Printer />, label: "3D", content: <Admin3DComponent /> },
+    { id: 2, icon: <Printer />, label: "Services", content: <Admin3DComponent /> },
     { id: 3, icon: <GraduationCap />, label: "Courses", content: <AdminCourses /> },
     { id: 4, icon: <Smile />, label: "About", content: <AdminAbout /> },
     { id: 5, icon: <HelpCircle />, label: "Faq", content: <AdminFaq /> },

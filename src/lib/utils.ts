@@ -6,11 +6,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-export function formatFullName(fullName:string) {
+export function formatFullName(fullName: string) {
   const words = fullName.split(' ');
 
   if (words.length < 4) {
-      return  words.map(name => name.charAt(0).toUpperCase() + name.slice(1)).join(' '); // Return the original full name if it has less than three parts
+    return words.map(name => name.charAt(0).toUpperCase() + name.slice(1)).join(' '); // Return the original full name if it has less than three parts
   }
 
   const firstName = words[0];
@@ -20,3 +20,8 @@ export function formatFullName(fullName:string) {
 
   return formattedName;
 }
+
+export function isColor(text: string) {
+  const colorNames = ['black', 'white', 'red', 'blue', 'green']; // Add more color names as needed
+  return colorNames.includes(text.toLowerCase().trim());
+};
