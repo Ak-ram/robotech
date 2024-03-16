@@ -16,10 +16,20 @@
   /* transition: all .2s ease-in; */
 }
 
+@media print {
+  .hide-when-printing {
+    display: none;
+  }
+  .printContainer{
+    align-items: start !important;
+    justify-content: start !important;
+  }
+}
 
 .player-wrapper {
   position: relative;
-  padding-top: 60%; /* Player ratio: 100 / (1280 / 720) */
+  padding-top: 60%;
+  /* Player ratio: 100 / (1280 / 720) */
 }
 
 .react-player {
@@ -183,8 +193,8 @@
 
 
 .slide-bottom {
-	-webkit-animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 
@@ -201,24 +211,26 @@
  * animation slide-bottom
  * ----------------------------------------
  */
- @-webkit-keyframes slide-bottom {
+@-webkit-keyframes slide-bottom {
   0% {
     -webkit-transform: translateY(-100px);
-            transform: translateY(-100px);
+    transform: translateY(-100px);
   }
+
   100% {
     -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-  }
-}
-@keyframes slide-bottom {
-  0% {
-    -webkit-transform: translateY(-100px);
-            transform: translateY(-100px);
-  }
-  100% {
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
+    transform: translateY(0px);
   }
 }
 
+@keyframes slide-bottom {
+  0% {
+    -webkit-transform: translateY(-100px);
+    transform: translateY(-100px);
+  }
+
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}

@@ -63,17 +63,9 @@ const Bill: React.FC<BillProps> = ({
 
   return (
     <>
-      <style>
-        {`
-          @media print {
-            .hide-when-printing {
-              display: none;
-            }
-          }
-        `}
-      </style>
-      <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-        <div className="bg-white w-full max-w-screen-md mx-auto p-6 md:p-8 rounded-lg shadow-md">
+
+      <div  className="printContainer fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="bg-white w-full max-w-screen-md mx-auto p-6 md:p-8 rounded-lg">
           {!printMode && (
             <div className="hide-when-printing flex items-center justify-between">
               <X
