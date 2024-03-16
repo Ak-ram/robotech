@@ -26,7 +26,7 @@ const ShareProductOnFacebook: React.FC<ShareProductOnFacebookProps> = ({ product
       url={shareUrl}
       hashtag={product.title}
     >
-      <Facebook className="w-4 h-4  text-blue-500 mr-2" />
+      <Facebook className="w-5 h-5  text-blue-500 mr-2" />
       <span className="font-semibold">
         Share on Facebook
       </span>
