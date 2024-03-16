@@ -42,7 +42,7 @@ const AdminBills = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await fetchJsonData("robotech/pages/customers.json");
+                const data = await fetchJsonData("robotech/pages/bills.json");
                 setJsonArray(data);
             } catch (error) {
                 setError((error as Error).message);
@@ -80,7 +80,7 @@ const AdminBills = () => {
     };
 
     const handleRemoveItem = async (customerId: string) => {
-      
+
         let confirmDel = window.confirm('Deleting this customer will also remove associated data such as transactions, products, courses, and print services purchased, impacting the stats page.')
         if (confirmDel) {
             const index = jsonArray.findIndex(item => item.id === customerId);
@@ -122,15 +122,15 @@ const AdminBills = () => {
             return;
         }
 
-          // Validate Age format
-          if (editedItem.age > 60  ) {
-              toast.error("Max Age is 60");
-              return;
-          }
-  
-          
-          // Validate Age format
-          if (editedItem.age < 10 ) {
+        // Validate Age format
+        if (editedItem.age > 60) {
+            toast.error("Max Age is 60");
+            return;
+        }
+
+
+        // Validate Age format
+        if (editedItem.age < 10) {
             toast.error("Min Age is 10");
             return;
         }
@@ -200,67 +200,26 @@ const AdminBills = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
 
-                <div className="flex items-end space-x-4 mb-2 lg:mb-0">
-                    <button
-                        className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all duration-300"
-                        onClick={handleAddItemClick}
-                    >
-                        <Plus size={18} className="mr-1" />
-                        Add Customer
-                    </button>
-
-                </div>
-
-
             </div>
-            {searchTerm.length >= 3 && jsonArray.length !== 0 ? (
-                <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
+            {jsonArray.length !== 0 ? (
+                <div className={"flex flex-col gap-2"}>
                     {jsonArray
-                        .filter((item) => {
-                            const fullName = item.fullName.toLowerCase();
-                            const phone = item.phone.toLowerCase();
-                            const search = searchTerm.toLowerCase();
-                            return fullName.includes(search) || phone.includes(search);
-                        })
+
                         .map((item, index) => (
                             <div
                                 key={index}
-                                className={`border border-zinc-300 p-4 rounded-lg bg-white shadow-md transition-all duration-300 transform 
+                                className={`border group cursor-pointer hover:border-zinc-500 border-zinc-300 p-4 rounded-lg bg-white font-medium shadow-md transition-all duration-300 transform 
                             `}
                             >
-                                <Link key={index} href={{
-                                    pathname: `admin/id_${item?.id}`,
-                                    query: {
-                                        id: item?.id,
-                                        data: JSON.stringify(item)
-                                    },
-                                }} className={`block`}>
+                                Bill ID: <span className="text-blue-400 group-hover:underline"> {item.id} </span>
 
-                                    <span className="block font-bold mb-2 text-xl rtl" dir="rtl">{item.fullName}</span>
-                                    <span className="block text-gray-600 mb-2 flex items-end gap-1" dir="rtl"><PhoneCall className="mb-[1px]" size={14} /> رقم التليفون: {item.phone}</span>
-                                    <span className="block text-gray-600 mb-2 flex items-center gap-1" dir="rtl"><User size={15} /> العمر: {item.age}</span>
-                                </Link>
-                                <div className="flex justify-end">
-                                    <button
-                                        className="flex gap-1 items-center  bg-blue-100 py-1 px-2 rounded text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
-                                        onClick={() => handleEditClick(item.id)}
-                                    >
-                                        <Edit size={17} />    Edit
-                                    </button>
-                                    <button
-                                        className="flex gap-1 items-center bg-red-100 py-1 px-2 rounded text-red-500 hover:text-red-600 transition-colors duration-300"
-                                        onClick={() => handleRemoveItem(item.id)}
-                                    >
-                                        <TrashIcon size={17} />  Remove
-                                    </button>
-                                </div>
                             </div>
                         ))
                     }
                 </div >
             ) : <div className="bg-white h-[300px] flex items-center justify-center">
                 <div className="text-center">
-                    <h2 className="text-xl font-semibold mb-4">Your Search Result Goes here...</h2>
+                    <h2 className="text-xl font-semibold mb-4">Your Bills Should Goes here...</h2>
                 </div>
             </div>}
 
@@ -303,7 +262,7 @@ const AdminBills = () => {
                                         <input
                                             type="number"
                                             placeholder="20"
-                                            
+
                                             className="p-2 w-full border border-gray-300 rounded"
                                             value={editedItem.age}
                                             onChange={(e) => handleInputChange(e, "age")}
