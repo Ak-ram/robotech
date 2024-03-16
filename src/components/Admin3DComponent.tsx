@@ -21,7 +21,8 @@ const Admin3DComponent = () => {
     brand: "",
     quantity: 1,
     externalLink:'',
-    unit:''
+    unit:'',
+    wholesalePrice: 0
 
   });
 
@@ -52,7 +53,8 @@ const Admin3DComponent = () => {
       brand: "",
       quantity: 1,
       externalLink:'',
-      unit:''
+      unit:'',
+      wholesalePrice: 0
 
     });
   };
@@ -88,7 +90,7 @@ const Admin3DComponent = () => {
       !editedItem.description ||
       !editedItem.image1 ||
       !editedItem.brand ||
-      !editedItem.unit
+      !editedItem.unit 
     ) {
       toast.error("All fields are required");
       return;
@@ -383,6 +385,17 @@ const Admin3DComponent = () => {
                 className="p-2 w-full border border-gray-300 rounded"
                 value={editedItem.externalLink}
                 onChange={(e) => handleInputChange(e, "externalLink")}
+              />
+            </div>
+            <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">Wholesale Price Per Gram</span>
+
+              <input
+                type="text"
+                placeholder="سعر الجملة"
+                className="p-2 w-full border border-gray-300 rounded"
+                value={editedItem.wholesalePrice}
+                onChange={(e) => handleInputChange(e, "wholesalePrice")}
               />
             </div>
           </div>

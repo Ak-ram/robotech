@@ -103,7 +103,7 @@ const CustomersStats = () => {
 
             <div className="flex flex-col">
                 <Stocks />
-
+                
                 <div className={`${!show ? "border border-blue-300 border-dashed" : ""} bg-white rounded-lg mb-5 overflow-hidden`}>
                 <div
                     className="flex items-center p-5 justify-between cursor-pointer"
