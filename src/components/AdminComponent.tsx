@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { StateProps } from "../../type";
-import { BarChart, GraduationCap, HelpCircle, Key, LayoutList, Loader, Map, Menu, Printer, SlidersHorizontal, Smile, StickyNote, UserCircle, X } from "lucide-react";
+import { BarChart, GraduationCap, HelpCircle, Key, LayoutList, Loader, Map, Menu, Paperclip, Printer, ScrollText, SlidersHorizontal, Smile, StickyNote, UserCircle, X } from "lucide-react";
 import Stats from "./Stats";
 import AdminCustomers from "./AdminCustomers";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import AdminFaq from "./AdminFaq";
 import AdminSlides from "./AdminSlides";
 import AdminAnnouncement from "./AdminAnnouncement";
 import AdminLocation from "./AdminLocation";
+import AdminBills from "./AdminBills";
 
 const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -49,9 +50,10 @@ const AdminComponent = () => {
     { id: 5, icon: <HelpCircle />, label: "Faq", content: <AdminFaq /> },
     { id: 6, icon: <SlidersHorizontal />, label: "Slides", content: <AdminSlides /> },
     { id: 7, icon: <StickyNote />, label: "Announcement", content: <AdminAnnouncement /> },
-    { id: 10, icon: <Map />, label: "Location", content: <AdminLocation /> },
-    { id: 8, icon: <UserCircle />, label: "Customers", content: <AdminCustomers /> },
-    { id: 9, icon: <BarChart />, label: "Stats", content: <Stats /> },
+    { id: 8, icon: <Map />, label: "Location", content: <AdminLocation /> },
+    { id: 9, icon: <UserCircle />, label: "Customers", content: <AdminCustomers /> },
+    { id: 10, icon: <BarChart />, label: "Stats", content: <Stats /> },
+    { id: 11, icon: <ScrollText />, label: "Bills", content: <AdminBills /> },
     // Add more items as needed
   ];
 
@@ -116,7 +118,7 @@ const AdminComponent = () => {
               </span>
               <span className="bg-white  hover:bg-slate-300 font-bold px-1.5 py-1 rounded">{selectedItem.label} Page</span>
             </div>
-            {isPasswordEntered || selectedItem.id !== 9 ? (
+            {isPasswordEntered || selectedItem.id !== 10 ? (
               selectedItem.content
             ) : (
               <div className="grid place-items-center h-[300px]">

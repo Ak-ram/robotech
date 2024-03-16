@@ -1,12 +1,15 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomerPageAddProducts from "@/components/CustomerPageAddProducts";
 import CustomerPageAddCourses from "@/components/CustomerPageAddCourses";
 import CustomerPageAddPrintServices from "@/components/CustomerPageAddPrintServices";
 import toast from "react-hot-toast";
 import { Printer } from "lucide-react";
 import Bill from "@/components/Bill";
+import { fetchJsonData } from "@/helpers/getJSONData";
+import { updateJsonFile } from "@/helpers/updateJSONData";
+import { generateNumericId } from "@/lib/utils";
 const CustomerPage = () => {
   const router = useRouter();
   const searchPar = useSearchParams();
@@ -18,7 +21,9 @@ const CustomerPage = () => {
   const [customerData, setCustomerData] = useState(initialCustomerData);
   const [currentTab, setCurrentTab] = useState(0);
   const [billData, setBillData] = useState<any>([]);
-  const [showBill, setShowBill] = useState(false)
+  const [showBill, setShowBill] = useState(false);
+  const [jsonArray, setJsonArray] = useState<any[]>([]);
+
   const tabs = [
     {
       content: (
@@ -54,10 +59,35 @@ const CustomerPage = () => {
       label: "Print Service",
     },
   ];
-  const printBill = () => {
+  const printBill = async () => {
     setShowBill(true);
-    toast.success("When you're ready, please click CTRL + P to print.")
-  }
+    const bill = {
+      id: generateNumericId(),
+      data: billData
+    };
+    const updatedArray = [...jsonArray, bill]; // Pushing the bill object into jsonArray
+    await updateJsonFile("robotech/pages/bills.json", updatedArray);
+  
+    toast.success("When you're ready, please click CTRL + P to print.");
+  };
+  
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const data = await fetchJsonData("robotech/pages/bills.json");
+            setJsonArray(data);
+        } catch (error) {
+            console.log((error as Error).message);
+        }
+    };
+
+    fetchData();
+}, []);
+
+
+
   return (
     <div className="m-8">
       {customerData && (
@@ -127,7 +157,7 @@ const CustomerPage = () => {
                   onClick={() => printBill()}
                   className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-blue-200 text-blue-700 hover:bg-blue-500 hover:text-white transition duration-300`}
                 >
-                  Print Bill
+                  Add Bill
                   <Printer className="" />
                 </button>:null}
                
