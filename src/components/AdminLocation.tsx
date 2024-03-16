@@ -132,7 +132,6 @@ const AdminLocation = () => {
                         <thead>
                             <tr className="bg-zinc-800 text-white ">
                                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">locationText</th>
-                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">URL</th>
                                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-2 py-2">Actions</th>
                             </tr>
                         </thead>
@@ -186,7 +185,7 @@ const AdminLocation = () => {
 
                            
                             <div className=" mb-2 lg:pr-4">
-                                <span className="text-sm font-bold my-2 -ml-2">URL</span>
+                                <span className="text-sm font-bold my-2 -ml-2">Google Map URL</span>
 
                                 <input
                                     type="text"

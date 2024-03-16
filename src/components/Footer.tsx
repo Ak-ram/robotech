@@ -90,7 +90,7 @@ const Footer = () => {
             <a className="ml-2 hover:underline" href="https://www.google.com/maps/search/%D8%A8%D9%86%D9%83+%D8%A7%D9%84%D8%A5%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D9%87%E2%80%AD/@29.075876,31.0982042,17z?entry=ttu">
               {data.length > 0 && data[0].locationText!}            </a>
             {
-              data.length > 0 && data[0].locationUrl! ? <iframe
+              data.length > 0 && data[0].locationUrl!.includes('maps') ? <iframe
                 height="300"
                 className="w-full mt-3"
                 src={data[0].locationUrl!}
