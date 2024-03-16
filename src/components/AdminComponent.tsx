@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { StateProps } from "../../type";
-import { BarChart, GraduationCap, HelpCircle, Key, LayoutList, Loader, Menu, Printer, SlidersHorizontal, Smile, StickyNote, UserCircle, X } from "lucide-react";
+import { BarChart, GraduationCap, HelpCircle, Key, LayoutList, Loader, Map, Menu, Printer, SlidersHorizontal, Smile, StickyNote, UserCircle, X } from "lucide-react";
 import Stats from "./Stats";
 import AdminCustomers from "./AdminCustomers";
 import { useRouter } from "next/navigation";
@@ -50,6 +50,7 @@ const AdminComponent = () => {
     { id: 7, icon: <StickyNote />, label: "Announcement", content: <AdminAnnouncement /> },
     { id: 8, icon: <UserCircle />, label: "Customers", content: <AdminCustomers /> },
     { id: 9, icon: <BarChart />, label: "Stats", content: <Stats /> },
+    { id: 10, icon: <Map />, label: "Location", content: <Stats /> },
     // Add more items as needed
   ];
 

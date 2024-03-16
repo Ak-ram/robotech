@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Facebook, Mail, MapPin, Phone } from 'lucide-react';
 import Container from "./Container";
 import ShortLogo from '@/assets/ShortLogo.png';
@@ -6,8 +6,27 @@ import ShortLogo from '@/assets/ShortLogo.png';
 import { navigation } from "@/constants/data";
 import Link from "next/link";
 import Image from "next/image";
-
+interface LocationItem {
+  LocationText: string;
+  LocationUrl: string; // Add the 'open' property to the LocationItem type
+}
 const Footer = () => {
+  const [data, setData] = useState<LocationItem[]>([]); // Set the type for 'data'
+  useEffect(() => {
+    const fetchFaq = async () => {
+      try {
+        const p = await getLocation();
+        setData(p);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      // Run the effect only in the browser environment
+      fetchFaq();
+    }
+  }, []);
   return (
 
     <div className="bg-zinc-900  text-zinc-300">
