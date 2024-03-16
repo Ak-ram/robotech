@@ -53,15 +53,15 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
             </div>
             <div className='player-wrapper'>
 
-            <ReactPlayer
-              url={course?.video}
-              light={course?.poster}
-              controls={true}
-              playing
-              className="w-full h-full p-5 react-player "
-              width='100%'
-              height='100%'
-            />
+              <ReactPlayer
+                url={course?.video}
+                light={course?.poster}
+                controls={true}
+                playing
+                className="w-full h-full p-5 react-player "
+                width='100%'
+                height='100%'
+              />
             </div>
             <p className="">{course?.description}</p>
             <ul className="flex gap-4">
@@ -109,15 +109,16 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
             <ul className="sm:flex items-center text-sm text-gray-500">
               <li>
                 Created by{" "}
-                <a href="#" className="font-bold">
+                <span className="font-bold">
                   {" "}
                   {course?.instructor}{" "}
-                </a>
+                </span>
               </li>
               <span className="hidden sm:inline mx-3 text-2xl">·</span>
               <li>Last updated {course?.last_updated} </li>
             </ul>
           </div>
+          <div className="my-1"><span className="font-medium text-gray-500">Duration:</span> <span className="font-medium mx-1"> {course?.duration} Hours </span></div>
           <div className="bg-white p-3 rounded-[.5rem] flex gap-4 items-center">
             <div className="flex-1 font-bold">
               Price: <FormattedPrice amount={course?.price!} />
@@ -135,14 +136,14 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
             ) : <span className="cursor-not-allowed sm:text-sm text-red-500 font-bold text-xs ">Register Closed</span>}
           </div>
           <div className="mt-10 py-2">
-              <span
+            <span
 
-                className="font-bold block  bg-white py-4 whitespace-nowrap border-b-2 border-transparent px-3 font-medium text-gray-600 transition-all duration-200 ease-in-out border-b-purple-600 text-purple-600"
-              >
-                {" "}
-                Course Details{" "}
-              </span>
-           
+              className="font-bold block  bg-white py-4 whitespace-nowrap border-b-2 border-transparent px-3 font-medium text-gray-600 transition-all duration-200 ease-in-out border-b-purple-600 text-purple-600"
+            >
+              {" "}
+              Course Details{" "}
+            </span>
+
           </div>
 
           <ul className="mt-2 space-y-4">
@@ -155,7 +156,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                   className="peer hidden"
                   type="checkbox"
                   id="accordion-1"
-                  
+
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

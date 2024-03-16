@@ -17,7 +17,7 @@ const SearchComponent = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [inputQuery, setInputQuery] = useState<string>("");
   const [inputError, setInputError] = useState<string | null>(null);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, Infinity]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false); // New state for loading indicator
 
@@ -117,7 +117,6 @@ const SearchComponent = () => {
                 <input
                   type="number"
                   min="0"
-                  max="1000"
                   value={priceRange[1]}
                   onChange={(e) => handlePriceRangeChange(e, 1)}
                   className="border rounded-md px-2 py-1 ml-2 mr-2  w-[90%] mx-auto"
