@@ -40,7 +40,7 @@ const AdminLocation = () => {
         updatedArray.splice(index, 1);
 
         try {
-            await updateJsonFile("robotech/pages/announcement.json", updatedArray);
+            await updateJsonFile("robotech/pages/location.json", updatedArray);
             setJsonArray(updatedArray);
             toast.success(`Item removed successfully`);
             toast.loading(`Be patient, changes takes a few moments to be reflected`);
@@ -82,7 +82,7 @@ const AdminLocation = () => {
             }
 
             try {
-                await updateJsonFile("robotech/pages/announcement.json", updatedArray);
+                await updateJsonFile("robotech/pages/location.json", updatedArray);
                 setJsonArray(updatedArray);
                 setEditIndex(null);
                 toast.success(`Item Added/Updated successfully`);
@@ -112,7 +112,7 @@ const AdminLocation = () => {
     return (
         <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
 
-            {!jsonArray && <h2 className="font-bold mb-4">Current Announcement data:</h2>}
+            {!jsonArray && <h2 className="font-bold mb-4">Current Location data:</h2>}
             {
                 jsonArray.length === 0 ? <div className="mb-5 flex items-center justify-end">
                     <button
@@ -120,7 +120,7 @@ const AdminLocation = () => {
                         onClick={handleAddItemClick}
                     >
                         <Plus size={18} className="mr-1" />
-                        Add Announcement
+                        Set Location
                     </button>
                 </div> : null
             }
@@ -168,7 +168,7 @@ const AdminLocation = () => {
 
 
                         <h2 className="font-bold mb-2 text-center text-lg">
-                            {editIndex === -1 ? "Add Announcement" : "Edit Announcement"}
+                            {editIndex === -1 ? "Set Location" : "Edit Location"}
                         </h2>
                         <div className="">
 

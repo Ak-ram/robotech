@@ -13,6 +13,7 @@ import AdminAbout from "./AdminAbout";
 import AdminFaq from "./AdminFaq";
 import AdminSlides from "./AdminSlides";
 import AdminAnnouncement from "./AdminAnnouncement";
+import AdminLocation from "./AdminLocation";
 
 const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -50,7 +51,7 @@ const AdminComponent = () => {
     { id: 7, icon: <StickyNote />, label: "Announcement", content: <AdminAnnouncement /> },
     { id: 8, icon: <UserCircle />, label: "Customers", content: <AdminCustomers /> },
     { id: 9, icon: <BarChart />, label: "Stats", content: <Stats /> },
-    { id: 10, icon: <Map />, label: "Location", content: <Stats /> },
+    { id: 10, icon: <Map />, label: "Location", content: <AdminLocation /> },
     // Add more items as needed
   ];
 
