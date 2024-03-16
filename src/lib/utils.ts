@@ -22,6 +22,6 @@ export function formatFullName(fullName: string) {
 }
 
 export function isColor(text: string) {
-  const colorNames = ['black', 'white', 'red', 'blue', 'green']; // Add more color names as needed
+  const colorNames = ['black', 'orange', 'lime', 'cyan', 'indigo', 'violet', 'purple', 'rose', 'yellow', 'pink', 'sky', 'red', 'blue', 'green']; // Add more color names as needed
   return colorNames.includes(text.toLowerCase().trim());
 };

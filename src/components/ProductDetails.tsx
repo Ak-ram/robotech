@@ -112,11 +112,11 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                                 {product.variations.split("|").map((kind, index) => (
                                     <div key={index} className={`flex justify-center gap-1 items-center`}>
                                         <span
-                                            style={{ backgroundColor: isColor(kind) ? kind.toLowerCase().trim() : 'black', opacity: 0.9 }}
+                                            style={{ backgroundColor: isColor(kind) ? (kind.toLowerCase().trim() === 'white' ? 'black' : kind.toLowerCase().trim()) : 'black', opacity: 0.9 }}
                                             className={`block border shadow w-[15px] mt-[3px] h-[15px] rounded`}
                                         ></span>
                                         <span className={`capitalize`}
-                                            style={{ color: isColor(kind) ? (kind.toLowerCase().trim() === 'white' ? 'black' : kind.toLowerCase().trim()) : 'inherit', opacity: 0.9 }}
+                                            style={{ color: isColor(kind) ? (kind.toLowerCase().trim() === 'white' ? 'black' : kind.toLowerCase().trim()) : 'black', opacity: 0.9 }}
                                         >
                                             {kind}
                                         </span>
