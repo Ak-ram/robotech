@@ -3,6 +3,7 @@ import Slider, { Settings } from "react-slick";
 import { getSlidesData } from "@/helpers/getSlidesData";
 import ProductSlider from "./ProductSlider";
 import Link from "next/link";
+import { Link2 } from "lucide-react";
 
 
 interface BannerProps { }
@@ -73,7 +74,7 @@ const Banner: React.FC<BannerProps> = () => {
     if (typeof window !== "undefined") {
       // Run the effect only in the browser environment
       fetchProducts();
-  }
+    }
   }, []);
 
   return (
@@ -86,13 +87,16 @@ const Banner: React.FC<BannerProps> = () => {
               className={`${dotActive === index ? "z-10" : "z-0"
                 } relative`}
             >
-              <div className="w-full flex items-center justify-center h-full">
-                <Link href={slide?.link_url} className="w-full">
+              <div className="w-full flex-col flex items-start justify-center h-full">
                 <img
                   src={slide?.image || "https://via.placeholder.com/800x400"}
                   alt={`Slide ${index}`}
                   className="object-contian w-full border border-designColor/40 overflow-hidden "
                 />
+                <Link href={slide?.link_url} className="my-2">
+                  <button className="flex items-center gap-1 justify-center hover:underline font-bold py-1 px-2 ">
+                    <Link2 size={17} /><span className="text-sm">Slide Link </span>
+                  </button>
                 </Link>
               </div>
             </div>
