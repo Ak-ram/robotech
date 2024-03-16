@@ -12,6 +12,7 @@ function AboutComponent() {
         description: string;
         link_url: string;
         link_text: string;
+        image_url: string;
     }
 
     const [data, setData] = useState<AboutData[]>([]);
@@ -44,19 +45,20 @@ function AboutComponent() {
                         We integrate cutting-edge technologies for precision and innovation in spacecraft design, robotics, and control systems.
                     </p>
                 </div>
-                <div className="grid gap-8 md:grid-cols-2">
+                <div className="grid gap-10 md:grid-cols-2">
                     {data.map((item) => (
-                        <div key={item.id} className="border shadow-lg border-blue-500/50  bg-white rounded-lg shadow-md p-6">
-                            <div className="flex items-center justify-center w-12 h-12 mb-4 rounded bg-blue-100">
-                                <Info className="text-blue-600" size={35} />
-                            </div>
-                            <div>
-                                <h6 className="text-xl font-bold uppercase leading-5 text-gray-800 mb-3">{item.title}</h6>
-                                <p className="text-sm text-gray-700 mb-3 ml-3">{item.description}</p>
-                                <Link href={item.link_url} className="inline-block bg-indigo-600 text-white text-sm py-2 px-4 rounded-md font-semibold transition-colors duration-200 hover:bg-indigo-700">
+                        <div key={item.id} className="border overflow-hidden shadow-lg border-gray-500/50 group bg-white rounded-lg shadow-md">
+                            <img className='w-full h-[250px] filter grayscale shadow-xl group-hover:grayscale-0 transition duration-300 ease-in-out' src={item?.image_url} alt={item?.title} />
+                            <div className='p-6'>
+
+                                <div>
+                                    <h6 className="text-xl font-bold uppercase leading-5 text-gray-800 mb-3">{item.title}</h6>
+                                    <p className=" text-gray-700 mb-3">{item.description}</p>
+                                    <Link href={item.link_url} className="inline-block bg-indigo-600 text-white py-2 px-4 rounded-md font-semibold transition-colors duration-200 hover:bg-indigo-700">
                                         {item.link_text.charAt(0).toUpperCase() + item.link_text.slice(1).toLowerCase()}
-                                    
-                                </Link>
+
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     ))}
