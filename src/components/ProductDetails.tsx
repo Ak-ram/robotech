@@ -146,7 +146,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                     <div className="flex text-rose-500 items-center">
                         <Youtube className="w-5 h-5  mr-2" />
                         <span className="font-semibold">
-                            <a href={product?.externalLink} className="hover:underline">
+                            <a href={product?.externalLink} target="_blank" className="hover:underline">
                                 Youtube Video
                             </a>
                         </span>
