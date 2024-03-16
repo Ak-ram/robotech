@@ -387,7 +387,7 @@ const Admin3DComponent = () => {
                 onChange={(e) => handleInputChange(e, "externalLink")}
               />
             </div>
-            <div className="w-full mb-2 lg:pr-4">
+            {/* <div className="w-full mb-2 lg:pr-4">
               <span className="text-sm font-bold my-2 -ml-2">Wholesale Price Per Gram</span>
 
               <input
@@ -397,7 +397,7 @@ const Admin3DComponent = () => {
                 value={editedItem.wholesalePrice}
                 onChange={(e) => handleInputChange(e, "wholesalePrice")}
               />
-            </div>
+            </div> */}
           </div>
           <div className="flex">
             <button
