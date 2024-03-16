@@ -79,8 +79,8 @@ const AdminBills = () => {
                                 className={`flex items-center justify-between border group hover:border-zinc-500 border-zinc-300 p-4 rounded-lg bg-white font-medium shadow-md transition-all duration-300 transform 
                             `}
                             >
-                                <div className="flex flex-col gap-1 ">
-                                    <span>Customer Name: {item?.customerData?.fullName}</span>
+                                <div className="flex flex-col gap-1 text-zinc-600">
+                                    <span>Customer Name: <span className="text-black">{item?.customerData?.fullName}</span></span>
                                     <span>Bill ID:  <span className="text-blue-400">{item.id}</span> </span>
                                 </div>
                                 <div className="flex justify-end">
