@@ -27,7 +27,8 @@ const CustomerPage = () => {
   const [currentBill, setCurrentBill] = useState<BillType>();
   interface BillType {
     id: string,
-    data: ProductType[]
+    data: ProductType[],
+    customerData: any
   }
   const tabs = [
     {
@@ -68,7 +69,8 @@ const CustomerPage = () => {
     setShowBill(true);
     const bill = {
       id: `R:${uuid()}`,
-      data: billData
+      data: billData,
+      customerData: customerData
     };
     setCurrentBill(bill)
     const updatedArray = [...jsonArray, bill]; // Pushing the bill object into jsonArray

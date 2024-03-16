@@ -3,7 +3,7 @@ import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import Link from 'next/link'
 import Bill from "./Bill";
-import { Edit, Trash, TrashIcon } from "lucide-react";
+import { Edit, Eye, Trash, TrashIcon } from "lucide-react";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 const AdminBills = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -60,7 +60,7 @@ const AdminBills = () => {
             <div className="mb-5 flex flex-col lg:flex-row items-center justify-between">
                 <input
                     type="text"
-                    placeholder="Search By Name, Phone"
+                    placeholder="Search By Customer Name, Bill ID"
                     className="text-black mb-2 p-2 border border-gray-300 rounded w-full lg:w-[60%] focus:outline-none focus:border-blue-500"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -70,22 +70,24 @@ const AdminBills = () => {
             {billsList.length !== 0 ? (
                 <div className={"flex flex-col gap-2"}>
                     {billsList
-
-                        .map((item, index) => (
+                        .filter(item =>
+                            item?.id.includes(searchTerm) ||
+                            item?.customerData?.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+                        ).map((item, index) => (
                             <div
                                 key={index}
                                 className={`flex items-center justify-between border group hover:border-zinc-500 border-zinc-300 p-4 rounded-lg bg-white font-medium shadow-md transition-all duration-300 transform 
                             `}
                             >
-                                <div> Bill ID: <span onClick={() => openBill(item.id)}
-                                    className="cursor-pointer text-blue-400 group-hover:underline"> {item.id} </span>
+                                <div className="flex flex-col gap-1 ">
+                                    <span>Customer Name: {item?.customerData?.fullName}</span>
+                                    <span>Bill ID:  <span className="text-blue-400">{item.id}</span> </span>
                                 </div>
                                 <div className="flex justify-end">
                                     <button
                                         className="flex gap-1 items-center  bg-blue-100 py-1 px-2 rounded text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
-                                    // onClick={() => handleEditClick(item.id)}
-                                    >
-                                        <Edit size={17} />    Edit
+                                        onClick={() => openBill(item.id)}                                    >
+                                        <Eye size={17} />    View
                                     </button>
                                     <button
                                         className="flex gap-1 items-center bg-red-100 py-1 px-2 rounded text-red-500 hover:text-red-600 transition-colors duration-300"
