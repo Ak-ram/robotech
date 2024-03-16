@@ -37,17 +37,13 @@ const Announcement = () => {
                 {data.length > 0 && data[0].body}
 
             </Link>
-            {/* {data.length > 0 && (
-                <Link href={data[0].link_url} className="flex items-end gap-1 flex-nowrap whitespace-nowrap font-bold text-xs sm:text-sm mt-2 sm:mt-0 underline hover:text-gray-200">
-                    {data[0].link_text}
-                </Link>
-            )} */}
+        
         </div>
         <span className="hover:text-white text-white/80 cursor-pointer mt-2 sm:mt-0 ml-3" onClick={() => setClosing(true)}><X className="" size={20} /></span>
     </div>
     return (
-        announcement
-    );
+        <>{data.length > 0 && data[0].body && announcement}
+        </>);
 };
 
 export default Announcement;

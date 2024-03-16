@@ -144,7 +144,7 @@ const AdminAnnouncement = () => {
                                 <tr key={index} className="hover:bg-slate-100">
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.body}</td>
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                                        <Link href={item.link_url}>
+                                        <Link href={item.link_url || ""}>
                                             {item.link_text}
                                         </Link>
                                     </td>
