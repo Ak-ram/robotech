@@ -1,4 +1,4 @@
-import { Ban, Check, CheckCheck, ChevronDown, Edit, Search, Trash, X } from "lucide-react";
+import { Ban, Check, CheckCheck, ChevronDown, Edit, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ProductType } from "../../type";
 import { getPrintServices } from "@/helpers/getPrintServices";

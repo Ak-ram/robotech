@@ -3,6 +3,7 @@ import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import Link from 'next/link'
 import Bill from "./Bill";
+import { Edit, Trash, TrashIcon } from "lucide-react";
 const AdminBills = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -27,7 +28,7 @@ const AdminBills = () => {
 
     const openBill = (id) => {
         const selected = jsonArray.find(bill => bill.id === id);
-        setSelectedBill(selected.data)
+        setSelectedBill(selected)
         setShowBill(true)
     }
     return (
@@ -52,12 +53,26 @@ const AdminBills = () => {
                         .map((item, index) => (
                             <div
                                 key={index}
-                                onClick={() => openBill(item.id)}
-                                className={`border group cursor-pointer hover:border-zinc-500 border-zinc-300 p-4 rounded-lg bg-white font-medium shadow-md transition-all duration-300 transform 
+                                className={`flex items-center justify-between border group hover:border-zinc-500 border-zinc-300 p-4 rounded-lg bg-white font-medium shadow-md transition-all duration-300 transform 
                             `}
                             >
-                                Bill ID: <span className="text-blue-400 group-hover:underline"> {item.id} </span>
-
+                                <div> Bill ID: <span onClick={() => openBill(item.id)}
+                                    className="cursor-pointer text-blue-400 group-hover:underline"> {item.id} </span>
+                                </div>
+                                <div className="flex justify-end">
+                                    <button
+                                        className="flex gap-1 items-center  bg-blue-100 py-1 px-2 rounded text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
+                                    // onClick={() => handleEditClick(item.id)}
+                                    >
+                                        <Edit size={17} />    Edit
+                                    </button>
+                                    <button
+                                        className="flex gap-1 items-center bg-red-100 py-1 px-2 rounded text-red-500 hover:text-red-600 transition-colors duration-300"
+                                    // onClick={() => handleRemoveItem(item.id)}
+                                    >
+                                        <TrashIcon size={17} />  Remove
+                                    </button>
+                                </div>
                             </div>
                         ))
                     }
@@ -68,7 +83,7 @@ const AdminBills = () => {
                 </div>
             </div>}
 
-            {showBill && <Bill setShowBill={setShowBill} transactionData={selectedBill} />
+            {showBill && <Bill id={selectedBill.id} setShowBill={setShowBill} transactionData={selectedBill.data} />
             }
             <Toaster
                 position="bottom-right"

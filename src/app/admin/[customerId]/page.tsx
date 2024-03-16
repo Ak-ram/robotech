@@ -9,7 +9,7 @@ import { Printer } from "lucide-react";
 import Bill from "@/components/Bill";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
-import { generateNumericId } from "@/lib/utils";
+import { v4 as uuid } from 'uuid'
 const CustomerPage = () => {
   const router = useRouter();
   const searchPar = useSearchParams();
@@ -62,29 +62,29 @@ const CustomerPage = () => {
   const printBill = async () => {
     setShowBill(true);
     const bill = {
-      id: generateNumericId(),
+      id: `R:${uuid()}`,
       data: billData
     };
     const updatedArray = [...jsonArray, bill]; // Pushing the bill object into jsonArray
     await updateJsonFile("robotech/pages/bills.json", updatedArray);
-  
+
     toast.success("When you're ready, please click CTRL + P to print.");
   };
-  
+
 
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const data = await fetchJsonData("robotech/pages/bills.json");
-            setJsonArray(data);
-        } catch (error) {
-            console.log((error as Error).message);
-        }
+      try {
+        const data = await fetchJsonData("robotech/pages/bills.json");
+        setJsonArray(data);
+      } catch (error) {
+        console.log((error as Error).message);
+      }
     };
 
     fetchData();
-}, []);
+  }, []);
 
 
 
@@ -159,8 +159,8 @@ const CustomerPage = () => {
                 >
                   Add Bill
                   <Printer className="" />
-                </button>:null}
-               
+                </button> : null}
+
               </div>
             </section>
           </div>
