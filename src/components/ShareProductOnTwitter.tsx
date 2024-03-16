@@ -27,7 +27,7 @@ const ShareProductOnTwitter: React.FC<ShareProductOnTwitterProps> = ({ product, 
       title={product.title}
       via="your-twitter-handle" // Replace with your Twitter handle
     >
-      <LucideTwitter className="w-4 h-4 text-blue-500 mr-2" />
+      <LucideTwitter className="w-5 h-5 text-blue-500 mr-2" />
       <span className="font-semibold">
         Share on Twitter
       </span>

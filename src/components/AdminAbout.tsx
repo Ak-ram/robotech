@@ -15,6 +15,7 @@ const AdminAbout = () => {
     description: "",
     link_text: "",
     link_url: "",
+    image_url: "",
   });
 
   useEffect(() => {
@@ -38,6 +39,7 @@ const AdminAbout = () => {
       description: "",
       link_text: "",
       link_url: "",
+      image_url: "",
     });
   };
 
@@ -70,7 +72,9 @@ const AdminAbout = () => {
       !editedItem.title ||
       !editedItem.description ||
       !editedItem.link_text ||
-      !editedItem.link_url
+      !editedItem.link_url ||
+      !editedItem.image_url
+
     ) {
       toast.error("All fields are required");
       return;
@@ -135,6 +139,7 @@ const AdminAbout = () => {
           <table className="min-w-full border border-gray-300 text-sm">
             <thead>
               <tr className="bg-zinc-800 text-white ">
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Image</th>
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Title</th>
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Description</th>
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Link text</th>
@@ -145,6 +150,7 @@ const AdminAbout = () => {
             <tbody>
               {jsonArray.map((item, index) => (
                 <tr key={index} className="hover:bg-slate-100">
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.image_url}</td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.title}</td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.description}</td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.link_text}</td>
@@ -178,19 +184,28 @@ const AdminAbout = () => {
           <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
 
 
-          <h2 className="font-bold mb-2 text-center text-lg">
+            <h2 className="font-bold mb-2 text-center text-lg">
               {editIndex === -1 ? "Add About Data" : "Edit About Data"}
             </h2>
             <div className="">
               <div className=" mb-2 lg:pr-4">
                 <span className="text-sm font-bold my-2 -ml-2">Title</span>
-
                 <input
                   type="text"
                   placeholder="Title"
                   className="w-full p-2 border border-gray-300 rounded"
                   value={editedItem.title}
                   onChange={(e) => handleInputChange(e, "title")}
+                />
+              </div>
+              <div className=" mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Image URL</span>
+                <input
+                  type="text"
+                  placeholder="https://example.com/example.png"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editedItem.image_url}
+                  onChange={(e) => handleInputChange(e, "image_url")}
                 />
               </div>
               <div className="mb-2 lg:pr-4">

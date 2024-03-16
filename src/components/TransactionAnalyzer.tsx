@@ -11,6 +11,16 @@ const TransactionAnalyzer = ({ customers }) => {
   const [selectedPeriod, setSelectedPeriod] = useState(null);
   const [show, setShow] = useState(false);
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+
+  // Function to handle search input change
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Function to filter transactions based on search query
+
   useEffect(() => {
     const analyzeTransactions = () => {
       const dailyTransactions = {};
@@ -306,9 +316,7 @@ const TransactionAnalyzer = ({ customers }) => {
 
   const renderTransactions = useCallback((period) => {
     const renderTransactionsByPeriod = (transactions) => {
-
       return transactions.map((transaction, index) => {
-        // console.log(transaction)
         return (
           <Link href={{
             pathname: `admin/id_${transaction?.customerId}`,
@@ -414,6 +422,7 @@ const TransactionAnalyzer = ({ customers }) => {
     switch (period) {
       case 'daily':
         return Object.keys(dailySells)
+          .filter(day => day.includes(searchQuery))
           .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
           .map(day => (
             <div key={day} className="mb-4">
@@ -426,6 +435,8 @@ const TransactionAnalyzer = ({ customers }) => {
 
       case 'monthly':
         return Object.keys(monthlySells)
+          .filter(month => month.includes(searchQuery))
+
           .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
           .map(month => (
             <div key={month} className="mb-4">
@@ -436,6 +447,8 @@ const TransactionAnalyzer = ({ customers }) => {
 
       case 'yearly':
         return Object.keys(yearlySells)
+          .filter(year => year.includes(searchQuery))
+
           .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
           .map(year => (
             <div key={year} className="mb-4">
@@ -458,6 +471,8 @@ const TransactionAnalyzer = ({ customers }) => {
               <div>
                 <h4 className="text-md font-semibold mb-2">Daily Revenue and Profits</h4>
                 {Object.entries(dailyRevenue)
+                  .filter(([day, revenue]) => day.includes(searchQuery))
+
                   .sort(([dayA]: [string, any], [dayB]: [string, any]) => {
                     // Convert dates to Date objects
                     const dateA = new Date(dayA);
@@ -486,6 +501,8 @@ const TransactionAnalyzer = ({ customers }) => {
               </div>
               <div>
                 {Object.entries(monthlyRevenue)
+                  .filter(([month, revenue]) => month.includes(searchQuery))
+
                   .sort(([dayA]: [string, any], [dayB]: [string, any]) => {
                     // Convert dates to Date objects
                     const dateA = new Date(dayA);
@@ -514,6 +531,8 @@ const TransactionAnalyzer = ({ customers }) => {
               </div>
               <div>
                 {Object.entries(yearlyRevenue)
+                  .filter(([year, revenue]) => year.includes(searchQuery))
+
                   .sort(([dayA]: [string, any], [dayB]: [string, any]) => {
                     // Convert dates to Date objects
                     const dateA = new Date(dayA);
@@ -541,7 +560,7 @@ const TransactionAnalyzer = ({ customers }) => {
       default:
         return null;
     }
-  }, [dailySells, monthlySells, yearlySells]);
+  }, [dailySells, monthlySells, yearlySells, searchQuery]);
 
 
 
@@ -549,57 +568,64 @@ const TransactionAnalyzer = ({ customers }) => {
   return (
     // <div className="overflow-auto mx-auto p-4">
     <div className={`${!show ? "border border-orange-500 border-dashed" : ""} bg-white  rounded-lg mb-5 overflow-hidden`}>
-     <div
-                    className="flex items-center p-5 justify-between cursor-pointer"
-                    onClick={() => setShow(!show)}
-                >
-                    <h3 className="transform  transition-transform duration-500 font-semibold text-orange-500">
-                        {show ? "Click to Collapse" : "Expand Revenue Overview"}
-                    </h3>
-                    <ChevronDown
-                        className={`transform text-orange-500 transition-transform duration-300 ${show ? "rotate-180" : ""
-                            }`}
-                        size={25}
-                    />
-                </div>
-      {show && <>
-      <div className="px-5 grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white border border-indigo-500 rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
-          onClick={() => handlePeriodClick('daily')}>
-          <Clock className="w-8 h-8 mr-2 text-indigo-500" />
-          <div>
-            <h3 className="text-lg text-indigo-600 font-semibold">Daily Revenue</h3>
-            <p className="text-indigo-500">{Object.keys(dailySells).length}</p>
-          </div>
-        </div>
-        <div className="bg-white border border-green-500  rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
-          onClick={() => handlePeriodClick('monthly')}>
-          <Calendar className="w-8 h-8 mr-2 text-green-500" />
-          <div>
-            <h3 className="text-lg text-green-500  font-semibold">Monthly Revenue</h3>
-            <p className="text-green-500 ">{Object.keys(monthlySells).length}</p>
-          </div>
-        </div>
-        <div className="bg-white rounded-lg border border-orange-500 shadow-lg p-4 flex items-center justify-center cursor-pointer"
-          onClick={() => handlePeriodClick('yearly')}>
-          <Package className="w-8 h-8 mr-2 text-orange-500" />
-          <div>
-            <h3 className="text-lg text-orange-500 font-semibold">Yearly Revenue</h3>
-            <p className="text-orange-600">{Object.keys(yearlySells).length}</p>
-          </div>
-        </div>
-        <div className="bg-white border border-rose-500 rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
-          onClick={() => handlePeriodClick('revenue')}>
-          <Banknote className="w-8 h-8 mr-2 text-rose-500" />
-          <div>
-            <h3 className="text-lg text-rose-500 font-semibold">Total Revenue</h3>
-            <p className="text-rose-600"><FormattedPrice amount={calculateTotalRevenue} /></p>
-          </div>
-        </div>
+      <div
+        className="flex items-center p-5 justify-between cursor-pointer"
+        onClick={() => setShow(!show)}
+      >
+        <h3 className="transform  transition-transform duration-500 font-semibold text-orange-500">
+          {show ? "Click to Collapse" : "Expand Revenue Overview"}
+        </h3>
+        <ChevronDown
+          className={`transform text-orange-500 transition-transform duration-300 ${show ? "rotate-180" : ""
+            }`}
+          size={25}
+        />
       </div>
+      {show && <>
+        <div className="px-5 grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-white border border-indigo-500 rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
+            onClick={() => handlePeriodClick('daily')}>
+            <Clock className="w-8 h-8 mr-2 text-indigo-500" />
+            <div>
+              <h3 className="text-lg text-indigo-600 font-semibold">Daily Revenue</h3>
+              <p className="text-indigo-500">{Object.keys(dailySells).length}</p>
+            </div>
+          </div>
+          <div className="bg-white border border-green-500  rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
+            onClick={() => handlePeriodClick('monthly')}>
+            <Calendar className="w-8 h-8 mr-2 text-green-500" />
+            <div>
+              <h3 className="text-lg text-green-500  font-semibold">Monthly Revenue</h3>
+              <p className="text-green-500 ">{Object.keys(monthlySells).length}</p>
+            </div>
+          </div>
+          <div className="bg-white rounded-lg border border-orange-500 shadow-lg p-4 flex items-center justify-center cursor-pointer"
+            onClick={() => handlePeriodClick('yearly')}>
+            <Package className="w-8 h-8 mr-2 text-orange-500" />
+            <div>
+              <h3 className="text-lg text-orange-500 font-semibold">Yearly Revenue</h3>
+              <p className="text-orange-600">{Object.keys(yearlySells).length}</p>
+            </div>
+          </div>
+          <div className="bg-white border border-rose-500 rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
+            onClick={() => handlePeriodClick('revenue')}>
+            <Banknote className="w-8 h-8 mr-2 text-rose-500" />
+            <div>
+              <h3 className="text-lg text-rose-500 font-semibold">Total Revenue</h3>
+              <p className="text-rose-600"><FormattedPrice amount={calculateTotalRevenue} /></p>
+            </div>
+          </div>
+        </div>
         {selectedPeriod && (
           <div className="mt-8 px-5">
             <h2 className="text-xl font-semibold mb-4">{`Transactions for ${selectedPeriod}`}</h2>
+            <input
+              type="text"
+              placeholder="Search for transactions by date..."
+              value={searchQuery}
+              className='border rounded py-2 px-4 w-full border-zinc-300 mx-auto'
+              onChange={(e) => handleSearchInputChange(e)}
+            />
             <div className="bg-white rounded-lg shadow-lg p-4">
               {renderTransactions(selectedPeriod)}
             </div>

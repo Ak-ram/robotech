@@ -16,14 +16,16 @@ interface TransactionData {
 
 interface BillProps {
   setBillData?: (data: TransactionData[]) => void;
+  id?: string;
   transactionData: TransactionData[];
   setShowBill: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Bill: React.FC<BillProps> = ({
-  setBillData = () => {},
+  setBillData = () => { },
   transactionData,
-  setShowBill
+  setShowBill,
+  id
 }) => {
   // Add your company data
   const companyData = {
@@ -61,17 +63,9 @@ const Bill: React.FC<BillProps> = ({
 
   return (
     <>
-      <style>
-        {`
-          @media print {
-            .hide-when-printing {
-              display: none;
-            }
-          }
-        `}
-      </style>
-      <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-        <div className="bg-white w-full max-w-screen-md mx-auto p-6 md:p-8 rounded-lg shadow-md">
+
+      <div  className="printContainer overflow-hidden fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="bg-white w-full max-w-screen-md mx-auto p-6 md:p-8 rounded-lg">
           {!printMode && (
             <div className="hide-when-printing flex items-center justify-between">
               <X
@@ -83,7 +77,7 @@ const Bill: React.FC<BillProps> = ({
               />
             </div>
           )}
-          <div className="p-4">
+          <div className="">
             {/* Logo and Company Information */}
             <div className="flex items-center justify-between mb-4">
               <div>
@@ -94,11 +88,12 @@ const Bill: React.FC<BillProps> = ({
                   width={70}
                   height={70}
                 />
-                <span className="font-bold text-lg">{companyData.name}</span>
+                {/* <span className="font-bold text-lg">{companyData.name}</span> */}
+                {/* <p>{companyData.address}</p> */}
+                {/* <p>{companyData.phone}</p> */}
               </div>
               <div className="text-right">
-                <p>{companyData.address}</p>
-                <p>{companyData.phone}</p>
+                ID: {id}
               </div>
             </div>
 
@@ -137,14 +132,14 @@ const Bill: React.FC<BillProps> = ({
             </div>
 
             {/* Total Amount */}
-            <div className="border-t border-gray-300 py-4 mb-4">
+            <div className="border-t border-gray-300 py-4">
               <p className="font-bold">
                 Total Amount: <FormattedPrice amount={totalAmount} />
               </p>
             </div>
 
             {/* Signature Section */}
-            <div className="my-16">
+            <div className="mt-6 mb-10">
               <h3 className="text-lg font-bold mb-2">Signatures</h3>
               <div className="flex justify-between">
                 <div>

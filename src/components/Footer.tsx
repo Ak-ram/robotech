@@ -1,4 +1,5 @@
-import React from "react";
+'use client'
+import React, { useEffect, useState } from "react";
 import { Facebook, Mail, MapPin, Phone } from 'lucide-react';
 import Container from "./Container";
 import ShortLogo from '@/assets/ShortLogo.png';
@@ -6,8 +7,31 @@ import ShortLogo from '@/assets/ShortLogo.png';
 import { navigation } from "@/constants/data";
 import Link from "next/link";
 import Image from "next/image";
-
+import { getLocation } from "@/helpers/getLocation";
+interface LocationItem {
+  locationText: string;
+  locationUrl: string; // Add the 'open' property to the LocationItem type
+}
 const Footer = () => {
+  const [data, setData] = useState<LocationItem[]>([{
+    locationText: "",
+    locationUrl: ""
+  }]); // Set the type for 'data'
+  useEffect(() => {
+    const fetchFaq = async () => {
+      try {
+        const p = await getLocation();
+        setData(p);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      // Run the effect only in the browser environment
+      fetchFaq();
+    }
+  }, []);
   return (
 
     <div className="bg-zinc-900  text-zinc-300">
@@ -43,7 +67,7 @@ const Footer = () => {
               </li>
               <li className="flex gap-2 w-fit hover:underline">
                 <MapPin />
-                <span className="ml-2 hover:underline">بنى سويف, امام بنك الاسكندرية</span>
+                <span className="ml-2 hover:underline">{data.length > 0 && data[0].locationText!}</span>
               </li>
             </ul>
           </div>
@@ -64,14 +88,18 @@ const Footer = () => {
           <div className="mt-3">
             <span className="font-bold text-orange-500">Our Location</span>
             <a className="ml-2 hover:underline" href="https://www.google.com/maps/search/%D8%A8%D9%86%D9%83+%D8%A7%D9%84%D8%A5%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D9%87%E2%80%AD/@29.075876,31.0982042,17z?entry=ttu">
-              بنى سويف, امام بنك الاسكندرية
-            </a>
-            <iframe
-              height="300"
-              className="w-full mt-3"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3488.1797670004244!2d31.112498075913482!3d29.041263665401818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145a25b7e8415d55%3A0xff3a526f06bd7889!2z2KjZhtmDINin2YTYpdiz2YPZhtiv2LHZitip!5e0!3m2!1sen!2seg!4v1705061347780!5m2!1sen!2seg" loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+              {data.length > 0 && data[0].locationText!}            </a>
+            {
+              data.length > 0 && data[0].locationUrl!.includes('maps') ? <iframe
+                height="300"
+                className="w-full mt-3"
+                src={data[0].locationUrl!}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+                : null
+            }
+
           </div>
         </div>
       </Container>

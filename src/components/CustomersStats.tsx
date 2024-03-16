@@ -11,6 +11,7 @@ import CustomerStatsTopSelling from "./CustomerStatsTopSelling";
 import CustomerStatsOutStocks from "./CustomerStatsOutStocks";
 import CustomerStatsInStocks from "./CustomerStatsInStocks";
 import Stocks from "./Stocks";
+import CustomerStatsServicesData from "./CustomerStatsServicesData";
 
 const CustomersStats = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -103,7 +104,7 @@ const CustomersStats = () => {
 
             <div className="flex flex-col">
                 <Stocks />
-
+                <CustomerStatsServicesData />
                 <div className={`${!show ? "border border-blue-300 border-dashed" : ""} bg-white rounded-lg mb-5 overflow-hidden`}>
                 <div
                     className="flex items-center p-5 justify-between cursor-pointer"

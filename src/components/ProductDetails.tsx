@@ -1,13 +1,14 @@
 import React from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon, Paintbrush, ShoppingBag, AlertCircle } from "lucide-react";
+import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon, Paintbrush, ShoppingBag, AlertCircle, Youtube } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
 import { ProductType } from "../../type";
 import Link from "next/link";
 import ShareProductOnFacebook from "./ShareProductOnFacebook";
 import ShareProductOnTwitter from "./ShareProductOnTwitter";
+import { isColor } from "@/lib/utils";
 
 const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
     const openWhatsApp = () => {
@@ -63,14 +64,14 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                 <div className="mt-5 space-y-2">
                     {product?.previousPrice! > product?.price! && <>
                         <div className="flex items-center text-sm font-medium text-gray-600">
-                            <Wallet2 className="w-4 h-4 mr-2" />
+                            <Wallet2 className="w-5 h-5 mr-2" />
                             Previous Price:{" "}
                             <FormattedPrice className="mx-1"
                                 amount={product?.previousPrice!} />
                         </div>
 
                         <div className="flex items-center text-sm font-medium text-gray-600">
-                            <Check className="w-4 h-4 mr-2" />
+                            <Check className="w-5 h-5 mr-2" />
                             You saved:{" "}
                             <FormattedPrice
                                 className="mx-1"
@@ -82,42 +83,42 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                     }
                     {
                         product?.category && <div className="flex items-center text-sm font-medium text-gray-600">
-                            <BookCopy className="w-4 h-4 mr-2" />
+                            <BookCopy className="w-5 h-5 mr-2" />
                             Categroy:
                             <span className="ml-1 text-sm text-indigo-600">{product?.category?.toUpperCase()}</span>
                         </div>
                     }
 
                     <div className="flex items-center text-sm font-medium text-gray-600">
-                        <Gift className="w-4 h-4 mr-2" />
+                        <Gift className="w-5 h-5 mr-2" />
                         Newly added
                     </div>
 
                     {
                         product?.count < 3 && product?.count > 0 && <div className="flex items-center justify-start text-sm font-medium text-rose-600">
-                            <AlertCircle className="w-4 h-4 mr-2" />
+                            <AlertCircle className="w-5 h-5 mr-2" />
                             Hurry to buy! Limited stock!🏃‍♂️
                         </div>
                     }
 
 
-                    {product?.colors && (
+                    {product?.variations && (
                         <div className="text-sm font-medium text-gray-600">
                             <div className="flex items-center">
-                                <Paintbrush className="w-4 h-4 mr-2" />
-                                Print Colors:
+                                <Paintbrush className="w-5 h-5 mr-2" />
+                                Variations List:
                             </div>
                             <div className="pl-3 mt-3 flex flex-wrap items-center w-full gap-6">
-                                {product.colors.split("|").map((color, index) => (
+                                {product.variations.split("|").map((kind, index) => (
                                     <div key={index} className={`flex justify-center gap-1 items-center`}>
                                         <span
-                                            style={{ backgroundColor: color.toLowerCase().trim(), opacity: 0.9 }}
-                                            className={`block border shadow w-[14px] h-[14px] rounded`}
+                                            style={{ backgroundColor: isColor(kind) ? (kind.toLowerCase().trim() === 'white' ? 'black' : kind.toLowerCase().trim()) : 'black', opacity: 0.9 }}
+                                            className={`block border shadow w-[15px] mt-[3px] h-[15px] rounded`}
                                         ></span>
                                         <span className={`capitalize`}
-                                            style={{ color: color.toLowerCase().trim() === 'white' ? 'black' : color.toLowerCase().trim(), opacity: 0.9 }}
+                                            style={{ color: isColor(kind) ? (kind.toLowerCase().trim() === 'white' ? 'black' : kind.toLowerCase().trim()) : 'black', opacity: 0.9 }}
                                         >
-                                            {color}
+                                            {kind}
                                         </span>
                                     </div>
                                 ))}
@@ -131,7 +132,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
 
             <div className="mt-5 pb-5 border-b space-y-2">
                 <div onClick={openWhatsApp} className="flex cursor-pointer items-center">
-                    <PhoneCall className="w-4 h-4 text-green-600 mr-2" />
+                    <PhoneCall className="w-5 h-5 text-green-600 mr-2" />
                     <span className="font-semibold">Whatsapp: 01102071544</span>
                 </div>
 
@@ -143,12 +144,11 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                 <ShareProductOnTwitter product={product} className="flex items-center" />
 
                 {product?.externalLink && product.externalLink.length && (
-                    <div className="flex items-center">
-                        <Link2 className="w-4 h-4 text-blue-500 mr-2" />
+                    <div className="flex text-rose-500 items-center">
+                        <Youtube className="w-5 h-5  mr-2" />
                         <span className="font-semibold">
-                            More Details:
-                            <a href={product?.externalLink} className="ml-2 text-blue-500 hover:underline">
-                                Follow
+                            <a href={product?.externalLink} target="_blank" className="hover:underline">
+                                Youtube Video
                             </a>
                         </span>
                     </div>
