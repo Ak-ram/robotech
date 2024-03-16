@@ -49,9 +49,9 @@ const AdminComponent = () => {
     { id: 5, icon: <HelpCircle />, label: "Faq", content: <AdminFaq /> },
     { id: 6, icon: <SlidersHorizontal />, label: "Slides", content: <AdminSlides /> },
     { id: 7, icon: <StickyNote />, label: "Announcement", content: <AdminAnnouncement /> },
+    { id: 10, icon: <Map />, label: "Location", content: <AdminLocation /> },
     { id: 8, icon: <UserCircle />, label: "Customers", content: <AdminCustomers /> },
     { id: 9, icon: <BarChart />, label: "Stats", content: <Stats /> },
-    { id: 10, icon: <Map />, label: "Location", content: <AdminLocation /> },
     // Add more items as needed
   ];
 
