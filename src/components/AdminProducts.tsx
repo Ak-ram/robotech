@@ -80,24 +80,27 @@ const AdminComponent = () => {
       isNew: false,
       quantity: 1,
       category: selectedCat,
-      wholesalePrice:0
+      wholesalePrice: 0
     });
   };
 
   const handleRemoveItem = async (sectionIndex: number, itemIndex: number) => {
-    const updatedData = [...jsonData];
-    updatedData[sectionIndex][selectedCat!].splice(itemIndex, 1);
+    const confirm = window.confirm('Sure to Delete ?');
+    if (confirm) {
+      const updatedData = [...jsonData];
+      updatedData[sectionIndex][selectedCat!].splice(itemIndex, 1);
 
-    try {
-      await updateJsonFile("robotech/pages/categories.json", updatedData);
-      setJsonData(updatedData);
-      toast.success(`Item removed successfully`);
-      toast.loading(`Be patient, changes takes a few moments to be reflected`);
-      setTimeout(() => {
-        toast.dismiss();
-      }, 5000);
-    } catch (error) {
-      toast.error(`${(error as Error).message}`);
+      try {
+        await updateJsonFile("robotech/pages/categories.json", updatedData);
+        setJsonData(updatedData);
+        toast.success(`Item removed successfully`);
+        toast.loading(`Be patient, changes takes a few moments to be reflected`);
+        setTimeout(() => {
+          toast.dismiss();
+        }, 5000);
+      } catch (error) {
+        toast.error(`${(error as Error).message}`);
+      }
     }
   };
 
