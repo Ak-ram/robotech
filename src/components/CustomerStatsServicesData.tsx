@@ -74,7 +74,6 @@ const CustomerStatsServicesData = () => {
         if (editedService) {
             setIsEditPopupOpen(false);
 
-            // Update the state immediately with the modified service
             setServices(prevServices => {
                 return prevServices.map(service => {
                     if (service.id === editedService.id) {
@@ -84,23 +83,23 @@ const CustomerStatsServicesData = () => {
                     }
                 });
             });
+           
             setEditedService(null);
             // Update the JSON file in the background
-            if (jsonData.length > 0 && Array.isArray(jsonData[0][editedService.category])) {
+            if (jsonData.length > 0) {
                 let updatedData = [...jsonData];
-                updatedData[0][editedService.category] = updatedData[0][editedService.category].map(service => {
+                updatedData = updatedData.map(service => {
                     if (service.id === editedService.id) {
                         return editedService;
                     } else {
                         return service;
                     }
                 });
-
                 // No need to await, updating JSON file in the background
                 updateJsonFile("robotech/pages/3d.json", updatedData)
-                    .then(() => console.log("JSON file updated successfully"))
-                    .catch(error => console.error("Error updating JSON file:", error));
-
+                .then(() => console.log("JSON file updated successfully"))
+                .catch(error => console.error("Error updating JSON file:", error));
+            
                 // Update the state with the new JSON data
                 setJsonData(updatedData);
             } else {
