@@ -49,7 +49,7 @@ function AboutComponent() {
                     {data.map((item) => (
                         <div key={item.id} className="border overflow-hidden shadow-lg border-gray-500/50 group bg-white rounded-lg shadow-md">
                             <div className='overflow-hidden w-full h-[250px]'>
-                            <img className='w-full h-full hover:scale-110 filter grayscale shadow-xl group-hover:grayscale-0 transition duration-300 ease-in-out' src={item?.image_url} alt={item?.title} />
+                            <img className='w-full h-full group-hover:scale-110 filter shadow-xl group-hover:grayscale transition duration-300 ease-in-out' src={item?.image_url} alt={item?.title} />
 
                             </div>
                             <div className='p-6'>
