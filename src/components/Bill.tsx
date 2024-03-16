@@ -16,7 +16,7 @@ interface TransactionData {
 
 interface BillProps {
   setBillData?: (data: TransactionData[]) => void;
-  id?: number;
+  id?: string;
   transactionData: TransactionData[];
   setShowBill: React.Dispatch<React.SetStateAction<boolean>>;
 }
