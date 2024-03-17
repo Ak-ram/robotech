@@ -137,7 +137,12 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                       imageAlt=""
                       // enlargedImagePosition="over"
                     />  */}
-                        <MagnifierComponent img={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} />
+                        {
+                          prefix === 'print' ?
+                            <img src={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} /> :
+                            <MagnifierComponent img={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} />
+
+                        }
                         {/* <img className="h-full w-full max-w-full object-cover" src={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} alt="" /> */}
                       </div>
                     </div>
