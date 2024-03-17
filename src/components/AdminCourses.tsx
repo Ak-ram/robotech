@@ -77,29 +77,33 @@ const AdminCourses = () => {
     };
 
     const handleRemoveItem = async (id: number) => {
-        const updatedArray = [...jsonArray];
-        updatedArray.splice(id, 1);
-
         try {
-            await await supabase
-                .from('courses')
-                .delete()
-                .eq('id', id);
-            setJsonArray(updatedArray);
-            toast.success(`Item removed successfully`);
-            toast.loading(`Be patient, changes takes a few moments to be reflected`);
-            setTimeout(() => {
-                toast.dismiss();
-
-            }, 5000);
+          // Remove the course from jsonArray
+          const updatedArray = jsonArray.filter(item => item.id !== id);
+      
+          // Update jsonArray state with the filtered array
+          setJsonArray(updatedArray);
+      
+          // Perform deletion operation in Supabase based on the course ID
+          await supabase
+            .from('courses')
+            .delete()
+            .eq('id', id);
+      
+          // Show success toast message
+          toast.success(`Item removed successfully`);
         } catch (error) {
-            toast.error((error as Error).message);
-
+          // Show error toast message
+          toast.error((error as Error).message);
         }
-    };
+      };
 
-    const handleEditClick = (index: number) => {
+    const handleEditClick = (id: number) => {
+        // Find the index of the course with the specified ID
+        const index = jsonArray.findIndex(item => item.id === id);
+        // Set the editIndex state to the found index
         setEditIndex(index);
+        // Set the editedItem state to the corresponding course object
         setEditedItem({ ...jsonArray[index] });
     };
 
@@ -136,7 +140,7 @@ const AdminCourses = () => {
                     if (error) {
                         throw error;
                     }
-                    updatedCourses = [...jsonArray, data![0]];
+                    updatedCourses = [...jsonArray, editedItem]; // Add a check for empty data array
                 } else {
                     // Update an existing course
                     const { data, error } = await supabase
@@ -151,7 +155,7 @@ const AdminCourses = () => {
                     );
                 }
 
-                setJsonArray(updatedCourses);
+                setJsonArray(updatedCourses); // Update the state variable
                 setEditIndex(null);
                 toast.success("Course Added/Updated successfully");
             }
@@ -159,6 +163,62 @@ const AdminCourses = () => {
             toast.error((error as Error).message);
         }
     };
+    // const handleEditSubmit = async () => {
+    //     try {
+    //         // Check for empty fields
+    //         if (
+    //             !editedItem.title ||
+    //             !editedItem.price ||
+    //             !editedItem.previousPrice ||
+    //             !editedItem.description ||
+    //             !editedItem.enrollmentOpen ||
+    //             !editedItem.enrollmentLink ||
+    //             !editedItem.instructor ||
+    //             !editedItem.duration ||
+    //             !editedItem.category ||
+    //             !editedItem.startDate ||
+    //             !editedItem.level ||
+    //             !editedItem.index ||
+    //             !editedItem.last_updated ||
+    //             !editedItem.more_details
+    //         ) {
+    //             toast.error("All fields are required");
+    //             return;
+    //         }
+
+    //         if (editIndex !== null) {
+    //             let updatedCourses;
+    //             if (editIndex === -1) {
+    //                 // Add a new course
+    //                 const { data, error } = await supabase
+    //                     .from('courses')
+    //                     .insert([editedItem]);
+    //                 if (error) {
+    //                     throw error;
+    //                 }
+    //                 updatedCourses = [...jsonArray, data![0]];
+    //             } else {
+    //                 // Update an existing course
+    //                 const { data, error } = await supabase
+    //                     .from('courses')
+    //                     .update(editedItem)
+    //                     .eq('id', editedItem.id);
+    //                 if (error) {
+    //                     throw error;
+    //                 }
+    //                 updatedCourses = jsonArray.map(course =>
+    //                     course.id === editedItem.id ? editedItem : course
+    //                 );
+    //             }
+
+    //             setJsonArray(updatedCourses);
+    //             setEditIndex(null);
+    //             toast.success("Course Added/Updated successfully");
+    //         }
+    //     } catch (error) {
+    //         toast.error((error as Error).message);
+    //     }
+    // };
 
 
     const handleEditCancel = () => {
@@ -206,7 +266,7 @@ const AdminCourses = () => {
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-2 py-2">
                                         <button
                                             className="mr-1"
-                                            onClick={() => handleEditClick(index)}
+                                            onClick={() => handleEditClick(+item.id)}
                                         >
                                             <Edit size={16} />
                                         </button>
