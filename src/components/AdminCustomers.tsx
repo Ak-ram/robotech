@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import { fetchJsonData } from "@/helpers/getJSONData";
-import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Plus, TrashIcon, Edit, PhoneCall, User } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from 'uuid';
-import { CourseType, ProductType } from "../../type";
 import Link from 'next/link'
-import NoContent from "./NoContent";
 import supabase from "@/supabase/config";
 const AdminCustomers = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -43,8 +39,8 @@ const AdminCustomers = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await fetchJsonData("robotech/pages/customers.json");
-                setJsonArray(data);
+                const { data } = await supabase.from('customers').select();
+                setJsonArray(data!);
             } catch (error) {
                 setError((error as Error).message);
             }
@@ -73,105 +69,157 @@ const AdminCustomers = () => {
         setSearchTerm('');
     };
 
-    const handleEditClick = (customerId: string) => {
-        const index = jsonArray.findIndex(item => item.id === customerId);
+
+
+    const handleEditClick = (id: number) => {
+        // Find the index of the course with the specified ID
+        const index = jsonArray.findIndex(item => item.id === id);
+        // Set the editIndex state to the found index
         setEditIndex(index);
+        // Set the editedItem state to the corresponding course object
         setEditedItem({ ...jsonArray[index] });
-        // setSearchTerm('');
     };
 
-    const handleRemoveItem = async (customerId: string) => {
-      
-        let confirmDel = window.confirm('Deleting this customer will also remove associated data such as transactions, products, courses, and print services purchased, impacting the stats page.')
+    const handleRemoveItem = async (id: number) => {
+        let confirmDel = window.confirm('Deleting this customer will also remove associated data such as transactions, products, courses, and print services purchased, impacting the stats page.');
         if (confirmDel) {
-            const index = jsonArray.findIndex(item => item.id === customerId);
-            if (index === -1) return; // Customer not found
-            const updatedArray = [...jsonArray];
-            updatedArray.splice(index, 1);
-
             try {
-                await updateJsonFile("robotech/pages/customers.json", updatedArray);
+                // Remove the course from jsonArray
+                const updatedArray = jsonArray.filter(item => item.id !== id);
+
+                // Update jsonArray state with the filtered array
                 setJsonArray(updatedArray);
-                toast.success('Customer removed successfully');
-                toast.loading(`Be patient, changes take a few moments to be reflected`);
-                setTimeout(() => {
-                    toast.dismiss();
-                }, 5000);
+
+                // Perform deletion operation in Supabase based on the course ID
+                await supabase
+                    .from('customers')
+                    .delete()
+                    .eq('id', id);
+
+                // Show success toast message
+                toast.success(`Item removed successfully`);
             } catch (error) {
-                setError((error as Error).message);
-            }
-        }
-    };
-
-
-    const handleEditSubmit = async () => {
-        // Check for empty fields
-        if (
-            !editedItem.id ||
-            !editedItem.fullName ||
-            !editedItem.phone ||
-            !editedItem.age
-        ) {
-            toast.error("All fields are required");
-            return;
-        }
-
-        // Validate full name (each word should have at least 3 characters)
-        const fullNameWords = editedItem.fullName.trim().split(' ');
-        if (fullNameWords.length < 2 || fullNameWords.some(word => word.trim().length < 3)) {
-            toast.error("Each word in the full name should have at least 3 characters");
-            return;
-        }
-
-          // Validate Age format
-          if (editedItem.age > 60  ) {
-              toast.error("Max Age is 60");
-              return;
-          }
-  
-          
-          // Validate Age format
-          if (editedItem.age < 10 ) {
-            toast.error("Min Age is 10");
-            return;
-        }
-
-        // Validate phone number format
-        const phoneRegex = /^(01[0-9]{9})$/;
-        if (!phoneRegex.test(editedItem.phone)) {
-            toast.error("Invalid phone number format. It should start with '01' and have 11 digits.");
-            return;
-        }
-
-        if (editIndex !== null) {
-            try {
-                let updatedArray;
-
-                if (editIndex === -1) {
-                    // Add a new item without overwriting existing ones
-                    updatedArray = [...jsonArray, editedItem];
-                } else {
-                    // Update an existing item without overwriting existing ones
-                    updatedArray = jsonArray.map((item, index) =>
-                        index === editIndex ? editedItem : item
-                    );
-                }
-
-                await updateJsonFile("robotech/pages/customers.json", updatedArray);
-                setJsonArray(updatedArray);
-                setEditIndex(null);
-                toast.success(editIndex === -1 ? 'Customer added successfully' : 'Customer updated successfully');
-                toast.loading(`Be patient, changes take a few moments to be reflected`);
-                setTimeout(() => {
-                    toast.dismiss();
-                }, 5000);
-            } catch (error) {
+                // Show error toast message
                 toast.error((error as Error).message);
             }
         }
 
-
     };
+
+    const handleEditSubmit = async () => {
+        try {
+            // Check for empty fields
+            if (
+                !editedItem.id ||
+                !editedItem.fullName ||
+                !editedItem.phone ||
+                !editedItem.age
+            ) {
+                toast.error("All fields are required");
+                return;
+            }
+
+            if (editIndex !== null) {
+                let updatedCustomers;
+                if (editIndex === -1) {
+                    // Add a new course
+                    const { data, error } = await supabase
+                        .from('customers')
+                        .insert([editedItem]);
+                    if (error) {
+                        throw error;
+                    }
+                    updatedCustomers = [...jsonArray, editedItem]; // Add a check for empty data array
+                } else {
+                    // Update an existing course
+                    const { data, error } = await supabase
+                        .from('customers')
+                        .update(editedItem)
+                        .eq('id', editedItem.id);
+                    if (error) {
+                        throw error;
+                    }
+                    updatedCustomers = jsonArray.map(course =>
+                        course.id === editedItem.id ? editedItem : course
+                    );
+                }
+
+                setJsonArray(updatedCustomers); // Update the state variable
+                setEditIndex(null);
+                toast.success("Customer Added/Updated successfully");
+            }
+        } catch (error) {
+            toast.error((error as Error).message);
+        }
+    };
+    // const handleEditSubmit = async () => {
+    //     // Check for empty fields
+    //     if (
+    //         !editedItem.id ||
+    //         !editedItem.fullName ||
+    //         !editedItem.phone ||
+    //         !editedItem.age
+    //     ) {
+    //         toast.error("All fields are required");
+    //         return;
+    //     }
+
+    //     // Validate full name (each word should have at least 3 characters)
+    //     const fullNameWords = editedItem.fullName.trim().split(' ');
+    //     if (fullNameWords.length < 2 || fullNameWords.some(word => word.trim().length < 3)) {
+    //         toast.error("Each word in the full name should have at least 3 characters");
+    //         return;
+    //     }
+
+    //     // Validate Age format
+    //     if (editedItem.age > 60) {
+    //         toast.error("Max Age is 60");
+    //         return;
+    //     }
+
+
+    //     // Validate Age format
+    //     if (editedItem.age < 10) {
+    //         toast.error("Min Age is 10");
+    //         return;
+    //     }
+
+    //     // Validate phone number format
+    //     const phoneRegex = /^(01[0-9]{9})$/;
+    //     if (!phoneRegex.test(editedItem.phone)) {
+    //         toast.error("Invalid phone number format. It should start with '01' and have 11 digits.");
+    //         return;
+    //     }
+
+    //     if (editIndex !== null) {
+    //         try {
+    //             let updatedArray;
+
+    //             if (editIndex === -1) {
+    //                 // Add a new item without overwriting existing ones
+    //                 updatedArray = [...jsonArray, editedItem];
+    //             } else {
+    //                 // Update an existing item without overwriting existing ones
+    //                 updatedArray = jsonArray.map((item, index) =>
+    //                     index === editIndex ? editedItem : item
+    //                 );
+    //             }
+
+    //             // await updateJsonFile("robotech/pages/customers.json", updatedArray);
+    //             setJsonArray(updatedArray);
+    //             setEditIndex(null);
+    //             toast.success(editIndex === -1 ? 'Customer added successfully' : 'Customer updated successfully');
+    //             toast.loading(`Be patient, changes take a few moments to be reflected`);
+    //             setTimeout(() => {
+    //                 toast.dismiss();
+    //             }, 5000);
+    //         } catch (error) {
+    //             toast.error((error as Error).message);
+    //         }
+    //     }
+
+
+    // };
 
     const handleEditCancel = () => {
         setEditIndex(null);
@@ -244,13 +292,13 @@ const AdminCustomers = () => {
                                 <div className="flex justify-end">
                                     <button
                                         className="flex gap-1 items-center  bg-blue-100 py-1 px-2 rounded text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
-                                        onClick={() => handleEditClick(item.id)}
+                                        onClick={() => handleEditClick(+item.id)}
                                     >
                                         <Edit size={17} />    Edit
                                     </button>
                                     <button
                                         className="flex gap-1 items-center bg-red-100 py-1 px-2 rounded text-red-500 hover:text-red-600 transition-colors duration-300"
-                                        onClick={() => handleRemoveItem(item.id)}
+                                        onClick={() => handleRemoveItem(+item.id)}
                                     >
                                         <TrashIcon size={17} />  Remove
                                     </button>
@@ -304,7 +352,7 @@ const AdminCustomers = () => {
                                         <input
                                             type="number"
                                             placeholder="20"
-                                            
+
                                             className="p-2 w-full border border-gray-300 rounded"
                                             value={editedItem.age}
                                             onChange={(e) => handleInputChange(e, "age")}
