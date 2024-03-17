@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Bill from "./Bill";
 import { Edit, Eye, Trash, TrashIcon } from "lucide-react";
 import { updateJsonFile } from "@/helpers/updateJSONData";
+import supabase from "@/supabase/config";
 const AdminBills = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [billsList, setBillsList] = useState<any[]>([]);
@@ -16,9 +17,10 @@ const AdminBills = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await fetchJsonData("robotech/pages/bills.json");
-                setJsonArray(data);
-                setBillsList(data)
+                const {data} = await supabase.from('bills').select('');
+                console.log(data)
+                setJsonArray(data!);
+                setBillsList(data!)
             } catch (error) {
                 console.log((error as Error).message);
             }
@@ -71,7 +73,7 @@ const AdminBills = () => {
                 <div className={"flex flex-col gap-2"}>
                     {billsList
                         .filter(item =>
-                            item?.id.includes(searchTerm) ||
+                            // item?.id.includes(searchTerm) ||
                             item?.customerData?.fullName.toLowerCase().includes(searchTerm.toLowerCase())
                         ).map((item, index) => (
                             <div
