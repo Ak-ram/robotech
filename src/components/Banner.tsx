@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
-import { getSlidesData } from "@/helpers/getSlidesData";
 import ProductSlider from "./ProductSlider";
 import Link from "next/link";
 import { Link2 } from "lucide-react";
+import supabase from "@/supabase/config";
 
 
 interface BannerProps { }
@@ -64,8 +64,10 @@ const Banner: React.FC<BannerProps> = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const slideList = await getSlidesData();
-        setSlides(slideList);
+        const {data} = await supabase
+        .from('slides')
+        .select("*");
+      setSlides(data || []);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
