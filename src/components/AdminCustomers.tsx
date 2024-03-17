@@ -25,14 +25,14 @@ const AdminCustomers = () => {
     async function insertDataIntoSupabase() {
         try {
             console.log(dataArrayWithoutId)
-            // const { data: insertedData, error } = await supabase
-            //     .from('customers')
-            //     .insert(dataArrayWithoutId);
-            // if (error) {
-            //     console.error('Error inserting data:', error.message);
-            // } else {
-            //     console.log('Data inserted successfully:', insertedData);
-            // }
+            const { data: insertedData, error } = await supabase
+                .from('customers')
+                .insert(dataArrayWithoutId);
+            if (error) {
+                console.error('Error inserting data:', error.message);
+            } else {
+                console.log('Data inserted successfully:', insertedData);
+            }
         } catch (error) {
             console.error('Error inserting data:', (error as Error).message);
         }
