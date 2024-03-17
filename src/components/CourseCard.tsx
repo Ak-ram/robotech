@@ -22,7 +22,7 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
     };
     const dispatch = useDispatch();
     return (
-        
+
         <section className="bg-white py-4 font-sans">
             <div className=" max-w-6xl m-auto  flex flex-wrap items-start justify-start">
                 {products?.map((item) => (
@@ -30,8 +30,6 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
                         <div key={item?.id} className="w-full border lg:w-1/2  flex flex-col mb-8 px-3">
                             <div className="overflow-hidden flex bg-white rounded-lg shadow hover:shadow-raised hover:translateY-2px transition">
                                 <Link className='block w-[200px] h-[200px]' href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: categoryName } }}>
-
-
                                     <img className="object-cover h-full w-full" src={item.poster} alt={item.title} />
                                 </Link>
                                 <div className="p-3 flex flex-1 flex-col justify-between ">
@@ -67,7 +65,7 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
                                             </button>
                                         }
                                         <div className='hidden lg:flex text-zinc-700 flex-col semibold'>
-                                            <span className='flex items-center gap-1'><User size={15}/> {item.instructor}</span>
+                                            <span className='flex items-center gap-1'><User size={15} /> {item.instructor}</span>
                                         </div>
                                     </div>
                                 </div>
