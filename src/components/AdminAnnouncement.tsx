@@ -50,7 +50,7 @@ const AdminAnnouncement = () => {
         .eq('id', id);
       
       setJsonArray(jsonArray.filter(item => item.id !== id));
-      toast.success('Slide removed successfully');
+      toast.success('Announcement removed successfully');
     } catch (error) {
       toast.error((error as Error).message);
     }
@@ -76,7 +76,7 @@ const AdminAnnouncement = () => {
           .from('announcements')
           .insert([editedItem]);
         setJsonArray([...jsonArray, editedItem]);
-        toast.success('Slide added successfully');
+        toast.success('Announcement added successfully');
       } else {
         await supabase
           .from('announcements')
@@ -84,7 +84,7 @@ const AdminAnnouncement = () => {
           .eq('id', editIndex);
         
         setJsonArray(jsonArray.map(item => item.id === editIndex ? editedItem : item));
-        toast.success('Slide updated successfully');
+        toast.success('Announcement updated successfully');
       }
 
       setEditIndex(null);
