@@ -1,12 +1,12 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import faq from '@/assets/Faq.png';
-import Image from 'next/image';
 import { Activity, ChevronDown } from 'lucide-react';
-import { getFaq } from '@/helpers/getFaq';
+import supabase from '../supabase/config';
 
 // Define the type for your FAQ item
 interface FAQItem {
+  id: number;
+  created_at: string;
   question: string;
   answer: string;
   open: boolean; // Add the 'open' property to the FAQItem type
@@ -18,8 +18,10 @@ function SupportComponent() {
   useEffect(() => {
     const fetchFaq = async () => {
       try {
-        const p = await getFaq();
-        setData(p);
+        const p = await supabase
+          .from('faq')
+          .select();
+        setData(p.data!);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -44,7 +46,7 @@ function SupportComponent() {
       <div>
         <div className="flex bg-slate-100 py-2 items-center justify-center gap-2 mx-auto text-center px-4 mt-8 text-2xl text-indigo-900 font-semibold">
           <Activity className='bg-white w-12 h-12 p-2 rounded-full text-rose-400' size={30} /> Frequently Asked Questions
-        </div> 
+        </div>
         <dl style={{ direction: 'rtl' }} className="mt-8 mx-auto max-w-screen-sm lg:max-w-screen-lg flex flex-col lg:flex-row lg:flex-wrap">
           <div className="lg:w-1/2">
             {data &&
@@ -79,8 +81,8 @@ function SupportComponent() {
             {data &&
               data.slice(Math.ceil(data?.length / 2), data?.length).map((item, i) => (
                 <div
-                className="question-and-answer select-none cursor-pointer border-2 mx-8 my-2 rounded-lg group"
-                onClick={() => toggleAnswer(i + Math.ceil(data?.length / 2))}
+                  className="question-and-answer select-none cursor-pointer border-2 mx-8 my-2 rounded-lg group"
+                  onClick={() => toggleAnswer(i + Math.ceil(data?.length / 2))}
                   key={`${i}_${item?.question}`}
                 >
                   <dt className={`py-3 mb-1 px-2 rounded border border-slate-300 ${item.open ? "bg-white" : "hover:bg-white"}`}>

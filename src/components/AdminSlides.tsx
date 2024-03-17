@@ -1,118 +1,108 @@
 import { useEffect, useState } from "react";
-import { fetchJsonData } from "@/helpers/getJSONData";
-import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
-import Link from 'next/link'
-import { v4 as uuidv4 } from 'uuid';
+import supabase from "../supabase/config"
+import Link from "next/link";
 
 const AdminSlides = () => {
-    const [jsonArray, setJsonArray] = useState<any[]>([]);
-    const [editIndex, setEditIndex] = useState<number | null>(null);
-    const [editedItem, setEditedItem] = useState<any>({
-        id: "",
-        image: "",
-        link_url: ""
+  const [jsonArray, setJsonArray] = useState<any[]>([]);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [editedItem, setEditedItem] = useState<any>({
+    image: "",
+    link_url: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('slides')
+          .select();
+        if (error) {
+          throw error;
+        }
+        setJsonArray(data || []);
+      } catch (error) {
+        toast.error((error as Error).message);
+      }
+    };
+
+    fetchData();
+  }, [editedItem]);
+
+  const handleAddItemClick = () => {
+    setEditIndex(-1); // Use -1 to indicate a new item
+    setEditedItem({
+      image: "",
+      link_url: "",
     });
+    toast.error(null); // Reset error state
+  };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await fetchJsonData("robotech/pages/slides.json");
-                setJsonArray(data);
-            } catch (error) {
-                toast.error((error as Error).message);
-            }
-        };
+  const handleRemoveItem = async (id: number) => {
+    try {
+      await supabase
+        .from('slides')
+        .delete()
+        .eq('id', id);
+      
+      setJsonArray(jsonArray.filter(item => item.id !== id));
+      toast.success('Slide removed successfully');
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  };
 
-        fetchData();
-    }, []);
+  const handleEditClick = (id: number) => {
+    const edited = jsonArray.find(item => item.id === id);
+    if (edited) {
+      setEditIndex(id);
+      setEditedItem(edited);
+    }
+  };
 
-    const handleAddItemClick = () => {
-        setEditIndex(-1); // Use -1 to indicate a new item
-        setEditedItem({
-            id: uuidv4(),
-            image: "",
-            link_url: ""
-        });
-    };
+  const handleEditSubmit = async () => {
+    try {
+      if (!editedItem.image || !editedItem.link_url) {
+        toast.error("All fields are required");
+        return;
+      }
 
-    const handleRemoveItem = async (index: number) => {
-        const updatedArray = [...jsonArray];
-        updatedArray.splice(index, 1);
+      if (editIndex === -1) {
+        await supabase
+          .from('slides')
+          .insert([editedItem]);
+        setJsonArray([...jsonArray, editedItem]);
+        toast.success('Slide added successfully');
+      } else {
+        await supabase
+          .from('slides')
+          .update(editedItem)
+          .eq('id', editIndex);
+        setJsonArray(jsonArray.map(item => item.id === editIndex ? editedItem : item));
+        toast.success('Slide updated successfully');
+      }
 
-        try {
-            await updateJsonFile("robotech/pages/slides.json", updatedArray);
-            setJsonArray(updatedArray);
-            toast.success(`Slide Removed successfully`);
-            toast.loading(`Be patient, changes takes a few moments to be reflected`);
-            setTimeout(() => {
-                toast.dismiss();
+      setEditIndex(null);
+      toast.error(null); // Reset error state
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  };
 
-            }, 5000);
-        } catch (error) {
-            toast.error((error as Error).message);
-        }
-    };
+  const handleEditCancel = () => {
+    setEditIndex(null);
+    setEditedItem({});
+  };
 
-    const handleEditClick = (index: number) => {
-        setEditIndex(index);
-        setEditedItem({ ...jsonArray[index] });
-    };
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    key: string
+  ) => {
+    setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
+  };
 
-    const handleEditSubmit = async () => {
-        // Check for empty fields
-        if (
-            !editedItem.id ||
-            !editedItem.image ||
-            !editedItem.link_url
-        ) {
-            toast.error("All fields are required");
-            return;
-        }
-
-        if (editIndex !== null) {
-            let updatedArray;
-
-            if (editIndex === -1) {
-                // Add a new item
-                updatedArray = [...jsonArray, editedItem];
-            } else {
-                // Update an existing item
-                updatedArray = jsonArray.map((item, index) =>
-                    index === editIndex ? editedItem : item
-                );
-            }
-
-            try {
-                await updateJsonFile("robotech/pages/slides.json", updatedArray);
-                setJsonArray(updatedArray);
-                setEditIndex(null);
-                toast.success(`Slide Added/Updated successfully`);
-                toast.loading(`Be patient, changes takes a few moments to be reflected`);
-                setTimeout(() => {
-                    toast.dismiss();
-
-                }, 5000);
-            } catch (error) {
-                toast.error((error as Error).message);
-            }
-        }
-    };
-
-    const handleEditCancel = () => {
-        setEditIndex(null);
-        setEditedItem({});
-    };
-
-    const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement>,
-        key: string
-    ) => {
-        setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
-    };
-    // if(jsonArray.length ===0) return 'no items' 
     return (
         <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
             {!jsonArray && <h2 className="font-bold mb-4">Current Slides data:</h2>}
@@ -138,19 +128,19 @@ const AdminSlides = () => {
                         </thead>
                         <tbody>
                             {jsonArray.map((item, index) => (
-                                <tr key={index} className="hover:bg-slate-100">
+                                <tr key={item.id} className="hover:bg-slate-100">
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2"><img width={50} height={50} src={item.image} /></td>
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2"><Link href={item.link_url}>{item.link_url}</Link></td>
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-2 py-2">
                                         <button
                                             className="mr-1"
-                                            onClick={() => handleEditClick(index)}
+                                            onClick={() => handleEditClick(item.id)}
                                         >
                                             <Edit size={16} />
                                         </button>
                                         <button
                                             className="mr-1"
-                                            onClick={() => handleRemoveItem(index)}
+                                            onClick={() => handleRemoveItem(item.id)}
                                         >
                                             <Trash size={16} />
                                         </button>
@@ -168,17 +158,7 @@ const AdminSlides = () => {
                             <h2 className="font-bold text-center text-lg mb-2">
                                 {editIndex === -1 ? "Add New Slide " : "Edit Item"}
                             </h2>
-                            <div className=" mb-2 lg:pr-4">
-                                <span className="text-sm font-bold my-2 -ml-2">ID</span>
-
-                                <input
-                                    type="text"
-                                    placeholder="ID"
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                    value={editedItem.id}
-                                    onChange={(e) => handleInputChange(e, "id")}
-                                />
-                            </div>
+   
 
 
                             <div className="mb-2 lg:pr-4">

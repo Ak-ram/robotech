@@ -1,17 +1,17 @@
 'use client'
-import { getCourses } from '@/helpers/getCourses';
 import React, { useEffect, useState } from 'react'
 import Product from './Product';
 import CourseCard from './CourseCard';
+import supabase from '@/supabase/config';
 
 function Courses() {
-    const [courses, setCourses] = useState([])
+    const [courses, setCourses] = useState<any[]>([])
 
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const coursesList = await getCourses();
-                setCourses(coursesList);
+                const { data } = await supabase.from('courses').select();
+                setCourses(data! || []);
             } catch (error) {
                 console.error("Error fetching products:", error);
             }
@@ -25,8 +25,8 @@ function Courses() {
 
 
     return (
-        <CourseCard categoryName= "courses" prefix='cr' products={courses} />
-        )
+        <CourseCard categoryName="courses" prefix='cr' products={courses} />
+    )
 }
 
 export default Courses
