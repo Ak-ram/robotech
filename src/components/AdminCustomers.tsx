@@ -11,7 +11,7 @@ const AdminCustomers = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     interface CustomerType {
-        id: string;
+        id?:number;
         fullName: string;
         phone: string;
         address: string;
@@ -22,7 +22,6 @@ const AdminCustomers = () => {
     }
 
     const [editedItem, setEditedItem] = useState<CustomerType>({
-        id: "",
         fullName: "",
         phone: "",
         address: "",
@@ -52,7 +51,6 @@ const AdminCustomers = () => {
     const handleAddItemClick = () => {
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
-            id: uuidv4(),
             fullName: "",
             phone: "",
             age: 0,
@@ -110,7 +108,6 @@ const AdminCustomers = () => {
         try {
             // Check for empty fields
             if (
-                !editedItem.id ||
                 !editedItem.fullName ||
                 !editedItem.phone ||
                 !editedItem.age

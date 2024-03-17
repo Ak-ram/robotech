@@ -7,6 +7,7 @@ import FormattedPrice from "./FormattedPrice";
 import { Edit, Edit2, Redo, ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
 import { getPrintServices } from "@/helpers/getPrintServices";
+import supabase from "@/supabase/config";
 
 const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, setCustomerData }) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
@@ -44,63 +45,51 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
 
 
   const handleAddOrder = async () => {
-    // Validate order details if needed
-    const existingCustomerIndex = jsonArray.findIndex(
-      (customer) => customer.id === customerData.id
-    );
-
-    if (existingCustomerIndex !== -1) {
-      const existingCustomer = jsonArray[existingCustomerIndex];
-
-      if (!existingCustomer.transactions) {
-        existingCustomer.transactions = {
-          courses: [],
-          printServices: [],
-          products: [],
-        };
-      } else if (!existingCustomer.transactions.printServices) {
-        existingCustomer.transactions.printServices = [];
+    try {
+      // Fetch the customer data
+      const { data, error } = await supabase
+        .from('customers')
+        .select('transactions')
+        .eq('id', customerData.id)
+        .single();
+  
+      if (error) {
+        throw error;
       }
-
-      existingCustomer.transactions.printServices.push(newOrder);
-      // Update the total purchase transactions
-      existingCustomer.total_purchase_transactions +=
-        existingCustomer.transactions.printServices.reduce(
-          (total, transaction) => total + transaction.subtotal,
-          0
-        );
-      jsonArray[existingCustomerIndex] = existingCustomer;
-
-      // Update the JSON file with the modified JSON array
-      try {
-        setShowAddOrderModal(false);
-        await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
-
-        // Update the customerData state with the new transaction
-        setCustomerData(existingCustomer);
-        setBillData([...billData, newOrder])
-
-        // Reset newOrder fields
-        setNewOrder({
-          productName: "",
-          quantity: 1,
-          date: "",
-          discount: 0,
-        });
-        toast.success(`Item Added/Updated successfully`);
-        toast.loading(`Be patient, changes take a few moments to be reflected`);
-
-        setTimeout(() => {
-          toast.dismiss();
-        }, 5000);
-      } catch (error) {
-        toast.error((error as Error).message);
+  
+      // Extract existing transactions from the fetched data
+      const existingTransactions = data?.transactions || { printServices: [] };
+  
+      // Add the new order to the printServices array
+      existingTransactions.printServices.push(newOrder);
+  
+      // Update the transactions field with the modified data
+      const { data: updatedData, error: updateError } = await supabase
+        .from('customers')
+        .update({ transactions: existingTransactions })
+        .eq('id', customerData.id);
+  
+      if (updateError) {
+        throw updateError;
       }
-    } else {
-      // Handle the case where the customer doesn't exist or show an error message
-      console.error("Customer not found for ID:", customerData.id);
+  
+      // Optionally update local state or perform other actions
+      // ...
+  
+      // Show success message
+      toast.success('Item Added/Updated successfully');
+      toast.loading('Be patient, changes take a few moments to be reflected');
+  
+      setTimeout(() => {
+        toast.dismiss();
+      }, 5000);
+    } catch (error) {
+      // Handle errors
+      console.error('Error adding order:', (error as Error).message);
+      toast.error((error as Error).message);
     }
   };
+  
 
   useEffect(() => {
     const fetchPrintServices = async () => {
