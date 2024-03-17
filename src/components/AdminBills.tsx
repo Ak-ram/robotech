@@ -17,7 +17,7 @@ const AdminBills = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const {data} = await supabase.from('bills').select('');
+                const { data } = await supabase.from('bills').select('');
                 console.log(data)
                 setJsonArray(data!);
                 setBillsList(data!)
@@ -46,7 +46,10 @@ const AdminBills = () => {
 
             try {
                 setBillsList(updatedArray)
-                await updateJsonFile("robotech/pages/bills.json", updatedArray);
+                await supabase.from('bills')
+                    .delete()
+                    .eq('id', id);
+
                 toast.success('Bill removed successfully')
             } catch (error) {
                 console.log(error)
@@ -74,7 +77,8 @@ const AdminBills = () => {
                     {billsList
                         .filter(item =>
                             // item?.id.includes(searchTerm) ||
-                            item?.customerData?.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+                            // item?.customerData?.fullName?.toLowerCase().includes(searchTerm.toLowerCase())
+                            item
                         ).map((item, index) => (
                             <div
                                 key={index}
