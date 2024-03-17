@@ -197,7 +197,7 @@ const CustomersStats = () => {
                                                     <FormattedPrice amount={customerInfo.total_purchase_transactions} />
                                                 </div>
                                                 <div className="p-3 w-1/6 whitespace-nowrap">
-                                                    <Link href={{ pathname: `admin/id_${customerInfo?.id}`, query: { id: customerInfo?.id, data: JSON.stringify(customerInfo) } }}>
+                                                    <Link href={{ pathname: `admin/id_${customerInfo?.id}`, query: { id: customerInfo?.id } }}>
                                                         <LinkIcon />
                                                     </Link>
                                                 </div>
