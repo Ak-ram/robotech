@@ -16,7 +16,7 @@ const CustomerPage = () => {
   // const data = searchPar?.get("data");
 
   // const initialCustomerData =
-    // typeof data === "string" ? JSON.parse(data) : null;
+  // typeof data === "string" ? JSON.parse(data) : null;
   const [customerData, setCustomerData] = useState<any>(null);
   const [currentTab, setCurrentTab] = useState(0);
   const [currentBillId, setCurrentBillId] = useState(0);
