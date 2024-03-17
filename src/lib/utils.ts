@@ -42,3 +42,24 @@ export function detectLanguage(text) {
       return "Unknown";
   }
 }
+
+
+
+export function searchItems(items,searchTerm, searchType) {
+  return items.filter(item => {
+      // Convert searchTerm to lowercase for case-insensitive search
+      const term = searchTerm.toLowerCase();
+      
+      // Determine the search behavior based on searchType
+      switch (searchType) {
+          case 'name':
+              return item?.customerData?.fullName?.toLowerCase().includes(term);
+          case 'phone':
+              return item?.customerData?.phone?.toLowerCase().includes(term);
+          case 'id':
+              return item?.id === +term;
+          default:
+              return [];
+      }
+  });
+}
