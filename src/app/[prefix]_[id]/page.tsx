@@ -15,6 +15,7 @@ import Related from "@/components/Related";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "@/components/Loading";
 import ProductDetails from "@/components/ProductDetails";
+import { detectLanguage } from "@/lib/utils";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -158,7 +159,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   </div>
                 </div>
 
-              <ProductDetails product={product} prefix={prefix} dispatch={dispatch} addToCart={addToCart} products={products}/>
+                <ProductDetails product={product} prefix={prefix} dispatch={dispatch} addToCart={addToCart} products={products} />
 
                 <div className="lg:col-span-3">
                   <div className="border-b border-gray-300">
@@ -194,7 +195,8 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                           })}
                         </ul>
                       ) : (
-                        <p className="my-5">{product?.description?.split('|').slice(0, 1)}</p>
+
+                        <p className="my-5 bg-white p-5 rounded" dir={detectLanguage(product?.description) === 'ar' ? 'rtl' : 'ltr'}>{product?.description?.split('|').slice(0, 1)}</p>
                       )}
 
                     </>

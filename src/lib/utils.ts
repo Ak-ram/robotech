@@ -24,3 +24,21 @@ export function isColor(text: string) {
   const colorNames = ['black', 'orange', 'lime', 'cyan', 'indigo', 'violet', 'purple', 'rose', 'yellow', 'pink', 'sky', 'red', 'blue', 'green']; // Add more color names as needed
   return colorNames.includes(text.toLowerCase().trim());
 };
+
+
+export function detectLanguage(text) {
+  if (!text) return "Unknown";
+
+  // Check if the text contains Arabic characters
+  if (/[\u0600-\u06FF]/.test(text)) {
+      return "ar";
+  }
+  // Check if the text contains Latin characters
+  else if (/^[a-zA-Z]*$/.test(text)) {
+      return "en";
+  }
+  // Default to unknown language
+  else {
+      return "Unknown";
+  }
+}
