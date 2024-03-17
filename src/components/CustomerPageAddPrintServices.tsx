@@ -61,6 +61,8 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
       existingTransactions.printServices.push(newOrder);
   
       // Update the transactions field with the modified data
+      setShowAddOrderModal(false)
+
       const { data: updatedData, error: updateError } = await supabase
         .from('customers')
         .update({ transactions: existingTransactions })

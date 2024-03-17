@@ -65,6 +65,7 @@ const CustomerPageAddCourses = ({
       existingTransactions.courses.push(newOrder);
 
       // Update the transactions field with the modified data
+      setShowAddOrderModal(false)
       const { data: updatedData, error: updateError } = await supabase
         .from("customers")
         .update({ transactions: existingTransactions })
@@ -76,7 +77,6 @@ const CustomerPageAddCourses = ({
 
       // Optionally update local state or perform other actions
       // ...
-
       // Show success message
       toast.success("Item Added/Updated successfully");
       toast.loading("Be patient, changes take a few moments to be reflected");
