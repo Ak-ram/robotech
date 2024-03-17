@@ -1,18 +1,18 @@
-import { updateJsonFile } from "@/helpers/updateJSONData";
 import OrderModel from "./orderModel";
 import { useEffect, useState } from "react";
 import { getCourses } from "@/helpers/getCourses";
-import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
-import { Check, Edit, Edit2, Redo, ScrollText, Trash } from "lucide-react";
+import { ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
+import supabase from "@/supabase/config";
+import { fetchJsonData } from "@/helpers/getJSONData";
 
 const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomerData }) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<any>([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [lastOrderId, setLastOrderId] = useState("");
 
@@ -50,84 +50,59 @@ const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomer
 
 
   
-  const handleAddOrder = async (courseId) => {
-    if (lastOrderId === courseId) {
-      toast.error(
-        "Sorry, you cannot add the same order twice in a row. Please try later or adding a different order."
-      );
-      setShowAddOrderModal(false)
-      return;
-    }
-    setLastOrderId(courseId);
-    setTimeout(() => {
-      setLastOrderId("");
-    }, 5 * 1000 * 60);
-    // Validate order details if needed
-    const existingCustomerIndex = jsonArray.findIndex(
-      (customer) => customer.id === customerData.id
-    );
 
-    if (existingCustomerIndex !== -1) {
-      const existingCustomer = jsonArray[existingCustomerIndex];
-
-      if (!existingCustomer.transactions) {
-        existingCustomer.transactions = {
-          courses: [],
-          printServices: [],
-          products: [],
-        };
-      } else if (!existingCustomer.transactions.courses) {
-        existingCustomer.transactions.courses = [];
+  const handleAddOrder = async () => {
+    try {
+      // Fetch the customer data
+      const { data, error } = await supabase
+        .from('customers')
+        .select('transactions')
+        .eq('id', customerData.id)
+        .single();
+  
+      if (error) {
+        throw error;
       }
-
-      existingCustomer.transactions.courses.push(newOrder);
-
-      // Update the JSON file with the modified JSON array
-      try {
-        // Calculate the total purchase transactions
-        existingCustomer.total_purchase_transactions =
-          existingCustomer.transactions.courses.reduce(
-            (total, transaction) => total + transaction.subtotal,
-            0
-          );
-
-        jsonArray[existingCustomerIndex] = existingCustomer;
-        // Update the JSON file with the modified JSON array
-        setShowAddOrderModal(false);
-        await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
-
-        // Update the customerData state with the new transaction
-        setCustomerData(existingCustomer);
-        setBillData([...billData,newOrder])
-
-        // Reset newOrder fields
-        setNewOrder({
-          productName: "",
-          quantity: 1,
-          date: "",
-          discount: 0,
-          subtotal: 0,
-          piecePrice: 0,
-        });
-        toast.success(`Item Added/Updated successfully`);
-        toast.loading(`Be patient, changes take a few moments to be reflected`);
-        setTimeout(() => {
-          toast.dismiss();
-        }, 5000);
-      } catch (error) {
-        toast.error((error as Error).message);
+  
+      // Extract existing transactions from the fetched data
+      const existingTransactions = data?.transactions || { courses: [] };
+  
+      // Add the new order to the printServices array
+      existingTransactions.courses.push(newOrder);
+  
+      // Update the transactions field with the modified data
+      const { data: updatedData, error: updateError } = await supabase
+        .from('customers')
+        .update({ transactions: existingTransactions })
+        .eq('id', customerData.id);
+  
+      if (updateError) {
+        throw updateError;
       }
-    } else {
-      // Handle the case where the customer doesn't exist or show an error message
-      console.error("Customer not found for ID:", customerData.id);
+  
+      // Optionally update local state or perform other actions
+      // ...
+  
+      // Show success message
+      toast.success('Item Added/Updated successfully');
+      toast.loading('Be patient, changes take a few moments to be reflected');
+  
+      setTimeout(() => {
+        toast.dismiss();
+      }, 3000);
+    } catch (error) {
+      // Handle errors
+      console.error('Error adding order:', (error as Error).message);
+      toast.error((error as Error).message);
     }
   };
+  
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const p = await getCourses();
-        setList(p);
+        const {data} = await supabase.from('courses').select();
+        setList(data!);
       } catch (error) {
         console.error("Error fetching Courses:", error);
       }
