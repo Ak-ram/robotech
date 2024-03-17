@@ -1,13 +1,12 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import faq from '@/assets/Faq.png';
-import Image from 'next/image';
 import { Activity, ChevronDown } from 'lucide-react';
-import { getFaq } from '@/helpers/getFaq';
 import supabase from '../supabase/config';
 
 // Define the type for your FAQ item
 interface FAQItem {
+  id: number;
+  created_at: string;
   question: string;
   answer: string;
   open: boolean; // Add the 'open' property to the FAQItem type
@@ -23,8 +22,6 @@ function SupportComponent() {
           .from('faq')
           .select();
         setData(p.data!);
-        console.log(p)
-
       } catch (error) {
         console.error('Error fetching products:', error);
       }

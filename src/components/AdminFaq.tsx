@@ -5,7 +5,7 @@ import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from 'uuid';
-import supabase from "@supabase/supabase-js"
+import supabase from "../supabase/config"
 const AdminFaq = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -19,8 +19,12 @@ const AdminFaq = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchJsonData("robotech/pages/faq.json");
-        setJsonArray(data);
+        // const data = await fetchJsonData("robotech/pages/faq.json");
+        // setJsonArray(data);
+        const p = await supabase
+          .from('faq')
+          .select();
+        setJsonArray(p.data!);
       } catch (error) {
         setError((error as Error).message);
       }
