@@ -8,12 +8,13 @@ import { CourseType } from "../../type";
 import FormattedPrice from "@/components/FormattedPrice";
 import toast from "react-hot-toast";
 import ReactPlayer from "react-player";
+import supabase from "@/supabase/config";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
 const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
-  const [course, setCourse] = useState<CourseType | undefined>();
+  const [course, setCourse] = useState<any>();
   const searchPar = useSearchParams();
   const idString = searchPar.get("id");
   const prefix = searchPar.get("prefix");
@@ -21,9 +22,14 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const p = await getOneProduct(prefix!, idString!);
-        console.log(p);
-        setCourse(p);
+        // const p = await getOneProduct(prefix!, idString!);
+        const { data } = await supabase
+          .from('courses')
+          .select('*')
+          .eq('id', +idString!)
+          .single();
+        console.log(data);
+        setCourse(data!);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -51,18 +57,20 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
         Your browser does not support the video tag.
       </video> */}
             </div>
-            <div className='player-wrapper'>
 
-              <ReactPlayer
-                url={course?.video}
-                light={course?.poster}
-                controls={true}
-                playing
-                className="w-full h-full p-5 react-player "
-                width='100%'
-                height='100%'
-              />
-            </div>
+
+            {course?.video && course.video.includes('http') ? <div className='player-wrapper'> <ReactPlayer
+              url={course?.video}
+              light={course?.poster}
+              controls={true}
+              playing
+              className="w-full h-full p-5 react-player "
+              width='100%'
+              height='100%'
+            /> </div>
+              : <img src={course?.poster} width={"100%"} height={"100%"} />
+            }
+
             <p className="">{course?.description}</p>
             <ul className="flex gap-4">
               <li className="flex items-center">
@@ -242,7 +250,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                 </div>
               </label>
             </li>
-            <li className="bg-white text-left">
+            {course?.more_details?.length > 0 && course?.more_details !== " " && <li className="bg-white text-left">
               <label
                 htmlFor="accordion-3"
                 className="relative flex flex-col rounded-md border border-gray-100 shadow-md"
@@ -277,7 +285,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                   </p>
                 </div>
               </label>
-            </li>
+            </li>}
           </ul>
         </div>
       </div>
