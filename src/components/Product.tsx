@@ -171,7 +171,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
 
 
-      <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
+      <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
         {/* Use handleSorting function to get sorted products */}
         {handleSorting().slice(perPage.start, perPage.end).map((item) => (
           <div
@@ -192,7 +192,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
             >
 
               <img
-                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full " // object-contain
+                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain sm:object-fill" // object-contain
                 src={item.image1}
                 alt="product image"
               />
