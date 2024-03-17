@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import { fetchJsonData } from "@/helpers/getJSONData";
-import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
-import { v4 as uuidv4 } from 'uuid';
+import supabase from "@/supabase/config";
 
 const Admin3DComponent = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState<any>({
-    id: "",
     title: "",
     price: "",
     previousPrice: 0,
@@ -20,8 +17,8 @@ const Admin3DComponent = () => {
     image3: "",
     brand: "",
     quantity: 1,
-    externalLink:'',
-    unit:'',
+    externalLink: '',
+    unit: '',
     wholesalePrice: 0
 
   });
@@ -29,8 +26,8 @@ const Admin3DComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchJsonData("robotech/pages/3d.json");
-        setJsonArray(data);
+        const { data } = await supabase.from('services').select();
+        setJsonArray(data!);
       } catch (error) {
         toast.error((error as Error).message);
       }
@@ -42,7 +39,6 @@ const Admin3DComponent = () => {
   const handleAddItemClick = () => {
     setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
-      id: uuidv4(),
       title: "",
       price: "",
       previousPrice: 0,
@@ -52,79 +48,74 @@ const Admin3DComponent = () => {
       image3: "",
       brand: "",
       quantity: 1,
-      externalLink:'',
-      unit:'',
+      externalLink: '',
+      unit: '',
       wholesalePrice: 0
 
     });
   };
 
-  const handleRemoveItem = async (index: number) => {
-    const updatedArray = [...jsonArray];
-    updatedArray.splice(index, 1);
-
+  const handleRemoveItem = async (id: number) => {
     try {
-      await updateJsonFile("robotech/pages/3d.json", updatedArray);
-      setJsonArray(updatedArray);
-      toast.success(`Item removed successfully`);
-      toast.loading(`Be patient, changes takes a few moments to be reflected`);
-      setTimeout(() => {
-        toast.dismiss();
-      }, 5000);
+      await supabase
+        .from('services')
+        .delete()
+        .eq('id', id);
+
+      setJsonArray(jsonArray.filter(item => item.id !== id));
+      toast.success('Service removed successfully');
     } catch (error) {
       toast.error((error as Error).message);
     }
   };
 
-  const handleEditClick = (index: number) => {
-    setEditIndex(index);
-    setEditedItem({ ...jsonArray[index] });
+
+  const handleEditClick = (id: number) => {
+    const edited = jsonArray.find(item => item.id === id);
+    if (edited) {
+      setEditIndex(id);
+      setEditedItem(edited);
+    }
   };
+
+
 
   const handleEditSubmit = async () => {
-    // Check for empty fields
-    if (
-      !editedItem.id ||
-      !editedItem.title ||
-      !editedItem.price ||
-      !editedItem.description ||
-      !editedItem.image1 ||
-      !editedItem.unit 
-    ) {
-      toast.error("All fields are required");
-      return;
-    }
+    try {
+      if (
+        !editedItem.title ||
+        !editedItem.price ||
+        !editedItem.description ||
+        !editedItem.image1 ||
+        !editedItem.unit
+      ) {
+        toast.error("All fields are required");
+        return;
+      } toast.error("All fields are required");
 
-    if (editIndex !== null) {
-      let updatedArray;
 
       if (editIndex === -1) {
-        // Add a new item
-        updatedArray = [...jsonArray, editedItem];
+        await supabase
+          .from('services')
+          .insert([editedItem]);
+        setJsonArray([...jsonArray, editedItem]);
+        toast.success('Announcement added successfully');
       } else {
-        // Update an existing item
-        updatedArray = jsonArray.map((item, index) =>
-          index === editIndex ? editedItem : item
-        );
+        await supabase
+          .from('services')
+          .update(editedItem)
+          .eq('id', editIndex);
+
+        setJsonArray(jsonArray.map(item => item.id === editIndex ? editedItem : item));
+        toast.success('Announcement updated successfully');
       }
 
-      try {
-        await updateJsonFile("robotech/pages/3d.json", updatedArray);
-        setJsonArray(updatedArray);
-        setEditIndex(null);
-        toast.success(`Item Added/Updated successfully`);
-        toast.loading(
-          `Be patient, changes takes a few moments to be reflected`
-        );
-        setTimeout(() => {
-          toast.dismiss();
-        }, 5000);
-      } catch (error) {
-        toast.error((error as Error).message);
-      }
+      setEditIndex(null);
+      toast.error(null); // Reset error state
+    } catch (error) {
+      toast.error((error as Error).message);
     }
   };
-
   const handleEditCancel = () => {
     setEditIndex(null);
     setEditedItem({});
@@ -156,7 +147,7 @@ const Admin3DComponent = () => {
           <table className="min-w-full border border-gray-300 text-sm">
             <thead>
               <tr className="bg-zinc-800 text-white ">
-               
+
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Title
                 </th>
@@ -192,7 +183,7 @@ const Admin3DComponent = () => {
             <tbody>
               {jsonArray.map((item, index) => (
                 <tr key={index} className="hover:bg-slate-100">
-                 
+
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     {item.title}
                   </td>
@@ -223,13 +214,13 @@ const Admin3DComponent = () => {
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
                     <button
                       className="mr-1"
-                      onClick={() => handleEditClick(index)}
+                      onClick={() => handleEditClick(+item.id!)}
                     >
                       <Edit size={16} />
                     </button>
                     <button
                       className="mr-1"
-                      onClick={() => handleRemoveItem(index)}
+                      onClick={() => handleRemoveItem(+item.id!)}
                     >
                       <Trash size={16} />
                     </button>
@@ -244,41 +235,41 @@ const Admin3DComponent = () => {
       )}
 
       {editIndex !== null && (
-           <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-           <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
-        
-           <h2 className="font-bold mb-2 text-center text-lg">
-                        {editIndex === -1 ? "Add Service" : "Edit Service"}
-                    </h2>
-          <div className="flex flex-col">
-         
-            <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Title</span>
+        <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
 
-              <input
-                type="text"
-                placeholder="3d Print, Caramel Macchiato"
-                className="w-full p-2 border border-gray-300 rounded"
-                value={editedItem.title}
-                onChange={(e) => handleInputChange(e, "title")}
-              />
-            </div>
-            <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Price Per Unit</span>
+            <h2 className="font-bold mb-2 text-center text-lg">
+              {editIndex === -1 ? "Add Service" : "Edit Service"}
+            </h2>
+            <div className="flex flex-col">
 
-              <input
-                type="text"
-                placeholder="Price Per Unit"
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.price}
-                onChange={(e) => {
-                  handleInputChange(e, "price")
-                }
+              <div className="w-full mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Title</span>
 
-                }
-              />
-            </div>
-            {/* <div className="w-full mb-2 lg:pr-4">
+                <input
+                  type="text"
+                  placeholder="3d Print, Caramel Macchiato"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editedItem.title}
+                  onChange={(e) => handleInputChange(e, "title")}
+                />
+              </div>
+              <div className="w-full mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Price Per Unit</span>
+
+                <input
+                  type="text"
+                  placeholder="Price Per Unit"
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.price}
+                  onChange={(e) => {
+                    handleInputChange(e, "price")
+                  }
+
+                  }
+                />
+              </div>
+              {/* <div className="w-full mb-2 lg:pr-4">
               <input
                 type="text"
                 placeholder="Previous Price"
@@ -287,62 +278,62 @@ const Admin3DComponent = () => {
                 onChange={(e) => handleInputChange(e, "previousPrice")}
               />
             </div> */}
-            <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Image 1</span>
+              <div className="w-full mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Image 1</span>
 
-              <input
-                type="text"
-                placeholder="https://www.image-example.com"
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.image1}
-                onChange={(e) => handleInputChange(e, "image1")}
-              />
-            </div>
-            <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Image 2</span>
+                <input
+                  type="text"
+                  placeholder="https://www.image-example.com"
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.image1}
+                  onChange={(e) => handleInputChange(e, "image1")}
+                />
+              </div>
+              <div className="w-full mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Image 2</span>
 
-              <input
-                type="text"
-                placeholder="https://www.image-example.com"
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.image2}
-                onChange={(e) => handleInputChange(e, "image2")}
-              />
-            </div>
-            <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Image 3</span>
+                <input
+                  type="text"
+                  placeholder="https://www.image-example.com"
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.image2}
+                  onChange={(e) => handleInputChange(e, "image2")}
+                />
+              </div>
+              <div className="w-full mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Image 3</span>
 
-              <input
-                type="text"
-                placeholder="https://www.image-example.com"
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.image3}
-                onChange={(e) => handleInputChange(e, "image3")}
-              />
-            </div>
-            <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Description</span>
+                <input
+                  type="text"
+                  placeholder="https://www.image-example.com"
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.image3}
+                  onChange={(e) => handleInputChange(e, "image3")}
+                />
+              </div>
+              <div className="w-full mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Description</span>
 
-              <input
-                type="text"
-                placeholder="Description..."
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.description}
-                onChange={(e) => handleInputChange(e, "description")}
-              />
-            </div>
-            <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Variations List</span>
+                <input
+                  type="text"
+                  placeholder="Description..."
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.description}
+                  onChange={(e) => handleInputChange(e, "description")}
+                />
+              </div>
+              <div className="w-full mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Variations List</span>
 
-              <input
-                type="text"
-                placeholder="variations list, separated by |, e.g., Red | Blue | Black"
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.variations}
-                onChange={(e) => handleInputChange(e, "variations")}
-              />
-            </div>
-            {/* <div className="w-full mb-2 lg:pr-4">
+                <input
+                  type="text"
+                  placeholder="variations list, separated by |, e.g., Red | Blue | Black"
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.variations}
+                  onChange={(e) => handleInputChange(e, "variations")}
+                />
+              </div>
+              {/* <div className="w-full mb-2 lg:pr-4">
              <span className="text-sm font-bold my-2 -ml-2">Count</span>
 
               <input
@@ -353,57 +344,57 @@ const Admin3DComponent = () => {
                 onChange={(e) => handleInputChange(e, "count")}
               />
             </div>   */}
-               <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Per Unit</span>
+              <div className="w-full mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Per Unit</span>
 
-              <input
-                type="text"
-                placeholder="gram / minute..."
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.unit}
-                onChange={(e) => handleInputChange(e, "unit")}
-              />
+                <input
+                  type="text"
+                  placeholder="gram / minute..."
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.unit}
+                  onChange={(e) => handleInputChange(e, "unit")}
+                />
+              </div>
+              <div className="w-full mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Extra Field</span>
+
+                <input
+                  type="text"
+                  placeholder="Additional details, like service type, e.g., 3D Prototype."
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.brand}
+                  onChange={(e) => handleInputChange(e, "brand")}
+                />
+              </div>
+              <div className="w-full mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">External Link</span>
+
+                <input
+                  type="text"
+                  placeholder="Link to video, or anything else"
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.externalLink}
+                  onChange={(e) => handleInputChange(e, "externalLink")}
+                />
+              </div>
             </div>
-            <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">Extra Field</span>
-
-              <input
-                type="text"
-                placeholder="Additional details, like service type, e.g., 3D Prototype."
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.brand}
-                onChange={(e) => handleInputChange(e, "brand")}
-              />
-            </div>
-            <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">External Link</span>
-
-              <input
-                type="text"
-                placeholder="Link to video, or anything else"
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.externalLink}
-                onChange={(e) => handleInputChange(e, "externalLink")}
-              />
+            <div className="flex">
+              <button
+                className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+                onClick={handleEditSubmit}
+              >
+                <Check size={18} className="mr-1" />
+                Save
+              </button>
+              <button
+                className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                onClick={handleEditCancel}
+              >
+                <X size={18} className="mr-1" />
+                Cancel
+              </button>
             </div>
           </div>
-          <div className="flex">
-            <button
-              className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
-              onClick={handleEditSubmit}
-            >
-              <Check size={18} className="mr-1" />
-              Save
-            </button>
-            <button
-              className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-              onClick={handleEditCancel}
-            >
-              <X size={18} className="mr-1" />
-              Cancel
-            </button>
-          </div>
-        </div>
         </div>
       )}
       {/* 
