@@ -31,12 +31,11 @@ const AdminFaq = () => {
     };
 
     fetchData();
-  }, []);
+  }, [editedItem]);
 
   const handleAddItemClick = () => {
     setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
-      id: uuidv4(),
       question: "",
       answer: "",
     });
@@ -69,7 +68,6 @@ const AdminFaq = () => {
   const handleEditSubmit = async () => {
     // Check for empty fields
     if (
-      !editedItem.id ||
       !editedItem.question ||
       !editedItem.answer
     ) {
@@ -83,6 +81,11 @@ const AdminFaq = () => {
       if (editIndex === -1) {
         // Add a new item
         updatedArray = [...jsonArray, editedItem];
+        await supabase
+          .from('faq')
+          .insert([editedItem])
+
+        setJsonArray([...jsonArray, editedItem])
       } else {
         // Update an existing item
         updatedArray = jsonArray.map((item, index) =>
@@ -91,8 +94,8 @@ const AdminFaq = () => {
       }
 
       try {
-        await updateJsonFile("robotech/pages/faq.json", updatedArray);
-        setJsonArray(updatedArray);
+        // await updateJsonFile("robotech/pages/faq.json", updatedArray);
+        // setJsonArray(updatedArray);
         setEditIndex(null);
         setError(null); // Reset error state
         toast.success('Question added successfully')
@@ -170,7 +173,7 @@ const AdminFaq = () => {
       {editIndex !== null && (
         <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white max-h-[700px] overflow-auto min-w-[500px] p-8 rounded-lg shadow-md">
-          <h2 className="font-bold mb-2 text-center text-lg">
+            <h2 className="font-bold mb-2 text-center text-lg">
               {editIndex === -1 ? "Add Faq" : "Edit Faq"}
             </h2>
             {error && <p className="text-red-500 mb-2">{error}</p>}
