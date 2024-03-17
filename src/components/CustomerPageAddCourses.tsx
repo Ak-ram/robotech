@@ -1,14 +1,17 @@
 import OrderModel from "./orderModel";
 import { useEffect, useState } from "react";
-import { getCourses } from "@/helpers/getCourses";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 import { ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
 import supabase from "@/supabase/config";
-import { fetchJsonData } from "@/helpers/getJSONData";
 
-const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomerData }) => {
+const CustomerPageAddCourses = ({
+  billData,
+  setBillData,
+  customerData,
+  setCustomerData,
+}) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
@@ -17,7 +20,6 @@ const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomer
   const [lastOrderId, setLastOrderId] = useState("");
 
   const [jsonArray, setJsonArray] = useState<any[]>([]);
-  const [categoriesArray, setCategoriesArray] = useState<any[]>([]);
   const [newOrder, setNewOrder] = useState({
     productName: "",
     quantity: 1,
@@ -32,14 +34,9 @@ const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomer
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const cusomterData = await fetchJsonData(
-          "robotech/pages/customers.json"
-        );
-        const categoriesData = await fetchJsonData(
-          "robotech/pages/categories.json"
-        );
-        setJsonArray(cusomterData);
-        setCategoriesArray(categoriesData);
+        const { data } = await supabase.from("customers").select();
+
+        setJsonArray(data!);
       } catch (error) {
         new Error((error as Error).message);
       }
@@ -48,60 +45,56 @@ const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomer
     fetchData();
   }, []);
 
-
-  
-
   const handleAddOrder = async () => {
     try {
       // Fetch the customer data
       const { data, error } = await supabase
-        .from('customers')
-        .select('transactions')
-        .eq('id', customerData.id)
+        .from("customers")
+        .select("transactions")
+        .eq("id", customerData.id)
         .single();
-  
+
       if (error) {
         throw error;
       }
-  
+
       // Extract existing transactions from the fetched data
       const existingTransactions = data?.transactions || { courses: [] };
-  
+
       // Add the new order to the printServices array
       existingTransactions.courses.push(newOrder);
-  
+
       // Update the transactions field with the modified data
       const { data: updatedData, error: updateError } = await supabase
-        .from('customers')
+        .from("customers")
         .update({ transactions: existingTransactions })
-        .eq('id', customerData.id);
-  
+        .eq("id", customerData.id);
+
       if (updateError) {
         throw updateError;
       }
-  
+
       // Optionally update local state or perform other actions
       // ...
-  
+
       // Show success message
-      toast.success('Item Added/Updated successfully');
-      toast.loading('Be patient, changes take a few moments to be reflected');
-  
+      toast.success("Item Added/Updated successfully");
+      toast.loading("Be patient, changes take a few moments to be reflected");
+
       setTimeout(() => {
         toast.dismiss();
       }, 3000);
     } catch (error) {
       // Handle errors
-      console.error('Error adding order:', (error as Error).message);
+      console.error("Error adding order:", (error as Error).message);
       toast.error((error as Error).message);
     }
   };
-  
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const {data} = await supabase.from('courses').select();
+        const { data } = await supabase.from("courses").select();
         setList(data!);
       } catch (error) {
         console.error("Error fetching Courses:", error);
@@ -136,7 +129,7 @@ const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomer
                   Transaction date: {course["date"]}
                 </p>
                 <p className="text-gray-600 mb-2">
-                Course name: {course["productName"]}
+                  Course name: {course["productName"]}
                 </p>
                 <p className="text-gray-600 mb-2">
                   Course price:{" "}
@@ -152,7 +145,6 @@ const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomer
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex-1">
-                
                   {/* ADD BILL HERE */}
                   <ScrollText
                     onClick={() => {
@@ -163,8 +155,6 @@ const CustomerPageAddCourses = ({billData,setBillData, customerData, setCustomer
                     size={20}
                   />
                 </div>
-
-               
               </div>
               {showBill && selectedCourse && (
                 <Bill

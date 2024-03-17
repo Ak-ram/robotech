@@ -1,11 +1,9 @@
 import OrderModel from "./orderModel";
 import { useEffect, useState } from "react";
-import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 import { ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
-import { getPrintServices } from "@/helpers/getPrintServices";
 import supabase from "@/supabase/config";
 
 const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, setCustomerData }) => {
@@ -15,7 +13,7 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
   const [list, setList] = useState<any>([]);
   const [selectedService, setSelectedService] = useState(null);
 
-  const [jsonArray, setJsonArray] = useState<any[]>([]);
+  const [jsonArray, setJsonArray] = useState<any>([]);
   const [newOrder, setNewOrder] = useState({
     productName: "",
     quantity: 1,
@@ -28,8 +26,8 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchJsonData("robotech/pages/customers.json");
-        setJsonArray(data);
+        const data = await supabase.from('customers').select();
+        setJsonArray(data!);
       } catch (error) {
         new Error((error as Error).message);
       }
