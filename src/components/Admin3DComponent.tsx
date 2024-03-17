@@ -80,6 +80,7 @@ const Admin3DComponent = () => {
 
 
 
+
   const handleEditSubmit = async () => {
     try {
       if (
@@ -91,31 +92,41 @@ const Admin3DComponent = () => {
       ) {
         toast.error("All fields are required");
         return;
-      } toast.error("All fields are required");
-
-
+      }
+  
       if (editIndex === -1) {
-        await supabase
+        const { data, error } = await supabase
           .from('services')
-          .insert([editedItem]);
-        setJsonArray([...jsonArray, editedItem]);
+          .insert([editedItem])
+          .select();
+  
+        if (error) {
+          throw new Error(error.message);
+        }
+  
+        setJsonArray([...jsonArray, data![0]]);
         toast.success('Announcement added successfully');
       } else {
-        await supabase
+        const { error } = await supabase
           .from('services')
           .update(editedItem)
           .eq('id', editIndex);
-
+  
+        if (error) {
+          throw new Error(error.message);
+        }
+  
         setJsonArray(jsonArray.map(item => item.id === editIndex ? editedItem : item));
         toast.success('Announcement updated successfully');
       }
-
+  
       setEditIndex(null);
-      toast.error(null); // Reset error state
+      toast.dismiss(); // Dismiss any existing toast
     } catch (error) {
       toast.error((error as Error).message);
     }
   };
+  
   const handleEditCancel = () => {
     setEditIndex(null);
     setEditedItem({});
