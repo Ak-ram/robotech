@@ -171,7 +171,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
 
 
-      <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
+      <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
         {/* Use handleSorting function to get sorted products */}
         {handleSorting().slice(perPage.start, perPage.end).map((item) => (
           <div
@@ -188,10 +188,11 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden"
+              className="min-w-[130px] relative  flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden"
             >
+
               <img
-                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
+                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain sm:object-fill" // object-contain
                 src={item.image1}
                 alt="product image"
               />
@@ -293,7 +294,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       </span>
 
                     }
-                    <span onClick={() => {
+                    {/* <span onClick={() => {
                       dispatch(addToCompare(item));
                       // if (isFavorite(item?.id)) {
                       //   toast.error(`${item?.title} removed from favorites!`);
@@ -303,7 +304,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                     }} title="Add to compare page" className="cursor-pointer">
                       <GitCompareArrows
                         size={23} className={`${isCompare(item.id) ? "text-blue-500" : "text-slate-400"} w-5 xs:w-fit mr-2`} />
-                    </span>
+                    </span> */}
                   </div>
 
 
