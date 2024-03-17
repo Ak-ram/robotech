@@ -75,7 +75,6 @@ const AdminCourses = () => {
             quantity: 1
         });
     };
-
     const handleRemoveItem = async (id: number) => {
         try {
           // Remove the course from jsonArray
