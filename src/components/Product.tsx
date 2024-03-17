@@ -294,7 +294,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                       </span>
 
                     }
-                    <span onClick={() => {
+                    {/* <span onClick={() => {
                       dispatch(addToCompare(item));
                       // if (isFavorite(item?.id)) {
                       //   toast.error(`${item?.title} removed from favorites!`);
@@ -304,7 +304,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                     }} title="Add to compare page" className="cursor-pointer">
                       <GitCompareArrows
                         size={23} className={`${isCompare(item.id) ? "text-blue-500" : "text-slate-400"} w-5 xs:w-fit mr-2`} />
-                    </span>
+                    </span> */}
                   </div>
 
 
