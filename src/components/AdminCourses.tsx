@@ -431,7 +431,7 @@ const AdminCourses = () => {
                                 />
                             </div>
                             <div className="w-full mb-2 lg:pr-4">
-                                <span className="text-sm font-bold my-2 -ml-2">Course Duration in weeks</span>
+                                <span className="text-sm font-bold my-2 -ml-2">Course Duration in hours</span>
 
                                 <input
                                     type="text"

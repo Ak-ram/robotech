@@ -15,6 +15,7 @@ import Related from "@/components/Related";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "@/components/Loading";
 import ProductDetails from "@/components/ProductDetails";
+import { detectLanguage } from "@/lib/utils";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -136,7 +137,12 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                       imageAlt=""
                       // enlargedImagePosition="over"
                     />  */}
-                        <MagnifierComponent img={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} />
+                        {
+                          prefix === 'print' ?
+                            <img src={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} /> :
+                            <MagnifierComponent img={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} />
+
+                        }
                         {/* <img className="h-full w-full max-w-full object-cover" src={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} alt="" /> */}
                       </div>
                     </div>
@@ -158,7 +164,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   </div>
                 </div>
 
-              <ProductDetails product={product} prefix={prefix} dispatch={dispatch} addToCart={addToCart} products={products}/>
+                <ProductDetails product={product} prefix={prefix} dispatch={dispatch} addToCart={addToCart} products={products} />
 
                 <div className="lg:col-span-3">
                   <div className="border-b border-gray-300">
@@ -194,7 +200,8 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                           })}
                         </ul>
                       ) : (
-                        <p className="my-5">{product?.description?.split('|').slice(0, 1)}</p>
+
+                        <p className="my-5 bg-white p-5 rounded" dir={detectLanguage(product?.description) === 'ar' ? 'rtl' : 'ltr'}>{product?.description?.split('|').slice(0, 1)}</p>
                       )}
 
                     </>

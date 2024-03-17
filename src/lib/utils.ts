@@ -24,3 +24,42 @@ export function isColor(text: string) {
   const colorNames = ['black', 'orange', 'lime', 'cyan', 'indigo', 'violet', 'purple', 'rose', 'yellow', 'pink', 'sky', 'red', 'blue', 'green']; // Add more color names as needed
   return colorNames.includes(text.toLowerCase().trim());
 };
+
+
+export function detectLanguage(text) {
+  if (!text) return "Unknown";
+
+  // Check if the text contains Arabic characters
+  if (/[\u0600-\u06FF]/.test(text)) {
+      return "ar";
+  }
+  // Check if the text contains Latin characters
+  else if (/^[a-zA-Z]*$/.test(text)) {
+      return "en";
+  }
+  // Default to unknown language
+  else {
+      return "Unknown";
+  }
+}
+
+
+
+export function searchItems(items,searchTerm, searchType) {
+  return items.filter(item => {
+      // Convert searchTerm to lowercase for case-insensitive search
+      const term = searchTerm.toLowerCase();
+      
+      // Determine the search behavior based on searchType
+      switch (searchType) {
+          case 'name':
+              return item?.customerData?.fullName?.toLowerCase().includes(term);
+          case 'phone':
+              return item?.customerData?.phone?.toLowerCase().includes(term);
+          case 'id':
+              return item?.id === +term;
+          default:
+              return [];
+      }
+  });
+}

@@ -8,6 +8,7 @@ import { navigation } from "@/constants/data";
 import Link from "next/link";
 import Image from "next/image";
 import { getLocation } from "@/helpers/getLocation";
+import supabase from "@/supabase/config";
 interface LocationItem {
   locationText: string;
   locationUrl: string; // Add the 'open' property to the LocationItem type
@@ -20,8 +21,8 @@ const Footer = () => {
   useEffect(() => {
     const fetchFaq = async () => {
       try {
-        const p = await getLocation();
-        setData(p);
+        const {data} = await supabase.from('location').select();
+        setData(data!);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
