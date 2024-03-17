@@ -188,10 +188,11 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="min-w-[130px] relative sm:mx-3 sm:mt-3 flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden"
+              className="min-w-[130px] relative  flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden"
             >
+
               <img
-                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full object-contain"
+                className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full " // object-contain
                 src={item.image1}
                 alt="product image"
               />
