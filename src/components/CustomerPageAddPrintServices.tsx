@@ -1,10 +1,9 @@
-import { updateJsonFile } from "@/helpers/updateJSONData";
 import OrderModel from "./orderModel";
 import { useEffect, useState } from "react";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
-import { Edit, Edit2, Redo, ScrollText, Trash } from "lucide-react";
+import { ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
 import { getPrintServices } from "@/helpers/getPrintServices";
 import supabase from "@/supabase/config";
@@ -13,7 +12,7 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<any>([]);
   const [selectedService, setSelectedService] = useState(null);
 
   const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -82,7 +81,7 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
   
       setTimeout(() => {
         toast.dismiss();
-      }, 5000);
+      }, 3000);
     } catch (error) {
       // Handle errors
       console.error('Error adding order:', (error as Error).message);
@@ -94,8 +93,8 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
   useEffect(() => {
     const fetchPrintServices = async () => {
       try {
-        const p = await getPrintServices();
-        setList(p);
+        const {data} = await supabase.from('services').select();
+        setList(data!);
       } catch (error) {
         console.error("Error fetching Print Services:", error);
       }

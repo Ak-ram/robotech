@@ -202,7 +202,6 @@ const AdminCustomers = () => {
                     pathname: `admin/id_${item?.id || editedItemId}`,
                     query: {
                       id: item?.id || editedItemId,
-                      // data: JSON.stringify(item)
                     },
                   }}
                   className={`block`}
