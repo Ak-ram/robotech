@@ -7,7 +7,6 @@ import Link from "next/link";
 
 const AdminSlides = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState<any>({
     image: "",
@@ -25,7 +24,7 @@ const AdminSlides = () => {
         }
         setJsonArray(data || []);
       } catch (error) {
-        setError((error as Error).message);
+        toast.error((error as Error).message);
       }
     };
 
@@ -38,7 +37,7 @@ const AdminSlides = () => {
       image: "",
       link_url: "",
     });
-    setError(null); // Reset error state
+    toast.error(null); // Reset error state
   };
 
   const handleRemoveItem = async (id: number) => {
@@ -51,7 +50,7 @@ const AdminSlides = () => {
       setJsonArray(jsonArray.filter(item => item.id !== id));
       toast.success('Slide removed successfully');
     } catch (error) {
-      setError((error as Error).message);
+      toast.error((error as Error).message);
     }
   };
 
@@ -66,7 +65,7 @@ const AdminSlides = () => {
   const handleEditSubmit = async () => {
     try {
       if (!editedItem.image || !editedItem.link_url) {
-        setError("All fields are required");
+        toast.error("All fields are required");
         return;
       }
 
@@ -86,9 +85,9 @@ const AdminSlides = () => {
       }
 
       setEditIndex(null);
-      setError(null); // Reset error state
+      toast.error(null); // Reset error state
     } catch (error) {
-      setError((error as Error).message);
+      toast.error((error as Error).message);
     }
   };
 
