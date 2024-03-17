@@ -5,7 +5,7 @@ import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from 'uuid';
-
+import supabase from "@supabase/supabase-js"
 const AdminFaq = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
