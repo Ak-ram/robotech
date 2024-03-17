@@ -7,20 +7,17 @@ import CustomerPageAddPrintServices from "@/components/CustomerPageAddPrintServi
 import toast from "react-hot-toast";
 import { Printer } from "lucide-react";
 import Bill from "@/components/Bill";
-import { fetchJsonData } from "@/helpers/getJSONData";
-import { updateJsonFile } from "@/helpers/updateJSONData";
-import { v4 as uuid } from 'uuid'
 import { ProductType } from "../../../../type";
 import supabase from "@/supabase/config";
 const CustomerPage = () => {
   const router = useRouter();
   const searchPar = useSearchParams();
   const customerId = searchPar?.get("id");
-  const data = searchPar?.get("data");
+  // const data = searchPar?.get("data");
 
-  const initialCustomerData =
-    typeof data === "string" ? JSON.parse(data) : null;
-  const [customerData, setCustomerData] = useState(initialCustomerData);
+  // const initialCustomerData =
+  // typeof data === "string" ? JSON.parse(data) : null;
+  const [customerData, setCustomerData] = useState<any>(null);
   const [currentTab, setCurrentTab] = useState(0);
   const [currentBillId, setCurrentBillId] = useState(0);
   const [billData, setBillData] = useState<any>([]);
@@ -78,7 +75,27 @@ const CustomerPage = () => {
   };
 
 
+  useEffect(() => {
+    async function fetchCustomerData() {
+      try {
+        const { data, error } = await supabase
+          .from('customers')
+          .select('*')
+          .eq('id', +customerId!)
+          .single();
 
+        if (error) {
+          throw error;
+        }
+
+        setCustomerData(data);
+      } catch (error) {
+        console.error('Error fetching customer data:', (error as Error).message);
+      }
+    }
+
+    fetchCustomerData();
+  }, [customerId]);
 
   return (
     <div className="m-8">
