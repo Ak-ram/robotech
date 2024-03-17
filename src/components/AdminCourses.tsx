@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { fetchJsonData } from "@/helpers/getJSONData";
+// import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from 'uuid';
+import supabase from "@/supabase/config";
 
 const AdminCourses = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [editedItem, setEditedItem] = useState<any>({
-        id: 0,
-        image1: "",
+        poster: "",
         rate: 0,
         title: "",
         price: 0,
@@ -35,8 +35,13 @@ const AdminCourses = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await fetchJsonData("robotech/pages/courses.json");
-                setJsonArray(data);
+                const { data, error } = await supabase
+                    .from('courses')
+                    .select();
+                if (error) {
+                    throw error;
+                }
+                setJsonArray(data || []);
             } catch (error) {
                 toast.error((error as Error).message)
             }
@@ -48,8 +53,7 @@ const AdminCourses = () => {
     const handleAddItemClick = () => {
         setEditIndex(-1); // Use -1 to indicate a new item
         setEditedItem({
-            id: uuidv4(),
-            image1: "",
+            poster: "",
             video: "",
             rate: 0,
             title: "",
@@ -72,12 +76,15 @@ const AdminCourses = () => {
         });
     };
 
-    const handleRemoveItem = async (index: number) => {
+    const handleRemoveItem = async (id: number) => {
         const updatedArray = [...jsonArray];
-        updatedArray.splice(index, 1);
+        updatedArray.splice(id, 1);
 
         try {
-            await updateJsonFile("robotech/pages/courses.json", updatedArray);
+            await await supabase
+                .from('courses')
+                .delete()
+                .eq('id', id);
             setJsonArray(updatedArray);
             toast.success(`Item removed successfully`);
             toast.loading(`Be patient, changes takes a few moments to be reflected`);
@@ -97,60 +104,62 @@ const AdminCourses = () => {
     };
 
     const handleEditSubmit = async () => {
-        // Check for empty fields
-        if (
-            !editedItem.id ||
-            !editedItem.image1 ||
-            !editedItem.video ||
-            !editedItem.rate ||
-            !editedItem.title ||
-            !editedItem.price ||
-            !editedItem.previousPrice ||
-            !editedItem.description ||
-            !editedItem.enrollmentOpen ||
-            !editedItem.enrollmentLink ||
-            !editedItem.instructor ||
-            !editedItem.instructor_info ||
-            !editedItem.duration ||
-            !editedItem.category ||
-            !editedItem.startDate ||
-            !editedItem.level ||
-            !editedItem.index ||
-            !editedItem.last_updated ||
-            !editedItem.more_details
-        ) {
-            toast.error("All fields are required")
-            return;
-        }
-
-        if (editIndex !== null) {
-            let updatedArray;
-
-            if (editIndex === -1) {
-                // Add a new item
-                updatedArray = [...jsonArray, editedItem];
-            } else {
-                // Update an existing item
-                updatedArray = jsonArray.map((item, index) =>
-                    index === editIndex ? editedItem : item
-                );
+        try {
+            // Check for empty fields
+            if (
+                !editedItem.title ||
+                !editedItem.price ||
+                !editedItem.previousPrice ||
+                !editedItem.description ||
+                !editedItem.enrollmentOpen ||
+                !editedItem.enrollmentLink ||
+                !editedItem.instructor ||
+                !editedItem.duration ||
+                !editedItem.category ||
+                !editedItem.startDate ||
+                !editedItem.level ||
+                !editedItem.index ||
+                !editedItem.last_updated ||
+                !editedItem.more_details
+            ) {
+                toast.error("All fields are required");
+                return;
             }
 
-            try {
-                await updateJsonFile("robotech/pages/courses.json", updatedArray);
-                setJsonArray(updatedArray);
+            if (editIndex !== null) {
+                let updatedCourses;
+                if (editIndex === -1) {
+                    // Add a new course
+                    const { data, error } = await supabase
+                        .from('courses')
+                        .insert([editedItem]);
+                    if (error) {
+                        throw error;
+                    }
+                    updatedCourses = [...jsonArray, data![0]];
+                } else {
+                    // Update an existing course
+                    const { data, error } = await supabase
+                        .from('courses')
+                        .update(editedItem)
+                        .eq('id', editedItem.id);
+                    if (error) {
+                        throw error;
+                    }
+                    updatedCourses = jsonArray.map(course =>
+                        course.id === editedItem.id ? editedItem : course
+                    );
+                }
+
+                setJsonArray(updatedCourses);
                 setEditIndex(null);
-                toast.success(`Item Added/Updated successfully`);
-                toast.loading(`Be patient, changes takes a few moments to be reflected`);
-                setTimeout(() => {
-                    toast.dismiss();
-
-                }, 5000);
-            } catch (error) {
-                toast.error((error as Error).message);
+                toast.success("Course Added/Updated successfully");
             }
+        } catch (error) {
+            toast.error((error as Error).message);
         }
     };
+
 
     const handleEditCancel = () => {
         setEditIndex(null);
@@ -184,7 +193,7 @@ const AdminCourses = () => {
                             <tr className="bg-zinc-800 text-white ">
                                 <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Title</th>
                                 <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Price</th>
-                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">image1</th>
+                                <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Poster</th>
                                 <th className="max-w-[150px] whitespace-nowrap text-ellipses border px-4 py-2">Actions</th>
                             </tr>
                         </thead>
@@ -193,7 +202,7 @@ const AdminCourses = () => {
                                 <tr key={index} className="hover:bg-slate-100">
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.title}</td>
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2">{item.price}</td>
-                                    <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2"><img src={item.image1} width="70" /></td>
+                                    <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-4 py-2"><img src={item.poster} width="70" /></td>
                                     <td className="text-center font-semibold max-w-[150px] whitespace-nowrap text-ellipses overflow-x-auto border px-2 py-2">
                                         <button
                                             className="mr-1"
@@ -203,7 +212,7 @@ const AdminCourses = () => {
                                         </button>
                                         <button
                                             className="mr-1"
-                                            onClick={() => handleRemoveItem(index)}
+                                            onClick={() => handleRemoveItem(+item.id)}
                                         >
                                             <Trash size={16} />
                                         </button>
@@ -217,9 +226,9 @@ const AdminCourses = () => {
             {editIndex !== null && (
                 <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white max-h-[700px] overflow-auto max-w-[600px] p-8 rounded-lg shadow-md">
-                    <h2 className="font-bold mb-2 text-center text-lg">
-              {editIndex === -1 ? "Add Course" : "Edit Course"}
-            </h2>
+                        <h2 className="font-bold mb-2 text-center text-lg">
+                            {editIndex === -1 ? "Add Course" : "Edit Course"}
+                        </h2>
                         <div className="flex flex-col lg:flex-row mb-2 lg:pr-4 flex-wrap">
 
                             <div className="w-full  mb-2 lg:pr-4">
@@ -265,8 +274,8 @@ const AdminCourses = () => {
                                     type="text"
                                     placeholder="https://www.image-example.com"
                                     className="p-2 w-full border border-gray-300 rounded"
-                                    value={editedItem.image1}
-                                    onChange={(e) => handleInputChange(e, "image1")}
+                                    value={editedItem.poster}
+                                    onChange={(e) => handleInputChange(e, "poster")}
                                 />
                             </div>
                             <div className="w-full mb-2 lg:pr-4">
@@ -294,7 +303,7 @@ const AdminCourses = () => {
                                 />
                             </div>
                             <div className="w-full mb-2 lg:pr-4">
-                            <span className="text-sm font-bold my-2 -ml-2">Rate</span>
+                                <span className="text-sm font-bold my-2 -ml-2">Rate</span>
 
                                 <input
                                     type="number"
