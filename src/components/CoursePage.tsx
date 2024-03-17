@@ -68,7 +68,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
               width='100%'
               height='100%'
             /> </div>
-              : <img src={course?.poster} width={"100%"} height={"100%"} />
+              : <img src={course?.poster} width={"100%"} height={"50%"} />
             }
 
             <p className="">{course?.description}</p>
@@ -143,18 +143,9 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
               </button>
             ) : <span className="cursor-not-allowed sm:text-sm text-red-500 font-bold text-xs ">Register Closed</span>}
           </div>
-          <div className="mt-10 py-2">
-            <span
+       
 
-              className="font-bold block  bg-white py-4 whitespace-nowrap border-b-2 border-transparent px-3 font-medium text-gray-600 transition-all duration-200 ease-in-out border-b-purple-600 text-purple-600"
-            >
-              {" "}
-              Course Details{" "}
-            </span>
-
-          </div>
-
-          <ul className="mt-2 space-y-4">
+          <ul className="mt-2 space-y-4 mt-10 py-2">
             <li className="bg-white text-left">
               <label
                 htmlFor="accordion-1"
