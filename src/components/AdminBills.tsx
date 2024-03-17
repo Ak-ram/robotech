@@ -216,9 +216,10 @@ const AdminBills = () => {
             {!jsonArray && <h2 className="font-bold mb-4">Current Customer data:</h2>}
 
             <div className="mb-5 flex flex-col lg:flex-row items-center justify-between">
+                <div className="w-full">
                 <input
                     type="text"
-                    placeholder="Search By Customer Name, Bill ID"
+                    placeholder="Bill ID,Customer Name, Customer Phone Number"
                     className="text-black mb-2 p-2 border border-gray-300 rounded w-full lg:w-[60%] focus:outline-none focus:border-blue-500"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -232,6 +233,7 @@ const AdminBills = () => {
                     <option value="phone">Phone</option>
                     <option value="id">Bill ID</option>
                 </select>
+                </div>
                 <button onClick={handleSearch} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Search</button>
             </div>
             {billsList.length !== 0 ? (
