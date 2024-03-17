@@ -7,11 +7,45 @@ import { v4 as uuidv4 } from 'uuid';
 import { CourseType, ProductType } from "../../type";
 import Link from 'next/link'
 import NoContent from "./NoContent";
+import supabase from "@/supabase/config";
 const AdminCustomers = () => {
     const [jsonArray, setJsonArray] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
+
+
+
+    const dataArrayWithoutId = jsonArray.map(obj => {
+        const { id, ...rest } = obj;
+        return rest;
+    });
+
+    // Function to insert data into Supabase table
+    async function insertDataIntoSupabase() {
+        try {
+            console.log(dataArrayWithoutId)
+            // const { data: insertedData, error } = await supabase
+            //     .from('customers')
+            //     .insert(dataArrayWithoutId);
+            // if (error) {
+            //     console.error('Error inserting data:', error.message);
+            // } else {
+            //     console.log('Data inserted successfully:', insertedData);
+            // }
+        } catch (error) {
+            console.error('Error inserting data:', (error as Error).message);
+        }
+    }
+
+    // Call the function to insert data into Supabase
+    insertDataIntoSupabase();
+
+    // Call the function to insert data into Supabase
+    insertDataIntoSupabase();
+
+
+
 
     interface CustomerType {
         id: string;
@@ -80,7 +114,7 @@ const AdminCustomers = () => {
     };
 
     const handleRemoveItem = async (customerId: string) => {
-      
+
         let confirmDel = window.confirm('Deleting this customer will also remove associated data such as transactions, products, courses, and print services purchased, impacting the stats page.')
         if (confirmDel) {
             const index = jsonArray.findIndex(item => item.id === customerId);
@@ -122,15 +156,15 @@ const AdminCustomers = () => {
             return;
         }
 
-          // Validate Age format
-          if (editedItem.age > 60  ) {
-              toast.error("Max Age is 60");
-              return;
-          }
-  
-          
-          // Validate Age format
-          if (editedItem.age < 10 ) {
+        // Validate Age format
+        if (editedItem.age > 60) {
+            toast.error("Max Age is 60");
+            return;
+        }
+
+
+        // Validate Age format
+        if (editedItem.age < 10) {
             toast.error("Min Age is 10");
             return;
         }
@@ -303,7 +337,7 @@ const AdminCustomers = () => {
                                         <input
                                             type="number"
                                             placeholder="20"
-                                            
+
                                             className="p-2 w-full border border-gray-300 rounded"
                                             value={editedItem.age}
                                             onChange={(e) => handleInputChange(e, "age")}
