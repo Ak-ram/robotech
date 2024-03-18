@@ -529,7 +529,7 @@ const AdminComponent = () => {
   const [selectedCat, setSelectedCat] = useState("sensors");
   const [categoryList, setcategoryList] = useState<string[]>([]);
   const [show, setShow] = useState(false);
-  const [newTableName, setNewTableName] = useState("");
+  const [newTableName,setNewTableName] = useState('')
   useEffect(() => {
     const getTablesList = async () => {
       const supabase = createClient(
@@ -545,9 +545,9 @@ const AdminComponent = () => {
     getTablesList();
   }, []);
 
-  useEffect(() => {
-    console.log(newTableName);
-  }, [newTableName]);
+  useEffect(()=>{
+    console.log(newTableName)
+  },[newTableName])
 
   useEffect(() => {
     const getList = async () => {
@@ -612,7 +612,7 @@ const AdminComponent = () => {
                       placeholder="New Category"
                       className="p-2 h-9 border mr-3 border-gray-300 rounded"
                       value={newTableName}
-                      onChange={(e) => setNewTableName(e.target.value)}
+                      onChange={(e)=> setNewTableName(e.target.value)}
                     />
                     <button className="bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 rounded">
                       Add
