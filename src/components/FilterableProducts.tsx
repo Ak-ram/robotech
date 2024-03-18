@@ -65,22 +65,7 @@ function FilterableProducts({ categories }) {
     }
   }, [categoryName]);
 
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const p = await getProducts();
-  //       setProducts(p);
-
-  //     } catch (error) {
-  //       console.error('Error fetching products:', error);
-  //     }
-  //   };
-
-  //   if (typeof window !== 'undefined') {
-  //     // Run the effect only in the browser environment
-  //     fetchProducts();
-  //   }
-  // }, []);
+  
 
   return (
     <div className="mt-3 md:mt-0">
