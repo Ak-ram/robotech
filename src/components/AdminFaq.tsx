@@ -64,33 +64,40 @@ const AdminFaq = () => {
 
   const handleEditSubmit = async () => {
     try {
-      if (!editedItem.question || !editedItem.answer) {
-        setError("All fields are required");
+      if (
+        !editedItem.question ||
+        !editedItem.answer
+      ) {
+        toast.error("All fields are required");
         return;
       }
 
       if (editIndex === -1) {
-        await supabase
-          .from('faq')
-          .insert([editedItem]);
-        setJsonArray([...jsonArray, editedItem]);
-        toast.success('Question added successfully');
+        // Add the new item
+        const { data, error } = await supabase
+          .from("faq")
+          .insert([editedItem])
+          .select();
+        if (error) {
+          throw error;
+        }
+        console.log(data);
+        const newItem: any = data![0];
+        setJsonArray([...jsonArray, newItem]);
+        toast.success("Question added successfully");
       } else {
-        await supabase
-          .from('faq')
-          .update(editedItem)
-          .eq('id', editIndex);
-        setJsonArray(jsonArray.map(item => item.id === editIndex ? editedItem : item));
-        toast.success('Question updated successfully');
+        await supabase.from("faq").update(editedItem).eq("id", editIndex);
+        setJsonArray(
+          jsonArray.map((item) => (item.id === editIndex ? editedItem : item))
+        );
+        toast.success("Question updated successfully");
       }
 
       setEditIndex(null);
-      setError(null); // Reset error state
     } catch (error) {
-      setError((error as Error).message);
+      toast.error((error as Error).message);
     }
   };
-
   const handleEditCancel = () => {
     setEditIndex(null);
     setEditedItem({});

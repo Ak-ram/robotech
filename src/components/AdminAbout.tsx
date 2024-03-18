@@ -50,15 +50,13 @@ const AdminAbout = () => {
     }
   };
 
-
   const handleEditClick = (id: number) => {
-    const edited = jsonArray.find(item => item.id === id);
+    const edited = jsonArray.find((item) => item.id === id);
     if (edited) {
       setEditIndex(id);
       setEditedItem(edited);
     }
   };
-
 
   const handleEditSubmit = async () => {
     try {
@@ -72,11 +70,6 @@ const AdminAbout = () => {
         toast.error("All fields are required");
         return;
       }
-
-      // if (editIndex === -1) {
-      //   await supabase.from("news").insert([editedItem]);
-      //   setJsonArray([...jsonArray, editedItem]);
-      //   toast.success("News added successfully");
 
       if (editIndex === -1) {
         // Add the new item
