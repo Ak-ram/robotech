@@ -6,7 +6,12 @@ import { ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
 import supabase from "@/supabase/config";
 
-const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, setCustomerData }) => {
+const CustomerPageAddPrintServices = ({
+  billData,
+  setBillData,
+  customerData,
+  setCustomerData,
+}) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
@@ -26,7 +31,7 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await supabase.from('customers').select();
+        const data = await supabase.from("customers").select();
         setJsonArray(data!);
       } catch (error) {
         new Error((error as Error).message);
@@ -36,64 +41,75 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
     fetchData();
   }, []);
 
-
-
-
-
-
   const handleAddOrder = async () => {
     try {
       // Fetch the customer data
       const { data, error } = await supabase
-        .from('customers')
-        .select('transactions')
-        .eq('id', customerData.id)
+        .from("customers")
+        .select("transactions")
+        .eq("id", customerData.id)
         .single();
-  
+
       if (error) {
         throw error;
       }
-  
+
       // Extract existing transactions from the fetched data
       const existingTransactions = data?.transactions || { printServices: [] };
-  
+
       // Add the new order to the printServices array
       existingTransactions.printServices.push(newOrder);
-  
+      const { data: total } = await supabase
+        .from("customers")
+        .select("total_purchase_transactions")
+        .eq("id", customerData.id)
+        .single();
+      const { printServices, courses, products } = existingTransactions;
+
+      const newTotal =
+        (total?.total_purchase_transactions ?? 0) +
+        printServices.reduce((total, item) => total + item.subtotal, 0) +
+        courses.reduce((total, item) => total + item.subtotal, 0) +
+        products.reduce((total, item) => total + item.subtotal, 0);
+
+      await supabase
+        .from("customers")
+        .update({ total_purchase_transactions: newTotal })
+        .eq("id", customerData.id);
+
       // Update the transactions field with the modified data
-      setShowAddOrderModal(false)
+      // setShowAddOrderModal(false)
 
       const { data: updatedData, error: updateError } = await supabase
-        .from('customers')
+        .from("customers")
         .update({ transactions: existingTransactions })
-        .eq('id', customerData.id);
-  
+        .eq("id", customerData.id);
+
       if (updateError) {
         throw updateError;
       }
-  
+
       // Optionally update local state or perform other actions
       // ...
-  
+
       // Show success message
-      toast.success('Item Added/Updated successfully');
-      toast.loading('Be patient, changes take a few moments to be reflected');
-  
+      toast.success("Item Added/Updated successfully");
+      toast.loading("Be patient, changes take a few moments to be reflected");
+
       setTimeout(() => {
         toast.dismiss();
       }, 3000);
     } catch (error) {
       // Handle errors
-      console.error('Error adding order:', (error as Error).message);
+      console.error("Error adding order:", (error as Error).message);
       toast.error((error as Error).message);
     }
   };
-  
 
   useEffect(() => {
     const fetchPrintServices = async () => {
       try {
-        const {data} = await supabase.from('services').select();
+        const { data } = await supabase.from("services").select();
         setList(data!);
       } catch (error) {
         console.error("Error fetching Print Services:", error);
@@ -147,7 +163,6 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex-1">
-
                   {/* ADD BILL HERE */}
                   <ScrollText
                     onClick={() => {
@@ -158,7 +173,6 @@ const CustomerPageAddPrintServices = ({ billData, setBillData, customerData, set
                     size={20}
                   />
                 </div>
-
               </div>
               {showBill && selectedService && (
                 <Bill
