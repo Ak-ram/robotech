@@ -528,6 +528,7 @@ const AdminComponent = () => {
   const [categoryProducts, setCategoryProducts] = useState<any>([]);
   const [selectedCat, setSelectedCat] = useState("sensors");
   const [categoryList, setcategoryList] = useState<string[]>([]);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const getTablesList = async () => {
@@ -591,22 +592,30 @@ const AdminComponent = () => {
                 </button>
 
                 <div>
-                  <span className={"flex items-center"}>
+                  <span
+                    className={`flex ${show ? "hidden" : "block"} items-center`}
+                  >
                     Category not exist ?{" "}
-                    <span className="cursor-pointer text-blue-400">
+                    <span
+                      onClick={() => setShow(true)}
+                      className="cursor-pointer text-blue-400"
+                    >
                       add category
                     </span>
                   </span>
-                  <div>
+                  <div className={show ? "block" : "hidden"}>
                     <input
                       type="text"
                       placeholder="New Category"
                       className="p-2 h-9 border mr-3 border-gray-300 rounded"
                     />
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    <button className="bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 rounded">
                       Add
                     </button>
-                    <button className="ml-2 border border-red-400 text-red-500 font-bold py-2 px-4 rounded">
+                    <button
+                      onClick={() => setShow(false)}
+                      className="ml-2 text-sm border border-red-400 text-red-500 font-bold py-2 px-4 rounded"
+                    >
                       Cancel
                     </button>
                   </div>
