@@ -1,11 +1,33 @@
-import { updateJsonFile } from '@/helpers/updateJSONData';
-import { Edit, Save } from 'lucide-react';
-import { useState } from 'react';
+import { updateJsonFile } from "@/helpers/updateJSONData";
+import { createClient } from "@supabase/supabase-js";
+import { Edit, Save } from "lucide-react";
+import { useEffect, useState } from "react";
 
-const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectionIndex }) => {
+const CustomSelect = ({
+  jsonData,
+  selectedCat,
+  setSelectedCat,
+  setSelectedSectionIndex,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editedCategory, setEditedCategory] = useState("");
   const [newCategoryValue, setNewCategoryValue] = useState("");
+  const [categoryList, setcategoryList] = useState<string[]>([]);
+
+  useEffect(() => {
+    const getList = async () => {
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        { db: { schema: "products" } }
+      );
+
+      const { data } = await supabase.from("schema_tables").select();
+      const tableNames = data!.map((item) => item.table_name);
+      setcategoryList(tableNames);
+    };
+    getList();
+  }, []);
 
   const handleEditCategory = (categoryName) => {
     setEditedCategory(categoryName);
@@ -13,23 +35,29 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
 
   const handleSubmitCategory = async () => {
     if (!newCategoryValue.trim()) return; // Prevent saving empty category name
-  
+
     const updatedData = [...jsonData];
-    const selectedSectionIndex = updatedData.findIndex(section => section[selectedCat]);
-  
+    const selectedSectionIndex = updatedData.findIndex(
+      (section) => section[selectedCat]
+    );
+
     if (selectedSectionIndex !== -1) {
-      const categoryIndex = Object.keys(updatedData[selectedSectionIndex]).findIndex(category => category === editedCategory);
+      const categoryIndex = Object.keys(
+        updatedData[selectedSectionIndex]
+      ).findIndex((category) => category === editedCategory);
       if (categoryIndex !== -1) {
         const newCategoryName = newCategoryValue.trim();
-        let updateProductsCat = updatedData[selectedSectionIndex][editedCategory].map(item=> {
-          item.category = newCategoryName
-          return item
-        })
+        let updateProductsCat = updatedData[selectedSectionIndex][
+          editedCategory
+        ].map((item) => {
+          item.category = newCategoryName;
+          return item;
+        });
         updatedData[selectedSectionIndex][newCategoryName] = updateProductsCat;
         delete updatedData[selectedSectionIndex][editedCategory];
-        
+
         console.log("Updated Data:", updatedData); // Log updated data before submission
-  
+
         try {
           await updateJsonFile("robotech/pages/categories.json", updatedData);
           setEditedCategory(""); // Reset edited category
@@ -41,7 +69,6 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
       }
     }
   };
-  
 
   return (
     <div className="relative inline-block w-[50%]">
@@ -78,7 +105,9 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
         <div className="cursor-pointer flex justify-between items-center w-full">
           <span>{selectedCat || "Select an option"}</span>
           <svg
-            className={`w-4 h-4 transition-transform ${isOpen ? "transform rotate-180" : ""}`}
+            className={`w-4 h-4 transition-transform ${
+              isOpen ? "transform rotate-180" : ""
+            }`}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -106,7 +135,7 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
                           onSubmit={(e) => {
                             e.preventDefault();
                             handleSubmitCategory();
-                            setEditedCategory('')
+                            setEditedCategory("");
                           }}
                           className="flex w-full items-center"
                         >
@@ -114,10 +143,15 @@ const CustomSelect = ({ jsonData, selectedCat, setSelectedCat, setSelectedSectio
                             type="text"
                             value={newCategoryValue}
                             placeholder={editedCategory}
-                            onChange={(e) => setNewCategoryValue(e.target.value)}
+                            onChange={(e) =>
+                              setNewCategoryValue(e.target.value)
+                            }
                             className="border border-gray-300 rounded outline-none p-1"
                           />
-                          <button type="submit" className="ml-auto cursor-pointer text-blue-500">
+                          <button
+                            type="submit"
+                            className="ml-auto cursor-pointer text-blue-500"
+                          >
                             <Save size={15} />
                           </button>
                         </form>

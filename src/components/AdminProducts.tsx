@@ -80,12 +80,12 @@ const AdminComponent = () => {
       isNew: false,
       quantity: 1,
       category: selectedCat,
-      wholesalePrice: 0
+      wholesalePrice: 0,
     });
   };
 
   const handleRemoveItem = async (sectionIndex: number, itemIndex: number) => {
-    const confirm = window.confirm('Sure to Delete ?');
+    const confirm = window.confirm("Sure to Delete ?");
     if (confirm) {
       const updatedData = [...jsonData];
       updatedData[sectionIndex][selectedCat!].splice(itemIndex, 1);
@@ -94,7 +94,9 @@ const AdminComponent = () => {
         await updateJsonFile("robotech/pages/categories.json", updatedData);
         setJsonData(updatedData);
         toast.success(`Item removed successfully`);
-        toast.loading(`Be patient, changes takes a few moments to be reflected`);
+        toast.loading(
+          `Be patient, changes takes a few moments to be reflected`
+        );
         setTimeout(() => {
           toast.dismiss();
         }, 5000);
@@ -158,7 +160,6 @@ const AdminComponent = () => {
     toast.success(`The cancellation process was successful.`);
   };
 
-
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     key: string
@@ -166,7 +167,7 @@ const AdminComponent = () => {
     const { name, value } = e.target;
     // Validate input value for numeric characters only
     if (
-      (key === "count" || key === 'price' || key === 'previousPrice') &&
+      (key === "count" || key === "price" || key === "previousPrice") &&
       !/^\d*\.?\d*$/.test(value)
     ) {
       // If input value contains non-numeric characters, do not update state
@@ -175,7 +176,6 @@ const AdminComponent = () => {
     // Update state with the new input value
     setEditedItem((prev) => ({ ...prev, [key]: value }));
   };
-
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewCategory(e.target.value);
@@ -250,39 +250,18 @@ const AdminComponent = () => {
         {/* <Stats /> */}
         <div className="">
           {selectedSectionIndex !== null &&
-            jsonData[selectedSectionIndex] &&
-            selectedCat ? (
+          jsonData[selectedSectionIndex] &&
+          selectedCat ? (
             <div key={selectedSectionIndex} className="mt-5">
               <span className="my-3 block flex items-center justify-end text-end text-sm">
                 {jsonData.length > 0 && (
                   <div className="flex-1 flex items-center gap-2">
-                    {/* <label htmlFor="sectionDropdown" className="font-bold mb-2">
-                Select Category:
-              </label> */}
-                    <CustomSelect selectedCat={selectedCat} setSelectedCat={setSelectedCat} setSelectedSectionIndex={setSelectedSectionIndex} jsonData={jsonData} />
-                    {/* <select
-                      id="sectionDropdown"
-                      className="my-2 appearance-none block bg-white border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                      value={selectedCat !== null ? selectedCat : ""}
-                      onChange={(e) => {
-                        const selectedItem = e.target.value;
-                        setSelectedCat(selectedItem);
-                        const sectionIndex = e.target.selectedIndex + 1;
-                        setSelectedSectionIndex(sectionIndex);
-                      }}
-                    >
-                      {jsonData.flatMap((section, sectionIndex) =>
-                        Object.keys(section).map((item) => (
-                          <option
-                            data-selected={item}
-                            key={`${sectionIndex}-${item}`}
-                            value={item}
-                          >
-                            {item}
-                          </option>
-                        ))
-                      )}
-                    </select> */}
+                     <CustomSelect 
+                      selectedCat={selectedCat}
+                      setSelectedCat={setSelectedCat}
+                      setSelectedSectionIndex={setSelectedSectionIndex}
+                      jsonData={jsonData}
+                    />
                     {selectedCat && (
                       <button
                         className="text-xs rounded-md absolute top-5 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
@@ -294,8 +273,9 @@ const AdminComponent = () => {
 
                     <div>
                       <span
-                        className={`${toggleNewCat ? "flex items-center" : "hidden"
-                          } mt-2`}
+                        className={`${
+                          toggleNewCat ? "flex items-center" : "hidden"
+                        } mt-2`}
                       >
                         Category not exist ?{" "}
                         <span
@@ -306,8 +286,9 @@ const AdminComponent = () => {
                         </span>
                       </span>
                       <div
-                        className={`${toggleNewCat ? "hidden" : "flex items-center"
-                          }`}
+                        className={`${
+                          toggleNewCat ? "hidden" : "flex items-center"
+                        }`}
                       >
                         <input
                           type="text"
@@ -402,8 +383,8 @@ const AdminComponent = () => {
                               +product.count === 0
                                 ? "text-red-500"
                                 : +product.count > 10
-                                  ? "text-green-500"
-                                  : "text-orange-500",
+                                ? "text-green-500"
+                                : "text-orange-500",
                               "text-xs font-medium"
                             )}
                           >
@@ -475,7 +456,7 @@ const AdminComponent = () => {
                             />
                           ) : (
                             <input
-                              // type={key === "count" ? "number" : "text"} 
+                              // type={key === "count" ? "number" : "text"}
                               type={"text"}
                               placeholder={placeholder}
                               className={`border border-gray-300 rounded outline-none w-full p-2 `}
