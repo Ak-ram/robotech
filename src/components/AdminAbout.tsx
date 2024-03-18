@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
-import { v4 as uuidv4 } from 'uuid';
 import supabase from "@/supabase/config";
 
 const AdminAbout = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState<any>({
-    id: "",
     title: "",
     description: "",
     link_text: "",
@@ -20,7 +18,7 @@ const AdminAbout = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data} = await supabase.from('news').select();
+        const { data } = await supabase.from("news").select();
         setJsonArray(data!);
       } catch (error) {
         toast.error((error as Error).message);
@@ -33,7 +31,6 @@ const AdminAbout = () => {
   const handleAddItemClick = () => {
     setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
-      id: uuidv4(),
       title: "",
       description: "",
       link_text: "",
@@ -42,69 +39,69 @@ const AdminAbout = () => {
     });
   };
 
-  const handleRemoveItem = async (index: number) => {
-    const updatedArray = [...jsonArray];
-    updatedArray.splice(index, 1);
-
+  const handleRemoveItem = async (id: number) => {
     try {
-      await updateJsonFile("robotech/pages/about.json", updatedArray);
-      setJsonArray(updatedArray);
-      toast.success(`Item removed successfully`);
-      toast.loading(`Be patient, changes takes a few moments to be reflected`);
-      setTimeout(() => {
-        toast.dismiss();
+      await supabase.from("news").delete().eq("id", id);
 
-      }, 5000);
+      setJsonArray(jsonArray.filter((item) => item.id !== id));
+      toast.success("News removed successfully");
     } catch (error) {
       toast.error((error as Error).message);
     }
   };
 
-  const handleEditClick = (index: number) => {
-    setEditIndex(index);
-    setEditedItem({ ...jsonArray[index] });
+
+  const handleEditClick = (id: number) => {
+    const edited = jsonArray.find(item => item.id === id);
+    if (edited) {
+      setEditIndex(id);
+      setEditedItem(edited);
+    }
   };
 
+
   const handleEditSubmit = async () => {
-    // Check for empty fields
-    if (
-      !editedItem.title ||
-      !editedItem.description ||
-      !editedItem.link_text ||
-      !editedItem.link_url ||
-      !editedItem.image_url
+    try {
+      if (
+        !editedItem.title ||
+        !editedItem.description ||
+        !editedItem.link_text ||
+        !editedItem.link_url ||
+        !editedItem.image_url
+      ) {
+        toast.error("All fields are required");
+        return;
+      }
 
-    ) {
-      toast.error("All fields are required");
-      return;
-    }
-
-    if (editIndex !== null) {
-      let updatedArray;
+      // if (editIndex === -1) {
+      //   await supabase.from("news").insert([editedItem]);
+      //   setJsonArray([...jsonArray, editedItem]);
+      //   toast.success("News added successfully");
 
       if (editIndex === -1) {
-        // Add a new item
-        updatedArray = [...jsonArray, editedItem];
+        // Add the new item
+        const { data, error } = await supabase
+          .from("news")
+          .insert([editedItem])
+          .select();
+        if (error) {
+          throw error;
+        }
+        console.log(data);
+        const newItem: any = data![0];
+        setJsonArray([...jsonArray, newItem]);
+        toast.success("News added successfully");
       } else {
-        // Update an existing item
-        updatedArray = jsonArray.map((item, index) =>
-          index === editIndex ? editedItem : item
+        await supabase.from("news").update(editedItem).eq("id", editIndex);
+        setJsonArray(
+          jsonArray.map((item) => (item.id === editIndex ? editedItem : item))
         );
+        toast.success("News updated successfully");
       }
 
-      try {
-        await updateJsonFile("robotech/pages/about.json", updatedArray);
-        setJsonArray(updatedArray);
-        setEditIndex(null);
-        toast.success(`Item Added/Updated successfully`);
-        toast.loading(`Be patient, changes takes a few moments to be reflected`);
-        setTimeout(() => {
-          toast.dismiss();
-
-        }, 5000);
-      } catch (error) {
-        toast.error((error as Error).message);
-      }
+      setEditIndex(null);
+    } catch (error) {
+      toast.error((error as Error).message);
     }
   };
 
@@ -121,8 +118,9 @@ const AdminAbout = () => {
   };
 
   return (
-    <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
-
+    <div
+      className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}
+    >
       {!jsonArray && <h2 className="font-bold mb-4">Current About data:</h2>}
       <div className="mb-5 flex items-center justify-end">
         <button
@@ -133,41 +131,54 @@ const AdminAbout = () => {
           Add Data
         </button>
       </div>
-      {jsonArray.length !== 0 ?
+      {jsonArray.length !== 0 ? (
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300 text-sm">
             <thead>
               <tr className="bg-zinc-800 text-white ">
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Image</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Title</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Description</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Link text</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">URL</th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-2 py-2">Actions</th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Image
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  Title
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
+                  URL
+                </th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-2 py-2">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {jsonArray.map((item, index) => (
                 <tr key={index} className="hover:bg-slate-100">
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2"><img className="w-10 h-10" src={item.image_url}/></td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.title}</td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.description}</td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.link_text}</td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    <img className="w-10 h-10" src={item.image_url} />
+                  </td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    {item.title}
+                  </td>
                   <td className="cursor-pointer max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2 flex hover:underline hover:text-blue-400 group:hover:bg-white">
-                    <a href={item.link_url} target="_blank" rel="noopener noreferrer" className="group-hover:text-blue-400">
-                      {item.link_url}
+                    <a
+                      href={item.link_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className=" hover:text-blue-400 hover:underline"
+                    >
+                      {item.link_text}
                     </a>
                   </td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
                     <button
                       className="mr-1"
-                      onClick={() => handleEditClick(index)}
+                      onClick={() => handleEditClick(+item.id!)}
                     >
                       <Edit size={16} />
                     </button>
                     <button
                       className="mr-1"
-                      onClick={() => handleRemoveItem(index)}
+                      onClick={() => handleRemoveItem(+item.id!)}
                     >
                       <Trash size={16} />
                     </button>
@@ -176,13 +187,14 @@ const AdminAbout = () => {
               ))}
             </tbody>
           </table>
-        </div> : <NoContent />}
+        </div>
+      ) : (
+        <NoContent />
+      )}
 
       {editIndex !== null && (
         <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
-
-
             <h2 className="font-bold mb-2 text-center text-lg">
               {editIndex === -1 ? "Add About Data" : "Edit About Data"}
             </h2>
@@ -208,7 +220,9 @@ const AdminAbout = () => {
                 />
               </div>
               <div className="mb-2 lg:pr-4">
-                <span className="text-sm font-bold my-2 -ml-2">Description</span>
+                <span className="text-sm font-bold my-2 -ml-2">
+                  Description
+                </span>
 
                 <input
                   type="text"
