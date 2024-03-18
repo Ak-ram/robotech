@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getCustomerData } from "@/helpers/getCustomerData";
 import { Activity, ArrowDown01, ArrowUp01, Clock, GitCommitHorizontal, LineChart, Link2Icon, LinkIcon, Search, Sparkle, X, Download, Ban, ChevronDown } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
@@ -8,8 +7,6 @@ import { downloadJSON } from "@/helpers/downloadJsonfile";
 import { getProducts } from "@/helpers/getProducts";
 import TransactionAnalyzer from "./TransactionAnalyzer";
 import CustomerStatsTopSelling from "./CustomerStatsTopSelling";
-import CustomerStatsOutStocks from "./CustomerStatsOutStocks";
-import CustomerStatsInStocks from "./CustomerStatsInStocks";
 import Stocks from "./Stocks";
 import CustomerStatsServicesData from "./CustomerStatsServicesData";
 import supabase from "@/supabase/config";
