@@ -9,9 +9,6 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ProductType } from "../../type";
-import { getPrintServices } from "@/helpers/getPrintServices";
-import { fetchJsonData } from "@/helpers/getJSONData";
-import { updateJsonFile } from "@/helpers/updateJSONData";
 import supabase from "@/supabase/config";
 
 const CustomerStatsServicesData = () => {
@@ -81,7 +78,7 @@ const CustomerStatsServicesData = () => {
       setEditedService(null);
       // Update the JSON file in the background
       if (jsonData.length > 0) {
-        let updatedData:any = [...jsonData];
+        let updatedData: any = [...jsonData];
         updatedData = updatedData.map((service) => {
           if (service.id === editedService.id) {
             return editedService;
@@ -92,9 +89,9 @@ const CustomerStatsServicesData = () => {
         // No need to await, updating JSON file in the background
         console.log(editedService);
         await supabase
-        .from("services")
-        .update(editedService)
-        .eq("id", editedService.id);
+          .from("services")
+          .update(editedService)
+          .eq("id", editedService.id);
         // Update the state with the new JSON data
         setJsonData(updatedData);
       } else {
@@ -190,6 +187,7 @@ const CustomerStatsServicesData = () => {
                   {Object.entries({
                     title: "Title",
                     wholesalePrice: "Wholesale Price", // Add the Wholesale Price field
+                    previousPrice: "Previous Price",
                     price: "Price",
                     unit: "Unit",
                     image1: "Image1",

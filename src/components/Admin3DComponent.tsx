@@ -17,16 +17,15 @@ const Admin3DComponent = () => {
     image3: "",
     brand: "",
     quantity: 1,
-    externalLink: '',
-    unit: '',
-    wholesalePrice: 0
-
+    externalLink: "",
+    unit: "",
+    wholesalePrice: 0,
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await supabase.from('services').select();
+        const { data } = await supabase.from("services").select();
         setJsonArray(data!);
       } catch (error) {
         toast.error((error as Error).message);
@@ -48,38 +47,30 @@ const Admin3DComponent = () => {
       image3: "",
       brand: "",
       quantity: 1,
-      externalLink: '',
-      unit: '',
-      wholesalePrice: 0
-
+      externalLink: "",
+      unit: "",
+      wholesalePrice: 0,
     });
   };
 
   const handleRemoveItem = async (id: number) => {
     try {
-      await supabase
-        .from('services')
-        .delete()
-        .eq('id', id);
+      await supabase.from("services").delete().eq("id", id);
 
-      setJsonArray(jsonArray.filter(item => item.id !== id));
-      toast.success('Service removed successfully');
+      setJsonArray(jsonArray.filter((item) => item.id !== id));
+      toast.success("Service removed successfully");
     } catch (error) {
       toast.error((error as Error).message);
     }
   };
 
-
   const handleEditClick = (id: number) => {
-    const edited = jsonArray.find(item => item.id === id);
+    const edited = jsonArray.find((item) => item.id === id);
     if (edited) {
       setEditIndex(id);
       setEditedItem(edited);
     }
   };
-
-
-
 
   const handleEditSubmit = async () => {
     try {
@@ -93,40 +84,42 @@ const Admin3DComponent = () => {
         toast.error("All fields are required");
         return;
       }
-  
+
       if (editIndex === -1) {
         const { data, error } = await supabase
-          .from('services')
+          .from("services")
           .insert([editedItem])
           .select();
-  
+
         if (error) {
           throw new Error(error.message);
         }
-  
+
         setJsonArray([...jsonArray, data![0]]);
-        toast.success('Announcement added successfully');
+        toast.success("Announcement added successfully");
       } else {
         const { error } = await supabase
-          .from('services')
+          .from("services")
           .update(editedItem)
-          .eq('id', editIndex);
-  
+          .eq("id", editIndex);
+
         if (error) {
           throw new Error(error.message);
         }
-  
-        setJsonArray(jsonArray.map(item => item.id === editIndex ? editedItem : item));
-        toast.success('Announcement updated successfully');
+
+        setJsonArray(
+          jsonArray.map((item) => (item.id === editIndex ? editedItem : item))
+        );
+        toast.success("Announcement updated successfully");
       }
-  
+
       setEditIndex(null);
       toast.dismiss(); // Dismiss any existing toast
     } catch (error) {
       toast.error((error as Error).message);
     }
   };
-  
+
   const handleEditCancel = () => {
     setEditIndex(null);
     setEditedItem({});
@@ -158,7 +151,6 @@ const Admin3DComponent = () => {
           <table className="min-w-full border border-gray-300 text-sm">
             <thead>
               <tr className="bg-zinc-800 text-white ">
-
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Title
                 </th>
@@ -194,7 +186,6 @@ const Admin3DComponent = () => {
             <tbody>
               {jsonArray.map((item, index) => (
                 <tr key={index} className="hover:bg-slate-100">
-
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     {item.title}
                   </td>
@@ -248,12 +239,10 @@ const Admin3DComponent = () => {
       {editIndex !== null && (
         <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
-
             <h2 className="font-bold mb-2 text-center text-lg">
               {editIndex === -1 ? "Add Service" : "Edit Service"}
             </h2>
             <div className="flex flex-col">
-
               <div className="w-full mb-2 lg:pr-4">
                 <span className="text-sm font-bold my-2 -ml-2">Title</span>
 
@@ -266,7 +255,9 @@ const Admin3DComponent = () => {
                 />
               </div>
               <div className="w-full mb-2 lg:pr-4">
-                <span className="text-sm font-bold my-2 -ml-2">Price Per Unit</span>
+                <span className="text-sm font-bold my-2 -ml-2">
+                  Price Per Unit
+                </span>
 
                 <input
                   type="text"
@@ -274,21 +265,19 @@ const Admin3DComponent = () => {
                   className="p-2 w-full border border-gray-300 rounded"
                   value={editedItem.price}
                   onChange={(e) => {
-                    handleInputChange(e, "price")
-                  }
-
-                  }
+                    handleInputChange(e, "price");
+                  }}
                 />
               </div>
-              {/* <div className="w-full mb-2 lg:pr-4">
-              <input
-                type="text"
-                placeholder="Previous Price"
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.previousPrice}
-                onChange={(e) => handleInputChange(e, "previousPrice")}
-              />
-            </div> */}
+              <div className="w-full mb-2 lg:pr-4">
+                <input
+                  type="text"
+                  placeholder="Previous Price"
+                  className="p-2 w-full border border-gray-300 rounded"
+                  value={editedItem.previousPrice}
+                  onChange={(e) => handleInputChange(e, "previousPrice")}
+                />
+              </div>
               <div className="w-full mb-2 lg:pr-4">
                 <span className="text-sm font-bold my-2 -ml-2">Image 1</span>
 
@@ -323,7 +312,9 @@ const Admin3DComponent = () => {
                 />
               </div>
               <div className="w-full mb-2 lg:pr-4">
-                <span className="text-sm font-bold my-2 -ml-2">Description</span>
+                <span className="text-sm font-bold my-2 -ml-2">
+                  Description
+                </span>
 
                 <input
                   type="text"
@@ -334,7 +325,9 @@ const Admin3DComponent = () => {
                 />
               </div>
               <div className="w-full mb-2 lg:pr-4">
-                <span className="text-sm font-bold my-2 -ml-2">Variations List</span>
+                <span className="text-sm font-bold my-2 -ml-2">
+                  Variations List
+                </span>
 
                 <input
                   type="text"
@@ -367,7 +360,9 @@ const Admin3DComponent = () => {
                 />
               </div>
               <div className="w-full mb-2 lg:pr-4">
-                <span className="text-sm font-bold my-2 -ml-2">Extra Field</span>
+                <span className="text-sm font-bold my-2 -ml-2">
+                  Extra Field
+                </span>
 
                 <input
                   type="text"
@@ -378,7 +373,9 @@ const Admin3DComponent = () => {
                 />
               </div>
               <div className="w-full mb-2 lg:pr-4">
-                <span className="text-sm font-bold my-2 -ml-2">External Link</span>
+                <span className="text-sm font-bold my-2 -ml-2">
+                  External Link
+                </span>
 
                 <input
                   type="text"
