@@ -47,6 +47,7 @@ import FormattedPrice from "./FormattedPrice";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+import supabase from "@/supabase/config";
 
 //   useEffect(() => {
 //     const getList = async () => {
@@ -532,13 +533,8 @@ const AdminComponent = () => {
   const [newTableName,setNewTableName] = useState('')
   useEffect(() => {
     const getTablesList = async () => {
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        { db: { schema: "products" } }
-      );
-
-      const { data } = await supabase.from("schema_tables").select();
+     
+      const { data } = await supabase.from("schema_table").select("*");
       const tableNames = data!.map((item) => item.table_name);
       setcategoryList(tableNames);
     };
@@ -551,13 +547,9 @@ const AdminComponent = () => {
 
   useEffect(() => {
     const getList = async () => {
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        { db: { schema: "products" } }
-      );
+    
 
-      const { data } = await supabase.from(selectedCat).select();
+      const { data } = await supabase.from('products').select("*").eq('category',selectedCat);
       setCategoryProducts(data!);
     };
     getList();
