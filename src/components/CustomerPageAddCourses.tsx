@@ -63,9 +63,24 @@ const CustomerPageAddCourses = ({
 
       // Add the new order to the printServices array
       existingTransactions.courses.push(newOrder);
+      await supabase
+      .from("customers")
+      .select("total_purchase_transactions")
+      .eq("id", customerData.id)
+      .single();
+    const { printServices, courses, products } = existingTransactions;
 
+    const newTotal =
+      printServices.reduce((total, item) => total + item.subtotal, 0) +
+      courses.reduce((total, item) => total + item.subtotal, 0) +
+      products.reduce((total, item) => total + item.subtotal, 0);
+
+    await supabase
+      .from("customers")
+      .update({ total_purchase_transactions: newTotal })
+      .eq("id", customerData.id);
       // Update the transactions field with the modified data
-      setShowAddOrderModal(false)
+      // setShowAddOrderModal(false)
       const { data: updatedData, error: updateError } = await supabase
         .from("customers")
         .update({ transactions: existingTransactions })

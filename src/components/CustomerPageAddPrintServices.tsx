@@ -59,7 +59,7 @@ const CustomerPageAddPrintServices = ({
 
       // Add the new order to the printServices array
       existingTransactions.printServices.push(newOrder);
-      const { data: total } = await supabase
+      await supabase
         .from("customers")
         .select("total_purchase_transactions")
         .eq("id", customerData.id)
@@ -67,7 +67,6 @@ const CustomerPageAddPrintServices = ({
       const { printServices, courses, products } = existingTransactions;
 
       const newTotal =
-        (total?.total_purchase_transactions ?? 0) +
         printServices.reduce((total, item) => total + item.subtotal, 0) +
         courses.reduce((total, item) => total + item.subtotal, 0) +
         products.reduce((total, item) => total + item.subtotal, 0);
@@ -78,7 +77,7 @@ const CustomerPageAddPrintServices = ({
         .eq("id", customerData.id);
 
       // Update the transactions field with the modified data
-      // setShowAddOrderModal(false)
+      setShowAddOrderModal(false);
 
       const { data: updatedData, error: updateError } = await supabase
         .from("customers")
