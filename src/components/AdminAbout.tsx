@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { fetchJsonData } from "@/helpers/getJSONData";
-import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from 'uuid';
+import supabase from "@/supabase/config";
 
 const AdminAbout = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -21,8 +20,8 @@ const AdminAbout = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchJsonData("robotech/pages/about.json");
-        setJsonArray(data);
+        const {data} = await supabase.from('news').select();
+        setJsonArray(data!);
       } catch (error) {
         toast.error((error as Error).message);
       }
@@ -150,7 +149,7 @@ const AdminAbout = () => {
             <tbody>
               {jsonArray.map((item, index) => (
                 <tr key={index} className="hover:bg-slate-100">
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.image_url}</td>
+                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2"><img className="w-10 h-10" src={item.image_url}/></td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.title}</td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.description}</td>
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.link_text}</td>

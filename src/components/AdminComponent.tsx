@@ -46,7 +46,7 @@ const AdminComponent = () => {
     { id: 1, icon: <LayoutList />, label: "Products", content: <AdminProducts /> },
     { id: 2, icon: <Printer />, label: "Services", content: <Admin3DComponent /> },
     { id: 3, icon: <GraduationCap />, label: "Courses", content: <AdminCourses /> },
-    { id: 4, icon: <Smile />, label: "About", content: <AdminAbout /> },
+    { id: 4, icon: <Smile />, label: "News", content: <AdminAbout /> },
     { id: 5, icon: <HelpCircle />, label: "Faq", content: <AdminFaq /> },
     { id: 6, icon: <SlidersHorizontal />, label: "Slides", content: <AdminSlides /> },
     { id: 7, icon: <StickyNote />, label: "Announcement", content: <AdminAnnouncement /> },
