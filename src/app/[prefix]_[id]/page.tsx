@@ -43,23 +43,8 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   const [mainImg, setMainImg] = useState<1 | 2 | 3>(1);
   const searchPar = useSearchParams();
   const idString = searchPar?.get("id");
-  // const id = Number(idString);
   const prefix = searchPar?.get("prefix");
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const p = await getCategoryProducts(prefix!);
-  //       setProducts(p);
-  //     } catch (error) {
-  //       console.error('Error fetching products:', error);
-  //     }
-  //   };
 
-  //   if (typeof window !== 'undefined') {
-  //     // Run the effect only in the browser environment
-  //     fetchProducts();
-  //   }
-  // }, [prefix]);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -144,17 +129,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                     </a>
                   </div>
                 </li>
-                {/* <li className="text-left">
-          <div className="-m-1">
-            <a
-              href={`/${(prefix === 'courses' || prefix === '3d_print') ? prefix : ''}`}
-              className="rounded-md p-1 text-xs xs:text-sm font-medium text-blue-600 focus:text-blue-900 focus:shadow hover:text-blue-800"
-              aria-current="page"
-            >
-              {prefix}
-            </a>
-          </div>
-        </li> */}
+            
                 {/* Separator */}
                 <li className="text-left">
                   <div className="flex items-center">
@@ -182,13 +157,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 <div className="lg:flex lg:items-center">
                   <div className="flex-1 lg:order-2 border-slate-300 rounded-md border-2">
                     <div className="max-w-xl mx-auto overflow-hidden rounded-lg">
-                      {/* <Magnifier
-                      className="max-w-xl overflow-hidden rounded-lg"
-                      style={{ height: '100%', width: '100%' }}
-                      imageSrc={product?.image1!}
-                      imageAlt=""
-                      // enlargedImagePosition="over"
-                    />  */}
+                    
                       {prefix === "print" ? (
                         <img
                           src={
@@ -210,7 +179,6 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                           }
                         />
                       )}
-                      {/* <img className="h-full w-full max-w-full object-cover" src={mainImg === 1 ? product?.image1 : mainImg === 2 ? product?.image2 : product?.image3} alt="" /> */}
                     </div>
                   </div>
 
