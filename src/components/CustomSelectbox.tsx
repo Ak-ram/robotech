@@ -84,17 +84,14 @@ const CustomSelect = ({
           setSelectedSectionIndex(sectionIndex);
         }}
       >
-        {jsonData.flatMap((section, sectionIndex) =>
-          Object.keys(section).map((item) => (
-            <option
-              data-selected={item}
-              key={`${sectionIndex}-${item}`}
-              value={item}
-            >
-              {item}
-            </option>
-          ))
-        )}
+        {/* {jsonData.flatMap((section, sectionIndex) => 
+           Object.keys(section).map((item) => ( */}
+        {categoryList.map((item) => (
+          <option data-selected={item} key={item} value={item}>
+            {item}
+          </option>
+        ))}
+        {/* )}  */}
       </select>
 
       {/* Custom select box */}
@@ -121,7 +118,7 @@ const CustomSelect = ({
         {isOpen && (
           <div className="absolute z-100 h-[200px] text-start overflow-scroll w-full top-full left-0 bg-white border border-gray-300 rounded-b-md overflow-hidden shadow-md">
             {jsonData.flatMap((section, sectionIndex) =>
-              Object.keys(section).map((item) => {
+              categoryList.map((item) => {
                 const newIndex = sectionIndex + 1;
                 return (
                   <div
