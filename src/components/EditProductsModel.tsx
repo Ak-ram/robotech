@@ -73,6 +73,7 @@ const EditProductsModel = ({
       await supabase.from("products").update(editedItem).eq("id", itemToEditId);
       toast.success("Updated!");
       setIsOpen(false);
+      setCategoryProducts([...categoryProducts, editedItem]);
     } else {
       setItemToEditId(null);
       const requiredFields = ["title", "price", "count", "image1"];
@@ -81,54 +82,21 @@ const EditProductsModel = ({
         toast.error(`title, price, count, image1 are required`);
         return;
       }
-      await supabase.from("products").insert(editedItem);
+      const { data } = await supabase
+        .from("products")
+        .insert(editedItem)
+        .select()
+        .single();
+      setItemToEditId(data.id);
       setIsOpen(false);
       toast.success("Created!");
+      setCategoryProducts([...categoryProducts, editedItem]);
     }
-
-    // If editedItem already exists, handle it accordingly
-    // if (existingProducts && existingProducts.length > 0) {
-    //   await supabase
-    //     .from("products")
-    //     .update(editedItem)
-    //     .eq("id", existingProducts![0].id);
-    //   // You can display an error message or perform any other action here
-    //   toast.success("Item already exists so we updated it");
-    //   console.log('exist')
-    //   return;
-    // }
-
-    // If editedItem doesn't exist, proceed with insertion
-    // try {
-    //   const requiredFields = [
-    //     "title",
-    //     "price",
-    //     "count",
-    //     "image1",
-
-    //   ];
-
-    //   if (requiredFields.some((field) => !editedItem[field])) {
-    //     toast.error(`title, price, count, image1 are required`);
-    //     return;
-    //   }
-    //   await supabase.from("products").insert([editedItem]);
-    //   toast.success("Data inserted successfully:");
-    //   setCategoryProducts([...categoryProducts, editedItem]);
-    //   setIsOpen(false);
-    //   setItemToEditId(null);
-    // } catch (error) {
-    //   toast.error("Error inserting data:");
-    //   // Handle the error appropriately
-    // }
   };
   const handleCancelation = () => {
     setIsOpen(false);
     setItemToEditId(null);
   };
-  //   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     setNewCategory(e.target.value);
-  //   };
 
   return (
     <>
