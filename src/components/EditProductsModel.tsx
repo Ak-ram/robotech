@@ -75,7 +75,7 @@ const EditProductsModel = ({
       .from("products")
       .select("*")
       .eq("title", editedItem.title); // Replace 'uniqueIdentifierField' with the actual field name used for identification
-
+console.log(existingProducts![0])
     if (error) {
       toast.error("Error fetching existing products:");
       // Handle the error appropriately
