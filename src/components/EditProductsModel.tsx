@@ -32,7 +32,7 @@ const EditProductsModel = ({ selectedCat, isOpen, setIsOpen }) => {
     // Update state with the new input value
     setEditedItem((prev) => ({ ...prev, [key]: value }));
   };
-  const handleEditSubmit = async () => {
+  const handleAddSubmit = async () => {
     await supabase.from("products").insert([editedItem]);
     console.log(editedItem);
   };
@@ -89,7 +89,7 @@ const EditProductsModel = ({ selectedCat, isOpen, setIsOpen }) => {
             <div className="flex">
               <button
                 className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
-                onClick={() => handleEditSubmit()}
+                onClick={() => handleAddSubmit()}
               >
                 <Check size={18} className="mr-1" />
                 Save
