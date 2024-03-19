@@ -1,5 +1,5 @@
 "use client";
-import { createClient } from "@supabase/supabase-js";
+import  supabase from "../supabase/config";
 import React, { useState, useEffect, ChangeEvent } from "react";
 import Categories from "./Categories";
 import Product from "./Product";
@@ -42,16 +42,9 @@ function FilterableProducts({ categories }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const supabase = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-          { db: { schema: "products" } }
-        );
-
-        // Make a request
         const { data, error } = categoryName
-          ? await supabase.from(categoryName.toLowerCase()).select("*")
-          : await supabase.from("sensors").select("*");
+          ? await supabase.from('products').select("").eq("category",categoryName.toLowerCase())
+          : await supabase.from("products").select("*");
         console.log(categoryName);
         setProducts(data!);
       } catch (error) {

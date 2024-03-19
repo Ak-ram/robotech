@@ -33,6 +33,7 @@ import Loading from "@/components/Loading";
 import ProductDetails from "@/components/ProductDetails";
 import { detectLanguage } from "@/lib/utils";
 import { createClient } from "@supabase/supabase-js";
+import supabase from "@/supabase/config";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -50,11 +51,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
       try {
         const schema = prefix === "print" ? "public" : "products";
     
-        const supabase = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-          { db: { schema } }
-        );
+    
     
         const { data } =
           prefix === "print"
@@ -64,7 +61,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 .eq("id", idString)
                 .single()
             : await supabase
-                .from(prefix!.toLowerCase())
+                .from('products')
                 .select("*")
                 .eq("id", idString)
                 .single();
