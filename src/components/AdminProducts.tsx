@@ -34,6 +34,7 @@ import { createClient } from "@supabase/supabase-js";
 import supabase from "@/supabase/config";
 import EditProductsModel from "./EditProductsModel";
 import { handleRemoveItem } from "@/helpers/deleteJSONItem";
+import Product from "./Product";
 
 //   useEffect(() => {
 //     const getList = async () => {
@@ -432,6 +433,7 @@ const AdminComponent = () => {
   const [show, setShow] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
+  const [ItemToEditId,setItemToEditId] = useState(null)
   useEffect(() => {
     const getTablesList = async () => {
       const { data } = await supabase.from("schema_table").select("*");
@@ -486,20 +488,26 @@ const AdminComponent = () => {
     setSelectedCat(newCategoryName);
     setNewCategoryName("");
   };
-  const handleAddCategoryProducts = () => {
+  const handleAddCategoryProducts = async (id = null) => {
     setIsOpen(true);
+    if (id) {
+      setItemToEditId(id)
+    }
   };
 
   const handleRemoveItem = async (id) => {
-    try {
-      await supabase.from("products").delete().eq("id", id);
+    const confirm = window.confirm("Sure to delete");
+    if (confirm) {
+      try {
+        await supabase.from("products").delete().eq("id", id);
 
-   let newList = categoryProducts.filter(item=> item.id !== id)
-      setCategoryProducts(newList);
+        let newList = categoryProducts.filter((item) => item.id !== id);
+        setCategoryProducts(newList);
 
-      toast.success("Item Deleted Successfully");
-    } catch (error) {
-      toast.error("Error Deleting Item. Please try again later.");
+        toast.success("Item Deleted Successfully");
+      } catch (error) {
+        toast.error("Error Deleting Item. Please try again later.");
+      }
     }
   };
 
@@ -570,9 +578,9 @@ const AdminComponent = () => {
                   </div>
                 </div>
               </div>
-              Count: <span className="font-bold ml-1">Product(s)</span>
+              Count: {categoryProducts?.length} Product(s)
               <span
-                onClick={handleAddCategoryProducts}
+                onClick={() => handleAddCategoryProducts()}
                 className="cursor-pointer inline-flex items-center justify-end w-fit mr-2 ml-3 py-2 px-3 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded"
               >
                 <Plus className="inline-block w-5 h-5 mr-1" size={20} />
@@ -651,9 +659,9 @@ const AdminComponent = () => {
                         <div className="ml-8">
                           <button
                             className="mr-1"
-                            // onClick={() =>
-                            //   // handleEditClick(selectedSectionIndex, itemIndex)
-                            // }
+                            onClick={() =>
+                              handleAddCategoryProducts(product.id)
+                            }
                           >
                             <Edit size={16} />
                           </button>
@@ -673,11 +681,13 @@ const AdminComponent = () => {
       </div>
       {isOpen && (
         <EditProductsModel
-        setCategoryProducts={setCategoryProducts}
-        categoryProducts={categoryProducts}
+          setCategoryProducts={setCategoryProducts}
+          categoryProducts={categoryProducts}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           selectedCat={selectedCat}
+          itemToEditId={ItemToEditId}
+          setItemToEditId={setItemToEditId}
         />
       )}
       <Toaster

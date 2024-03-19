@@ -1,9 +1,31 @@
 import supabase from "@/supabase/config";
 import { Check, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const EditProductsModel = ({ selectedCat, isOpen, setIsOpen,setCategoryProducts,categoryProducts }) => {
+const EditProductsModel = ({
+  itemToEditId,
+  setItemToEditId,
+  selectedCat,
+  isOpen,
+  setIsOpen,
+  setCategoryProducts,
+  categoryProducts,
+}) => {
+  useEffect(() => {
+    const autoFill = async (id) => {
+      const { data } = await supabase
+        .from("products")
+        .select()
+        .eq("id", id)
+        .single();
+      console.log(data);
+    };
+    if (itemToEditId) {
+      autoFill(itemToEditId);
+    }
+  }, []);
+
   const [editedItem, setEditedItem] = useState<any>({
     title: "",
     price: "",
@@ -38,35 +60,33 @@ const EditProductsModel = ({ selectedCat, isOpen, setIsOpen,setCategoryProducts,
     const { data: existingProducts, error } = await supabase
       .from("products")
       .select("*")
-      .eq("title", editedItem.title) // Replace 'uniqueIdentifierField' with the actual field name used for identification
-  
+      .eq("title", editedItem.title); // Replace 'uniqueIdentifierField' with the actual field name used for identification
+
     if (error) {
       toast.error("Error fetching existing products:");
       // Handle the error appropriately
       return;
     }
-  
+
     // If editedItem already exists, handle it accordingly
     if (existingProducts && existingProducts.length > 0) {
       toast.error("Item already exists in products:");
       // You can display an error message or perform any other action here
       return;
     }
-  
+
     // If editedItem doesn't exist, proceed with insertion
     try {
       await supabase.from("products").insert([editedItem]);
       toast.success("Data inserted successfully:");
-      setCategoryProducts([...categoryProducts,editedItem])
+      setCategoryProducts([...categoryProducts, editedItem]);
       setIsOpen(false);
-
     } catch (error) {
       toast.error("Error inserting data:");
       // Handle the error appropriately
     }
   };
-  
-  
+
   //   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //     setNewCategory(e.target.value);
   //   };
