@@ -33,6 +33,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import supabase from "@/supabase/config";
 import EditProductsModel from "./EditProductsModel";
+import { handleRemoveItem } from "@/helpers/deleteJSONItem";
 
 //   useEffect(() => {
 //     const getList = async () => {
@@ -485,9 +486,23 @@ const AdminComponent = () => {
     setSelectedCat(newCategoryName);
     setNewCategoryName("");
   };
-const handleAddCategoryProducts = ()=>{
-  setIsOpen(true)
-}
+  const handleAddCategoryProducts = () => {
+    setIsOpen(true);
+  };
+
+  const handleRemoveItem = async (id) => {
+    try {
+      await supabase.from("products").delete().eq("id", id);
+
+   let newList = categoryProducts.filter(item=> item.id !== id)
+      setCategoryProducts(newList);
+
+      toast.success("Item Deleted Successfully");
+    } catch (error) {
+      toast.error("Error Deleting Item. Please try again later.");
+    }
+  };
+
   return (
     <>
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
@@ -644,9 +659,7 @@ const handleAddCategoryProducts = ()=>{
                           </button>
                           <button
                             className="mr-1"
-                            // onClick={() =>
-                            //   // handleRemoveItem(selectedSectionIndex, itemIndex)
-                            // }
+                            onClick={() => handleRemoveItem(product.id)}
                           >
                             <Trash size={16} />
                           </button>
@@ -658,14 +671,13 @@ const handleAddCategoryProducts = ()=>{
           </div>
         </div>
       </div>
-      {
-isOpen &&
-      <EditProductsModel
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        selectedCat={selectedCat}
-      />
-      }
+      {isOpen && (
+        <EditProductsModel
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          selectedCat={selectedCat}
+        />
+      )}
       <Toaster
         position="bottom-right"
         toastOptions={{
