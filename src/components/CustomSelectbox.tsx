@@ -19,6 +19,7 @@
 
 import { useState } from "react";
 import { Check, Edit2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
   const [editableOption, setEditableOption] = useState("");
@@ -45,6 +46,7 @@ const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
       // Update the category list in the parent component
       // You can pass a function from the parent component to update the category list
       // For example: updateCategoryList(updatedCategoryList);
+      toast.success("category updated successfully");
     }
   };
 
@@ -84,7 +86,9 @@ const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
 
             {editableOption && (
               <div className="option-edit">
-                <span className="w-full text-gray-600 text-start mb-2 block">New category name:</span>
+                <span className="w-full text-gray-600 text-start mb-2 block">
+                  New category name:
+                </span>
                 <input
                   type="text"
                   value={editedOption}
@@ -93,7 +97,10 @@ const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
                 />
                 <button className="bg-green-200 text-green-500 flex w-full rounded my-5 py-2 items-center justify-center font-semibold">
                   Submit
-                  <Check className="option-icon bg-white mx-2 rounded-full p-1 w-7 h-7 text-green-600 border border-green-400" onClick={handleOptionUpdate} />
+                  <Check
+                    className="option-icon bg-white mx-2 rounded-full p-1 w-7 h-7 text-green-600 border border-green-400"
+                    onClick={handleOptionUpdate}
+                  />
                 </button>
               </div>
             )}
