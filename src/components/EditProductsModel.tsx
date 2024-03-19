@@ -73,7 +73,7 @@ const EditProductsModel = ({
       // If itemToEditId exists, it means we are editing an existing product
       await supabase.from("products").update(editedItem).eq("id", itemToEditId);
       toast.success("Updated!");
-      
+
       // Update the product in the categoryProducts state
       const updatedProducts = categoryProducts.map(product => {
         if (product.id === itemToEditId) {
@@ -83,13 +83,13 @@ const EditProductsModel = ({
         }
       });
       setCategoryProducts(updatedProducts);
-  
+
       setIsOpen(false);
     } else {
       // If itemToEditId doesn't exist, it means we are adding a new product
       setItemToEditId(null);
       const requiredFields = ["title", "price", "count", "image1"];
-  
+
       if (requiredFields.some((field) => !editedItem[field])) {
         toast.error(`title, price, count, image1 are required`);
         return;
@@ -99,25 +99,25 @@ const EditProductsModel = ({
         .insert(editedItem)
         .select()
         .single();
-        
+
       if (error) {
         toast.error("Error creating product.");
         return;
       }
-  
+
       // Update the editedItem with the assigned id
       const newItemWithId = { ...editedItem, id: data.id };
-  
+
       setItemToEditId(data.id);
-      
+
       // Add the new product to the categoryProducts state
       setCategoryProducts([...categoryProducts, newItemWithId]);
-  
+
       setIsOpen(false);
       toast.success("Created!");
     }
   };
-  
+
   // const handleAddSubmit = async () => {
   //   if (itemToEditId) {
   //     await supabase.from("products").update(editedItem).eq("id", itemToEditId);
