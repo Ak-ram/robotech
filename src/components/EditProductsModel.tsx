@@ -14,17 +14,31 @@ const EditProductsModel = ({
 }) => {
   useEffect(() => {
     const autoFill = async (id) => {
-      const { data } = await supabase
-        .from("products")
-        .select()
-        .eq("id", id)
-        .single();
-      console.log(data);
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select("*")
+          .eq("id", id)
+          .single();
+
+        if (error) {
+          toast.error("Error fetching product data.");
+          return;
+        }
+
+        if (data) {
+          // Update the state with the fetched data
+          setEditedItem(data);
+        }
+      } catch (error) {
+        toast.error("Error auto-filling product data.");
+      }
     };
+
     if (itemToEditId) {
       autoFill(itemToEditId);
     }
-  }, []);
+  }, [itemToEditId]);
 
   const [editedItem, setEditedItem] = useState<any>({
     title: "",
@@ -77,6 +91,21 @@ const EditProductsModel = ({
 
     // If editedItem doesn't exist, proceed with insertion
     try {
+      const requiredFields = [
+        "id",
+        "title",
+        "price",
+        "previousPrice",
+        "description",
+        "count",
+        "image1",
+        // "brand",
+      ];
+
+      if (requiredFields.some((field) => !editedItem[field])) {
+        toast.error(`fill required fields`);
+        return;
+      }
       await supabase.from("products").insert([editedItem]);
       toast.success("Data inserted successfully:");
       setCategoryProducts([...categoryProducts, editedItem]);
