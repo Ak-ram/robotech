@@ -95,12 +95,12 @@ const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
                   onChange={handleOptionInputChange}
                   className="border w-full border-green-400 rounded p-2"
                 />
-                <button className="bg-green-200 text-green-500 flex w-full rounded my-5 py-2 items-center justify-center font-semibold">
+                <button
+                  onClick={handleOptionUpdate}
+                  className="bg-green-200 text-green-500 flex w-full rounded my-5 py-2 items-center justify-center font-semibold"
+                >
                   Submit
-                  <Check
-                    className="option-icon bg-white mx-2 rounded-full p-1 w-7 h-7 text-green-600 border border-green-400"
-                    onClick={handleOptionUpdate}
-                  />
+                  <Check className="option-icon bg-white mx-2 rounded-full p-1 w-7 h-7 text-green-600 border border-green-400" />
                 </button>
               </div>
             )}
