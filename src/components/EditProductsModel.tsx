@@ -70,29 +70,86 @@ const EditProductsModel = ({
   };
   const handleAddSubmit = async () => {
     if (itemToEditId) {
+      // If itemToEditId exists, it means we are editing an existing product
       await supabase.from("products").update(editedItem).eq("id", itemToEditId);
       toast.success("Updated!");
+      
+      // Update the product in the categoryProducts state
+      const updatedProducts = categoryProducts.map(product => {
+        if (product.id === itemToEditId) {
+          return editedItem;
+        } else {
+          return product;
+        }
+      });
+      setCategoryProducts(updatedProducts);
+  
       setIsOpen(false);
-      setCategoryProducts([...categoryProducts, editedItem]);
     } else {
+      // If itemToEditId doesn't exist, it means we are adding a new product
       setItemToEditId(null);
       const requiredFields = ["title", "price", "count", "image1"];
-
+  
       if (requiredFields.some((field) => !editedItem[field])) {
         toast.error(`title, price, count, image1 are required`);
         return;
       }
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("products")
         .insert(editedItem)
         .select()
         .single();
+        
+      if (error) {
+        toast.error("Error creating product.");
+        return;
+      }
+  
+      // Update the editedItem with the assigned id
+      const newItemWithId = { ...editedItem, id: data.id };
+  
       setItemToEditId(data.id);
+      
+      // Add the new product to the categoryProducts state
+      setCategoryProducts([...categoryProducts, newItemWithId]);
+  
       setIsOpen(false);
       toast.success("Created!");
-      setCategoryProducts([...categoryProducts, editedItem]);
     }
   };
+  
+  // const handleAddSubmit = async () => {
+  //   if (itemToEditId) {
+  //     await supabase.from("products").update(editedItem).eq("id", itemToEditId);
+  //     toast.success("Updated!");
+  //     const updatedProducts = categoryProducts.map(product => {
+  //       if (product.id === itemToEditId) {
+  //         return editedItem;
+  //       } else {
+  //         return product;
+  //       }
+  //     });
+  //     setCategoryProducts(updatedProducts);
+  //     setIsOpen(false);
+  //     } else {
+  //     setItemToEditId(null);
+  //     const requiredFields = ["title", "price", "count", "image1"];
+
+  //     if (requiredFields.some((field) => !editedItem[field])) {
+  //       toast.error(`title, price, count, image1 are required`);
+  //       return;
+  //     }
+  //     const { data } = await supabase
+  //       .from("products")
+  //       .insert(editedItem)
+  //       .select()
+  //       .single();
+  //     setItemToEditId(data.id);
+  //     setIsOpen(false);
+  //     toast.success("Created!");
+  //     setCategoryProducts([...categoryProducts, editedItem]);
+  //   }
+  // };
   const handleCancelation = () => {
     setIsOpen(false);
     setItemToEditId(null);
