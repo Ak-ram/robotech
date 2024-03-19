@@ -673,6 +673,8 @@ const AdminComponent = () => {
       </div>
       {isOpen && (
         <EditProductsModel
+        setCategoryProducts={setCategoryProducts}
+        categoryProducts={categoryProducts}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           selectedCat={selectedCat}

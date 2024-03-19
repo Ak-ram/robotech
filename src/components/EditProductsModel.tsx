@@ -3,7 +3,7 @@ import { Check, X } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const EditProductsModel = ({ selectedCat, isOpen, setIsOpen }) => {
+const EditProductsModel = ({ selectedCat, isOpen, setIsOpen,setCategoryProducts,categoryProducts }) => {
   const [editedItem, setEditedItem] = useState<any>({
     title: "",
     price: "",
@@ -57,7 +57,9 @@ const EditProductsModel = ({ selectedCat, isOpen, setIsOpen }) => {
     try {
       await supabase.from("products").insert([editedItem]);
       toast.success("Data inserted successfully:");
+      setCategoryProducts([...categoryProducts,editedItem])
       setIsOpen(false);
+
     } catch (error) {
       toast.error("Error inserting data:");
       // Handle the error appropriately
