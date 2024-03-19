@@ -99,7 +99,7 @@ const EditProductsModel = ({
         "price",
         "count",
         "image1",
-      
+
       ];
 
       if (requiredFields.some((field) => !editedItem[field])) {
