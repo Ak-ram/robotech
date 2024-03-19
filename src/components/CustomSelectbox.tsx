@@ -46,7 +46,7 @@ const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
       // Update the category list in the parent component
       // You can pass a function from the parent component to update the category list
       // For example: updateCategoryList(updatedCategoryList);
-      toast.success("category updated successfully");
+      toast.loading("Still working on it");
     }
   };
 
