@@ -1,6 +1,7 @@
 import supabase from "@/supabase/config";
 import { Check, X } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const EditProductsModel = ({ selectedCat, isOpen, setIsOpen }) => {
   const [editedItem, setEditedItem] = useState<any>({
@@ -33,9 +34,37 @@ const EditProductsModel = ({ selectedCat, isOpen, setIsOpen }) => {
     setEditedItem((prev) => ({ ...prev, [key]: value }));
   };
   const handleAddSubmit = async () => {
-    await supabase.from("products").insert([editedItem]);
-    console.log(editedItem);
+    // Check if editedItem already exists in products table
+    const { data: existingProducts, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("title", editedItem.title) // Replace 'uniqueIdentifierField' with the actual field name used for identification
+  
+    if (error) {
+      toast.error("Error fetching existing products:");
+      // Handle the error appropriately
+      return;
+    }
+  
+    // If editedItem already exists, handle it accordingly
+    if (existingProducts && existingProducts.length > 0) {
+      toast.error("Item already exists in products:");
+      // You can display an error message or perform any other action here
+      return;
+    }
+  
+    // If editedItem doesn't exist, proceed with insertion
+    try {
+      await supabase.from("products").insert([editedItem]);
+      toast.success("Data inserted successfully:");
+      setIsOpen(false);
+    } catch (error) {
+      toast.error("Error inserting data:");
+      // Handle the error appropriately
+    }
   };
+  
+  
   //   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //     setNewCategory(e.target.value);
   //   };
