@@ -20,34 +20,19 @@
 //   const [editIndex, setEditIndex] = useState<number | null>(null);
 //   const [searchTerm, setSearchTerm] = useState("");
 //   const [categoryProducts, setCategoryProducts] = useState<any>([]);
-//   const [editedItem, setEditedItem] = useState<any>({
-//     id: "",
-//     title: "",
-//     price: "",
-//     previousPrice: 0,
-//     description: "",
-//     count: 0,
-//     image1: "",
-//     image2: "",
-//     image3: "",
-//     // brand: "",
-//     wholesalePrice: 0,
-//     isNew: false,
-//     quantity: 1,
-//     externalLink: "",
-//     category: selectedCat,
-//   });
+//
 //   const [selectedSectionIndex, setSelectedSectionIndex] = useState<
 //     number | null
 //   >(null);
 
 import { Edit, Plus, Search, Trash } from "lucide-react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import supabase from "@/supabase/config";
+import EditProductsModel from "./EditProductsModel";
 
 //   useEffect(() => {
 //     const getList = async () => {
@@ -182,27 +167,6 @@ import supabase from "@/supabase/config";
 //     setEditIndex(null);
 //     setEditedItem({});
 //     toast.success(`The cancellation process was successful.`);
-//   };
-
-//   const handleInputChange = (
-//     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-//     key: string
-//   ) => {
-//     const { name, value } = e.target;
-//     // Validate input value for numeric characters only
-//     if (
-//       (key === "count" || key === "price" || key === "previousPrice") &&
-//       !/^\d*\.?\d*$/.test(value)
-//     ) {
-//       // If input value contains non-numeric characters, do not update state
-//       return;
-//     }
-//     // Update state with the new input value
-//     setEditedItem((prev) => ({ ...prev, [key]: value }));
-//   };
-
-//   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     setNewCategory(e.target.value);
 //   };
 
 //   const handleAddCategory = async () => {
@@ -439,71 +403,6 @@ import supabase from "@/supabase/config";
 //                       ))}
 //                 </div>
 //               </div>
-
-//               {editIndex !== null && (
-//                 <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-//                   <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
-//                     <h2 className="font-bold mb-2 text-center text-lg">
-//                       {editIndex === -1 ? "Add Product" : "Edit Product"}
-//                     </h2>
-
-//                     <div className="">
-//                       {Object.entries({
-//                         // id: 'ID',
-//                         title: "Title",
-//                         description: "Description",
-//                         price: "Price",
-//                         previousPrice: "Previous Price",
-//                         count: "Count",
-//                         // brand: 'Brand',
-//                         image1: "Image1",
-//                         image2: "Image2",
-//                         image3: "Image3",
-//                         externalLink: "External Link",
-//                       }).map(([key, placeholder], index) => (
-//                         <div key={key} className={`flex-col mb-2 lg:pr-4`}>
-//                           <span className="font-bold text-sm mb-2 inline-block ml-1">
-//                             {placeholder}
-//                           </span>
-//                           {key === "description" ? (
-//                             <textarea
-//                               placeholder={placeholder}
-//                               className={`border border-gray-300 rounded outline-none w-full p-2 `}
-//                               value={editedItem[key]}
-//                               onChange={(e) => handleInputChange(e, key)}
-//                             />
-//                           ) : (
-//                             <input
-//                               // type={key === "count" ? "number" : "text"}
-//                               type={"text"}
-//                               placeholder={placeholder}
-//                               className={`border border-gray-300 rounded outline-none w-full p-2 `}
-//                               value={editedItem[key]}
-//                               onChange={(e) => handleInputChange(e, key)}
-//                             />
-//                           )}
-//                         </div>
-//                       ))}
-//                     </div>
-//                     <div className="flex">
-//                       <button
-//                         className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
-//                         // onClick={() => handleEditSubmit(selectedSectionIndex)}
-//                       >
-//                         <Check size={18} className="mr-1" />
-//                         Save
-//                       </button>
-//                       <button
-//                         className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-//                         onClick={handleEditCancel}
-//                       >
-//                         <X size={18} className="mr-1" />
-//                         Cancel
-//                       </button>
-//                     </div>
-//                   </div>
-//                 </div>
-//               )}
 //             </div>
 //           ) : (
 //             <Loading />
@@ -530,10 +429,10 @@ const AdminComponent = () => {
   const [selectedCat, setSelectedCat] = useState("sensors");
   const [categoryList, setcategoryList] = useState<string[]>([]);
   const [show, setShow] = useState(false);
-  const [newTableName,setNewTableName] = useState('')
+  const [isOpen, setIsOpen] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
   useEffect(() => {
     const getTablesList = async () => {
-     
       const { data } = await supabase.from("schema_table").select("*");
       const tableNames = data!.map((item) => item.table_name);
       setcategoryList(tableNames);
@@ -541,19 +440,54 @@ const AdminComponent = () => {
     getTablesList();
   }, []);
 
-  useEffect(()=>{
-    console.log(newTableName)
-  },[newTableName])
-
   useEffect(() => {
     const getList = async () => {
-    
-
-      const { data } = await supabase.from('products').select("*").eq('category',selectedCat);
+      const { data } = await supabase
+        .from("products")
+        .select("*")
+        .eq("category", selectedCat);
       setCategoryProducts(data!);
     };
     getList();
   }, [selectedCat]);
+
+  const handleAddCategory = async () => {
+    // Check if the new category name already exists in the table
+    const { data: existingCategory, error } = await supabase
+      .from("schema_table")
+      .select("*")
+      .eq("table_name", newCategoryName.toLowerCase());
+
+    if (error) {
+      toast.error(`Error checking existing category`);
+      return;
+    }
+
+    // If the category does not exist, insert it
+    if (!existingCategory || existingCategory.length === 0) {
+      const { data, error: insertError } = await supabase
+        .from("schema_table")
+        .insert([{ table_name: newCategoryName.toLowerCase() }]);
+
+      if (insertError) {
+        toast.error(`Error adding category`);
+        return;
+      }
+
+      toast.success(`Category added successfully: ${data}`);
+      setcategoryList((prevList) => [
+        ...prevList,
+        newCategoryName.toLowerCase(),
+      ]);
+    } else {
+      toast.error(`Category already exists`);
+    }
+    setSelectedCat(newCategoryName);
+    setNewCategoryName("");
+  };
+const handleAddCategoryProducts = ()=>{
+  setIsOpen(true)
+}
   return (
     <>
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
@@ -603,10 +537,13 @@ const AdminComponent = () => {
                       type="text"
                       placeholder="New Category"
                       className="p-2 h-9 border mr-3 border-gray-300 rounded"
-                      value={newTableName}
-                      onChange={(e)=> setNewTableName(e.target.value)}
+                      value={newCategoryName}
+                      onChange={(e) => setNewCategoryName(e.target.value)}
                     />
-                    <button className="bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 rounded">
+                    <button
+                      onClick={handleAddCategory}
+                      className="bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 rounded"
+                    >
                       Add
                     </button>
                     <button
@@ -619,7 +556,10 @@ const AdminComponent = () => {
                 </div>
               </div>
               Count: <span className="font-bold ml-1">Product(s)</span>
-              <span className="cursor-pointer inline-flex items-center justify-end w-fit mr-2 ml-3 py-2 px-3 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded">
+              <span
+                onClick={handleAddCategoryProducts}
+                className="cursor-pointer inline-flex items-center justify-end w-fit mr-2 ml-3 py-2 px-3 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded"
+              >
                 <Plus className="inline-block w-5 h-5 mr-1" size={20} />
                 New
               </span>
@@ -718,6 +658,14 @@ const AdminComponent = () => {
           </div>
         </div>
       </div>
+      {
+isOpen &&
+      <EditProductsModel
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        selectedCat={selectedCat}
+      />
+      }
       <Toaster
         position="bottom-right"
         toastOptions={{
