@@ -110,12 +110,16 @@ const EditProductsModel = ({
       toast.success("Data inserted successfully:");
       setCategoryProducts([...categoryProducts, editedItem]);
       setIsOpen(false);
+      setItemToEditId(null);
     } catch (error) {
       toast.error("Error inserting data:");
       // Handle the error appropriately
     }
   };
-
+  const handleCancelation = () => {
+    setIsOpen(false);
+    setItemToEditId(null);
+  };
   //   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //     setNewCategory(e.target.value);
   //   };
@@ -176,7 +180,7 @@ const EditProductsModel = ({
               </button>
               <button
                 className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setIsOpen(false)}
+                onClick={() => handleCancelation()}
               >
                 <X size={18} className="mr-1" />
                 Cancel
