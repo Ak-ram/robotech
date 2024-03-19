@@ -88,7 +88,7 @@ const EditProductsModel = ({
         .update(editedItem)
         .eq("id", existingProducts![0].id);
       // You can display an error message or perform any other action here
-      toast.success("Item updated");
+      toast.success("Item already exists so we updated it");
       return;
     }
 
@@ -97,15 +97,13 @@ const EditProductsModel = ({
       const requiredFields = [
         "title",
         "price",
-        "previousPrice",
-        "description",
         "count",
         "image1",
-        // "brand",
+      
       ];
 
       if (requiredFields.some((field) => !editedItem[field])) {
-        toast.error(`fill required fields`);
+        toast.error(`title, price, count, image1 are required`);
         return;
       }
       await supabase.from("products").insert([editedItem]);
