@@ -72,10 +72,9 @@ const EditProductsModel = ({
   const handleAddSubmit = async () => {
     // Check if editedItem already exists in products table
     const { data: existingProducts, error } = await supabase
-      .from("products")
-      .select("*")
-      .eq("title", editedItem.title); // Replace 'uniqueIdentifierField' with the actual field name used for identification
-console.log(existingProducts![0])
+    .from("products")
+    .select("*")
+    .ilike("title", `%${editedItem.title}%`);
     if (error) {
       toast.error("Error fetching existing products:");
       // Handle the error appropriately
@@ -84,15 +83,18 @@ console.log(existingProducts![0])
 
     // If editedItem already exists, handle it accordingly
     if (existingProducts && existingProducts.length > 0) {
-      toast.error("Item already exists in products:");
+      await supabase
+        .from("products")
+        .update(editedItem)
+        .eq("id", existingProducts![0].id);
       // You can display an error message or perform any other action here
+      toast.success("Item updated");
       return;
     }
 
     // If editedItem doesn't exist, proceed with insertion
     try {
       const requiredFields = [
-        "id",
         "title",
         "price",
         "previousPrice",
