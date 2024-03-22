@@ -63,26 +63,26 @@ const CustomerPageAddCourses = ({
 
       // Add the new order to the printServices array
       existingTransactions.courses.push(newOrder);
-      setBillData([...billData,newOrder])
+      setBillData([...billData, newOrder]);
 
       await supabase
-      .from("customers")
-      .select("total_purchase_transactions")
-      .eq("id", customerData.id)
-      .single();
-    const { printServices, courses, products } = existingTransactions;
+        .from("customers")
+        .select("total_purchase_transactions")
+        .eq("id", customerData.id)
+        .single();
+      const { printServices, courses, products } = existingTransactions;
 
-    const newTotal =
-      printServices.reduce((total, item) => total + item.subtotal, 0) +
-      courses.reduce((total, item) => total + item.subtotal, 0) +
-      products.reduce((total, item) => total + item.subtotal, 0);
+      const newTotal =
+        printServices.reduce((total, item) => total + item.subtotal, 0) +
+        courses.reduce((total, item) => total + item.subtotal, 0) +
+        products.reduce((total, item) => total + item.subtotal, 0);
 
-    await supabase
-      .from("customers")
-      .update({ total_purchase_transactions: newTotal })
-      .eq("id", customerData.id);
+      await supabase
+        .from("customers")
+        .update({ total_purchase_transactions: newTotal })
+        .eq("id", customerData.id);
       // Update the transactions field with the modified data
-      setShowAddOrderModal(false)
+      setShowAddOrderModal(false);
       const { data: updatedData, error: updateError } = await supabase
         .from("customers")
         .update({ transactions: existingTransactions })
@@ -91,19 +91,19 @@ const CustomerPageAddCourses = ({
       if (updateError) {
         throw updateError;
       }
-  // Fetch the updated customer data after adding the order
-  const { data: updatedCustomer, error: customerError } = await supabase
-  .from("customers")
-  .select()
-  .eq("id", customerData.id)
-  .single();
+      // Fetch the updated customer data after adding the order
+      const { data: updatedCustomer, error: customerError } = await supabase
+        .from("customers")
+        .select()
+        .eq("id", customerData.id)
+        .single();
 
-if (customerError) {
-  throw customerError;
-}
+      if (customerError) {
+        throw customerError;
+      }
 
-// Update the updatedCustomerData state variable with the new data
-setUpdatedCustomerData(updatedCustomer);
+      // Update the updatedCustomerData state variable with the new data
+      setUpdatedCustomerData(updatedCustomer);
       // Optionally update local state or perform other actions
       // ...
       // Show success message

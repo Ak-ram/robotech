@@ -59,7 +59,7 @@ const CustomerPageAddPrintServices = ({
 
       // Add the new order to the printServices array
       existingTransactions.printServices.push(newOrder);
-      setBillData([...billData,newOrder])
+      setBillData([...billData, newOrder]);
       await supabase
         .from("customers")
         .select("total_purchase_transactions")
@@ -84,19 +84,19 @@ const CustomerPageAddPrintServices = ({
         .from("customers")
         .update({ transactions: existingTransactions })
         .eq("id", customerData.id);
-  // Fetch the updated customer data after adding the order
-  const { data: updatedCustomer, error: customerError } = await supabase
-  .from("customers")
-  .select()
-  .eq("id", customerData.id)
-  .single();
+      // Fetch the updated customer data after adding the order
+      const { data: updatedCustomer, error: customerError } = await supabase
+        .from("customers")
+        .select()
+        .eq("id", customerData.id)
+        .single();
 
-if (customerError) {
-  throw customerError;
-}
+      if (customerError) {
+        throw customerError;
+      }
 
-// Update the updatedCustomerData state variable with the new data
-setUpdatedCustomerData(updatedCustomer);
+      // Update the updatedCustomerData state variable with the new data
+      setUpdatedCustomerData(updatedCustomer);
       if (updateError) {
         throw updateError;
       }
