@@ -3,7 +3,7 @@ import { Check, Edit2 } from "lucide-react";
 import toast from "react-hot-toast";
 import supabase from "@/supabase/config";
 
-const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
+const CustomSelect = ({ selectedCat, setSelectedCat,categoryProducts, categoryList }) => {
   const [editableOption, setEditableOption] = useState("");
   const [editedOption, setEditedOption] = useState("");
   const [inUpdateMode, setInUpdateMode] = useState(false);
@@ -23,22 +23,22 @@ const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
         category === editableOption ? editedOption : category
       );
       setSelectedCat(editedOption);
+      console.log(categoryProducts)
       setEditableOption("");
       setInUpdateMode(false);
       await supabase
-        .from("schema_table")
-        .update({ table_name: editedOption })
-        .eq("table_name", editableOption)
-        .single();
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("category", editableOption);
-      const extractedArray = data!.map((item) => {
+      .from('schema_table')
+      .update({ 'table_name': editedOption })
+      .eq('table_name', editableOption)
+      .single();
+      const {data,error} = await supabase.from('products').select('*').eq('category',editableOption)
+      const extractedArray = data!.map(item => {
         return { id: item.id, category: editedOption };
-      });
-      await supabase.from("products").upsert(extractedArray);
-    }
+    });
+      await supabase
+  .from('products')
+  .upsert(extractedArray)
+          }
   };
 
   const handleOptionInputChange = (e) => {

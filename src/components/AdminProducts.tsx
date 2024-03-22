@@ -107,14 +107,46 @@ const AdminComponent = () => {
         .from("products")
         .select("*")
         .eq("category", selectedCat);
-      const extractIds = data!.map(async(item) => {
-        await supabase.from("products").delete().eq('id',item.id);
+      data!.map(async (item) => {
+        await supabase.from("products").delete().eq("id", item.id);
       });
-      
+      // Remove the deleted category from the category list
+      setcategoryList((prevList) =>
+        prevList.filter((cat) => cat !== selectedCat)
+      );
 
-      console.log(extractIds);
+      // Update the selected category to the first category in the list
+      if (categoryList.length > 0) {
+        setSelectedCat(categoryList[0]);
+      } else {
+        setSelectedCat("");
+      }
+
+      // Clear the category products
+      setCategoryProducts([]);
+
+      toast.success("Category deleted successfully");
     }
   };
+  // const handleDeleteCategory = async () => {
+  //   const confirm = window.confirm("Sure to delete this category ?");
+  //   if (confirm) {
+  //     await supabase
+  //       .from("schema_table")
+  //       .delete()
+  //       .eq("table_name", selectedCat)
+  //       .single();
+  //     const { data, error } = await supabase
+  //       .from("products")
+  //       .select("*")
+  //       .eq("category", selectedCat);
+  //     const extractIds = data!.map(async(item) => {
+  //       await supabase.from("products").delete().eq('id',item.id);
+  //     });
+
+  //     console.log(extractIds);
+  //   }
+  // };
   return (
     <>
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
@@ -124,9 +156,13 @@ const AdminComponent = () => {
             <span className="my-3 block flex items-center justify-end text-end text-sm">
               <div className="flex-1 flex items-center gap-2">
                 <CustomSelect
-                  {...{ categoryList, selectedCat, setSelectedCat }}
+                  {...{
+                    categoryProducts,
+                    categoryList,
+                    selectedCat,
+                    setSelectedCat,
+                  }}
                 />
-
                 <button
                   onClick={handleDeleteCategory}
                   className="text-xs rounded-md absolute top-5 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
