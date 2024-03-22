@@ -4,51 +4,43 @@ import Link from "next/link";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import supabase from "@/supabase/config";
-import toast, { Toast } from "react-hot-toast";
 const LoginComponent = () => {
-  // const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(""); // Combined message state
   const [isAuth, setIsAuth] = useState(false); // Combined message state
   const [route, setRoute] = useState("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const dispatch = useDispatch();
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: { target: { value: any } }) => {
     const enteredEmail = e.target.value;
     setEmail(enteredEmail);
     // Regular expression for basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
+
     // Test if the entered email matches the regex pattern
     const isValidEmail = emailRegex.test(enteredEmail);
-    
+
     if (!isValidEmail) {
       setMessage("Please enter a valid email address.");
       setIsSubmitDisabled(true);
-    }else{
-      
-      setIsSubmitDisabled(false);
+    } else {
       setMessage(""); // Clear previous messages when input changes
-    
     }
+    setIsSubmitDisabled(false);
   };
-  
-
-  
-  // const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setUsername(e.target.value);
-  //   setIsSubmitDisabled(!e.target.value || !email);
-  //   setMessage(""); // Clear previous messages when input changes
-  // };
 
   const handleSubmit = async () => {
-    // if (email === 'ibrahem' && password === process.env.NEXT_PUBLIC_AUTH_TOKEN) {
-    if (
-      email === 'dd' 
-      // && username === process.env.NEXT_PUBLIC_AUTH_PASSWORD
-    ) {
-      // Assuming you want to dispatch user information when the login is successful
-      // const userInformation = { email, username };
+    const { data, error } = await supabase
+      .from("admins")
+      .select("email")
+      .eq("email", email)
+      .single();
+    console.log(data);
+    if (error) {
+      console.log("An error occurred. Please try again later.");
+      return;
+    }
+    if (data && data.email && email === data.email) {
       const userInformation = { email };
       dispatch(addUser(userInformation));
 
@@ -57,15 +49,16 @@ const LoginComponent = () => {
       setRoute("/admin");
       return;
     } else {
+      console.log('else block');
+
       // First, perform a query to check if the username or email already exist
       const { data, error } = await supabase
         .from("ask_to_be_an_admin")
         .select("email")
-        .eq("email", email)
+        .eq("email", email);
 
       if (error) {
         console.error("Error checking for existing records:", error.message);
-        toast.error("An error occurred. Please try again later.");
         return; // Exit the function early if an error occurs
       }
 
@@ -79,19 +72,15 @@ const LoginComponent = () => {
 
       // If no existing records are found, proceed with inserting the new record
       try {
-        await supabase
-          .from("ask_to_be_an_admin")
-          .insert({ email: email });
+        await supabase.from("ask_to_be_an_admin").insert({ email: email });
         setMessage("Your request was sent to the super admin.");
-        toast.success("Sent 🎉");
+        console.log("Sent 🎉");
         // setUsername("");
         setEmail("");
         setIsAuth(false);
       } catch (error) {
         console.error("Error inserting data:", (error as any).message);
-        toast.error(
-          "An error occurred while sending your request. Please try again later."
-        );
+        
         setMessage(
           "An error occurred while sending your request. Please try again later."
         );
@@ -113,7 +102,6 @@ const LoginComponent = () => {
                 isAuth ? "hidden" : "block"
               } py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7`}
             >
-              
               <div className="relative">
                 <input
                   id="email"

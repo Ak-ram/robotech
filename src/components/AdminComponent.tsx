@@ -15,6 +15,7 @@ import AdminSlides from "./AdminSlides";
 import AdminAnnouncement from "./AdminAnnouncement";
 import AdminLocation from "./AdminLocation";
 import AdminBills from "./AdminBills";
+import supabase from "@/supabase/config";
 
 const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -74,24 +75,51 @@ const AdminComponent = () => {
 
   if (!userInfo) {
     setTimeout(() => {
-      router.push('/login');
+      router.push('/ask_to_be_an_admin');
     }, 1000);
     return (
       <div className="h-[400px] flex items-center justify-center flex-col gap-3 p-3 mx-auto">
         <Loader className="animate-spin" />
-        <h2 className="text-center">You should login first, you will be redirected to the login page...</h2>
+        <h2 className="text-center">Ask to be an admin first, you will be redirected to the another page...</h2>
         {/* Redirect to the login page */}
       </div>
     );
   }
 
-  const isAuthorized =
-    userInfo.email === process.env.NEXT_PUBLIC_AUTH_USERNAME &&
-    userInfo.password === process.env.NEXT_PUBLIC_AUTH_PASSWORD;
 
-  if (!isAuthorized) {
-    return null; // Or render a login component, redirect, or some other behavior
-  }
+  const isAuthorized = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('admins')
+        .select('email')
+        .eq('email', userInfo.email)
+        .single();
+  
+      if (error) {
+        throw error;
+      }
+  
+      return data && data.email === userInfo.email;
+    } catch (error) {
+      console.error('Error checking authorization:', (error as any).message);
+      return false; // Return false in case of an error
+    }
+  };
+  
+  // Call the function and handle the result
+  isAuthorized()
+    .then((authorized) => {
+      if (!authorized) {
+        return null; // Or render a login component, redirect, or some other behavior
+      }
+      
+      // Continue with authorized logic
+    })
+    .catch((error) => {
+      console.error('Error checking authorization:', error.message);
+      // Handle the error, e.g., render an error message
+    });
+  
 
   return (
     <>
