@@ -1,18 +1,22 @@
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import OrderModel from "./orderModel";
 import { useEffect, useState } from "react";
-import { getProducts } from "@/helpers/getProducts";
-import { fetchJsonData } from "@/helpers/getJSONData";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
-import { Check, Edit, Edit2, Redo, ScrollText, Trash } from "lucide-react";
+import { Edit2, Redo, ScrollText, Trash } from "lucide-react";
 import Bill from "./Bill";
+import supabase from "@/supabase/config";
 
-const CustomerPageAddProducts = ({ billData,setBillData,customerData, setCustomerData }) => {
+const CustomerPageAddProducts = ({
+  billData,
+  setBillData,
+  customerData,
+  setCustomerData,
+}) => {
   const [showAddOrderModal, setShowAddOrderModal] = useState(false);
   const [showBill, setShowBill] = useState(false);
   const [updatedCustomerData, setUpdatedCustomerData] = useState(customerData);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<any>([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [lastOrderId, setLastOrderId] = useState("");
 
@@ -32,14 +36,9 @@ const CustomerPageAddProducts = ({ billData,setBillData,customerData, setCustome
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const cusomterData = await fetchJsonData(
-          "robotech/pages/customers.json"
-        );
-        const categoriesData = await fetchJsonData(
-          "robotech/pages/categories.json"
-        );
-        setJsonArray(cusomterData);
-        setCategoriesArray(categoriesData);
+        const { data } = await supabase.from("customers").select();
+
+        setJsonArray(data!);
       } catch (error) {
         new Error((error as Error).message);
       }
@@ -58,11 +57,12 @@ const CustomerPageAddProducts = ({ billData,setBillData,customerData, setCustome
         if (productIndex !== -1) {
           const updatedCategory = [...category]; // Create a copy of the category array
           const refundedProduct = updatedCategory[productIndex];
-          refundedProduct.count = Number(refundedProduct.count) + Number(product.quantity); // Increment the count by refunded quantity
+          refundedProduct.count =
+            Number(refundedProduct.count) + Number(product.quantity); // Increment the count by refunded quantity
           updatedCategory[productIndex] = refundedProduct; // Update the product in the category array
-  
+
           updatedData[0][product.productCategory] = updatedCategory; // Update the category array in the updatedData
-  
+
           await updateJsonFile("robotech/pages/categories.json", updatedData);
           console.log("Product count updated successfully");
         } else {
@@ -75,160 +75,145 @@ const CustomerPageAddProducts = ({ billData,setBillData,customerData, setCustome
       console.error("Error updating product count:", error);
     }
   };
-  
-  
-  
-  // const handleRefundProductCount = async (product) => {
-  //   const updatedData = [...categoriesArray];
-  //   const category = updatedData[0][product.productCategory];
-  //   if (category) {
-  //     const productIndex = category.findIndex(
-  //       (item) => item.id === product.productId
-  //     );
-  //     if (productIndex !== -1) {
-  //       let obj = updatedData[0][product.productCategory].find(
-  //         (item) => item.id === product.productId
-  //       );
-  //       let updatedObject = {
-  //         ...obj,
-  //         count: `${+obj?.count + +product?.quantity}`,
-  //       };
-  //       updatedData[0][product.productCategory].map((product) => {
-  //         if (product.id === product.productId) {
-  //           return updatedObject;
-  //         }
-  //         return product;
-  //       });
-  
-  //       await updateJsonFile("robotech/pages/categories.json", updatedData);
-  //     } else {
-  //       console.log("Product not found in category");
-  //     }
-  //   } else {
-  //     console.log("Category not found");
-  //   }
-  // };
 
-  const handleRefundOrder = async (product) => {
+  const handleRefundOrder = async (productToRefund) => {
     // Confirm with the user before proceeding with the refund
     if (window.confirm("Are you sure you want to refund this product?")) {
-      // Remove the refunded product from the products array
-      const updatedProducts = customerData.transactions.products.filter(
-        (p) => p !== product
-      );
-
-      // Calculate the refund amount
-      const refundAmount = product.subtotal;
-
-      // Update the total purchase transactions for the customer
-      const existingCustomerIndex = jsonArray.findIndex(
-        (customer) => customer.id === customerData.id
-      );
-
-      if (existingCustomerIndex !== -1) {
-        const existingCustomer = { ...jsonArray[existingCustomerIndex] }; // Make a copy to avoid mutation
-        // Subtract the refund amount from total_purchase_transactions
-        existingCustomer.total_purchase_transactions -= refundAmount;
-        // Update the transactions array with the updated products
-        existingCustomer.transactions.products = updatedProducts;
-        // Recalculate total purchase transactions based on remaining transactions
-        existingCustomer.total_purchase_transactions =
-          existingCustomer.transactions.products.reduce(
-            (total, transaction) => total + transaction.subtotal,
-            0
-          );
-
-        try {
-          jsonArray[existingCustomerIndex] = existingCustomer;
-          await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
-          setCustomerData(existingCustomer);
-          toast.success(`Product refunded successfully`);
-        } catch (error) {
-          // Display error message if update fails
-          toast.error((error as Error).message);
-        }
-      }
-    }
-    handleRefundProductCount(product)
-  };
-
-  const handleAddOrder = async (productId) => {
-    if (lastOrderId === productId) {
-      toast.error(
-        "Sorry, you cannot add the same order twice in a row. Please try later or adding a different order."
-      );
-      setShowAddOrderModal(false)
-      return;
-    }
-    setLastOrderId(productId);
-    setTimeout(() => {
-      setLastOrderId("");
-    }, 3 * 1000 * 60);
-    // Validate order details if needed
-    const existingCustomerIndex = jsonArray.findIndex(
-      (customer) => customer.id === customerData.id
-    );
-
-    if (existingCustomerIndex !== -1) {
-      const existingCustomer = jsonArray[existingCustomerIndex];
-
-      if (!existingCustomer.transactions) {
-        existingCustomer.transactions = {
-          courses: [],
-          printServices: [],
-          products: [],
-        };
-      } else if (!existingCustomer.transactions.products) {
-        existingCustomer.transactions.products = [];
-      }
-
-      existingCustomer.transactions.products.push(newOrder);
-
-      // Update the JSON file with the modified JSON array
+    
       try {
-        // Calculate the total purchase transactions
-        existingCustomer.total_purchase_transactions =
-          existingCustomer.transactions.products.reduce(
-            (total, transaction) => total + transaction.subtotal,
-            0
-          );
-
-        jsonArray[existingCustomerIndex] = existingCustomer;
-        // Update the JSON file with the modified JSON array
-        setShowAddOrderModal(false);
-        await updateJsonFile("robotech/pages/customers.json", [...jsonArray]);
-
-        // Update the customerData state with the new transaction
-        setCustomerData(existingCustomer);
-        setBillData([...billData,newOrder])
-        // Reset newOrder fields
-        setNewOrder({
-          productName: "",
-          quantity: 1,
-          date: "",
-          discount: 0,
-          subtotal: 0,
-          piecePrice: 0,
-        });
-        toast.success(`Item Added/Updated successfully`);
-        toast.loading(`Be patient, changes take a few moments to be reflected`);
+        // Fetch the customer data
+        const { data, error } = await supabase
+          .from("customers")
+          .select("transactions")
+          .eq("id", customerData.id)
+          .single();
+  
+        if (error) {
+          throw error;
+        }
+  
+        // Extract existing transactions from the fetched data
+        const existingTransactions = data?.transactions || { products: [] };
+        let newV = existingTransactions.products.filter(product=>product.productId !== productToRefund.productId);
+        existingTransactions.products = newV;
+        await supabase
+        .from("customers")
+        .select("total_purchase_transactions")
+        .eq("id", customerData.id)
+        .single();
+      const { printServices, courses, products } = existingTransactions;
+  
+      const newTotal =
+        printServices.reduce((total, item) => total + item.subtotal, 0) +
+        courses.reduce((total, item) => total + item.subtotal, 0) +
+        products.reduce((total, item) => total + item.subtotal, 0);
+  
+      await supabase
+        .from("customers")
+        .update({ total_purchase_transactions: newTotal })
+        .eq("id", customerData.id);
+        // Update the transactions field with the modified data
+        const { data: updatedData, error: updateError } = await supabase
+          .from("customers")
+          .update({ transactions: existingTransactions })
+          .eq("id", customerData.id);
+  
+        if (updateError) {
+          throw updateError;
+        }
+  
+        // Optionally update local state or perform other actions
+        // ...
+        // Show success message
+        toast.success("Item Refunded successfully");
+        toast.loading("Be patient, changes take a few moments to be reflected");
+  
         setTimeout(() => {
           toast.dismiss();
-        }, 5000);
+        }, 3000);
       } catch (error) {
+        // Handle errors
+        console.error("Error refunding order:", (error as Error).message);
         toast.error((error as Error).message);
       }
-    } else {
-      // Handle the case where the customer doesn't exist or show an error message
-      console.error("Customer not found for ID:", customerData.id);
+
+
+
+
+
+
+
+
+    }
+  };
+  const handleAddOrder = async () => {
+    try {
+      // Fetch the customer data
+      const { data, error } = await supabase
+        .from("customers")
+        .select("transactions")
+        .eq("id", customerData.id)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      // Extract existing transactions from the fetched data
+      const existingTransactions = data?.transactions || { products: [] };
+
+      // Add the new order to the printServices array
+      existingTransactions.products.push(newOrder);
+      setBillData([...billData, newOrder]);
+
+      await supabase
+        .from("customers")
+        .select("total_purchase_transactions")
+        .eq("id", customerData.id)
+        .single();
+      const { printServices, courses, products } = existingTransactions;
+
+      const newTotal =
+        printServices.reduce((total, item) => total + item.subtotal, 0) +
+        courses.reduce((total, item) => total + item.subtotal, 0) +
+        products.reduce((total, item) => total + item.subtotal, 0);
+
+      await supabase
+        .from("customers")
+        .update({ total_purchase_transactions: newTotal })
+        .eq("id", customerData.id);
+      // Update the transactions field with the modified data
+      setShowAddOrderModal(false);
+      const { data: updatedData, error: updateError } = await supabase
+        .from("customers")
+        .update({ transactions: existingTransactions })
+        .eq("id", customerData.id);
+
+      if (updateError) {
+        throw updateError;
+      }
+
+      // Optionally update local state or perform other actions
+      // ...
+      // Show success message
+      toast.success("Item Added/Updated successfully");
+      toast.loading("Be patient, changes take a few moments to be reflected");
+
+      setTimeout(() => {
+        toast.dismiss();
+      }, 3000);
+    } catch (error) {
+      // Handle errors
+      console.error("Error adding order:", (error as Error).message);
+      toast.error((error as Error).message);
     }
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchCourses = async () => {
       try {
-        const p = await getProducts();
-        setList(p);
+        const { data } = await supabase.from("products").select();
+        setList(data!);
       } catch (error) {
         console.error("Error fetching Products:", error);
       }
@@ -236,7 +221,7 @@ const CustomerPageAddProducts = ({ billData,setBillData,customerData, setCustome
 
     if (typeof window !== "undefined") {
       // Run the effect only in the browser environment
-      fetchProducts();
+      fetchCourses();
     }
   }, []);
 
