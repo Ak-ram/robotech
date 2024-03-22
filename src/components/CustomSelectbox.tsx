@@ -47,7 +47,6 @@ const CustomSelect = ({
     }
     toast.success("Category updated successfully");
   };
-
   const handleOptionInputChange = (e) => {
     setEditedOption(e.target.value);
   };
