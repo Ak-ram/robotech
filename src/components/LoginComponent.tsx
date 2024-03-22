@@ -33,13 +33,9 @@ const LoginComponent = () => {
     const { data, error } = await supabase
       .from("admins")
       .select("email")
-      .eq("email", email)
+      .eq("email", "a@gmail.com")
       .single();
-    console.log(data);
-    if (error) {
-      console.log("An error occurred. Please try again later.");
-      return;
-    }
+
     if (data && data.email && email === data.email) {
       const userInformation = { email };
       dispatch(addUser(userInformation));
@@ -49,8 +45,6 @@ const LoginComponent = () => {
       setRoute("/admin");
       return;
     } else {
-      console.log('else block');
-
       // First, perform a query to check if the username or email already exist
       const { data, error } = await supabase
         .from("ask_to_be_an_admin")
@@ -80,7 +74,7 @@ const LoginComponent = () => {
         setIsAuth(false);
       } catch (error) {
         console.error("Error inserting data:", (error as any).message);
-        
+
         setMessage(
           "An error occurred while sending your request. Please try again later."
         );
