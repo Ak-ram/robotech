@@ -63,6 +63,8 @@ const CustomerPageAddCourses = ({
 
       // Add the new order to the printServices array
       existingTransactions.courses.push(newOrder);
+      setBillData([...billData,newOrder])
+
       await supabase
       .from("customers")
       .select("total_purchase_transactions")
@@ -80,7 +82,7 @@ const CustomerPageAddCourses = ({
       .update({ total_purchase_transactions: newTotal })
       .eq("id", customerData.id);
       // Update the transactions field with the modified data
-      // setShowAddOrderModal(false)
+      setShowAddOrderModal(false)
       const { data: updatedData, error: updateError } = await supabase
         .from("customers")
         .update({ transactions: existingTransactions })

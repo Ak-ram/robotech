@@ -78,7 +78,6 @@ const Stats = () => {
     const totalUnavailableProducts = categoryStats.reduce((acc, category) => acc + category.outStockProducts.length, 0);
     const totalAvailablePrice = categoryStats.reduce((acc, category) => acc + category.inStockProducts.reduce((total, product) => total + +product.price, 0), 0);
     const totalUnavailablePrice = categoryStats.reduce((acc, category) => acc + category.outStockProducts.reduce((total, product) => total + +product.price, 0), 0);
-
     const filteredCategoryStats = categoryStats.filter((categoryInfo) =>
         categoryInfo.categoryName.toLowerCase().includes(searchTerm.toLowerCase())
     );

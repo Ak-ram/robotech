@@ -59,6 +59,7 @@ const CustomerPageAddPrintServices = ({
 
       // Add the new order to the printServices array
       existingTransactions.printServices.push(newOrder);
+      setBillData([...billData,newOrder])
       await supabase
         .from("customers")
         .select("total_purchase_transactions")
