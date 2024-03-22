@@ -60,7 +60,7 @@ const CustomerPageAddProducts = ({
 
         await supabase
           .from("products")
-          .update({ "count": newStock })
+          .update({ count: newStock })
           .eq("id", productToRefund.productId);
 
         // Fetch the customer data
@@ -105,7 +105,19 @@ const CustomerPageAddProducts = ({
         if (updateError) {
           throw updateError;
         }
+        // Fetch the updated customer data after adding the order
+        const { data: updatedCustomer, error: customerError } = await supabase
+          .from("customers")
+          .select()
+          .eq("id", customerData.id)
+          .single();
 
+        if (customerError) {
+          throw customerError;
+        }
+
+        // Update the updatedCustomerData state variable with the new data
+        setUpdatedCustomerData(updatedCustomer);
         // Optionally update local state or perform other actions
         // ...
         // Show success message
@@ -167,7 +179,19 @@ const CustomerPageAddProducts = ({
       if (updateError) {
         throw updateError;
       }
+      // Fetch the updated customer data after adding the order
+      const { data: updatedCustomer, error: customerError } = await supabase
+        .from("customers")
+        .select()
+        .eq("id", customerData.id)
+        .single();
 
+      if (customerError) {
+        throw customerError;
+      }
+
+      // Update the updatedCustomerData state variable with the new data
+      setUpdatedCustomerData(updatedCustomer);
       // Optionally update local state or perform other actions
       // ...
       // Show success message

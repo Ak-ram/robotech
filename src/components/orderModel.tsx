@@ -228,7 +228,7 @@ const OrderModel = ({
                 setSelectedItem={setSelectedItem}
                 setNewOrder={setNewOrder}
                 newOrder={newOrder}
-                options={products}
+                options={list}
                 onSelect={handleSelect}
               />
             </div>
