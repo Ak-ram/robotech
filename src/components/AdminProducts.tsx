@@ -95,7 +95,26 @@ const AdminComponent = () => {
       }
     }
   };
+  const handleDeleteCategory = async () => {
+    const confirm = window.confirm("Sure to delete this category ?");
+    if (confirm) {
+      await supabase
+        .from("schema_table")
+        .delete()
+        .eq("table_name", selectedCat)
+        .single();
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("category", selectedCat);
+      const extractIds = data!.map(async(item) => {
+        await supabase.from("products").delete().eq('id',item.id);
+      });
+      
 
+      console.log(extractIds);
+    }
+  };
   return (
     <>
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
@@ -108,7 +127,10 @@ const AdminComponent = () => {
                   {...{ categoryList, selectedCat, setSelectedCat }}
                 />
 
-                <button className="text-xs rounded-md absolute top-5 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded">
+                <button
+                  onClick={handleDeleteCategory}
+                  className="text-xs rounded-md absolute top-5 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
+                >
                   Delete Category
                 </button>
 

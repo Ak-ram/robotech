@@ -1,22 +1,3 @@
-// const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
-//   return (
-//     <select
-//       id="sectionDropdown"
-//       value={selectedCat}
-//       onChange={(e) => setSelectedCat(e.target.value)}
-//     >
-//       {categoryList &&
-//         categoryList.map((item) => (
-//           <option data-selected={item} key={item} value={item}>
-//             {item}
-//           </option>
-//         ))}
-//     </select>
-//   );
-// };
-
-// export default CustomSelect;
-
 import { useState } from "react";
 import { Check, Edit2 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -44,21 +25,19 @@ const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
       setSelectedCat(editedOption);
       setEditableOption("");
       setInUpdateMode(false);
-      // const {data,error}= await supabase.from('schema_table').select("*").eq('table_name',editableOption)
       await supabase
-      .from('schema_table')
-      .update({ 'table_name': editedOption })
-      .eq('table_name', editableOption)
-      .single();
-      const {data,error} = await supabase.from('products').select('*').eq('category',editableOption)
-      const extractedArray = data!.map(item => {
+        .from("schema_table")
+        .update({ table_name: editedOption })
+        .eq("table_name", editableOption)
+        .single();
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("category", editableOption);
+      const extractedArray = data!.map((item) => {
         return { id: item.id, category: editedOption };
-    });
-      await supabase
-  .from('products')
-  .upsert(extractedArray)
-      
-      console.log(extractedArray);
+      });
+      await supabase.from("products").upsert(extractedArray);
     }
   };
 
