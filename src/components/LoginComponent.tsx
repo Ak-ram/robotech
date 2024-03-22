@@ -33,7 +33,7 @@ const LoginComponent = () => {
     const { data, error } = await supabase
       .from("admins")
       .select("email")
-      .eq("email", "a@gmail.com")
+      .eq("email", email)
       .single();
 
     if (data && data.email && email === data.email) {
