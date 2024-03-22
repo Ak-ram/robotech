@@ -46,88 +46,72 @@ const CustomerPageAddProducts = ({
 
     fetchData();
   }, []);
-  const handleRefundProductCount = async (product) => {
-    try {
-      const updatedData = [...categoriesArray];
-      const category = updatedData[0][product.productCategory];
-      if (category) {
-        const productIndex = category.findIndex(
-          (item) => item.id === product.productId
-        );
-        if (productIndex !== -1) {
-          const updatedCategory = [...category]; // Create a copy of the category array
-          const refundedProduct = updatedCategory[productIndex];
-          refundedProduct.count =
-            Number(refundedProduct.count) + Number(product.quantity); // Increment the count by refunded quantity
-          updatedCategory[productIndex] = refundedProduct; // Update the product in the category array
-
-          updatedData[0][product.productCategory] = updatedCategory; // Update the category array in the updatedData
-
-          await updateJsonFile("robotech/pages/categories.json", updatedData);
-          console.log("Product count updated successfully");
-        } else {
-          console.log("Product not found in category");
-        }
-      } else {
-        console.log("Category not found");
-      }
-    } catch (error) {
-      console.error("Error updating product count:", error);
-    }
-  };
 
   const handleRefundOrder = async (productToRefund) => {
     // Confirm with the user before proceeding with the refund
     if (window.confirm("Are you sure you want to refund this product?")) {
-    
       try {
+        const { data: existingProduct, error: fetchError } = await supabase
+          .from("products")
+          .select("count")
+          .eq("id", productToRefund.productId)
+          .single();
+        const newStock = existingProduct!.count + productToRefund.quantity;
+
+        await supabase
+          .from("products")
+          .update({ "count": newStock })
+          .eq("id", productToRefund.productId);
+
         // Fetch the customer data
         const { data, error } = await supabase
           .from("customers")
           .select("transactions")
           .eq("id", customerData.id)
           .single();
-  
+
         if (error) {
           throw error;
         }
-  
+
         // Extract existing transactions from the fetched data
         const existingTransactions = data?.transactions || { products: [] };
-        let newV = existingTransactions.products.filter(product=>product.productId !== productToRefund.productId);
+        let newV = existingTransactions.products.filter(
+          (product) => product.productId !== productToRefund.productId
+        );
         existingTransactions.products = newV;
         await supabase
-        .from("customers")
-        .select("total_purchase_transactions")
-        .eq("id", customerData.id)
-        .single();
-      const { printServices, courses, products } = existingTransactions;
-  
-      const newTotal =
-        printServices.reduce((total, item) => total + item.subtotal, 0) +
-        courses.reduce((total, item) => total + item.subtotal, 0) +
-        products.reduce((total, item) => total + item.subtotal, 0);
-  
-      await supabase
-        .from("customers")
-        .update({ total_purchase_transactions: newTotal })
-        .eq("id", customerData.id);
+          .from("customers")
+          .select("total_purchase_transactions")
+          .eq("id", customerData.id)
+          .single();
+        const { printServices, courses, products } = existingTransactions;
+
+        const newTotal =
+          printServices.reduce((total, item) => total + item.subtotal, 0) +
+          courses.reduce((total, item) => total + item.subtotal, 0) +
+          products.reduce((total, item) => total + item.subtotal, 0);
+
+        await supabase
+          .from("customers")
+          .update({ total_purchase_transactions: newTotal })
+          .eq("id", customerData.id);
         // Update the transactions field with the modified data
         const { data: updatedData, error: updateError } = await supabase
           .from("customers")
           .update({ transactions: existingTransactions })
           .eq("id", customerData.id);
-  
+
         if (updateError) {
           throw updateError;
         }
-  
+
         // Optionally update local state or perform other actions
         // ...
         // Show success message
         toast.success("Item Refunded successfully");
         toast.loading("Be patient, changes take a few moments to be reflected");
-  
+
         setTimeout(() => {
           toast.dismiss();
         }, 3000);
@@ -136,14 +120,6 @@ const CustomerPageAddProducts = ({
         console.error("Error refunding order:", (error as Error).message);
         toast.error((error as Error).message);
       }
-
-
-
-
-
-
-
-
     }
   };
   const handleAddOrder = async () => {
@@ -158,7 +134,6 @@ const CustomerPageAddProducts = ({
       if (error) {
         throw error;
       }
-
       // Extract existing transactions from the fetched data
       const existingTransactions = data?.transactions || { products: [] };
 

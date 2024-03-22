@@ -3,7 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 import { CourseType, ProductType } from "../../type";
 import { fetchJsonData } from "@/helpers/getJSONData";
-import { updateJsonFile } from "@/helpers/updateJSONData";
+import supabase from "@/supabase/config";
 
 const CustomSelect = ({
   options,
@@ -105,14 +105,15 @@ const OrderModel = ({
   const [selectedItem, setSelectedItem] = useState<
     CourseType | ProductType | null
   >(null);
-  const [categoriesList, setCategoriesList] = useState<any[][]>([[]]);
+  const [products, setproducts] = useState<any>([]);
 
   useEffect(() => {
     // Fetch categories data
     const fetchData = async () => {
       try {
-        const data = await fetchJsonData("robotech/pages/categories.json");
-        setCategoriesList(data);
+        const { data } = await supabase.from("products").select();
+        console.log("dara", data);
+        setproducts(data);
       } catch (error) {
         toast.error(`${(error as Error).message}`);
       }
@@ -157,43 +158,57 @@ const OrderModel = ({
       toast.error("Please select a product");
       return;
     }
-
     if (newOrder.quantity <= 0) {
       toast.error("Quantity should be greater than zero");
       return;
     }
-
+    console.log(selectedItem);
     if ("count" in selectedItem!) {
-      // Access the count property only when the selectedItem is of type ProductType
-      const itemCount = +selectedItem.count;
-      if (newOrder.quantity > itemCount) {
-        toast.error(`only ${itemCount} piece(s) available in-stock`);
+      if (newOrder.quantity > selectedItem.count) {
+        toast.error(`only ${selectedItem.count} piece(s) available in-stock`);
         return;
-      } else {
-        let obj = categoriesList[0][selectedItem.category].find(
-          (product) => product.id === selectedItem.id
-        );
-        let updatedObject = {
-          ...obj,
-          count: `${+selectedItem?.count - +newOrder?.quantity}`,
-        };
-        const updatedProducts = categoriesList[0][selectedItem.category].map(
-          (product) => {
-            if (product.id === selectedItem.id) {
-              return updatedObject;
-            }
-            return product;
-          }
-        );
-
-        // Update the correct object within the categoriesList array
-        const updatedCategoriesList = [...categoriesList]; // Copy the original array
-        updatedCategoriesList[0][selectedItem.category] = updatedProducts; // Update the correct category array
-
-        setCategoriesList(updatedCategoriesList); // Update the state with the updated array
-        await updateJsonFile("robotech/pages/categories.json", categoriesList);
+      }else{
+        const newStock = selectedItem.count - newOrder.quantity;
+        console.log('selected product stock',selectedItem.count)
+        console.log('new order quantity',newOrder.quantity)
+        console.log('new stock',newStock)
+        await supabase
+            .from('products')
+            .update({ 'count': newStock })
+            .eq('id', selectedItem.id); 
       }
     }
+
+    // if ("count" in selectedItem!) {
+    //   // Access the count property only when the selectedItem is of type ProductType
+    //   const itemCount = +selectedItem.count;
+    //   if (newOrder.quantity > itemCount) {
+    //     toast.error(`only ${itemCount} piece(s) available in-stock`);
+    //     return;
+    //   } else {
+    //     let obj = categoriesList[0][selectedItem.category].find(
+    //       (product) => product.id === selectedItem.id
+    //     );
+    //     let updatedObject = {
+    //       ...obj,
+    //       count: `${+selectedItem?.count - +newOrder?.quantity}`,
+    //     };
+    //     const updatedProducts = categoriesList[0][selectedItem.category].map(
+    //       (product) => {
+    //         if (product.id === selectedItem.id) {
+    //           return updatedObject;
+    //         }
+    //         return product;
+    //       }
+    //     );
+
+    //     // Update the correct object within the categoriesList array
+    //     const updatedCategoriesList = [...categoriesList]; // Copy the original array
+    //     updatedCategoriesList[0][selectedItem.category] = updatedProducts; // Update the correct category array
+
+    //     setCategoriesList(updatedCategoriesList); // Update the state with the updated array
+    //   }
+    // }
 
     // Proceed with adding order
     handleAddOrder(newOrder.productId);
@@ -213,7 +228,7 @@ const OrderModel = ({
                 setSelectedItem={setSelectedItem}
                 setNewOrder={setNewOrder}
                 newOrder={newOrder}
-                options={list}
+                options={products}
                 onSelect={handleSelect}
               />
             </div>
