@@ -33,7 +33,7 @@ const Bill: React.FC<BillProps> = ({
     address: "In front of Alex Bank, Beni Suef",
     phone: "01102071544"
   };
-
+console.log(transactionData[0]?.date,'hiii')
   const [printMode, setPrintMode] = useState(false);
 
   // Calculate total amount
@@ -41,15 +41,7 @@ const Bill: React.FC<BillProps> = ({
     (total, transaction) => total + transaction.subtotal,
     0
   );
-  const dating = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
-  });
+  const dating = transactionData[0]?.date
 
   const handlePrint = () => {
     setPrintMode(true);

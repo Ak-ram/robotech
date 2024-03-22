@@ -7,6 +7,7 @@ import FormattedPrice from "./FormattedPrice";
 import ApexChartComp from "./ApexChart";
 import { Banknote, CheckCircle, ChevronDown, DollarSign, Download, LineChart, Search, ShoppingCart, X, XCircle } from "lucide-react";
 import CustomersStats from "./CustomersStats";
+import { exportSupabaseTableToExcel } from "@/lib/exportToExcel";
 
 
 
@@ -77,7 +78,6 @@ const Stats = () => {
     const totalUnavailableProducts = categoryStats.reduce((acc, category) => acc + category.outStockProducts.length, 0);
     const totalAvailablePrice = categoryStats.reduce((acc, category) => acc + category.inStockProducts.reduce((total, product) => total + +product.price, 0), 0);
     const totalUnavailablePrice = categoryStats.reduce((acc, category) => acc + category.outStockProducts.reduce((total, product) => total + +product.price, 0), 0);
-
     const filteredCategoryStats = categoryStats.filter((categoryInfo) =>
         categoryInfo.categoryName.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -126,7 +126,10 @@ const Stats = () => {
 
                                                     <LineChart className="" />
                                                 </span>
-                                                <span onClick={() => downloadJSON(`${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/categories.json`, 'categories.json')} className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center hover:bg-slate-200 block">
+                                                <span
+                                                onClick={()=>exportSupabaseTableToExcel('products')}
+                                                //  onClick={() => downloadJSON(`${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/categories.json`, 'categories.json')} 
+                                                 className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center hover:bg-slate-200 block">
                                                     <Download className="" />
                                                 </span>
                                             </div>
