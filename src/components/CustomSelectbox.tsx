@@ -20,6 +20,7 @@
 import { useState } from "react";
 import { Check, Edit2 } from "lucide-react";
 import toast from "react-hot-toast";
+import supabase from "@/supabase/config";
 
 const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
   const [editableOption, setEditableOption] = useState("");
@@ -35,7 +36,7 @@ const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
     setEditedOption(option);
   };
 
-  const handleOptionUpdate = () => {
+  const handleOptionUpdate = async () => {
     if (editedOption) {
       const updatedCategoryList = categoryList.map((category) =>
         category === editableOption ? editedOption : category
@@ -43,10 +44,21 @@ const CustomSelect = ({ selectedCat, setSelectedCat, categoryList }) => {
       setSelectedCat(editedOption);
       setEditableOption("");
       setInUpdateMode(false);
-      // Update the category list in the parent component
-      // You can pass a function from the parent component to update the category list
-      // For example: updateCategoryList(updatedCategoryList);
-      toast.loading("Still working on it");
+      // const {data,error}= await supabase.from('schema_table').select("*").eq('table_name',editableOption)
+      await supabase
+      .from('schema_table')
+      .update({ 'table_name': editedOption })
+      .eq('table_name', editableOption)
+      .single();
+      const {data,error} = await supabase.from('products').select('*').eq('category',editableOption)
+      const extractedArray = data!.map(item => {
+        return { id: item.id, category: editedOption };
+    });
+      await supabase
+  .from('products')
+  .upsert(extractedArray)
+      
+      console.log(extractedArray);
     }
   };
 
