@@ -143,18 +143,18 @@ const AdminComponent = () => {
         .select("email")
         .eq("email", userInfo.email)
         .single();
-  
+
       if (error) {
         throw error;
       }
-  
+
       return data !== null; // Return true if data exists, indicating authorization
     } catch (error) {
       console.error("Error checking authorization:", (error as any).message);
       return false; // Return false in case of an error
     }
   };
-  
+
   // Call the function and handle the result
   isAuthorized()
     .then((authorized) => {
@@ -164,13 +164,13 @@ const AdminComponent = () => {
         }, 1000);
         return null; // Or render a login component, redirect, or some other behavior
       }
-  
+
       // Continue with authorized logic
     })
     .catch((error) => {
       console.error("Error checking authorization:", error.message);
     });
-  
+
 
   return (
     <>
