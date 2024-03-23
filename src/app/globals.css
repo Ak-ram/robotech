@@ -25,6 +25,12 @@
     justify-content: start !important;
   }
 }
+/* CSS file or inline style */
+@media (max-width: 768px) {
+  .slick-dots {
+      display: none !important;
+  }
+}
 
 .player-wrapper {
   position: relative;
