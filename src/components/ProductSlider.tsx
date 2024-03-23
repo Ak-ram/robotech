@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
-import { getProducts } from "@/helpers/getProducts";
-import { ChevronDown, Hand, HandMetal } from 'lucide-react';
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/proSlice";
+import supabase from "@/supabase/config";
 
 const ProductSlider = () => {
     const [products, setProducts] = useState<any[]>([]);
@@ -17,8 +15,8 @@ const ProductSlider = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const p = await getProducts();
-                setProducts(p);
+                const {data} = await supabase.from('products').select("*");
+                setProducts(data!);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -100,6 +98,7 @@ const ProductSlider = () => {
                                                 prefix: (product?.category),
                                             },
                                         }}
+                                        
                                         key={index}
                                         className="min-w-28 min-h-28 w-28 h-28 md:h-24 md:w-24 md:min-h-24 md:min-w-24 block border border-gray-300 px-1 hover:border-orange-400 rounded-lg overflow-hidden"
                                     >
