@@ -4,6 +4,7 @@ import ProductSlider from "./ProductSlider";
 import Link from "next/link";
 import { Link2 } from "lucide-react";
 import supabase from "@/supabase/config";
+import ProductSliderSM from "./ProductSliderSM";
 
 
 interface BannerProps { }
@@ -107,6 +108,7 @@ const Banner: React.FC<BannerProps> = () => {
       </div>
       <div className="lg:block lg:w-[28%]">
         <ProductSlider />
+        <ProductSliderSM/>
       </div>
     </div>
   );
