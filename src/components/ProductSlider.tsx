@@ -71,7 +71,7 @@ const ProductSlider = () => {
             <div
                 className={`${i === dotActive ? 'bg-slate-800 w-3 h-1 lg:w-5 lg:h-2 ' : "h-1 w-1 lg:w-2 lg:h-2 border border-zinc-400"} rounded-full cursor-pointer`}
             >
-                <span className="hidden md:flex items-center gap-1">
+                <span className="hidden lg:flex items-center gap-1">
 
                 </span>
             </div>
@@ -84,7 +84,7 @@ const ProductSlider = () => {
             <Slider {...settings} initialSlide={currentIndex}>
                 {Array.from({ length: Math.ceil(products.length / productsPerPage) }).map((_, slideIndex) => (
                     <div key={slideIndex}>
-                        <div className="flex flex-nowrap overflow-auto md:grid md:grid-cols-3 gap-3 p-4 relative">
+                        <div className="flex flex-nowrap overflow-auto lg:grid lg:grid-cols-3 gap-3 p-4 relative">
 
 
                             {products
@@ -100,7 +100,7 @@ const ProductSlider = () => {
                                         }}
                                         
                                         key={index}
-                                        className="min-w-28 min-h-28 w-28 h-28 md:h-24 md:w-24 md:min-h-24 md:min-w-24 block border border-gray-300 px-1 hover:border-orange-400 rounded-lg overflow-hidden"
+                                        className="min-w-28 min-h-28 w-28 h-28 lg:h-24 lg:w-24 lg:min-h-24 lg:min-w-24 block border border-gray-300 px-1 hover:border-orange-400 rounded-lg overflow-hidden"
                                     >
                                         <img
                                             className=" w-full h-full object-contain mx-auto transition duration-300 transform hover:scale-105"
