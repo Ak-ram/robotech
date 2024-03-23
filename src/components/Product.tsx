@@ -177,7 +177,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
           <div
             title={item?.title}
             key={`${item.id}_${item.title}`}
-            className="p-0 flex xs:block w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden xs:rounded-md"
+            className="p-0 flex py-3 rounded-md xs:block w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden xs:rounded-md"
           >
 
             <Link
