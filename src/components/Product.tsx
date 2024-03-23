@@ -209,7 +209,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
 
               {
                 item.price < item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
-                  <span className="absolute text-xs xs:text-base xs:-top-2 xs:-left-2 top-1 left-1 m-2 rounded bg-black px-2 text-center  md: font-medium text-white">
+                  <span className="absolute text-xs xs:text-base py-1 -top-3 m-2 rounded bg-black px-2 text-center  md: font-medium text-white">
                     {calculatePercentage(item?.price, item?.previousPrice)}% OFF
                   </span>
                   : null}
