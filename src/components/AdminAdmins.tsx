@@ -46,18 +46,34 @@ const AdminAdmins = () => {
     }
   };
 
-  const handleRemoveAdminAsked = async (admin) => {
-    const confirm = window.confirm("Sure to delete this request ?");
+  const handleRemoveAdminAsked = async (admin, displayConfirmation = true) => {
+    if (displayConfirmation) {
+      const confirm = window.confirm("Sure to delete this request ?");
+      if (!confirm) {
+        return;
+      }
+    }
+    const { data } = await supabase
+      .from("ask_to_be_an_admin")
+      .delete()
+      .eq("email", admin.email)
+      .select();
+    const updatedList = askedToBeAnAdmin.filter(
+      (ask) => ask.id !== data![0].id
+    );
+    setAskedToBeAnAdmin(updatedList);
+  };
+
+  const handleAskAcception = async (asked) => {
+    const confirm = window.confirm("Sure to make this email as an admin ?");
     if (confirm) {
-      const { data } = await supabase
-        .from("ask_to_be_an_admin")
-        .delete()
-        .eq("email", admin.email)
-        .select();
-      const updatedList = askedToBeAnAdmin.filter((ask) => ask.id !== data![0].id);
-      setAskedToBeAnAdmin(updatedList);
+      await supabase.from("admins").insert(asked);
+      const updatedList = [...admins, asked];
+      setAdmins(updatedList);
+      handleRemoveAdminAsked(asked, false);
     }
   };
+
   return (
     <div
       className={`${
@@ -94,6 +110,7 @@ const AdminAdmins = () => {
                     <div>{asked?.email}</div>
                     <div className="flex gap-2 ml-auto items-center justify-center">
                       <Check
+                        onClick={() => handleAskAcception(asked)}
                         className="text-green-600 cursor-pointer"
                         size={16}
                       />
