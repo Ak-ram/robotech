@@ -31,7 +31,7 @@ const CustomersStats = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [show, setShow] = useState(false);
 
-  const [customers, setCustomers] = useState<any[]>([]);
+  const [customers, setCustomers] = useState<any>([]);
   const [highestTotalPurchase, setHighestTotalPurchase] = useState<
     number | null
   >(null);
@@ -116,7 +116,7 @@ const CustomersStats = () => {
           </div>
         </div>
 
-        <CustomerStatsTopSelling customers={customers} />
+        <CustomerStatsTopSelling />
 
         <div className="flex flex-col">
           <Stocks />
