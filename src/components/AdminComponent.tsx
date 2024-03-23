@@ -33,6 +33,7 @@ import AdminAnnouncement from "./AdminAnnouncement";
 import AdminLocation from "./AdminLocation";
 import AdminBills from "./AdminBills";
 import supabase from "@/supabase/config";
+import toast from "react-hot-toast";
 
 const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
@@ -168,40 +169,8 @@ const AdminComponent = () => {
     })
     .catch((error) => {
       console.error("Error checking authorization:", error.message);
-      // Handle the error, e.g., render an error message
     });
-  // const isAuthorized = async () => {
-  //   try {
-  //     const { data, error } = await supabase
-  //       .from("admins")
-  //       .select("email")
-  //       .eq("email", userInfo.email)
-  //       .single();
-
-  //     if (error) {
-  //       throw error;
-  //     }
-
-  //     return data.email;
-  //   } catch (error) {
-  //     console.error("Error checking authorization:", (error as any).message);
-  //     return false; // Return false in case of an error
-  //   }
-  // };
-
-  // // Call the function and handle the result
-  // isAuthorized()
-  //   .then((authorized) => {
-  //     if (!authorized) {
-  //       return null; // Or render a login component, redirect, or some other behavior
-  //     }
-
-  //     // Continue with authorized logic
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error checking authorization:", error.message);
-  //     // Handle the error, e.g., render an error message
-  //   });
+  
 
   return (
     <>
