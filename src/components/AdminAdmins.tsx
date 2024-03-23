@@ -33,6 +33,31 @@ const AdminAdmins = () => {
     }
   }, []);
 
+  const handleRemoveAdmin = async (admin) => {
+    const confirm = window.confirm("Sure to delete this admin ?");
+    if (confirm) {
+      const { data } = await supabase
+        .from("admins")
+        .delete()
+        .eq("email", admin.email)
+        .select();
+      const updatedList = admins.filter((admin) => admin.id !== data![0].id);
+      setAdmins(updatedList);
+    }
+  };
+
+  const handleRemoveAdminAsked = async (admin) => {
+    const confirm = window.confirm("Sure to delete this request ?");
+    if (confirm) {
+      const { data } = await supabase
+        .from("ask_to_be_an_admin")
+        .delete()
+        .eq("email", admin.email)
+        .select();
+      const updatedList = askedToBeAnAdmin.filter((ask) => ask.id !== data![0].id);
+      setAskedToBeAnAdmin(updatedList);
+    }
+  };
   return (
     <div
       className={`${
@@ -62,11 +87,21 @@ const AdminAdmins = () => {
               <div className="flex-1 border p-3 rounded border-slate-300 ">
                 <h3>Asked To Be An Admins</h3>
                 {askedToBeAnAdmin?.map((asked) => (
-                  <div className="bg-gray-200 p-2 flex items-center justify-between rounded my-2 " key={asked?.id}>
+                  <div
+                    className="bg-gray-200 p-2 flex items-center justify-between rounded my-2 "
+                    key={asked?.id}
+                  >
                     <div>{asked?.email}</div>
                     <div className="flex gap-2 ml-auto items-center justify-center">
-                      <Check className="text-green-600 cursor-pointer" size={16}/>
-                      <Trash className="text-rose-600 cursor-pointer" size={16}/>
+                      <Check
+                        className="text-green-600 cursor-pointer"
+                        size={16}
+                      />
+                      <Trash
+                        onClick={() => handleRemoveAdminAsked(asked)}
+                        className="text-rose-600 cursor-pointer"
+                        size={16}
+                      />
                     </div>
                   </div>
                 ))}
@@ -74,11 +109,18 @@ const AdminAdmins = () => {
               <div className="flex-1 border p-3 rounded border-slate-300 ">
                 <h3>Admins</h3>
                 {admins?.map((admin) => (
-                  <div className="bg-gray-200 p-2 flex items-center justify-between rounded my-2 " key={admin?.id}>
+                  <div
+                    className="bg-gray-200 p-2 flex items-center justify-between rounded my-2 "
+                    key={admin?.id}
+                  >
                     <div>{admin?.email}</div>
                     <div className="flex gap-2 ml-auto items-center justify-center">
-                      <Trash className="text-rose-600 cursor-pointer" size={16}/>
-                    </div>{" "}
+                      <Trash
+                        onClick={() => handleRemoveAdmin(admin)}
+                        className="text-rose-600 cursor-pointer"
+                        size={16}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
