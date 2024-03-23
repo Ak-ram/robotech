@@ -105,7 +105,7 @@ const CustomerStatsInStocks = ({ instock, setInstock }) => {
                   src={product?.image1}
                   alt={product.title}
                 />{" "}
-                <div className="pl-3 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                <div className="pl-3 max-w-[20rem] overflow-hidden text-ellipsis  text-sm whitespace-nowrap overflow-hidden text-ellipsis">
                   {product.title}
                 </div>
                 <div className="ml-auto">

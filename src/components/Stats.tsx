@@ -114,7 +114,7 @@ const Stats = () => {
               </div>
             </div>
             <div className="flex justify-start flex-wrap gap-2">
-              <div className="flex flex-col lg:flex-row gap-2  flex-1">
+              <div className="flex flex-col md:flex-row gap-2  flex-1">
                 {/* <div className="-my-2 flex-1 overflow-x-auto ">
                   <div className="py-2 px-3">
                     <div className="shadow-xl border border-slate-300 overflow-hidden sm:rounded-lg">
@@ -172,7 +172,7 @@ const Stats = () => {
                     </div>
                   </div>
                 </div> */}
-                <section className="flex-1 rounded-lg w-[400px] border border-gray-300 p-5 bg-white">
+                <section className="flex-1 w-full  rounded-lg w-[400px] border border-gray-300 p-5 bg-white">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex items-center justify-center p-6 rounded-lg bg-blue-50">
                       <div className="mr-2">
@@ -247,7 +247,7 @@ const Stats = () => {
                     </div>
                   </div>
                 </section>
-                <section className="flex-1 overflow-auto h-[400px] rounded-lg w-[400px] border border-gray-300 p-5 bg-white">
+                <section className="flex-1 w-full overflow-auto h-[400px] rounded-lg w-[400px] border border-gray-300 p-5 bg-white">
                   <h3 className="font-bold text-center">Downloads Center</h3>
                   {[
                     "products",

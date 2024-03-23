@@ -160,7 +160,7 @@ const CustomerStatsOutStocks = ({ outstock, setOutstock }) => {
                   src={product?.image1}
                   alt={product.title}
                 />{" "}
-                <div className="pl-3 text-sm overflow-hidden text-ellipsis">
+                <div className=" max-w-[20rem] overflow-hidden text-ellipsis pl-3 text-sm overflow-hidden text-ellipsis">
                   {product.title}
                 </div>
                 <div className="ml-auto">
