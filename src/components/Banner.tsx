@@ -23,7 +23,7 @@ const Banner: React.FC<BannerProps> = () => {
     arrows: false,
     fade: true,
     speed: 1000,
-    // adaptiveHeight: true, 
+    // adaptiveHeight: true,
     beforeChange: (prev: number, next: number) => {
       setDotActive(next);
     },

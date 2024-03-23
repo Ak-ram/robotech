@@ -313,7 +313,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
             </div>
           </div>
 
-          // )) 
+          // ))
         ))}
       </div>
 
