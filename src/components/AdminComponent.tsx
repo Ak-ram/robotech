@@ -192,40 +192,7 @@ const AdminComponent = () => {
             </p>
           </div>
         )}
-        {/* {selectedItem ? (
-          <div className="">
-            <div className="border-b-zinc-300 pb-2 border-b mb-2 flex items-center gap-2">
-              <span className="hover:bg-slate-300 bgwhite  py-1 px-1 rounded cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
-                {isOpen ? <X /> : <Menu />}
-              </span>
-              <span className="bg-white hover:bg-slate-300 font-bold px-1.5 py-1 rounded">{selectedItem.label} Page</span>
-            </div>
-            {isPasswordEntered ? (
-              selectedItem.content
-            ) : (
-              <div>
-                <form onSubmit={handlePasswordSubmit}>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter the password"
-                  />
-                  <button type="submit">Submit</button>
-                </form>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div>
-            <span className="cursor-pointer w-fit inline-block" onClick={() => setOpen(!isOpen)}>
-              {isOpen ? <X /> : <Menu />}
-            </span>
-            <p className="font-bold text-lg flex items-center justify-center lg:h-[500px] mb-5 text-gray-600">
-              Select Page from the sidebar.
-            </p>
-          </div>
-        )} */}
+       
       </div>
     </>
   );
