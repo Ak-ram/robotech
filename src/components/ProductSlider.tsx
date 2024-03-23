@@ -49,7 +49,7 @@ const ProductSlider = () => {
         appendDots: (dots: any) => (
             <div
                 style={{
-            
+
                 }}
                 className="absolute"
             >
@@ -98,7 +98,7 @@ const ProductSlider = () => {
                                                 prefix: (product?.category),
                                             },
                                         }}
-                                        
+
                                         key={index}
                                         className="min-w-28 min-h-28 w-28 h-28 md:h-24 md:w-24 md:min-h-24 md:min-w-24 block border border-gray-300 px-1 hover:border-orange-400 rounded-lg overflow-hidden"
                                     >
