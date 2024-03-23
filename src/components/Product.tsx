@@ -177,7 +177,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
           <div
             title={item?.title}
             key={`${item.id}_${item.title}`}
-            className="p-0 flex rounded-md xs:block w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden xs:rounded-md"
+            className="p-0  flex rounded-md xs:block w-full mx-auto relative bg-white group border-[1px] border-slate-300 hover:border-designColor/60 duration-300 hover:shadow-xl overflow-hidden xs:rounded-md"
           >
 
             <Link
@@ -188,7 +188,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
                   prefix: (prefix === "print" ? prefix : item?.category),
                 },
               }}
-              className="min-w-[130px] relative  flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden"
+              className="min-w-[130px] relative my-auto flex mx-auto h-28 xs:h-48 lg:h-68 overflow-hidden"
             >
 
               <img
@@ -207,13 +207,13 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               ) : null}
 
 
+            </Link>
               {
                 item.price < item.previousPrice && calculatePercentage(item?.price, item?.previousPrice) ?
-                  <span className="absolute text-xs xs:text-base py-1 top-1.5 m-2 rounded bg-black px-2 text-center  md: font-medium text-white">
+                  <span className="absolute text-xs xs:text-base py-1 top-[10px] m-2 rounded bg-black px-2 text-center  md: font-medium text-white">
                     {calculatePercentage(item?.price, item?.previousPrice)}% OFF
                   </span>
                   : null}
-            </Link>
 
             <div className="group border-l border-slate-200 xs:border-0 w-[60%] flex justify-center w-full items-start flex-col">
               {/* <div className="absolute top-4 right-2 flex items-center space-x-2">
@@ -229,7 +229,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
               {/* <div className="py-3 px-10 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 translate-y-full transition-all group-hover:translate-y-0 w-full absolute"> */}
               <div className="py-3  transition-all px-3 xs:px-5 backdrop-blur-2xl bg-opacity-20 bottom-0 left-0 xs:border-t border-slate-300 rounded transition-all w-full ">
                 <p
-                  className="pr-2 text-zinc-500 xs:text-black text-xl xs:whitespace-nowrap text-ellipsis overflow-hidden duration-300 font-semibold xs:font-bold">
+                  className="pr-2 max-h-[60px] text-zinc-500 xs:text-black text-xl xs:whitespace-nowrap text-ellipsis overflow-hidden duration-300 font-semibold xs:font-bold">
                   {item?.title}
                 </p>
                 <p className="flex mt-1 items-center justify-start w-full text-black font-semibold">

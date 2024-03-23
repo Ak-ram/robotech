@@ -36,10 +36,10 @@ const ProductSliderSM = () => {
     dots: false,
     autoplaySpeed: 5000,
     slidesToShow: 3, // Display three products per slide
-    slidesToScroll: 1,
+    slidesToScroll: 3,
     arrows: false,
     draggable: true, // Enable dragging behavior
-    swipeToSlide: true, // Enable swiping behavior
+    // swipeToSlide: true, // Enable swiping behavior
     beforeChange: (prev: number, next: number) => {
       setDotActive(next);
     },
@@ -74,16 +74,16 @@ const ProductSliderSM = () => {
                   prefix: product?.category,
                 },
               }}
-              className="w-full flex block rounded-lg overflow-hidden"
+              className="flex block rounded-lg overflow-hidden"
             >
               <img
-                className="w-full h-20 object-contain mx-auto transition duration-300 transform hover:scale-105"
+                className="w-24 h-24 object-contain mx-auto transition duration-300 transform hover:scale-105"
                 src={product.image1}
                 alt={product.title}
               />
             </Link>
-              <div className="p-3">
-                <h3 className="w-[100px] text-gray-700 whitespace-nowrap overflow-hidden text-ellipsis font-bold text-sm">
+              <div className="py-3 w-full ml-1">
+                <h3 className="break-all text-gray-700 max-h-10 overflow-hidden text-ellipsis font-bold text-sm">
                   {product?.title}
                 </h3>
                 <FormattedPrice
