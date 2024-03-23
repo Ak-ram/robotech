@@ -20,6 +20,7 @@ import {
 import CustomersStats from "./CustomersStats";
 import { exportSupabaseTableToExcel } from "@/lib/exportToExcel";
 import supabase from "@/supabase/config";
+import AdminAdmins from "./AdminAdmins";
 
 interface CategoryStats {
   categoryName: string;
@@ -280,6 +281,7 @@ const Stats = () => {
       </section>
 
       <CustomersStats />
+      <AdminAdmins/>
     </div>
   );
 };
