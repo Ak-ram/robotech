@@ -39,17 +39,23 @@ const Stats = () => {
   const [show, setShow] = useState(false);
   const [products, setProducts] = useState<ProductType[]>([]);
   const [inStock, setInStock] = useState<ProductType[]>([]);
-  const [inStockPrice,setInStockPrice]= useState(0)
+  const [inStockPrice, setInStockPrice] = useState(0);
   const [outStock, setOutStock] = useState<ProductType[]>([]);
-  const [outStockPrice,setOutStockPrice]= useState(0)
+  const [outStockPrice, setOutStockPrice] = useState(0);
 
-const productUtils = async()=>{
-    const {data:products} = await supabase.from('products').select("*");
-    const {data:inStock} = await supabase.from('products').select("*").gt('count',0);
-    const {data:outStock} = await supabase.from('products').select("*").eq('count',0);
-    return [products,inStock,outStock]
-}
-useEffect(() => {
+  const productUtils = async () => {
+    const { data: products } = await supabase.from("products").select("*");
+    const { data: inStock } = await supabase
+      .from("products")
+      .select("*")
+      .gt("count", 0);
+    const { data: outStock } = await supabase
+      .from("products")
+      .select("*")
+      .eq("count", 0);
+    return [products, inStock, outStock];
+  };
+  useEffect(() => {
     const fetchData = async () => {
       const [products, inStock, outStock] = await productUtils();
       setProducts(products!);
@@ -59,19 +65,19 @@ useEffect(() => {
     fetchData();
   }, []);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     const totalInStockPrice = inStock.reduce((accumulator, currentProduct) => {
+      return accumulator + currentProduct.price;
+    }, 0);
+    const totalOutStockPrice = outStock.reduce(
+      (accumulator, currentProduct) => {
         return accumulator + currentProduct.price;
-      }, 0);
-      const totalOutStockPrice = outStock.reduce((accumulator, currentProduct) => {
-        return accumulator + currentProduct.price;
-      }, 0);
-      setInStockPrice(totalInStockPrice)
-      setOutStockPrice(totalOutStockPrice)
-  },[inStock,outStock])
-
-
+      },
+      0
+    );
+    setInStockPrice(totalInStockPrice);
+    setOutStockPrice(totalOutStockPrice);
+  }, [inStock, outStock]);
 
   return (
     <div className=" mx-auto">
@@ -108,7 +114,7 @@ useEffect(() => {
               </div>
             </div>
             <div className="flex justify-start flex-wrap gap-2">
-              <div className="flex gap-2  flex-1">
+              <div className="flex flex-col lg:flex-row gap-2  flex-1">
                 {/* <div className="-my-2 flex-1 overflow-x-auto ">
                   <div className="py-2 px-3">
                     <div className="shadow-xl border border-slate-300 overflow-hidden sm:rounded-lg">
@@ -167,7 +173,7 @@ useEffect(() => {
                   </div>
                 </div> */}
                 <section className="flex-1 rounded-lg w-[400px] border border-gray-300 p-5 bg-white">
-                  <div className="grid lg:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <div className="flex items-center justify-center p-6 rounded-lg bg-blue-50">
                       <div className="mr-2">
                         <ShoppingCart size={32} className="text-blue-500" />
@@ -216,9 +222,9 @@ useEffect(() => {
                           amount={inStockPrice}
                           className="text-xl font-bold text-green-700"
                         />
-                         <p className="text-sm text-green-700">
-                            Total Available Price
-                          </p>
+                        <p className="text-sm text-green-700">
+                          Total Available Price
+                        </p>
                       </div>
                     </div>
                     <div className="col-span-full">
@@ -241,12 +247,31 @@ useEffect(() => {
                     </div>
                   </div>
                 </section>
-                <section className="flex-1 rounded-lg w-[400px] border border-gray-300 p-5 bg-white">
-<h3>Downloads</h3>
-<div className="bg-slate-200 my-2 rounded flex items-center justify-between p-3 w-full">
-    <span>Products</span>
-    <span><Download size={17}/></span>
-</div>
+                <section className="flex-1 overflow-auto h-[400px] rounded-lg w-[400px] border border-gray-300 p-5 bg-white">
+                  <h3 className="font-bold text-center">Downloads Center</h3>
+                  {[
+                    "products",
+                    "courses",
+                    "services",
+                    "ask_to_be_an_admin",
+                    "admins",
+                    "announcements",
+                    "faq",
+                    "location",
+                    "schema_table",
+                    "slides",
+                  ].map((item) => (
+                    <div
+                      key={item}
+                      onClick={() => exportSupabaseTableToExcel(item)}
+                      className="bg-gray-200 my-2 cursor-pointer rounded flex items-center justify-between p-3 w-full"
+                    >
+                      <span>{item.toUpperCase()}</span>
+                      <span>
+                        <Download size={17} />
+                      </span>
+                    </div>
+                  ))}
                 </section>
               </div>
             </div>
