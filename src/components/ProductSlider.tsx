@@ -79,7 +79,7 @@ const ProductSlider = () => {
     };
 
     return (
-        <div className="relative border h-[97%] border-slate-300">
+        <div className="hidden lg:block relative border h-[97%] border-slate-300">
 
             <Slider {...settings} initialSlide={currentIndex}>
                 {Array.from({ length: Math.ceil(products.length / productsPerPage) }).map((_, slideIndex) => (
@@ -100,7 +100,7 @@ const ProductSlider = () => {
                                         }}
                                         
                                         key={index}
-                                        className="min-w-28 min-h-28 w-28 h-28 lg:h-24 lg:w-24 lg:min-h-24 lg:min-w-24 block border border-gray-300 px-1 hover:border-orange-400 rounded-lg overflow-hidden"
+                                        className="min-w-20 min-h-20 w-20 h-20 lg:h-24 lg:w-24 lg:min-h-24 lg:min-w-24 block border border-gray-300 px-1 hover:border-orange-400 rounded-lg overflow-hidden"
                                     >
                                         <img
                                             className=" w-full h-full object-contain mx-auto transition duration-300 transform hover:scale-105"

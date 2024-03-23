@@ -31,7 +31,13 @@
       display: none !important;
   }
 }
-
+.productslidersm .slick-slide{
+  width: 250px !important;
+  margin:.5rem !important; 
+}
+.productslidersm .slick-track{
+  display: flex;
+}
 .player-wrapper {
   position: relative;
   padding-top: 60%;
