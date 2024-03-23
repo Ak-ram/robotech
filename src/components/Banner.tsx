@@ -97,7 +97,7 @@ const Banner: React.FC<BannerProps> = () => {
                 />
                 <Link href={slide?.link_url} className="my-2">
                   <button className="flex items-center gap-1 justify-center hover:underline font-bold py-1 px-2 ">
-                    <Link2 size={17} /><span className="text-sm">Slide Link </span>
+                    <Link2 size={17} /><span className="text-xs">more info... </span>
                   </button>
                 </Link>
               </div>
