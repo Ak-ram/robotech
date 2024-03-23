@@ -51,7 +51,7 @@ const ProductSlider = () => {
         appendDots: (dots: any) => (
             <div
                 style={{
-            
+
                 }}
                 className="absolute"
             >
