@@ -95,7 +95,7 @@ function FilterableProducts({ categories }) {
           </div> */}
           <div
             className={`${
-              openSidebar ? "blur-md hidden md:flex" : "blur-none"
+              openSidebar ? "blur-md flex" : "blur-none"
             } `}
           >
             <Product
