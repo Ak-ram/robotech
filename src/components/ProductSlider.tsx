@@ -39,8 +39,8 @@ const ProductSlider = () => {
 
     const settings: Settings = {
         dots: true,
-        infinite: true,
-        autoplay: true,
+     infinite: true,
+         autoplay: true,
         autoplaySpeed: 5000,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -86,7 +86,7 @@ const ProductSlider = () => {
             <Slider {...settings} initialSlide={currentIndex}>
                 {Array.from({ length: Math.ceil(products.length / productsPerPage) }).map((_, slideIndex) => (
                     <div key={slideIndex}>
-                        <div className="grid grid-cols-3 gap-3 p-4 relative">
+                        <div className="flex flex-nowrap overflow-auto md:grid md:grid-cols-3 gap-3 p-4 relative">
 
 
                             {products
@@ -101,10 +101,10 @@ const ProductSlider = () => {
                                             },
                                         }}
                                         key={index}
-                                        className="block border border-gray-300 px-1 hover:border-orange-400 rounded-lg overflow-hidden"
+                                        className="min-w-28 min-h-28 w-28 h-28 md:h-24 md:w-24 md:min-h-24 md:min-w-24 block border border-gray-300 px-1 hover:border-orange-400 rounded-lg overflow-hidden"
                                     >
                                         <img
-                                            className="w-18 h-18 lg:w-20 lg:h-20 object-contain mx-auto transition duration-300 transform hover:scale-105"
+                                            className=" w-full h-full object-contain mx-auto transition duration-300 transform hover:scale-105"
                                             src={product.image1}
                                             alt={product.title}
                                         />
