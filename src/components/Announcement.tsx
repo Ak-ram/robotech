@@ -40,7 +40,7 @@ const Announcement = () => {
         <div className="items-start sm:items-center bg-blue-500 text-white py-3 px-2 sm:px-5 flex">
             <div className="container w-[90%] mx-auto sm:gap-3 flex flex-col items-center sm:flex-row sm:items-center">
                 <Link href={data[0]?.link_url || ''}
-                    className="flex flex-nowrap hover:underline gap-1 items-center overflow-auto w-[99%] text-xs sm:text-sm font-semibold">
+                    className="flex flex-nowrap hover:underline gap-1 items-center overflow-auto w-fit text-xs sm:text-sm font-semibold">
                     <Feather width={25} height={25} className="hidden xs:inline-block" />
                     {data.length > 0 && data[0].body}
 

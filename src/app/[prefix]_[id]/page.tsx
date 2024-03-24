@@ -3,26 +3,11 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/proSlice";
-import { getOneProduct } from "@/helpers/getOneProduct";
 import { ProductType } from "../../../type";
-import FormattedPrice from "@/components/FormattedPrice";
-import Link from "next/link";
 import {
-  Banknote,
-  Check,
   CheckCircle,
-  Dot,
-  FacebookIcon,
-  Gift,
   Home,
-  Link2,
-  Link2Icon,
-  PhoneCall,
-  Redo,
-  TwitterIcon,
   Undo,
-  Wallet2,
-  X,
 } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
@@ -32,7 +17,6 @@ import toast, { Toaster } from "react-hot-toast";
 import Loading from "@/components/Loading";
 import ProductDetails from "@/components/ProductDetails";
 import { detectLanguage } from "@/lib/utils";
-import { createClient } from "@supabase/supabase-js";
 import supabase from "@/supabase/config";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -66,7 +50,6 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 .eq("id", idString)
                 .single();
     
-        console.log("single product", data);
         setProduct(data!);
         if (typeof window !== "undefined" && window.scrollTo) {
           window.scrollTo({ top: 0, behavior: "smooth" });
@@ -309,6 +292,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   <p className="mt-4 text-xs sm:text-base">
                     Contact Us in Whatsapp : 01102071544
                   </p>
+                
                 </div>
               </div>
             </div>

@@ -8,9 +8,9 @@ import {
   Search,
   SquareDot,
 } from "lucide-react";
-import { getProducts } from "@/helpers/getProducts";
 import Product from "./Product";
 import { ProductType } from "../../type";
+import supabase from "@/supabase/config";
 
 const SearchComponent = () => {
   const [res, setRes] = useState<ProductType[]>([]);
@@ -23,8 +23,8 @@ const SearchComponent = () => {
 
   const fetchData = async () => {
     setLoading(true); // Set loading to true before fetching data
-    let allProducts = await getProducts();
-    const searchResults = allProducts.filter((item: ProductType) =>
+    let { data } = await supabase.from("products").select("*");
+    const searchResults = data!.filter((item: ProductType) =>
       item.title.toLowerCase().includes(inputQuery.toLowerCase())
     );
 
@@ -37,7 +37,7 @@ const SearchComponent = () => {
       return isInPriceRange && isMatchingCategory;
     });
 
-    setProducts(allProducts);
+    setProducts(data!);
     setRes(filteredResults);
     setLoading(false); // Set loading back to false after fetching data
   };

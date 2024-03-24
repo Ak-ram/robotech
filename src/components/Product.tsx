@@ -94,7 +94,7 @@ const Product = ({ products, prefix, categoryName }: Item) => {
   };
 
   return (
-    <div className={`flex-1 pt-5 bg-white mt-2 rounded-lg`}>
+    <div className={`flex-1 min-h-screen pt-5 bg-white mt-2 rounded-lg`}>
       <nav aria-label="Page navigation example" className="mx-2 px-3 sm:mx-4 flex relative flex-wrap items-center justify-end">
         {/* Filter Icon */}
         <div className="mr-2">
