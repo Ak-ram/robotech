@@ -25,7 +25,7 @@ function Courses() {
 
 
     return (
-        <CourseCard categoryName="courses" prefix='cr' products={courses} />
+        <CourseCard categoryName="courses" products={courses} />
     )
 }
 
