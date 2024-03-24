@@ -361,19 +361,6 @@ const Admin3DComponent = () => {
               </div>
               <div className="w-full mb-2 lg:pr-4">
                 <span className="text-sm font-bold my-2 -ml-2">
-                  Extra Field
-                </span>
-
-                <input
-                  type="text"
-                  placeholder="Additional details, like service type, e.g., 3D Prototype."
-                  className="p-2 w-full border border-gray-300 rounded"
-                  value={editedItem.brand}
-                  onChange={(e) => handleInputChange(e, "brand")}
-                />
-              </div>
-              <div className="w-full mb-2 lg:pr-4">
-                <span className="text-sm font-bold my-2 -ml-2">
                   External Link
                 </span>
 
