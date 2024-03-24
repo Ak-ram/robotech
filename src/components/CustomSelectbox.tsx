@@ -33,8 +33,9 @@ const CustomSelect = ({
       setcategoryList(updatedCategoryList)
       setSelectedCat(editedOption);
       setEditableOption("");
-      setInUpdateMode(false);
+      console.log(categoryProducts,temp);
       setCategoryProducts(temp)
+      setInUpdateMode(false);
       await supabase
         .from("schema_table")
         .update({ table_name: editedOption })
