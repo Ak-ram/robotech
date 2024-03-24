@@ -2,11 +2,14 @@ import { useEffect, useState, useRef } from "react";
 import CustomerStatsInStocks from "./CustomerStatsInStocks";
 import CustomerStatsOutStocks from "./CustomerStatsOutStocks";
 import { getProducts } from "@/helpers/getProducts";
-import { ProductType } from "../../type";
+import { ProductType, StateProps } from "../../type";
 import { Check, ChevronDown, Trash } from "lucide-react";
 import supabase from "@/supabase/config";
+import { useSelector } from "react-redux";
 
 const AdminAdmins = () => {
+  const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
+
   const [askedToBeAnAdmin, setAskedToBeAnAdmin] = useState<any>([]);
   const [admins, setAdmins] = useState<any>([]);
   const [show, setShow] = useState(false);
@@ -132,12 +135,14 @@ const AdminAdmins = () => {
                   >
                     <div>{admin?.email}</div>
                     <div className="flex gap-2 ml-auto items-center justify-center">
-                      <Trash
-                        onClick={() => handleRemoveAdmin(admin)}
-                        className="text-rose-600 cursor-pointer"
-                        size={16}
-                      />
-                    </div>
+                    {userInfo?.email !== admin?.email ? (
+                        <Trash
+                          onClick={() => handleRemoveAdmin(admin)}
+                          className="text-rose-600 cursor-pointer"
+                          size={16}
+                        />
+                        ):<span className="text-sm font-bold text-blue-500">You ✅</span>}
+                        </div>
                   </div>
                 ))}
               </div>
