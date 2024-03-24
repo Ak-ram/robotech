@@ -64,16 +64,15 @@ const AdminComponent = () => {
           .eq("email", superAdminInfo.email)
           .eq("password", superAdminInfo.password)
           .single();
-  
+
         if (data !== null) {
           setIsSuperAdminAuth(true);
         }
       };
-  
+
       isExistingInSupbase(); // Invoke the function to perform the database check
     }
   }, [superAdminInfo]); // Include superAdminInfo in the dependency array
-  
 
   const sidebarItems: SidebarItem[] = [
     {
@@ -141,6 +140,13 @@ const AdminComponent = () => {
       dispatch(
         addSuperAdmin({ email: superAdminEmail, password: superAdminPassword })
       );
+      const { data } = await supabase
+        .from("admins")
+        .select("*")
+        .eq("email", superAdminEmail);
+      if (!data) {
+        await supabase.from("admins").insert({ email: superAdminEmail });
+      }
     } else {
       setMsg("Incorrect email or password! ❌");
     }

@@ -1,4 +1,4 @@
-import { addSuperAdmin, addUser } from "@/redux/proSlice";
+import { addUser } from "@/redux/proSlice";
 import { Key } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -35,23 +35,10 @@ const LoginComponent = () => {
       .select("email")
       .eq("email", email)
       .single();
-    const { data: asSuperAdmin } = await supabase
-      .from("super_admins")
-      .select("email")
-      .eq("email", email)
-      .single();
 
-    if (
-      (data && data.email && email === data.email) ||
-      email === asSuperAdmin?.email
-    ) {
-      if (email === data!?.email) {
-        const userInformation = { email };
-        dispatch(addUser(userInformation));
-      }
-      if (email === asSuperAdmin!?.email) {
-        dispatch(addSuperAdmin({ email }));
-      }
+    if (data && data.email && email === data.email) {
+      const userInformation = { email };
+      dispatch(addUser(userInformation));
 
       setMessage("You are authorized to login."); // Set authorized message
       setIsAuth(true);
