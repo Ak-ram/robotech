@@ -92,7 +92,7 @@ export const proSlice = createSlice({
         state.compareData.push(action.payload);
       }
     },
-    
+
     deleteCompare: (state, action) => {
       state.compareData = state.compareData.filter(
         (item) => !(item.id === action.payload.id && item.title === action.payload.title)
