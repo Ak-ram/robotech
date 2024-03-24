@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { addSuperAdmin } from "@/redux/proSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { StateProps } from "../../type";
 import {
   BarChart,
@@ -34,10 +35,12 @@ import AdminAnnouncement from "./AdminAnnouncement";
 import AdminLocation from "./AdminLocation";
 import AdminBills from "./AdminBills";
 import supabase from "@/supabase/config";
-import toast from "react-hot-toast";
 
 const AdminComponent = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
+  const superAdminInfo = useSelector(
+    (state: StateProps) => state.pro.superAdminInfo
+  );
   interface SidebarItem {
     id: number;
     label: string;
@@ -51,19 +54,27 @@ const AdminComponent = () => {
   const [isSuperAdminAuth, setIsSuperAdminAuth] = useState<boolean>(false);
   const [msg, setMsg] = useState<string>("");
   const router = useRouter();
-
-  // useEffect(() => {
-  //   const storedPasswordStatus = sessionStorage.getItem("isPasswordEntered");
-  //   console.log(storedPasswordStatus)
-  //   if (storedPasswordStatus === "true") {
-  //     setIsPasswordEntered(true);
-  //   }
-  // }, []);
+  const dispatch = useDispatch();
   useEffect(() => {
-    return () => {
-      setIsSuperAdminAuth(false);
-    };
-  }, []);
+    if (superAdminInfo) {
+      const isExistingInSupbase = async () => {
+        const { data } = await supabase
+          .from("super_admins")
+          .select("*")
+          .eq("email", superAdminInfo.email)
+          .eq("password", superAdminInfo.password)
+          .single();
+  
+        if (data !== null) {
+          setIsSuperAdminAuth(true);
+        }
+      };
+  
+      isExistingInSupbase(); // Invoke the function to perform the database check
+    }
+  }, [superAdminInfo]); // Include superAdminInfo in the dependency array
+  
+
   const sidebarItems: SidebarItem[] = [
     {
       id: 1,
@@ -127,9 +138,11 @@ const AdminComponent = () => {
       superAdminPassword === data!?.password
     ) {
       setIsSuperAdminAuth(true);
-      setMsg("Welcome ✅");
+      dispatch(
+        addSuperAdmin({ email: superAdminEmail, password: superAdminPassword })
+      );
     } else {
-      setMsg("NOT ALLOWED !! ❌");
+      setMsg("Incorrect email or password! ❌");
     }
   };
 
@@ -269,7 +282,9 @@ const AdminComponent = () => {
                     >
                       Submit
                     </button>
-                    {msg}
+                    <span className="mt-3 font-bold text-sm text-rose-700">
+                      {msg}
+                    </span>
                   </div>
                 </form>
               </div>
