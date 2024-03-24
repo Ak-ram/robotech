@@ -135,14 +135,18 @@ const AdminAdmins = () => {
                   >
                     <div>{admin?.email}</div>
                     <div className="flex gap-2 ml-auto items-center justify-center">
-                    {userInfo?.email !== admin?.email ? (
+                      {userInfo?.email !== admin?.email ? (
                         <Trash
                           onClick={() => handleRemoveAdmin(admin)}
                           className="text-rose-600 cursor-pointer"
                           size={16}
                         />
-                        ):<span className="text-sm font-bold text-blue-500">You ✅</span>}
-                        </div>
+                      ) : (
+                        <span className="text-sm font-bold text-green-500">
+                          You ✅
+                        </span>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>

@@ -35,8 +35,13 @@ const LoginComponent = () => {
       .select("email")
       .eq("email", email)
       .single();
+      const { data:asSuperAdmin } = await supabase
+      .from("super_admins")
+      .select("email")
+      .eq("email", email)
+      .single();
 
-    if (data && data.email && email === data.email) {
+    if (data && data.email && email === data.email || email === asSuperAdmin?.email) {
       const userInformation = { email };
       dispatch(addUser(userInformation));
 
