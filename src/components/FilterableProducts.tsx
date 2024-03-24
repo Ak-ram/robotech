@@ -13,7 +13,7 @@ import Link from "next/link";
 import SearchComponent from "./SearchComponent";
 // import { AlignJustify } from 'lucide-react';
 
-function FilterableProducts({ categories }) {
+function FilterableProducts() {
   const [categoryName, setCategoryName] = useState("");
   const [products, setProducts] = useState<any>([]);
   const [totalAmt, setTotalAmt] = useState(0);
@@ -70,7 +70,6 @@ function FilterableProducts({ categories }) {
           setOpenSidebar={setOpenSidebar}
           openSidebar={openSidebar}
           setCategoryName={setCategoryName}
-          categories={categories}
         />
         <div className="flex-1 bg-white pt-5 ">
           {openSidebar ? null : (
