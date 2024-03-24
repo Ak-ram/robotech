@@ -58,7 +58,7 @@ function FilterableProducts() {
     }
   }, [categoryName]);
 
-  
+
 
   return (
     <div className="mt-3 md:mt-0">

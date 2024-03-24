@@ -34,9 +34,9 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
     const fetchProduct = async () => {
       try {
         const schema = prefix === "print" ? "public" : "products";
-    
-    
-    
+
+
+
         const { data } =
           prefix === "print"
             ? await supabase
@@ -49,7 +49,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 .select("*")
                 .eq("id", idString)
                 .single();
-    
+
         setProduct(data!);
         if (typeof window !== "undefined" && window.scrollTo) {
           window.scrollTo({ top: 0, behavior: "smooth" });
@@ -58,7 +58,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
         console.error("Error fetching products:", error);
       }
     };
-    
+
     if (typeof window !== "undefined") {
       fetchProduct();
     }
@@ -109,7 +109,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                     </a>
                   </div>
                 </li>
-            
+
                 {/* Separator */}
                 <li className="text-left">
                   <div className="flex items-center">
@@ -137,7 +137,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 <div className="lg:flex lg:items-center">
                   <div className="flex-1 lg:order-2 border-slate-300 rounded-md border-2">
                     <div className="max-w-xl mx-auto overflow-hidden rounded-lg">
-                    
+
                       {prefix === "print" ? (
                         <img
                           src={
@@ -292,7 +292,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   <p className="mt-4 text-xs sm:text-base">
                     Contact Us in Whatsapp : 01102071544
                   </p>
-                
+
                 </div>
               </div>
             </div>
