@@ -5,7 +5,6 @@ import { ChevronDown, Eye, TrashIcon } from "lucide-react";
 import supabase from "@/supabase/config";
 
 const SuperAdminBills = () => {
-  const [jsonArray, setJsonArray] = useState<any[]>([]);
   const [billsList, setBillsList] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchType, setSearchType] = useState("name");
@@ -18,7 +17,6 @@ const SuperAdminBills = () => {
       try {
         const { data } = await supabase.from("bills").select("");
         console.log(data);
-        setJsonArray(data!);
         setBillsList(data!);
       } catch (error) {
         console.log((error as Error).message);
@@ -49,12 +47,12 @@ const SuperAdminBills = () => {
   };
 
   const handleSearch = () => {
-    const filteredItems = filterItems(jsonArray, searchTerm, searchType);
+    const filteredItems = filterItems(billsList, searchTerm, searchType);
     setBillsList(filteredItems);
   };
 
   const openBill = (id) => {
-    const selected = jsonArray.find((bill) => bill.id === id);
+    const selected = billsList.find((bill) => bill.id === id);
     setSelectedBill(selected);
     setShowBill(true);
   };
@@ -102,7 +100,7 @@ const SuperAdminBills = () => {
         <div
           className={`min-h-[400px] lg:p-3 w-full bottom-0 left-0 lg:relative overflow-hidden mt-5`}
         >
-          {!jsonArray && (
+          {!billsList && (
             <h2 className="font-bold mb-4">Current Customer data:</h2>
           )}
 
