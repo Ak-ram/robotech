@@ -24,13 +24,13 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
     return (
 
         <section className="bg-white py-4 font-sans">
-            <div className=" max-w-6xl m-auto  flex flex-wrap items-start justify-start">
+            <div className=" max-w-6xl m-auto gap-2 flex flex-wrap items-start justify-start">
                 {products?.map((item) => (
                     <>
-                        <div key={item?.id} className="w-full border lg:w-1/2  flex flex-col mb-8 px-3">
-                            <div className="overflow-hidden flex bg-white rounded-lg shadow hover:shadow-raised hover:translateY-2px transition">
-                                <Link className='block w-[200px] h-[200px]' href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: categoryName } }}>
-                                    <img className="object-cover h-full w-full" src={item.poster} alt={item.title} />
+                        <div key={item?.id} className="w-full  lg:w-[49%]  flex flex-col mb-8 px-3">
+                            <div className="overflow-hidden border flex flex-col xs:flex-row bg-white rounded-lg shadow hover:shadow-raised hover:translateY-2px transition">
+                                <Link className='block sm:w-[200px] h-[200px]' href={{ pathname: `/id_${item?.id}`, query: { id: item?.id, prefix: categoryName } }}>
+                                    <img className="sm:object-cover h-full w-full" src={item.poster} alt={item.title} />
                                 </Link>
                                 <div className="p-3 flex flex-1 flex-col justify-between ">
                                     <h5 className='text-zinc-700 text-xs w-fit bg-gray-100 px-2 py-0.5 rounded font-semibold'>{item.category}</h5>
@@ -58,9 +58,9 @@ const CourseCard = ({ products, prefix, categoryName }: Item) => {
                                     <span className='font-semibold'>Level: <span className={`${item?.level.toLowerCase() === 'beginner' ? 'text-green-700' : item.level.toLowerCase() === 'intermediate' ? 'text-yellow-700' : item.level.toLowerCase() === 'advanced' ? "text-red-700" : ""}`}>{item.level.toLowerCase()}</span></span>
                                     <span className='font-semibold text-zinc-700'>Duration: {item.duration} hours</span>
 
-                                    <div className='flex w-full items-center  justify-between  mt-4'>
+                                    <div className='flex w-full items-center justify-end sm:justify-between  sm:mt-4'>
                                         {item.enrollmentOpen === 'open' && item.enrollmentLink ? <Link className='bg-orange-200 text-orange-600 font-bold rounded-md px-3 py-1.5 text-sm text-center transition' href={item.enrollmentLink!} >Enroll Now</Link> :
-                                            <button disabled={true} className={`bg-red-200 text-red-500 font-bold my-2 rounded-md px-3 py-1.5 text-xs text-center transition`}>
+                                            <button disabled={true} className={`bg-red-200 text-red-500 font-bold my-2 rounded-md px-3 py-1.5 text-sm text-center transition`}>
                                                 Enrolment Closed
                                             </button>
                                         }
