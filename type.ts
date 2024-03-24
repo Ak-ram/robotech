@@ -49,6 +49,7 @@ export interface StateProps {
   pro: {
     productData: ProductType[];
     userInfo: null | { email: string; password: string }; // Adjust this based on your actual state structure
+    superAdminInfo: null | { email: string; password: string }; // Adjust this based on your actual state structure
     orderData: {
       length: number;
       map(arg0: (item: ProductType) => import("react").JSX.Element): import("react").ReactNode;

@@ -4,6 +4,7 @@ import { ProductType } from "../../type";
 interface StoreState {
   productData: ProductType[];
   userInfo: null | string;
+  superAdminInfo: null | string;
   orderData: ProductType[];
   favoriteData: ProductType[];
   compareData: ProductType[];
@@ -12,6 +13,7 @@ interface StoreState {
 const initialState: StoreState = {
   productData: [],
   userInfo: null,
+  superAdminInfo: null,
   orderData: [],
   favoriteData: [],
   compareData: [],
@@ -25,8 +27,6 @@ export const proSlice = createSlice({
       const existingProduct = state.productData.find(
         (item: ProductType) => item?.id === action.payload.id && item?.title === action.payload.title
       );
-
-      console.log('exist',action.payload)
       if (existingProduct) {
         existingProduct.quantity += action.payload.quantity;
       } else {
@@ -107,6 +107,12 @@ export const proSlice = createSlice({
     deleteUser: (state) => {
       state.userInfo = null;
     },
+    addSuperAdmin: (state, action) => {
+      state.superAdminInfo = action.payload;
+    },
+    deleteSuperAdmin: (state) => {
+      state.superAdminInfo = null;
+    },
     addOrder: (state, action) => {
       const existingOrder = state.orderData.find(
         (item: ProductType) => item.id === action.payload.id
@@ -131,6 +137,8 @@ export const {
   resetCart,
   addUser,
   deleteUser,
+  addSuperAdmin,
+  deleteSuperAdmin,
   addOrder,
   resetOrder,
   addToFavorite,
