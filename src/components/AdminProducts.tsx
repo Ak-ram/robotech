@@ -132,7 +132,11 @@ const AdminComponent = () => {
     }
   };
   const handleRefresh = () => {
-    setRefresh(!refresh)
+
+    setRefresh(true)
+    setTimeout(() => {
+      setRefresh(false)
+    }, 1000);
   }
   return (
     <>
@@ -164,7 +168,7 @@ const AdminComponent = () => {
                     handleRefresh()
                   }
                 >
-                  <RefreshCcw size={16} />
+                  <RefreshCcw className={`${refresh ? "animate-spin":""}`} size={16} />
                 </button>
                 <div>
                   <span
