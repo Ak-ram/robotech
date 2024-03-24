@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { addSuperAdmin } from "@/redux/proSlice";
+import { addSuperAdmin, deleteSuperAdmin, deleteUser } from "@/redux/proSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { StateProps } from "../../type";
 import {
@@ -67,6 +67,8 @@ const AdminComponent = () => {
 
         if (data !== null) {
           setIsSuperAdminAuth(true);
+        }else{
+          setIsSuperAdminAuth(false)
         }
       };
 
@@ -140,6 +142,8 @@ const AdminComponent = () => {
       dispatch(
         addSuperAdmin({ email: superAdminEmail, password: superAdminPassword })
       );
+      // dispatch(deleteUser());
+
       const { data } = await supabase
         .from("admins")
         .select("*")
