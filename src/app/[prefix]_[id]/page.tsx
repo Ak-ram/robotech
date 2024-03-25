@@ -66,6 +66,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
 
   const dispatch = useDispatch();
   if (prefix === "courses") return <CoursePage searchParams={{}} />;
+  // if (!prefix) return <CoursePage searchParams={{}} />;
   return (
     <>
       {product ? (
