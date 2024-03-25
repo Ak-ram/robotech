@@ -9,6 +9,7 @@ import FormattedPrice from "@/components/FormattedPrice";
 import toast from "react-hot-toast";
 import ReactPlayer from "react-player";
 import supabase from "@/supabase/config";
+import { detectLanguage } from "@/lib/utils";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -71,7 +72,16 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
               : <img src={course?.poster} width={"100%"} height={"50%"} />
             }
 
-            <p className="">{course?.description}</p>
+            {course?.description.split("\n").map((line, i) => (
+              <div
+                dir={detectLanguage(course?.description) === "ar" ? "rtl" : "ltr"}
+                className="w-full"
+                key={i}
+              >
+                {i > 0 && <br />}
+                {line}
+              </div>
+            ))}
             <ul className="flex gap-4">
               <li className="flex items-center">
                 <span className="mr-1.5 rounded bg-gray-900 px-2 text-sm font-semibold text-white">
@@ -143,7 +153,7 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
               </button>
             ) : <span className="cursor-not-allowed sm:text-sm text-red-500 font-bold text-xs ">Register Closed</span>}
           </div>
-       
+
 
           <ul className="mt-2 space-y-4 mt-10 py-2">
             <li className="bg-white text-left">
@@ -272,8 +282,18 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                 </div>
                 <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
                   <p className="px-4 font-semibold text-gray-600 mb-6">
-                    {course?.more_details}
+                    {course?.more_details.split("\n").map((line, i) => (
+                      <div
+                        dir={detectLanguage(course?.more_details) === "ar" ? "rtl" : "ltr"}
+                        className="w-full"
+                        key={i}
+                      >
+                        {i > 0 && <br />}
+                        {line}
+                      </div>
+                    ))}
                   </p>
+
                 </div>
               </label>
             </li>}
