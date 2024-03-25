@@ -1,6 +1,7 @@
 import { navigation } from "@/constants/data";
 import { getCategories } from "@/helpers/getCategories";
 import supabase from "@/supabase/config";
+import { getAllProducts } from "@/supabase/getAllProducts";
 import {
   ChevronRight,
   Loader,
@@ -17,11 +18,26 @@ const Categories = ({
   setCategoryName,
   openSidebar,
   setOpenSidebar,
-  products,
+  categoryName
 }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-const [categories,setCategories] = useState<string[]>([""])
+  const [categories, setCategories] = useState<string[]>([""]);
+  const [products, setProducts] = useState<any>([]);
+  useEffect(() => {
+    fetchData();
+  }, [categoryName]);
+
+  // Inside useEffect
+  const fetchData = async () => {
+    try {
+      const {data} = await supabase.from('products').select("*").eq("category", categoryName.toLowerCase());
+      setProducts(data!);
+    } catch (error) {
+      console.error('Error fetching data:', (error as Error).message);
+    }
+  };
+
   const closeSidebar = () => {
     setSelectedCategory("");
     setIsOpen(false);
@@ -40,9 +56,8 @@ const [categories,setCategories] = useState<string[]>([""])
 
   return (
     <div
-      className={`flex ${
-        openSidebar ? " w-[320px] " : "w-0 "
-      } h-full border border-1 pt-0 shadow-xl absolute left-0 top-0 z-10 overflow-hidden ease-in-out duration-500 transition-all`}
+      className={`flex ${openSidebar ? " w-[320px] " : "w-0 "
+        } h-full border border-1 pt-0 shadow-xl absolute left-0 top-0 z-10 overflow-hidden ease-in-out duration-500 transition-all`}
     >
       <div className="flex-grow lg:flex-grow-0 w-full bg-white ">
         <div className="flex flex-col h-full p-3 overflow-y-auto">
@@ -62,11 +77,10 @@ const [categories,setCategories] = useState<string[]>([""])
                 closeSidebar();
               }}
               className={`text-ellipsis overflow-hidden w-full whitespace-nowrap
-                 ${
-                   selectedCategory === ""
-                     ? "bg-gray-100 text-black"
-                     : "text-zinc-800 hover:bg-zinc-100 hover:text-zinc-950"
-                 } font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
+                 ${selectedCategory === ""
+                  ? "bg-gray-100 text-black"
+                  : "text-zinc-800 hover:bg-zinc-100 hover:text-zinc-950"
+                } font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
             >
               <svg
                 className="mr-4 h-5 w-5 align-middle"
@@ -88,11 +102,10 @@ const [categories,setCategories] = useState<string[]>([""])
             {categories?.map((cat_title: string, i: number) => (
               <div key={`${cat_title}_${i}`}>
                 <button
-                  className={`text-ellipsis overflow-hidden w-full whitespace-nowrap ${
-                    selectedCategory === cat_title
+                  className={`text-ellipsis overflow-hidden w-full whitespace-nowrap ${selectedCategory === cat_title
                       ? "bg-gray-100 text-black"
                       : "text-zinc-800 hover:bg-zinc-100 hover:text-zinc-950"
-                  } font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
+                    } font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
                   onClick={() => {
                     setCategoryName(cat_title);
                     setSelectedCategory((prev) =>

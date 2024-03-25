@@ -67,12 +67,12 @@ function FilterableProducts() {
       <div
         className={`relative flex overflow-auto m-auto `}
       >
-        {/* <Categories
-          // products={products}
+        <Categories
           setOpenSidebar={setOpenSidebar}
+          categoryName={categoryName}
           openSidebar={openSidebar}
           setCategoryName={setCategoryName}
-        /> */}
+        /> 
         <div className="flex-1 bg-white pt-5 ">
           {openSidebar ? null : (
             <AlignJustify
