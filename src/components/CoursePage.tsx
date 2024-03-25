@@ -188,28 +188,16 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                 </div>
                 <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
                   <ul className="space-y-1 font-semibold text-gray-600 mb-6">
-                    {course?.index &&
-                      course?.index?.split("|").map((item, i) => (
-                        <li
-                          key={i}
-                          className="flex px-2 sm:px-6 py-2.5 hover:bg-gray-100"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className="mr-2 w-6"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                              clip-rule="evenodd"
-                            ></path>
-                          </svg>
-                          {item}
-                          {/* <span className="ml-auto text-sm"> 23 min </span> */}
-                        </li>
-                      ))}
+                    {course?.index.split("\n").map((line, i) => (
+                      <div
+                        dir={detectLanguage(course?.index) === "ar" ? "rtl" : "ltr"}
+                        className="px-4 font-semibold text-gray-600 mb-6 w-full"
+                        key={i}
+                      >
+                        {i > 0 && <br />}
+                        {line}
+                      </div>
+                    ))}
                   </ul>
                 </div>
               </label>
@@ -251,7 +239,8 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                 </div>
               </label>
             </li>
-            {course?.more_details?.length > 0 && course?.more_details !== " " && <li className="bg-white text-left">
+
+            {course?.more_details && <li className="bg-white text-left">
               <label
                 htmlFor="accordion-3"
                 className="relative flex flex-col rounded-md border border-gray-100 shadow-md"
@@ -281,22 +270,22 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                   </h3>
                 </div>
                 <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
-                  <p className="px-4 font-semibold text-gray-600 mb-6">
-                    {course?.more_details.split("\n").map((line, i) => (
-                      <div
-                        dir={detectLanguage(course?.more_details) === "ar" ? "rtl" : "ltr"}
-                        className="w-full"
-                        key={i}
-                      >
-                        {i > 0 && <br />}
-                        {line}
-                      </div>
-                    ))}
-                  </p>
+                  {course?.more_details.split("\n").map((line, i) => (
+                    <div
+                      dir={detectLanguage(course?.more_details) === "ar" ? "rtl" : "ltr"}
+                      className="px-4 font-semibold text-gray-600 mb-6 w-full"
+                      key={i}
+                    >
+                      {i > 0 && <br />}
+                      {line}
+                    </div>
+                  ))}
 
                 </div>
               </label>
             </li>}
+
+
           </ul>
         </div>
       </div>
