@@ -126,7 +126,7 @@ const Admin3DComponent = () => {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     key: string
   ) => {
     setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
@@ -155,29 +155,13 @@ const Admin3DComponent = () => {
                   Title
                 </th>
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  PP Unit
+                  Price Per Unit
                 </th>
-                {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  Previous Price
-                </th> */}
+         
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Image 1
                 </th>
-                {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  Image 2
-                </th>
-                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  Image 3
-                </th> */}
-                {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  Description
-                </th> */}
-                {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  Per Minute
-                </th> */}
-                {/* <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
-                  Brand
-                </th> */}
+                
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Actions
                 </th>
@@ -192,27 +176,11 @@ const Admin3DComponent = () => {
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     {item.price}
                   </td>
-                  {/* <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                    {item.previousPrice}
-                  </td> */}
+                 
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     <img src={item.image1} width="70" />
                   </td>
-                  {/* <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                    {item.count}
-                  </td> */}
-                  {/* <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                    <img src={item.image2} width="70" />
-                  </td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                    <img src={item.image3} width="70" />
-                  </td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                    {item.description}
-                  </td>
-                  <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                    {item.brand}
-                  </td> */}
+                
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
                     <button
                       className="mr-1"
@@ -270,6 +238,9 @@ const Admin3DComponent = () => {
                 />
               </div>
               <div className="w-full mb-2 lg:pr-4">
+              <span className="text-sm font-bold my-2 -ml-2">
+                  Previous Price
+                </span>
                 <input
                   type="text"
                   placeholder="Previous Price"
@@ -316,13 +287,12 @@ const Admin3DComponent = () => {
                   Description
                 </span>
 
-                <input
-                  type="text"
+                <textarea
                   placeholder="Description..."
                   className="p-2 w-full border border-gray-300 rounded"
                   value={editedItem.description}
                   onChange={(e) => handleInputChange(e, "description")}
-                />
+                ></textarea>
               </div>
               <div className="w-full mb-2 lg:pr-4">
                 <span className="text-sm font-bold my-2 -ml-2">
@@ -337,17 +307,7 @@ const Admin3DComponent = () => {
                   onChange={(e) => handleInputChange(e, "variations")}
                 />
               </div>
-              {/* <div className="w-full mb-2 lg:pr-4">
-             <span className="text-sm font-bold my-2 -ml-2">Count</span>
-
-              <input
-                type="text"
-                placeholder="Price Per Minute"
-                className="p-2 w-full border border-gray-300 rounded"
-                value={editedItem.count}
-                onChange={(e) => handleInputChange(e, "count")}
-              />
-            </div>   */}
+           
               <div className="w-full mb-2 lg:pr-4">
                 <span className="text-sm font-bold my-2 -ml-2">Per Unit</span>
 
@@ -392,16 +352,7 @@ const Admin3DComponent = () => {
           </div>
         </div>
       )}
-      {/* 
-      <div className="mt-5">
-        <button
-          className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-          onClick={handleAddItemClick}
-        >
-          <Plus size={18} className="mr-1" />
-          Add Item
-        </button>
-      </div> */}
+    
       <Toaster
         position="bottom-right"
         toastOptions={{

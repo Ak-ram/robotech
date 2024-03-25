@@ -242,35 +242,21 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                         <li className="font-bold text-black">
                           Product Attributes:
                         </li>
-                        {product?.description
-                          ?.split("|")
-                          .slice(1)
-                          .map((part, index) => {
-                            if (part.includes("|")) {
-                              const bullets = part
-                                .split("|")
-                                .map((bullet) => bullet.trim());
-                              return bullets.map((bullet, i) => (
-                                <li
-                                  key={i}
-                                  className="bg-white border-slate-500 flex items-center px-2 sm:px-6 py-2.5 hover:bg-gray-100 transition-colors duration-300 ease-in-out"
-                                >
-                                  <CheckCircle className="w-4 h-4 mr-2 text-black" />
-                                  <span>{bullet}</span>
-                                </li>
-                              ));
-                            } else {
-                              return (
-                                <li
-                                  className="mt-4 bg-white border-slate-400 border rounded p-2 text-xs sm:text-base items-center flex gap-1"
-                                  key={index}
-                                >
-                                  <CheckCircle className="w-4 h-4 min-w-[1rem] mr-2 text-black" />
-                                  <span>{part.split("|")[0]}</span>
-                                </li>
-                              );
-                            }
-                          })}
+                       
+
+{product?.description.split("\n").map((line, i) => (
+  <div
+    dir={detectLanguage(product?.description) === "ar" ? "rtl" : "ltr"}
+    className="w-full"
+    key={i}
+  >
+    {i > 0 && <br />} 
+    {line}
+  </div>
+))}
+
+
+
                       </ul>
                     ) : (
                       <p
@@ -284,6 +270,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                         {product?.description?.split("|").slice(0, 1)}
                       </p>
                     )}
+
                   </>
 
                   <h1 className="mt-8 text-lg md:text-3xl  font-bold">
