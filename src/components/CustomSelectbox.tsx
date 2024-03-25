@@ -7,7 +7,9 @@ const CustomSelect = ({
   selectedCat,
   setSelectedCat,
   categoryProducts,
+  setCategoryProducts,
   categoryList,
+  setcategoryList
 }) => {
   const [editableOption, setEditableOption] = useState("");
   const [editedOption, setEditedOption] = useState("");
@@ -27,9 +29,12 @@ const CustomSelect = ({
       const updatedCategoryList = categoryList.map((category) =>
         category === editableOption ? editedOption : category
       );
+      let temp = categoryProducts
+      setcategoryList(updatedCategoryList)
       setSelectedCat(editedOption);
-      console.log(categoryProducts);
       setEditableOption("");
+      console.log(categoryProducts,temp);
+      setCategoryProducts(temp)
       setInUpdateMode(false);
       await supabase
         .from("schema_table")

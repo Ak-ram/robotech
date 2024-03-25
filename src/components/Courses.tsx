@@ -6,7 +6,6 @@ import supabase from '@/supabase/config';
 
 function Courses() {
     const [courses, setCourses] = useState<any[]>([])
-
     useEffect(() => {
         const fetchCourses = async () => {
             try {

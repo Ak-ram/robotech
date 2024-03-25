@@ -80,18 +80,18 @@ const AdminAdmins = () => {
   return (
     <div
       className={`${
-        !show ? "border border-green-500 border-dashed" : ""
+        !show ? "border border-indigo-500 border-dashed" : ""
       } bg-white rounded-lg mb-5 overflow-hidden`}
     >
       <div
         className="flex items-center p-5 justify-between cursor-pointer"
         onClick={() => setShow(!show)}
       >
-        <h3 className="transform  transition-transform duration-500 font-semibold text-green-500">
+        <h3 className="transform  transition-transform duration-500 font-semibold text-indigo-500">
           {show ? "Click to Collapse" : "Expand Admins Request"}
         </h3>
         <ChevronDown
-          className={`transform text-green-500 transition-transform duration-300 ${
+          className={`transform text-indigo-500 transition-transform duration-300 ${
             show ? "rotate-180" : ""
           }`}
           size={25}

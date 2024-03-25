@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { TextareaHTMLAttributes, useEffect, useState } from "react";
 // import { fetchJsonData } from "@/helpers/getJSONData";
 import { updateJsonFile } from "@/helpers/updateJSONData";
 import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
@@ -162,62 +162,7 @@ const AdminCourses = () => {
             toast.error((error as Error).message);
         }
     };
-    // const handleEditSubmit = async () => {
-    //     try {
-    //         // Check for empty fields
-    //         if (
-    //             !editedItem.title ||
-    //             !editedItem.price ||
-    //             !editedItem.previousPrice ||
-    //             !editedItem.description ||
-    //             !editedItem.enrollmentOpen ||
-    //             !editedItem.enrollmentLink ||
-    //             !editedItem.instructor ||
-    //             !editedItem.duration ||
-    //             !editedItem.category ||
-    //             !editedItem.startDate ||
-    //             !editedItem.level ||
-    //             !editedItem.index ||
-    //             !editedItem.last_updated ||
-    //             !editedItem.more_details
-    //         ) {
-    //             toast.error("All fields are required");
-    //             return;
-    //         }
-
-    //         if (editIndex !== null) {
-    //             let updatedCourses;
-    //             if (editIndex === -1) {
-    //                 // Add a new course
-    //                 const { data, error } = await supabase
-    //                     .from('courses')
-    //                     .insert([editedItem]);
-    //                 if (error) {
-    //                     throw error;
-    //                 }
-    //                 updatedCourses = [...jsonArray, data![0]];
-    //             } else {
-    //                 // Update an existing course
-    //                 const { data, error } = await supabase
-    //                     .from('courses')
-    //                     .update(editedItem)
-    //                     .eq('id', editedItem.id);
-    //                 if (error) {
-    //                     throw error;
-    //                 }
-    //                 updatedCourses = jsonArray.map(course =>
-    //                     course.id === editedItem.id ? editedItem : course
-    //                 );
-    //             }
-
-    //             setJsonArray(updatedCourses);
-    //             setEditIndex(null);
-    //             toast.success("Course Added/Updated successfully");
-    //         }
-    //     } catch (error) {
-    //         toast.error((error as Error).message);
-    //     }
-    // };
+   
 
 
     const handleEditCancel = () => {
@@ -226,7 +171,7 @@ const AdminCourses = () => {
     };
 
     const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement>,
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
         key: string
     ) => {
         setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
@@ -340,14 +285,13 @@ const AdminCourses = () => {
                             <div className="w-full mb-2 lg:pr-4">
                                 <span className="text-sm font-bold my-2 -ml-2">Description</span>
 
-                                <input
+                                <textarea
                                     required
-                                    type="text"
                                     placeholder="Learn what is arduino and how to develop it..."
                                     className="p-2 w-full border border-gray-300 rounded"
                                     value={editedItem.description}
                                     onChange={(e) => handleInputChange(e, "description")}
-                                />
+                                ></textarea>
                             </div>
                             <div className="w-full mb-2 lg:pr-4">
                                 <span className="text-sm font-bold my-2 -ml-2">Video Sample</span>
@@ -422,13 +366,12 @@ const AdminCourses = () => {
                             <div className="w-full mb-2 lg:pr-4">
                                 <span className="text-sm font-bold my-2 -ml-2">Instructor Info</span>
 
-                                <input
-                                    type="text"
+                                <textarea
                                     placeholder="More about the Instructor"
                                     className="p-2 w-full border border-gray-300 rounded"
                                     value={editedItem.instructor_info}
                                     onChange={(e) => handleInputChange(e, "instructor_info")}
-                                />
+                                ></textarea>
                             </div>
                             <div className="w-full mb-2 lg:pr-4">
                                 <span className="text-sm font-bold my-2 -ml-2">Course Duration in hours</span>
@@ -476,13 +419,12 @@ const AdminCourses = () => {
                             <div className="w-full mb-2 lg:pr-4">
                                 <span className="text-sm font-bold my-2 -ml-2">Course Map</span>
 
-                                <input
-                                    type="text"
+                                <textarea
                                     placeholder="Indices separated by |, ex; topic 1 | topic 2 | ..."
                                     className="p-2 w-full border border-gray-300 rounded"
                                     value={editedItem.index}
                                     onChange={(e) => handleInputChange(e, "index")}
-                                />
+                                ></textarea>
                             </div>
                             <div className="w-full mb-2 lg:pr-4">
                                 <span className="text-sm font-bold my-2 -ml-2">Last Updated</span>
@@ -499,13 +441,12 @@ const AdminCourses = () => {
                             <div className="w-full mb-2 lg:pr-4">
                                 <span className="text-sm font-bold my-2 -ml-2">More Details</span>
 
-                                <input
-                                    type="text"
+                                <textarea
                                     placeholder="All rights reserved..."
                                     className="p-2 w-full border border-gray-300 rounded"
                                     value={editedItem.more_details}
                                     onChange={(e) => handleInputChange(e, "more_details")}
-                                />
+                                ></textarea>
                             </div>
                         </div>
                         <div className="flex">

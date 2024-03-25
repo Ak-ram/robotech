@@ -1,4 +1,4 @@
-import { Edit, Plus, Search, Trash } from "lucide-react";
+import { Edit, Plus, RefreshCcw, Search, Trash } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import FormattedPrice from "./FormattedPrice";
 import { cn } from "@/lib/utils";
@@ -19,6 +19,7 @@ const AdminComponent = () => {
   const [newCategoryName, setNewCategoryName] = useState("");
   const [ItemToEditId, setItemToEditId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     const getTablesList = async () => {
       const { data } = await supabase.from("schema_table").select("*");
@@ -36,8 +37,10 @@ const AdminComponent = () => {
         .eq("category", selectedCat);
       setCategoryProducts(data!);
     };
-    getList();
-  }, [selectedCat]);
+    if (selectedCat !== '') {
+      getList();
+    }
+  }, [selectedCat,refresh]);
 
   const handleAddCategory = async () => {
     // Check if the new category name already exists in the table
@@ -128,25 +131,13 @@ const AdminComponent = () => {
       toast.success("Category deleted successfully");
     }
   };
-  // const handleDeleteCategory = async () => {
-  //   const confirm = window.confirm("Sure to delete this category ?");
-  //   if (confirm) {
-  //     await supabase
-  //       .from("schema_table")
-  //       .delete()
-  //       .eq("table_name", selectedCat)
-  //       .single();
-  //     const { data, error } = await supabase
-  //       .from("products")
-  //       .select("*")
-  //       .eq("category", selectedCat);
-  //     const extractIds = data!.map(async(item) => {
-  //       await supabase.from("products").delete().eq('id',item.id);
-  //     });
+  const handleRefresh = () => {
 
-  //     console.log(extractIds);
-  //   }
-  // };
+    setRefresh(true)
+    setTimeout(() => {
+      setRefresh(false)
+    }, 1000);
+  }
   return (
     <>
       <div className="lg:p-3  min-h-[400px] z-10 bottom-0 left-0 overflow-hidden mt-5">
@@ -161,6 +152,8 @@ const AdminComponent = () => {
                     categoryList,
                     selectedCat,
                     setSelectedCat,
+                    setcategoryList,
+                    setCategoryProducts
                   }}
                 />
                 <button
@@ -169,7 +162,14 @@ const AdminComponent = () => {
                 >
                   Delete Category
                 </button>
-
+                <button
+                  className="mr-1"
+                  onClick={() =>
+                    handleRefresh()
+                  }
+                >
+                  <RefreshCcw className={`${refresh ? "animate-spin":""}`} size={16} />
+                </button>
                 <div>
                   <span
                     className={`flex ${show ? "hidden" : "block"} items-center`}
@@ -268,8 +268,8 @@ const AdminComponent = () => {
                               +product.count === 0
                                 ? "text-red-500"
                                 : +product.count > 10
-                                ? "text-green-500"
-                                : "text-orange-500",
+                                  ? "text-green-500"
+                                  : "text-orange-500",
                               "text-xs font-medium"
                             )}
                           >
@@ -293,6 +293,7 @@ const AdminComponent = () => {
                           >
                             <Edit size={16} />
                           </button>
+
                           <button
                             className="mr-1"
                             onClick={() => handleRemoveItem(product.id)}

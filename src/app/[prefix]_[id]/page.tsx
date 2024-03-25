@@ -34,22 +34,22 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
     const fetchProduct = async () => {
       try {
         const schema = prefix === "print" ? "public" : "products";
-    
-    
-    
+
+
+
         const { data } =
           prefix === "print"
             ? await supabase
-                .from("services")
-                .select("*")
-                .eq("id", idString)
-                .single()
+              .from("services")
+              .select("*")
+              .eq("id", idString)
+              .single()
             : await supabase
-                .from('products')
-                .select("*")
-                .eq("id", idString)
-                .single();
-    
+              .from('products')
+              .select("*")
+              .eq("id", idString)
+              .single();
+
         setProduct(data!);
         if (typeof window !== "undefined" && window.scrollTo) {
           window.scrollTo({ top: 0, behavior: "smooth" });
@@ -58,7 +58,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
         console.error("Error fetching products:", error);
       }
     };
-    
+
     if (typeof window !== "undefined") {
       fetchProduct();
     }
@@ -109,7 +109,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                     </a>
                   </div>
                 </li>
-            
+
                 {/* Separator */}
                 <li className="text-left">
                   <div className="flex items-center">
@@ -137,15 +137,15 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 <div className="lg:flex lg:items-center">
                   <div className="flex-1 lg:order-2 border-slate-300 rounded-md border-2">
                     <div className="max-w-xl mx-auto overflow-hidden rounded-lg">
-                    
+
                       {prefix === "print" ? (
                         <img
                           src={
                             mainImg === 1
                               ? product?.image1
                               : mainImg === 2
-                              ? product?.image2
-                              : product?.image3
+                                ? product?.image2
+                                : product?.image3
                           }
                         />
                       ) : (
@@ -154,8 +154,8 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                             mainImg === 1
                               ? product?.image1
                               : mainImg === 2
-                              ? product?.image2
-                              : product?.image3
+                                ? product?.image2
+                                : product?.image3
                           }
                         />
                       )}
@@ -236,54 +236,25 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   </h1>
 
                   <>
-                    {product?.description?.length &&
-                    product?.description?.includes("|") ? (
-                      <ul className="space-y-1 w-[90%] font-semibold mt-3 text-gray-600 mb-6">
-                        <li className="font-bold text-black">
-                          Product Attributes:
-                        </li>
-                        {product?.description
-                          ?.split("|")
-                          .slice(1)
-                          .map((part, index) => {
-                            if (part.includes("|")) {
-                              const bullets = part
-                                .split("|")
-                                .map((bullet) => bullet.trim());
-                              return bullets.map((bullet, i) => (
-                                <li
-                                  key={i}
-                                  className="bg-white border-slate-500 flex items-center px-2 sm:px-6 py-2.5 hover:bg-gray-100 transition-colors duration-300 ease-in-out"
-                                >
-                                  <CheckCircle className="w-4 h-4 mr-2 text-black" />
-                                  <span>{bullet}</span>
-                                </li>
-                              ));
-                            } else {
-                              return (
-                                <li
-                                  className="mt-4 bg-white border-slate-400 border rounded p-2 text-xs sm:text-base items-center flex gap-1"
-                                  key={index}
-                                >
-                                  <CheckCircle className="w-4 h-4 min-w-[1rem] mr-2 text-black" />
-                                  <span>{part.split("|")[0]}</span>
-                                </li>
-                              );
-                            }
-                          })}
-                      </ul>
-                    ) : (
-                      <p
-                        className="my-5 bg-white p-5 rounded"
-                        dir={
-                          detectLanguage(product?.description) === "ar"
-                            ? "rtl"
-                            : "ltr"
-                        }
-                      >
-                        {product?.description?.split("|").slice(0, 1)}
-                      </p>
-                    )}
+                    {product?.description?.length
+                      && (
+                        <ul className="space-y-1 w-[90%] font-semibold mt-3 text-gray-600 mb-6">
+                          <li className="font-bold text-black">
+                            Product Attributes:
+                          </li>
+                          {product?.description.split("\n").map((line, i) => (
+                            <div
+                              dir={detectLanguage(product?.description) === "ar" ? "rtl" : "ltr"}
+                              className="w-full"
+                              key={i}
+                            >
+                              {i > 0 && <br />}
+                              {line}
+                            </div>
+                          ))}
+                        </ul>
+                      )}
+
                   </>
 
                   <h1 className="mt-8 text-lg md:text-3xl  font-bold">
@@ -292,15 +263,15 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   <p className="mt-4 text-xs sm:text-base">
                     Contact Us in Whatsapp : 01102071544
                   </p>
-                
+
                 </div>
               </div>
             </div>
           </div>
           {products?.filter((item: ProductType) => item?.id !== product?.id)
             .length && (
-            <Related prefix={prefix} products={products} product={product} />
-          )}
+              <Related prefix={prefix} products={products} product={product} />
+            )}
           <Toaster
             position="bottom-right"
             toastOptions={{

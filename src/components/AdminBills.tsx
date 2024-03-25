@@ -58,25 +58,7 @@ const AdminBills = () => {
     setShowBill(true);
   };
 
-  const handleRemoveBill = async (id) => {
-    const confirm = window.confirm("Sure to Remove ?");
-    if (confirm) {
-      const index = billsList.findIndex((item) => item.id === id);
-      if (index === -1) return; // Customer not found
-      const updatedArray = [...billsList];
-      updatedArray.splice(index, 1);
-
-      try {
-        setBillsList(updatedArray);
-        await supabase.from("bills").delete().eq("id", id);
-
-        toast.success("Bill removed successfully");
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
+ 
   return (
     <div
       className={`min-h-[400px] lg:p-3 w-full bottom-0 left-0 lg:relative overflow-hidden mt-5`}
