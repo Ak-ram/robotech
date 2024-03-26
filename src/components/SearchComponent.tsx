@@ -1,14 +1,10 @@
 "use client";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import {
-  Dot,
   HelpCircle,
-  Loader,
   Loader2,
   Search,
-  SquareDot,
 } from "lucide-react";
-import Product from "./Product";
 import { ProductType } from "../../type";
 import supabase from "@/supabase/config";
 import SearchCard from "./SearchCard";
@@ -22,7 +18,6 @@ const SearchComponent = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false); // New state for loading indicator
 
-  // ...
 
   const fetchData = async () => {
     setLoading(true); // Set loading to true before fetching data

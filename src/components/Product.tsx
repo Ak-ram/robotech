@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllProducts } from "@/supabase/getAllProducts";
 import ProductCard from "./ProductCard";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Item {
   prefix: string;
@@ -46,22 +47,24 @@ const Product = ({ prefix, categoryName }: Item) => {
       <div className="mx-2 px-3 sm:mx-4 flex relative flex-wrap items-center justify-end">
         <ul className="flex items-center ml-auto -space-x-px h-8">
           <li className="mr-2">
-            Page No: {currentPage} 
+            Page No: {currentPage}
           </li>
           <li>
             <button
-              className={`flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700`}
+              className={`flex items-center justify-center px-1 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700`}
               onClick={handlePrev}
             >
+              <ChevronLeft size={18} />
               <span className="hidden sm:block ml-1">Previous</span>
             </button>
           </li>
           <li>
             <button
-              className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700`}
+              className={`flex items-center justify-center px-1 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700`}
               onClick={handleNext}
             >
               <span className="hidden sm:block mr-1">Next</span>
+              <ChevronRight size={18} />
             </button>
           </li>
         </ul>
