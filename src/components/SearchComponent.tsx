@@ -138,7 +138,7 @@ const SearchComponent = () => {
           </div>
         ) : res.length > 0 ? (
           <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
-          {res.map(item => <SearchCard item={item} prefix={item.category} />)}
+          {res.map((item,i) => <SearchCard key={i} item={item} prefix={item.category} />)}
           </div>
         ) : (
           <div className="flex min-h-[400px] items-center justify-center">
