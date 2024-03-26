@@ -3,6 +3,7 @@ import Slider, { Settings } from "react-slick";
 import Link from "next/link";
 import supabase from "@/supabase/config";
 import FormattedPrice from "./FormattedPrice";
+import { ProductType } from "../../type";
 
 const ProductSliderSM = () => {
   const [products, setProducts] = useState<any>([]);
@@ -21,19 +22,18 @@ const ProductSliderSM = () => {
     if (typeof window !== "undefined") {
       fetchProducts().then(data=>{
         setProducts(data);
-
       });
     }
   }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const nextIndex = (currentIndex + 1) % Math.ceil(products.length);
+      const nextIndex = (currentIndex + 1) % Math.ceil((products as Array<ProductType>).length);
       setCurrentIndex(nextIndex);
     }, 5 * 60 * 1000); // 5 minutes in milliseconds
 
     return () => clearTimeout(timer);
-  }, [currentIndex, products.length]);
+  }, [currentIndex,products]);
 
   const settings: Settings = {
     dots: false,
