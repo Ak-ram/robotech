@@ -24,10 +24,10 @@ function PrintServices() {
   }, []);
 
   return <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
-  {services.map((item) => (
+  {services.map((item,i) => (
 
 
-    <ServiceCard item={item} />
+    <ServiceCard key={`${item}_${i}`} item={item} />
 
   ))}
 </div>;
