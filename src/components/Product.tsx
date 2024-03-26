@@ -16,6 +16,10 @@ const Product = ({ prefix, categoryName }: Item) => {
   useEffect(() => {
     fetchData();
   }, [currentPage, perPage, categoryName]);
+  useEffect(() => {
+    // Reset page number to 1 whenever categoryName changes
+    setCurrentPage(1);
+  }, [categoryName]);
 
   // Inside Product component
   const handlePrev = () => {
