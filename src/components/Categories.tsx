@@ -57,7 +57,7 @@ const Categories = ({
   return (
     <div
       className={`flex ${openSidebar ? " w-[320px] " : "w-0 "
-        } h-full border border-1 pt-0 shadow-xl absolute left-0 top-0 z-10 overflow-hidden ease-in-out duration-500 transition-all`}
+        } h-full border border-1 pt-0 shadow-xl absolute left-0 top-0 z-10 overflow-hidden`}
     >
       <div className="flex-grow lg:flex-grow-0 w-full bg-white ">
         <div className="flex flex-col h-full p-3 overflow-y-auto">
@@ -80,7 +80,7 @@ const Categories = ({
                  ${selectedCategory === ""
                   ? "bg-gray-100 text-black"
                   : "text-zinc-800 hover:bg-zinc-100 hover:text-zinc-950"
-                } font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
+                } font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
             >
               <svg
                 className="mr-4 h-5 w-5 align-middle"
@@ -105,7 +105,7 @@ const Categories = ({
                   className={`text-ellipsis overflow-hidden w-full whitespace-nowrap ${selectedCategory === cat_title
                       ? "bg-gray-100 text-black"
                       : "text-zinc-800 hover:bg-zinc-100 hover:text-zinc-950"
-                    } font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
+                    } font-semibold flex cursor-pointer items-center lg:border-l-designColor py-2 px-4 font-medium text-gray-600 outline-none lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor focus:border-l-4  text-sm md:text-base`}
                   onClick={() => {
                     setCategoryName(cat_title);
                     setSelectedCategory((prev) =>
@@ -173,7 +173,7 @@ const Categories = ({
                 href={item?.href}
                 key={item._id}
                 passHref
-                className={`hover:bg-zinc-100 flex cursor-pointer items-center border-l-designColor py-2 px-4 font-semibold text-zinc-800 outline-none transition-all duration-100 ease-in-out lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor-600 focus:border-l-4  text-sm md:text-base`}
+                className={`hover:bg-zinc-100 flex cursor-pointer items-center border-l-designColor py-2 px-4 font-semibold text-zinc-800 outline-none lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor-600 focus:border-l-4  text-sm md:text-base`}
               >
                 <svg
                   className="mr-4 h-5 w-5 align-middle"
