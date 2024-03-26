@@ -25,42 +25,17 @@ const ProductSliderSM = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const nextIndex = (currentIndex + 1) % Math.ceil((products as Array<ProductType>).length);
-      setCurrentIndex(nextIndex);
-    }, 5 * 60 * 1000); // 5 minutes in milliseconds
-
-    return () => clearTimeout(timer);
-  }, [currentIndex,products]);
 
   const settings: Settings = {
     dots: false,
-    autoplaySpeed: 5000,
-    slidesToShow: 3, // Display three products per slide
-    slidesToScroll: 3,
+    infinite: true,
+    // autoplaySpeed: 5000,
+    slidesToShow: 2, // Display three products per slide
+    slidesToScroll: 2,
     arrows: false,
     draggable: true, // Enable dragging behavior
     // swipeToSlide: true, // Enable swiping behavior
-    beforeChange: (prev: number, next: number) => {
-      setDotActive(next);
-    },
-    appendDots: (dots: any) => (
-      <div style={{}} className="absolute">
-        <ul
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            gap: 3,
-            userSelect: "all",
-          }}
-          className="justify-center pb-5"
-        >
-          {dots}
-        </ul>
-      </div>
-    ),
+  
   };
 
   return (
