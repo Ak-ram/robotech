@@ -11,6 +11,7 @@ import {
 import Product from "./Product";
 import { ProductType } from "../../type";
 import supabase from "@/supabase/config";
+import SearchCard from "./SearchCard";
 
 const SearchComponent = () => {
   const [res, setRes] = useState<ProductType[]>([]);
@@ -21,15 +22,17 @@ const SearchComponent = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false); // New state for loading indicator
 
+  // ...
+
   const fetchData = async () => {
     setLoading(true); // Set loading to true before fetching data
-    let { data } = await supabase.from("products").select("*");
-    const searchResults = data!.filter((item: ProductType) =>
-      item.title.toLowerCase().includes(inputQuery.toLowerCase())
-    );
+    let { data } = await supabase
+      .from("products")
+      .select("*")
+      .filter("title", "ilike", `%${inputQuery}%`); // Use ilike filter for partial match search
 
     // Apply additional filters
-    let filteredResults = searchResults.filter((item: ProductType) => {
+    let filteredResults = data!.filter((item: ProductType) => {
       const isInPriceRange =
         item.price >= priceRange[0] && item.price <= priceRange[1];
       const isMatchingCategory =
@@ -61,35 +64,21 @@ const SearchComponent = () => {
   };
 
   const searching = (query: string) => {
-    // if (query.trim() === "") {
-    //   setInputError(null);
-    // } else {
-    //   if (query.length < 3) {
-    //     setInputError("less than 3 chars.");
-    //   } else {
-    //     setInputError(null);
-    //     setInputQuery(query);
-    //   }
-    // }
+
     setInputQuery(query);
   };
 
   return (
     <>
-      {/* {loading && (
-        <div className="flex items-center justify-center h-full absolute top-0 left-0 w-full bg-white opacity-75">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-        </div>
-      )} */}
+
       <div className="mt-2 !ml-0  border-t md:border-none border-gray-700 md:mt-0 relative flex-1 relative  justify-center items-center">
         <Search className="text-zinc-500 absolute top-7 sm:top-8 left-2 md:w-6 md:h-6" />
         <input
           onInput={(e: ChangeEvent<HTMLInputElement>) => {
             searching(e.target.value);
           }}
-          className={`shadow-lg text-lg !text-black outline-none sm:h-14 pl-10 border rounded-md pr-20 py-2 md:py-3 mr-auto mt-4 w-full ${
-            inputError ? "border-red-500" : ""
-          }`}
+          className={`shadow-lg text-lg !text-black outline-none sm:h-14 pl-10 border rounded-md pr-20 py-2 md:py-3 mr-auto mt-4 w-full ${inputError ? "border-red-500" : ""
+            }`}
           type="text"
           placeholder="Search..."
         />
@@ -153,8 +142,8 @@ const SearchComponent = () => {
             </div>
           </div>
         ) : res.length > 0 ? (
-          <div className="min-h-[400px] ">
-            <Product products={res} categoryName="" prefix="" />
+          <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
+          {res.map(item => <SearchCard item={item} prefix={item.category} />)}
           </div>
         ) : (
           <div className="flex min-h-[400px] items-center justify-center">
