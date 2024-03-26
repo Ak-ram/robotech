@@ -13,7 +13,7 @@ const ProductSlider = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const {data} = await supabase.from('products').select("*");
+                const {data} = await supabase.from('products').select("*").limit(36);
                 setProducts(data!);
             } catch (error) {
                 console.error('Error fetching products:', error);

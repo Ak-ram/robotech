@@ -9,7 +9,6 @@ const ProductSliderSM = () => {
   const [products, setProducts] = useState<any>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [dotActive, setDotActive] = useState<number>(0);
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
