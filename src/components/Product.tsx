@@ -76,10 +76,10 @@ const Product = ({ prefix, categoryName }: Item) => {
 
       {/* Render product cards */}
       <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
-        {products.map((item) => (
+        {products.map((item,i) => (
 
 
-          <ProductCard item={item} prefix={prefix} />
+          <ProductCard key={`${item}_${i}`} item={item} prefix={prefix} />
 
         ))}
       </div>
