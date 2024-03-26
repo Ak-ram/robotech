@@ -1,5 +1,5 @@
 "use client";
-import  supabase from "../supabase/config";
+import supabase from "../supabase/config";
 import React, { useState, useEffect, ChangeEvent } from "react";
 import Categories from "./Categories";
 import Product from "./Product";
@@ -11,11 +11,12 @@ import { ProductType, StateProps } from "../../type";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import SearchComponent from "./SearchComponent";
+import { getAllProducts } from "@/supabase/getAllProducts";
 // import { AlignJustify } from 'lucide-react';
 
 function FilterableProducts() {
   const [categoryName, setCategoryName] = useState("");
-  const [products, setProducts] = useState<any>([]);
+  // const [products, setProducts] = useState<any>([]);
   const [totalAmt, setTotalAmt] = useState(0);
   const [rowPrice, setRowPrice] = useState(0);
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -39,26 +40,27 @@ function FilterableProducts() {
     setRowPrice(rowAmt);
   }, [productData]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const { data, error } = categoryName
-          ? await supabase.from('products').select("").eq("category",categoryName.toLowerCase())
-          : await supabase.from("products").select("*");
-        console.log(categoryName);
-        setProducts(data!);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       // const { data, error } = categoryName
+  //       //   ? getAllProducts(categoryName)
+  //       //   : await supabase.from("products").select("*");
+  //       const p = getAllProducts(categoryName,10).then(data => setProducts(data));
+  //       // console.log(p)
+  //       ;
+  //     } catch (error) {
+  //       console.error("Error fetching products:", error);
+  //     }
+  //   };
 
-    if (typeof window !== "undefined") {
-      // Run the effect only in the browser environment
-      fetchProducts();
-    }
-  }, [categoryName]);
+  //   if (typeof window !== "undefined") {
+  //     // Run the effect only in the browser environment
+  //     fetchProducts();
+  //   }
+  // }, [categoryName]);
 
-  
+
 
   return (
     <div className="mt-3 md:mt-0">
@@ -66,11 +68,11 @@ function FilterableProducts() {
         className={`relative flex overflow-auto m-auto `}
       >
         <Categories
-          products={products}
           setOpenSidebar={setOpenSidebar}
+          categoryName={categoryName}
           openSidebar={openSidebar}
           setCategoryName={setCategoryName}
-        />
+        /> 
         <div className="flex-1 bg-white pt-5 ">
           {openSidebar ? null : (
             <AlignJustify
@@ -91,14 +93,13 @@ function FilterableProducts() {
             <SearchComponent />
           </div> */}
           <div
-            className={`${
-              openSidebar ? "blur-md flex" : "blur-none"
-            } `}
+            className={`${openSidebar ? "blur-md flex" : "blur-none"
+              } `}
           >
             <Product
               categoryName={categoryName}
               prefix={"pr"}
-              products={products}
+              // products={products}
             />
           </div>
         </div>

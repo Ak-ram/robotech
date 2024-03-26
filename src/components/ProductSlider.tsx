@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
 import supabase from "@/supabase/config";
 
 const ProductSlider = () => {
@@ -10,7 +9,6 @@ const ProductSlider = () => {
     const productsPerPage = 12; // Number of products per slide
     const [dotActive, setDotActive] = useState<number>(0);
 
-    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchProducts = async () => {
