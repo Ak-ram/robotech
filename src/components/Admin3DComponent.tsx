@@ -53,18 +53,16 @@ const Admin3DComponent = () => {
       wholesalePrice: 0,
     });
   };
-
   const handleRemoveItem = async (id: number) => {
-   let confirm = window.confirm('Sure to delete ? ')
-   if(!confirm) return;
-   try {
-    await supabase.from("services").delete().eq("id", id);
-
-    setJsonArray(jsonArray.filter((item) => item.id !== id));
-    toast.success("Service removed successfully");
-  } catch (error) {
-    toast.error((error as Error).message);
-  }
+    let confirm = window.confirm('Sure to delete ? ')
+    if (!confirm) return;
+    try {
+      await supabase.from("services").delete().eq("id", id);
+      setJsonArray(jsonArray.filter((item) => item.id !== id));
+      toast.success("Service removed successfully");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
   };
 
   const handleEditClick = (id: number) => {
