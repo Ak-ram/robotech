@@ -5,21 +5,24 @@ import supabase from "@/supabase/config";
 import FormattedPrice from "./FormattedPrice";
 
 const ProductSliderSM = () => {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<any>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [dotActive, setDotActive] = useState<number>(0);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await supabase.from("products").select("*");
-        setProducts(data!);
+        const { data } = await supabase.from("products").select("*").limit(6);
+        return data;
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
     if (typeof window !== "undefined") {
-      fetchProducts();
+      fetchProducts().then(data=>{
+        setProducts(data);
+
+      });
     }
   }, []);
 
@@ -64,7 +67,7 @@ const ProductSliderSM = () => {
   return (
     <div className="productslidersm lg:hidden relative border h-[97%] border-slate-300">
       <Slider {...settings} initialSlide={currentIndex}>
-        {products.map((product, index) => (
+        {products && products.map((product, index) => (
           <div className="!flex !w-[250px]  border border-gray-300 px-1 hover:border-orange-400 rounded-lg overflow-hidden" key={index}>
             <Link
               href={{
