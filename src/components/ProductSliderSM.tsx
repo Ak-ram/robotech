@@ -4,15 +4,15 @@ import Link from "next/link";
 import supabase from "@/supabase/config";
 import FormattedPrice from "./FormattedPrice";
 import { ProductType } from "../../type";
+import { getAllProducts } from "@/supabase/getAllProducts";
 
 const ProductSliderSM = () => {
   const [products, setProducts] = useState<any>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [dotActive, setDotActive] = useState<number>(0);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await supabase.from("products").select("*").limit(6);
+        const  data = getAllProducts(undefined,6,undefined)
         return data;
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -23,7 +23,7 @@ const ProductSliderSM = () => {
         setProducts(data);
       });
     }
-  }, []);
+  }, [products]);
 
 
   const settings: Settings = {

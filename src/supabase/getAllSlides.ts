@@ -15,7 +15,7 @@ if (typeof window !== 'undefined') {
   window.addEventListener("beforeunload", releaseCachedData);
 }
 
-const getAllProducts = async (categoryName?: string, limit: number = 10, offset: number = 0) => {
+const getAllSlides = async () => {
   try {
     // If the user has left the website, release cached data
     if (!isUserActive) {
@@ -23,28 +23,13 @@ const getAllProducts = async (categoryName?: string, limit: number = 10, offset:
       isUserActive = true; // Reset flag for the next session
     }
 
-    // Generate a cache key based on inputs
-    const cacheKey = `${categoryName || 'all'}_${limit}_${offset}`;
-
     // If data exists in cache, return it
-    if (cache[cacheKey]) {
-      return cache[cacheKey];
+    if (Object.keys(cache).length > 0) {
+      return Object.values(cache)[0]; // Return the first (and only) item in the cache
     }
-
-    // Calculate the range for fetching data
-    const from = offset;
-    const to = offset + limit - 1;
 
     // Construct the query
-    let query = supabase.from('products')
-      .select('*')
-      .range(from, to)
-      .order('id', { ascending: true });
-
-    // Add category filter if provided
-    if (categoryName) {
-      query = query.eq("category", categoryName.toLowerCase());
-    }
+    let query = supabase.from('slides').select('*');
 
     // Execute the query
     const { data, error } = await query;
@@ -54,13 +39,13 @@ const getAllProducts = async (categoryName?: string, limit: number = 10, offset:
     }
 
     // Cache the fetched data
-    cache[cacheKey] = data || [];
+    cache['slides'] = data || [];
 
-    return cache[cacheKey];
+    return cache['slides'];
   } catch (error) {
-    console.error('Error fetching products:', (error as Error).message);
+    console.error('Error fetching slides:', (error as Error).message);
     return []; // Return an empty array in case of error
   }
 };
 
-export { getAllProducts };
+export { getAllSlides };

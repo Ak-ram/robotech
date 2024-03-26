@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Link2 } from "lucide-react";
 import supabase from "@/supabase/config";
 import ProductSliderSM from "./ProductSliderSM";
+import { getAllSlides } from "@/supabase/getAllSlides";
 
 
 interface BannerProps { }
@@ -65,26 +66,27 @@ const Banner: React.FC<BannerProps> = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const {data} = await supabase
-        .from('slides')
-        .select("*");
-      setSlides(data || []);
+        const data = await getAllSlides(); // Await the promise resolution
+        return data;
       } catch (error) {
         console.error("Error fetching products:", error);
+        return []; // Return an empty array if there's an error
       }
     };
-
+  
     if (typeof window !== "undefined") {
-      // Run the effect only in the browser environment
-      fetchProducts();
+      fetchProducts().then(data => {
+        setSlides(data);
+      });
     }
-  }, []);
+  }, []); // Removed slides from dependency array to prevent infinite loop
+  
 
   return (
     <div className="relative flex flex-col lg:flex-row gap-3 lg:mt-2 lg:p-5 bg-white">
       <div className="lg:w-[70%] overflow-hidden  rounded-lg ">
         <Slider {...settings}>
-          {slides.map((slide, index) => (
+          {slides && slides.map((slide, index) => (
             <div
               key={slide?.id}
               className={`${dotActive === index ? "z-10" : "z-0"
@@ -96,7 +98,7 @@ const Banner: React.FC<BannerProps> = () => {
                   alt={`Slide ${index}`}
                   className="object-contian w-full border border-designColor/40 overflow-hidden "
                 />
-                <Link href={slide?.link_url} className="my-2">
+                <Link href={slide?.link_url || '#'} className="my-2">
                   <button className="flex items-center gap-1 justify-center hover:underline font-bold py-1 px-2 ">
                     <Link2 size={17} /><span className="text-xs">more info... </span>
                   </button>
@@ -108,7 +110,7 @@ const Banner: React.FC<BannerProps> = () => {
       </div>
       <div className="lg:block lg:w-[28%]">
         <ProductSlider />
-        <ProductSliderSM/>
+        <ProductSliderSM />
       </div>
     </div>
   );
