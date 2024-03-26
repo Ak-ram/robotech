@@ -12,7 +12,6 @@ import {
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import { getCategoryProducts } from "@/helpers/getCategoryProducts";
-import Related from "@/components/Related";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "@/components/Loading";
 import ProductDetails from "@/components/ProductDetails";
@@ -24,7 +23,6 @@ type Props = {
 
 const Page: React.FC<Props> = ({ searchParams }: Props) => {
   const [product, setProduct] = useState<any>();
-  const [products, setProducts] = useState<any[]>([]);
   const [mainImg, setMainImg] = useState<1 | 2 | 3>(1);
   const searchPar = useSearchParams();
   const idString = searchPar?.get("id");
@@ -33,7 +31,6 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const schema = prefix === "print" ? "public" : "products";
 
 
 
@@ -214,7 +211,6 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 prefix={prefix}
                 dispatch={dispatch}
                 addToCart={addToCart}
-                products={products}
               />
 
               <div className="lg:col-span-3">
@@ -269,10 +265,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
               </div>
             </div>
           </div>
-          {products?.filter((item: ProductType) => item?.id !== product?.id)
-            .length && (
-              <Related prefix={prefix} products={products} product={product} />
-            )}
+          
           <Toaster
             position="bottom-right"
             toastOptions={{
