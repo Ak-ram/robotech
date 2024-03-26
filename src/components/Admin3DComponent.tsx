@@ -3,6 +3,7 @@ import { Check, X, Trash, Edit, Link, Plus } from "lucide-react";
 import NoContent from "./NoContent";
 import toast, { Toaster } from "react-hot-toast";
 import supabase from "@/supabase/config";
+import { detectLanguage } from "@/lib/utils";
 
 const Admin3DComponent = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
@@ -54,14 +55,16 @@ const Admin3DComponent = () => {
   };
 
   const handleRemoveItem = async (id: number) => {
-    try {
-      await supabase.from("services").delete().eq("id", id);
+   let confirm = window.confirm('Sure to delete ? ')
+   if(!confirm) return;
+   try {
+    await supabase.from("services").delete().eq("id", id);
 
-      setJsonArray(jsonArray.filter((item) => item.id !== id));
-      toast.success("Service removed successfully");
-    } catch (error) {
-      toast.error((error as Error).message);
-    }
+    setJsonArray(jsonArray.filter((item) => item.id !== id));
+    toast.success("Service removed successfully");
+  } catch (error) {
+    toast.error((error as Error).message);
+  }
   };
 
   const handleEditClick = (id: number) => {
@@ -157,11 +160,11 @@ const Admin3DComponent = () => {
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Price Per Unit
                 </th>
-         
+
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Image 1
                 </th>
-                
+
                 <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">
                   Actions
                 </th>
@@ -176,11 +179,11 @@ const Admin3DComponent = () => {
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     {item.price}
                   </td>
-                 
+
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
                     <img src={item.image1} width="70" />
                   </td>
-                
+
                   <td className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
                     <button
                       className="mr-1"
@@ -238,7 +241,7 @@ const Admin3DComponent = () => {
                 />
               </div>
               <div className="w-full mb-2 lg:pr-4">
-              <span className="text-sm font-bold my-2 -ml-2">
+                <span className="text-sm font-bold my-2 -ml-2">
                   Previous Price
                 </span>
                 <input
@@ -288,6 +291,8 @@ const Admin3DComponent = () => {
                 </span>
 
                 <textarea
+                  dir={detectLanguage(editedItem.description) === "ar" ? "rtl" : "ltr"}
+
                   placeholder="Description..."
                   className="p-2 w-full border border-gray-300 rounded"
                   value={editedItem.description}
@@ -307,7 +312,7 @@ const Admin3DComponent = () => {
                   onChange={(e) => handleInputChange(e, "variations")}
                 />
               </div>
-           
+
               <div className="w-full mb-2 lg:pr-4">
                 <span className="text-sm font-bold my-2 -ml-2">Per Unit</span>
 
@@ -352,7 +357,7 @@ const Admin3DComponent = () => {
           </div>
         </div>
       )}
-    
+
       <Toaster
         position="bottom-right"
         toastOptions={{
