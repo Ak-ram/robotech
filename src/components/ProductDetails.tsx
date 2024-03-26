@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
 import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon, Paintbrush, ShoppingBag, AlertCircle, Youtube } from "lucide-react";
@@ -9,8 +9,10 @@ import Link from "next/link";
 import ShareProductOnFacebook from "./ShareProductOnFacebook";
 import ShareProductOnTwitter from "./ShareProductOnTwitter";
 import { isColor } from "@/lib/utils";
+import supabase from "@/supabase/config";
 
-const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
+const ProductDetails = ({ product, prefix, dispatch, addToCart }) => {
+    const [products, setProducts] = useState<any>([])
     const openWhatsApp = () => {
         const phoneNumber = "201102071544";
         const message = "Hi Robotech, I need some help.";
@@ -26,7 +28,13 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
             // You might want to handle this case differently based on your requirements.
         }
     };
-
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data } = await supabase.from('products').select("*").eq('category', product.category)
+            setProducts(data!)
+        }
+fetchData()
+    },[product])
     return (
         <div className="bg-white p-6 rounded lg:col-span-2 lg:row-span-2 lg:row-end-2">
             <h1 className="text-3xl font-bold text-gray-900">{product?.title}</h1>
@@ -136,10 +144,7 @@ const ProductDetails = ({ product, prefix, dispatch, addToCart, products }) => {
                     <span className="font-semibold">Whatsapp: 01102071544</span>
                 </div>
 
-                {/* <FacebookShareButton className="flex items-center" url={'robotechspace.com' + product.id}>
-                    <FacebookIcon className="w-4 h-4 text-blue-500 mr-2" />
-                    <span className="font-semibold">Share on Facebook</span>
-                </FacebookShareButton> */}
+              
                 <ShareProductOnFacebook product={product} className="flex items-center" />
                 <ShareProductOnTwitter product={product} className="flex items-center" />
 
