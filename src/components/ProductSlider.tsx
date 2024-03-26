@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
 import Link from "next/link";
 import supabase from "@/supabase/config";
+import { getAllProducts } from "@/supabase/getAllProducts";
 
 const ProductSlider = () => {
     const [products, setProducts] = useState<any[]>([]);
@@ -12,17 +13,19 @@ const ProductSlider = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            try {
-                const {data} = await supabase.from('products').select("*").limit(36);
-                setProducts(data!);
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            }
+          try {
+            const  data = getAllProducts(undefined,36,undefined)
+            return data;
+          } catch (error) {
+            console.error("Error fetching products:", error);
+          }
         };
-        if (typeof window !== 'undefined') {
-            fetchProducts();
+        if (typeof window !== "undefined") {
+          fetchProducts().then(data=>{
+            setProducts(data);
+          });
         }
-    }, []);
+      }, [products]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
