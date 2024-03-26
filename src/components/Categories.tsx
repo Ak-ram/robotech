@@ -57,7 +57,7 @@ const Categories = ({
   return (
     <div
       className={`flex ${openSidebar ? " w-[320px] " : "w-0 "
-        } h-full border border-1 pt-0 shadow-xl absolute left-0 top-0 z-10 overflow-hidden`}
+        } h-full border border-1 pt-0 shadow-xl absolute left-0 top-0 z-10 overflow-hidden ease-in-out duration-300 transition-all`}
     >
       <div className="flex-grow lg:flex-grow-0 w-full bg-white ">
         <div className="flex flex-col h-full p-3 overflow-y-auto">
@@ -173,7 +173,7 @@ const Categories = ({
                 href={item?.href}
                 key={item._id}
                 passHref
-                className={`hover:bg-zinc-100 flex cursor-pointer items-center border-l-designColor py-2 px-4 font-semibold text-zinc-800 outline-none lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor-600 focus:border-l-4  text-sm md:text-base`}
+                className={`hover:bg-zinc-100 flex cursor-pointer items-center border-l-designColor py-2 px-4 font-semibold text-zinc-800 outline-none  lg:hover:border-l-4 lg:hover:border-l-designColor lg:hover:text-designColor-600 focus:border-l-4  text-sm md:text-base`}
               >
                 <svg
                   className="mr-4 h-5 w-5 align-middle"
