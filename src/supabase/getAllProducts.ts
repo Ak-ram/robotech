@@ -88,9 +88,9 @@ const releaseCachedData = () => {
   isUserActive = false;
 };
 
-// Event listener to detect when the user leaves the website
-window.addEventListener("beforeunload", releaseCachedData);
-
+if (typeof window !== 'undefined') {
+  window.addEventListener("beforeunload", releaseCachedData);
+}
 const getAllProducts = async (categoryName, limit, offset) => {
   try {
     // If the user has left the website, release cached data
