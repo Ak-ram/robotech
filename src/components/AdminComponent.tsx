@@ -24,12 +24,7 @@ const AdminComponent = () => {
     (state: StateProps) => state.pro.superAdminInfo
   );
 
-  const [selectedItem, setSelectedItem] = useState<SidebarItem | null>({
-    id: 1,
-    icon: <LayoutList />,
-    label: "Products",
-    content: <AdminProducts />,
-  });
+  const [selectedItem, setSelectedItem] = useState<SidebarItem | null>(sidebarItems[0]);
   const [isOpen, setOpen] = useState<Boolean>(true);
   const [superAdminPassword, setSuperAdminPassword] = useState<string>("");
   const [superAdminEmail, setSuperAdminEmail] = useState<string>("");
