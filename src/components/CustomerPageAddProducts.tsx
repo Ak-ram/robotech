@@ -77,7 +77,7 @@ const CustomerPageAddProducts = ({
         // Extract existing transactions from the fetched data
         const existingTransactions = data?.transactions || { products: [] };
         let newV = existingTransactions.products.filter(
-          (product) => product.productId !== productToRefund.productId
+          (product) => product.productId !== productToRefund.productId && product.date !== productToRefund.date 
         );
         existingTransactions.products = newV;
         await supabase
