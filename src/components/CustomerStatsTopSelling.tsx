@@ -1,11 +1,13 @@
 "use client";
 import supabase from "@/supabase/config";
-import { Activity, Briefcase, Book, ChevronDown } from "lucide-react";
+import { Activity, Briefcase, Book, ChevronDown, RefreshCcw } from "lucide-react";
 import { useState } from "react";
 
 const CustomerStatsTopSelling = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const [customers, setCusomers] = useState<any>([]);
+  const [refresh, setRefresh] = useState(false);
+
   const getCustomers = async () => {
     const { data } = await supabase.from("customers").select("*");
     data! && setCusomers(data);
@@ -36,6 +38,12 @@ const CustomerStatsTopSelling = () => {
 
     return { mostSellingProduct, sellingTimes: maxQuantity };
   };
+  const handleRefresh = () => {
+    setRefresh(true)
+    setTimeout(() => {
+      setRefresh(false)
+    }, 1000);
+  }
   const getMostSellingService = () => {
     const serviceMap = new Map();
     customers.forEach((customer) => {
@@ -93,9 +101,8 @@ const CustomerStatsTopSelling = () => {
   return (
     // <div className=" flex-1 bg-white  rounded-lg shadow-md animate-fade-in">
     <div
-      className={`top-selling-card ${
-        !isShow ? "border border-rose-500 border-dashed" : ""
-      } px-3 py-5 my-5  bg-white rounded-lg mb-5 overflow-hidden`}
+      className={`top-selling-card ${!isShow ? "border border-rose-500 border-dashed" : ""
+        } px-3 py-5 my-5  bg-white rounded-lg mb-5 overflow-hidden`}
     >
       <div
         className={`flex items-center justify-between cursor-pointer`}
@@ -105,20 +112,29 @@ const CustomerStatsTopSelling = () => {
           {isShow ? "Click to Collapse" : "Expand Top Selling"}
         </h3>
         <ChevronDown
-          className={`text-rose-400 transform transition-transform duration-300 ${
-            isShow ? "rotate-180" : ""
-          }`}
+          className={`text-rose-400 transform transition-transform duration-300 ${isShow ? "rotate-180" : ""
+            }`}
           size={25}
         />
       </div>
       {isShow && (
         <>
-          <h2 className="mt-5 top-selling-heading text-2xl font-semibold mb-6 flex items-center justify-center bg-blue-100 py-2 px-4 rounded-md">
+         <button
+              className="mr-2 my-2 ml-auto block"
+              onClick={() =>
+                handleRefresh()
+              }
+            >
+              <RefreshCcw className={`${refresh ? "animate-spin" : ""}`} size={16} />
+            </button>
+          <h2 className=" top-selling-heading text-2xl font-semibold mb-6 flex items-center justify-center bg-blue-100 py-2 px-4 rounded-md">
+            
             <span className="top-selling-icon mr-2 text-blue-500">
               <Activity size={24} />
             </span>
             Top Selling
           </h2>
+         
           <div className="top-selling-products grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="top-selling-product mb-3 py-3 px-2 rounded-md border border-gray-200">
               <h3 className="top-selling-title text-lg font-semibold mb-3 flex items-center">
