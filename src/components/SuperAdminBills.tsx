@@ -131,7 +131,7 @@ const SuperAdminBills = () => {
             </button>
           </div>
           {billsList.length !== 0 ? (
-            <div className={"flex flex-col gap-2"}>
+            <div className={"flex h-[400px] overflow-auto flex-col gap-2"}>
               {billsList.map((item, index) => (
                 <div
                   key={index}

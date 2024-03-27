@@ -38,15 +38,15 @@ const Announcement = () => {
 
     let announcement = closed ? null : (
         <div className="items-start sm:items-center bg-blue-500 text-white py-3 px-2 sm:px-5 flex">
-            <div className="container w-[90%] mx-auto sm:gap-3 flex flex-col items-center sm:flex-row sm:items-center">
+            <div className="container w-[90%] mx-auto sm:gap-3 flex flex-col sm:flex-row">
                 <Link href={data[0]?.link_url || ''}
-                    className="flex flex-nowrap hover:underline gap-1 items-center overflow-auto w-fit text-xs sm:text-sm font-semibold">
+                    className="flex hover:underline gap-1 items-center overflow-hidden w-fit text-xs sm:text-sm font-semibold">
                     <Feather width={25} height={25} className="hidden xs:inline-block" />
                     {data.length > 0 && data[0].body}
 
                 </Link>
             </div>
-            <span className="hover:text-white text-white/80 cursor-pointer mt-2 sm:mt-0 ml-3" onClick={() => setClosing(true)}>
+            <span className="hover:text-white text-white/80 cursor-pointer" onClick={() => setClosing(true)}>
                 <X className="" size={20} />
             </span>
         </div>

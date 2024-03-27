@@ -5,9 +5,9 @@ import React from "react";
 const page = async () => {
 
   return (
-    <Container className="py-10">
+    <Container className="pt-7 !m-0">
       <div className="border-b border-gray-400 pb-4 flex items-center justify-between">
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center mx-3 space-x-4">
         {/* Lucide Printer icon */}
         <PackageCheck className="w-8 h-8 text-gray-600" />
         <div>

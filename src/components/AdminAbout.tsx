@@ -40,6 +40,8 @@ const AdminAbout = () => {
   };
 
   const handleRemoveItem = async (id: number) => {
+    const confirm = window.confirm('sure to delete ?')
+    if(!confirm) return;
     try {
       await supabase.from("news").delete().eq("id", id);
 

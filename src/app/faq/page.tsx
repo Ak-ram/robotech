@@ -8,8 +8,8 @@ const page = async () => {
   // const products = await getFaq();
   return (
 
-    <Container className="py-10">
-      <div className="border-b border-gray-400 pb-4 flex items-center justify-between">
+    <Container className="pt-10 !mx-0">
+      <div className="border-b px-3 border-gray-400 pb-4 flex items-center justify-between">
         <div className="flex items-center space-x-4">
           {/* Lucide HelpCircle icon */}
           <HelpCircle className="w-8 h-8 text-gray-600" />

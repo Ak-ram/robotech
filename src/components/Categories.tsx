@@ -57,7 +57,7 @@ const Categories = ({
   return (
     <div
       className={`flex ${openSidebar ? " w-[320px] " : "w-0 "
-        } h-full border border-1 pt-0 shadow-xl absolute left-0 top-0 z-10 overflow-hidden ease-in-out duration-300 transition-all`}
+        } h-full border border-1 pt-0 shadow-xl absolute left-0 top-0 z-[5] overflow-hidden ease-in-out duration-300 transition-all`}
     >
       <div className="flex-grow lg:flex-grow-0 w-full bg-white ">
         <div className="flex flex-col h-full p-3 overflow-y-auto">

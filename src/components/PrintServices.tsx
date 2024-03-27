@@ -23,7 +23,7 @@ function PrintServices() {
     }
   }, []);
 
-  return <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
+  return <div className="bg-white p-3 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
   {services.map((item,i) => (
 
 

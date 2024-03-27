@@ -42,17 +42,17 @@ function SupportComponent() {
   };
 
   return (
-    <div className="min-h-[400px]  rounded py-1">
+    <div className="min-h-[400px]  rounded">
       <div>
-        <div className="flex bg-slate-100 py-2 items-center justify-center gap-2 mx-auto text-center px-4 mt-8 text-2xl text-indigo-900 font-semibold">
+        <div className="flex bg-slate-100 py-2 items-center justify-center gap-1 mx-auto text-center px-4 text-xl md:text-2xl text-indigo-900 font-semibold">
           <Activity className='bg-white w-12 h-12 p-2 rounded-full text-rose-400' size={30} /> Frequently Asked Questions
         </div>
-        <dl style={{ direction: 'rtl' }} className="mt-8 mx-auto max-w-screen-sm lg:max-w-screen-lg flex flex-col lg:flex-row lg:flex-wrap">
+        <dl style={{ direction: 'rtl' }} className="mt-2 mx-auto flex flex-col lg:flex-row lg:flex-wrap">
           <div className="lg:w-1/2">
             {data &&
               data.slice(0, Math.ceil(data?.length / 2)).map((item, i) => (
                 <div
-                  className="question-and-answer select-none cursor-pointer border-2 mx-8 my-2 rounded-lg group"
+                  className="question-and-answer select-none cursor-pointer border-2 mx-2 my-2 rounded-lg group"
                   onClick={() => toggleAnswer(i)}
                   key={`${i}_${item?.question}`}
                 >
@@ -67,8 +67,8 @@ function SupportComponent() {
                     </div>
                   </dt>
                   <dd
-                    className={`answer bg-white rounded text-gray-700 text-sm xs:text-base ${!item.open
-                      ? 'h-0 overflow-hidden  duration-300'
+                    className={`answer overflow-hidden  bg-white rounded text-gray-700 text-sm xs:text-base ${!item.open
+                      ? 'h-0  duration-300'
                       : 'h-fit  py-3 px-2 border-t -max-height duration-300'
                       }`}
                   >
@@ -81,7 +81,7 @@ function SupportComponent() {
             {data &&
               data.slice(Math.ceil(data?.length / 2), data?.length).map((item, i) => (
                 <div
-                  className="question-and-answer select-none cursor-pointer border-2 mx-8 my-2 rounded-lg group"
+                  className="question-and-answer select-none cursor-pointer border-2 mx-2 my-2 rounded-lg group"
                   onClick={() => toggleAnswer(i + Math.ceil(data?.length / 2))}
                   key={`${i}_${item?.question}`}
                 >
@@ -96,9 +96,9 @@ function SupportComponent() {
                     </div>
                   </dt>
                   <dd
-                    className={`answer bg-white rounded text-gray-700 text-sm xs:text-base ${!item.open
-                      ? 'h-0 overflow-hidden  duration-300'
-                      : 'h-fit  py-3 px-2 border-t -max-height duration-300'
+                    className={`answer overflow-hidden transition-height duration-300 bg-white rounded text-gray-700 text-sm xs:text-base ${!item.open
+                      ? 'h-0  py-0 px-0 '
+                      : 'h-fit  py-3 px-2 border-t -max-height'
                       }`}
                   >
                     {item?.answer}
