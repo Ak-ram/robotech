@@ -61,10 +61,9 @@ const AdminBills = () => {
  
   return (
     <div
-      className={`min-h-[400px] lg:p-3 w-full bottom-0 left-0 lg:relative overflow-hidden mt-5`}
+      className={`lg:p-3 w-full bottom-0 left-0 lg:relative overflow-hidden mt-5`}
     >
       {!jsonArray && <h2 className="font-bold mb-4">Current Customer data:</h2>}
-
       <div className="mb-5 flex flex-col lg:flex-row items-center justify-between">
         <div className="w-full">
           <input
@@ -91,6 +90,8 @@ const AdminBills = () => {
           Search
         </button>
       </div>
+      <div className="h-[400px] overflow-auto">
+
       {billsList.length !== 0 ? (
         <div className={"flex flex-col gap-2"}>
           {billsList.map((item, index) => (
@@ -123,15 +124,17 @@ const AdminBills = () => {
           ))}
         </div>
       ) : (
-        <div className="bg-white h-[300px] flex items-center justify-center">
-          <div className="text-center">
+        <div className="bg-white h-[400px] flex items-center justify-center">
+          <div className="text-center -mt-5">
+            <div className="text-5xl mb-2">🥹</div>
             <h2 className="text-xl font-semibold mb-4">
-              Your Bills Should Goes here...
+              
+              No Bills...
             </h2>
           </div>
         </div>
       )}
-
+</div>
       {showBill && (
         <Bill
           id={selectedBill.id}
