@@ -71,7 +71,7 @@ const CustomerPageAddProducts = ({
           .single();
 
         if (error) {
-          throw error;
+          throw 'error';
         }
 
         // Extract existing transactions from the fetched data
@@ -130,7 +130,7 @@ const CustomerPageAddProducts = ({
       } catch (error) {
         // Handle errors
         console.error("Error refunding order:", (error as Error).message);
-        toast.error((error as Error).message);
+        toast.error("Refund cannot be processed as the product is currently out of stock.");
       }
     }
   };
