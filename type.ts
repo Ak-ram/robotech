@@ -59,3 +59,12 @@ export interface StateProps {
     compareData: ProductType[];
   };
 }
+
+
+
+export interface SidebarItem {
+  id: number;
+  label: string;
+  content: any;
+  icon: any;
+}
