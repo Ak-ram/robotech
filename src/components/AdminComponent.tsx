@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { addSuperAdmin, deleteSuperAdmin, deleteUser } from "@/redux/proSlice";
+import { addSuperAdmin } from "@/redux/proSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SidebarItem, StateProps } from "../../type";
 import {
   Key,
-  LayoutList,
   Loader,
   Menu,
   User,
@@ -12,7 +11,6 @@ import {
 } from "lucide-react";
 
 import { useRouter } from "next/navigation";
-import Loading from "./Loading";
 import AdminProducts from "./AdminProducts";
 
 import supabase from "@/supabase/config";
@@ -164,7 +162,7 @@ const AdminComponent = () => {
         className={`${isOpen ? "max-w-screen-lg" : "w-full"
           } flex-1  mx-auto py-5 p-4 `}
       >
-        {selectedItem ? (
+        {selectedItem &&
           <div className="">
             <div className="border-b-zinc-300 pb-2 border-b mb-2 flex items-center gap-2">
               <span
@@ -231,20 +229,7 @@ const AdminComponent = () => {
               </div>
             )}
           </div>
-        ) : (
-          // <div>
-          //   <span
-          //     className="cursor-pointer w-fit inline-block"
-          //     onClick={() => setOpen(!isOpen)}
-          //   >
-          //     {isOpen ? <X /> : <Menu />}
-          //   </span>
-          //   <p className="font-bold text-lg flex items-center justify-center lg:h-[500px] mb-5 text-gray-600">
-          //     Select Page from the sidebar.
-          //   </p>
-          // </div>
-          null
-        )}
+        }
       </div>
     </>
   );
