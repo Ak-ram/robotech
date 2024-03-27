@@ -116,7 +116,7 @@ const CustomersStats = () => {
           </div>
         </div>
 
-        <CustomerStatsTopSelling />
+        {/* <CustomerStatsTopSelling /> */}
 
         <div className="flex flex-col">
           <Stocks />

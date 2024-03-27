@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Clock, Calendar, Package, Banknote, User, ArrowDown, ArrowUp, TrendingUp, TrendingDown, Diff, ChevronDown } from 'lucide-react';
+import { Clock, Calendar, Package, Banknote, User, ArrowDown, ArrowUp, TrendingUp, TrendingDown, Diff, ChevronDown, RefreshCcw } from 'lucide-react';
 import FormattedPrice from './FormattedPrice';
 import Link from 'next/link';
 import RevenueCharts from './RevenuCharts';
@@ -10,10 +10,15 @@ const TransactionAnalyzer = ({ customers }) => {
   const [yearlySells, setYearlySells] = useState({});
   const [selectedPeriod, setSelectedPeriod] = useState(null);
   const [show, setShow] = useState(false);
-
+  const [refresh, setRefresh] = useState(false)
   const [searchQuery, setSearchQuery] = useState('');
 
-
+  const handleRefresh = () => {
+    setRefresh(true)
+    setTimeout(() => {
+      setRefresh(false)
+    }, 1000);
+  }
   // Function to handle search input change
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -116,7 +121,7 @@ const TransactionAnalyzer = ({ customers }) => {
     };
 
     analyzeTransactions();
-  }, [customers]);
+  }, [customers, refresh]);
 
   const handlePeriodClick = period => {
     setSelectedPeriod(period);
@@ -460,6 +465,7 @@ const TransactionAnalyzer = ({ customers }) => {
       case 'revenue':
         return (
           <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
+
             <h3 className="text-lg font-semibold mb-4">Revenue Overview</h3>
             <div className="bg-white rounded-lg p-4 mb-4">
               <div className="flex items-center mb-4">
@@ -582,7 +588,16 @@ const TransactionAnalyzer = ({ customers }) => {
         />
       </div>
       {show && <>
+        <button
+          className="mr-5 mb-4 ml-auto block"
+          onClick={() =>
+            handleRefresh()
+          }
+        >
+          <RefreshCcw className={`${refresh ? "animate-spin" : ""}`} size={16} />
+        </button>
         <div className="px-5 grid grid-cols-1 md:grid-cols-4 gap-4">
+
           <div className="bg-white border border-indigo-500 rounded-lg shadow-lg p-4 flex items-center justify-center cursor-pointer"
             onClick={() => handlePeriodClick('daily')}>
             <Clock className="w-8 h-8 mr-2 text-indigo-500" />
@@ -626,7 +641,7 @@ const TransactionAnalyzer = ({ customers }) => {
               className='border rounded py-2 px-4 w-full border-zinc-300 mx-auto'
               onChange={(e) => handleSearchInputChange(e)}
             />
-            <div className="bg-white rounded-lg shadow-lg p-4">
+            <div className=" h-[400px] overflow-auto bg-white rounded-lg shadow-lg p-4">
               {renderTransactions(selectedPeriod)}
             </div>
           </div>
