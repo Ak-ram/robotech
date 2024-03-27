@@ -41,6 +41,8 @@ const AdminSlides = () => {
   };
 
   const handleRemoveItem = async (id: number) => {
+    const confirm = window.confirm('sure to delete ?')
+    if(!confirm) return; 
     try {
       await supabase
         .from('slides')
@@ -166,7 +168,7 @@ const AdminSlides = () => {
 
                                 <input
                                     type="text"
-                                    placeholder="image"
+                                    placeholder="image 800 * 400 "
                                     className="p-2 w-full border border-gray-300 rounded"
                                     value={editedItem.image}
                                     onChange={(e) => handleInputChange(e, "image")}
