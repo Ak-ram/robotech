@@ -255,7 +255,7 @@ const TransactionAnalyzer = ({ customers }) => {
         name: day,
         revenue: revenue,
       }));
-  }, [dailyRevenue]);
+  }, [dailyRevenue,refresh]);
   const dailyProfitsData = useMemo(() => {
     return Object.entries(dailyProfits)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -263,7 +263,7 @@ const TransactionAnalyzer = ({ customers }) => {
         name: day,
         revenue: revenue,
       }));
-  }, [dailyProfits]);
+  }, [dailyProfits,refresh]);
   const monthlyRevenueData = useMemo(() => {
     return Object.entries(monthlyRevenue)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -271,7 +271,7 @@ const TransactionAnalyzer = ({ customers }) => {
         name: month,
         revenue: revenue,
       }));
-  }, [monthlyRevenue]);
+  }, [monthlyRevenue,refresh]);
   const monthlyProfitsData = useMemo(() => {
     return Object.entries(monthlyProfits)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -279,7 +279,7 @@ const TransactionAnalyzer = ({ customers }) => {
         name: month,
         revenue: revenue,
       }));
-  }, [monthlyProfits]);
+  }, [monthlyProfits,refresh]);
   const yearlyRevenueData = useMemo(() => {
     return Object.entries(yearlyRevenue)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -287,7 +287,7 @@ const TransactionAnalyzer = ({ customers }) => {
         name: year,
         revenue: revenue,
       }));
-  }, [yearlyRevenue]);
+  }, [yearlyRevenue,refresh]);
   const yearlyProfitsData = useMemo(() => {
     return Object.entries(yearlyProfits)
       .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()).reverse()
@@ -295,7 +295,7 @@ const TransactionAnalyzer = ({ customers }) => {
         name: year,
         revenue: revenue,
       }));
-  }, [yearlyProfits]);
+  }, [yearlyProfits,refresh]);
 
 
   const calculateTotalRevenue = useMemo(() => {
@@ -316,7 +316,7 @@ const TransactionAnalyzer = ({ customers }) => {
       });
     });
     return total;
-  }, [customers]);
+  }, [customers,refresh]);
 
 
   const renderTransactions = useCallback((period) => {
@@ -566,7 +566,7 @@ const TransactionAnalyzer = ({ customers }) => {
       default:
         return null;
     }
-  }, [dailySells, monthlySells, yearlySells, searchQuery]);
+  }, [dailySells, monthlySells, yearlySells, searchQuery,refresh]);
 
 
 
