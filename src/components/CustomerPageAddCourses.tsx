@@ -43,8 +43,10 @@ const CustomerPageAddCourses = ({
     };
 
     fetchData();
-  }, []);
-
+  }, [billData]);
+  useEffect(() => {
+    console.log('billData', billData)
+  }, [billData])
   const handleAddOrder = async () => {
     try {
       // Fetch the customer data
@@ -145,10 +147,12 @@ const CustomerPageAddCourses = ({
         >
           Add Course
         </button>
-        {updatedCustomerData?.transactions?.courses
+        <div>
+          {/* {updatedCustomerData?.transactions?.courses
           ?.slice()
-          .reverse()
-          .map((course, index) => (
+          .reverse() */}
+
+          {billData && billData?.map((course, index) => (
             <div
               key={index}
               className={`bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4`}
@@ -193,8 +197,8 @@ const CustomerPageAddCourses = ({
               )}
             </div>
           ))}
+        </div>
       </div>
-
       {showAddOrderModal && (
         <OrderModel
           list={list}

@@ -39,7 +39,7 @@ const CustomerPageAddPrintServices = ({
     };
 
     fetchData();
-  }, []);
+  }, [billData]);
 
   const handleAddOrder = async () => {
     try {
@@ -143,10 +143,10 @@ const CustomerPageAddPrintServices = ({
         >
           Add Print Service
         </button>
-        {updatedCustomerData?.transactions?.printServices
-          ?.slice()
-          .reverse()
-          .map((service, index) => (
+        {/* {updatedCustomerData?.transactions?.printServices
+           ?.slice()
+           .reverse() */}
+        {billData?.map((service, index) => (
             <div
               key={index}
               className="bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4"

@@ -45,7 +45,7 @@ const CustomerPageAddProducts = ({
     };
 
     fetchData();
-  }, []);
+  }, [billData]);
 
   const handleRefundOrder = async (productToRefund) => {
     // Confirm with the user before proceeding with the refund
@@ -77,7 +77,7 @@ const CustomerPageAddProducts = ({
         // Extract existing transactions from the fetched data
         const existingTransactions = data?.transactions || { products: [] };
         let newV = existingTransactions.products.filter(
-          (product) => product.productId !== productToRefund.productId && product.date !== productToRefund.date 
+          (product) => product.productId !== productToRefund.productId && product.date !== productToRefund.date
         );
         existingTransactions.products = newV;
         await supabase
@@ -124,9 +124,7 @@ const CustomerPageAddProducts = ({
         toast.success("Item Refunded successfully");
         toast.loading("Be patient, changes take a few moments to be reflected");
 
-        setTimeout(() => {
-          toast.dismiss();
-        }, 3000);
+    
       } catch (error) {
         // Handle errors
         console.error("Error refunding order:", (error as Error).message);
@@ -198,9 +196,7 @@ const CustomerPageAddProducts = ({
       toast.success("Item Added/Updated successfully");
       toast.loading("Be patient, changes take a few moments to be reflected");
 
-      setTimeout(() => {
-        toast.dismiss();
-      }, 3000);
+   
     } catch (error) {
       // Handle errors
       console.error("Error adding order:", (error as Error).message);
@@ -233,61 +229,59 @@ const CustomerPageAddProducts = ({
         >
           Add Product
         </button>
-        {updatedCustomerData?.transactions?.products
-          ?.slice()
-          .reverse()
-          .map((product, index) => (
-            <div
-              key={index}
-              className={`bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4`}
-            >
-              <div className="flex-1">
-                <p className="text-gray-600 mb-2">
-                  Transaction date: {product["date"]}
-                </p>
-                <p className="text-gray-600 mb-2">
-                  Product name: {product["productName"]}
-                </p>
-                <p className="text-gray-600 mb-2">
-                  Product price:{" "}
-                  <FormattedPrice amount={+product["piecePrice"]} />
-                </p>
-                <p className="text-gray-600 mb-2">
-                  Discound: <FormattedPrice amount={+product["discount"]!} />
-                </p>
-                <p className="text-gray-600 mb-2">
-                  Sub-total price:{" "}
-                  <FormattedPrice amount={+product["subtotal"]!} />
-                </p>
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex-1">
-                  <ScrollText
-                    onClick={() => {
-                      setShowBill(true);
-                      setSelectedProduct(product);
-                    }}
-                    className="my-2 ml-auto cursor-pointer text-blue-600"
-                    size={20}
-                  />
-                </div>
 
-                <span
-                  onClick={() => handleRefundOrder(product)}
-                  className="flex gap-1 text-red-600  cursor-pointer items-center justify-center"
-                >
-                  Refund
-                  <Redo className="ml-auto mr-2" size={20} />
-                </span>
-              </div>
-              {showBill && selectedProduct && (
-                <Bill
-                  transactionData={[selectedProduct]}
-                  setShowBill={setShowBill}
-                />
-              )}
+        {billData?.map((product, index) => (
+          <div
+            key={index}
+            className={`bg-white flex gap-3 p-6 rounded-lg shadow-md mb-4`}
+          >
+            <div className="flex-1">
+              <p className="text-gray-600 mb-2">
+                Transaction date: {product["date"]}
+              </p>
+              <p className="text-gray-600 mb-2">
+                Product name: {product["productName"]}
+              </p>
+              <p className="text-gray-600 mb-2">
+                Product price:{" "}
+                <FormattedPrice amount={+product["piecePrice"]} />
+              </p>
+              <p className="text-gray-600 mb-2">
+                Discound: <FormattedPrice amount={+product["discount"]!} />
+              </p>
+              <p className="text-gray-600 mb-2">
+                Sub-total price:{" "}
+                <FormattedPrice amount={+product["subtotal"]!} />
+              </p>
             </div>
-          ))}
+            <div className="flex flex-col gap-2">
+              <div className="flex-1">
+                <ScrollText
+                  onClick={() => {
+                    setShowBill(true);
+                    setSelectedProduct(product);
+                  }}
+                  className="my-2 ml-auto cursor-pointer text-blue-600"
+                  size={20}
+                />
+              </div>
+
+              {/* <span
+                onClick={() => handleRefundOrder(product)}
+                className="flex gap-1 text-red-600  cursor-pointer items-center justify-center"
+              >
+                Refund
+                <Redo className="ml-auto mr-2" size={20} />
+              </span> */}
+            </div>
+            {showBill && selectedProduct && (
+              <Bill
+                transactionData={[selectedProduct]}
+                setShowBill={setShowBill}
+              />
+            )}
+          </div>
+        ))}
       </div>
 
       {showAddOrderModal && (

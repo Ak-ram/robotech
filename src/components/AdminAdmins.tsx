@@ -3,18 +3,19 @@ import CustomerStatsInStocks from "./CustomerStatsInStocks";
 import CustomerStatsOutStocks from "./CustomerStatsOutStocks";
 import { getProducts } from "@/helpers/getProducts";
 import { ProductType, StateProps } from "../../type";
-import { Check, ChevronDown, Trash } from "lucide-react";
+import { Check, ChevronDown, Edit, Trash, X } from "lucide-react";
 import supabase from "@/supabase/config";
 import { useSelector } from "react-redux";
+import SuperAdminEditForm from "./SuperAdminEditForm";
 
 const AdminAdmins = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
-
   const [askedToBeAnAdmin, setAskedToBeAnAdmin] = useState<any>([]);
   const [admins, setAdmins] = useState<any>([]);
   const [show, setShow] = useState(false);
+  const [superAdminEditFormOpen, setSuperAdminEditFormOpening] = useState(false)
+  const [superAdmin, setSuperAdmin] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,6 +36,10 @@ const AdminAdmins = () => {
       fetchData();
     }
   }, []);
+
+
+
+
 
   const handleRemoveAdmin = async (admin) => {
     const confirm = window.confirm("Sure to delete this admin ?");
@@ -77,11 +82,19 @@ const AdminAdmins = () => {
     }
   };
 
+  const handleEditSuperAdmin = async (superAdmin) => {
+    if(!superAdmin) window.alert("Refresh the page and try again.");
+    setSuperAdminEditFormOpening(true)
+    const { data: toEdit } = await supabase
+      .from("super_admins")
+      .select("*").eq('email', superAdmin.email).single();
+    setSuperAdmin(toEdit)
+  }
+
   return (
     <div
-      className={`${
-        !show ? "border border-indigo-500 border-dashed" : ""
-      } bg-white rounded-lg mb-5 overflow-hidden`}
+      className={`${!show ? "border border-indigo-500 border-dashed" : ""
+        } bg-white rounded-lg mb-5 overflow-hidden`}
     >
       <div
         className="flex items-center p-5 justify-between cursor-pointer"
@@ -91,9 +104,8 @@ const AdminAdmins = () => {
           {show ? "Click to Collapse" : "Expand Admins Request"}
         </h3>
         <ChevronDown
-          className={`transform text-indigo-500 transition-transform duration-300 ${
-            show ? "rotate-180" : ""
-          }`}
+          className={`transform text-indigo-500 transition-transform duration-300 ${show ? "rotate-180" : ""
+            }`}
           size={25}
         />
       </div>
@@ -142,9 +154,17 @@ const AdminAdmins = () => {
                           size={16}
                         />
                       ) : (
-                        <span className="text-sm font-bold text-green-500">
-                          You ✅
-                        </span>
+                        <>
+
+                          <span className="text-sm font-bold text-green-500">
+                            You ✅
+                          </span>
+                          <Edit
+                            onClick={() => handleEditSuperAdmin(admin)}
+                            className="text-blue-600 cursor-pointer"
+                            size={16}
+                          />
+                        </>
                       )}
                     </div>
                   </div>
@@ -154,6 +174,7 @@ const AdminAdmins = () => {
           )}
         </div>
       )}
+      {superAdminEditFormOpen && <SuperAdminEditForm {...{ superAdmin, superAdminEditFormOpen, setSuperAdmin, setSuperAdminEditFormOpening }} />}
     </div>
   );
 };
