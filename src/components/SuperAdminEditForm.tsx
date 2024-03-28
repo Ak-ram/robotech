@@ -73,10 +73,7 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
                         .from('super_admins')
                         .update(editedItem)
                         .eq('id', superAdmin.id);
-                    await supabase
-                        .from('admins')
-                        .update({ email: editedItem.email })
-                        .eq('email', superAdmin.email);
+
 
 
 
@@ -90,7 +87,7 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
                         setEmailError("");
                         setPasswordError("");
                         handleCancel()
-                       
+
                     }
                 } catch (error) {
                     // Handle any other errors
@@ -102,30 +99,7 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
             setPasswordError(isPasswordValid ? "" : "Invalid password, less than 8 chars");
         }
     };
-    // const handleSave = () => {
-    //     const isEmailValid = validateEmail(editedItem.email);
-    //     const isPasswordValid = validatePassword(editedItem.password);
-
-    //     if (isEmailValid && isPasswordValid) {
-    //         if (
-    //             editedItem.email === superAdmin.email &&
-    //             editedItem.password === superAdmin.password
-    //         ) {
-    //             // No changes were made
-    //             setEmailError("No changes were made to the email and password.");
-    //         } else {
-    //             // Changes were made, proceed with saving
-    //             console.log(editedItem);
-    //             // await supabase.from('super_admins').update(editedItem).eq('id',superAdmin.id)
-    //             setEmailError("");
-    //         setPasswordError("");
-    //         }
-    //     } else {
-    //         setEmailError(isEmailValid ? "" : "Invalid email.");
-    //         setPasswordError(isPasswordValid ? "" : "Invalid password, less than 8 chars");
-    //     }
-    // };
-
+   
     const handleCancel = () => {
         setEditedItem({ email: superAdmin.email, password: superAdmin.password });
         setSuperAdminEditFormOpening(false);
