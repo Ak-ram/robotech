@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import SuperAdminEditForm from "./SuperAdminEditForm";
 
 const AdminAdmins = () => {
-  const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
+  const superAdminInfo = useSelector((state: StateProps) => state.pro.superAdminInfo);
   const [askedToBeAnAdmin, setAskedToBeAnAdmin] = useState<any>([]);
   const [admins, setAdmins] = useState<any>([]);
   const [show, setShow] = useState(false);
@@ -147,7 +147,7 @@ const AdminAdmins = () => {
                   >
                     <div>{admin?.email}</div>
                     <div className="flex gap-2 ml-auto items-center justify-center">
-                      {userInfo?.email !== admin?.email ? (
+                      {superAdminInfo?.email !== admin?.email ? (
                         <Trash
                           onClick={() => handleRemoveAdmin(admin)}
                           className="text-rose-600 cursor-pointer"
