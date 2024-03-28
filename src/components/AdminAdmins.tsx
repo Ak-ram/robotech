@@ -10,12 +10,11 @@ import SuperAdminEditForm from "./SuperAdminEditForm";
 
 const AdminAdmins = () => {
   const userInfo = useSelector((state: StateProps) => state.pro.userInfo);
-
   const [askedToBeAnAdmin, setAskedToBeAnAdmin] = useState<any>([]);
   const [admins, setAdmins] = useState<any>([]);
   const [show, setShow] = useState(false);
   const [superAdminEditFormOpen, setSuperAdminEditFormOpening] = useState(false)
-  const [superAdmin, setSuperAdmin] = useState({email:'',password:''})
+  const [superAdmin, setSuperAdmin] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +36,10 @@ const AdminAdmins = () => {
       fetchData();
     }
   }, []);
+
+
+
+
 
   const handleRemoveAdmin = async (admin) => {
     const confirm = window.confirm("Sure to delete this admin ?");
@@ -80,11 +83,12 @@ const AdminAdmins = () => {
   };
 
   const handleEditSuperAdmin = async (superAdmin) => {
+    if(!superAdmin) window.alert("Please wait a moment before trying again. You can't change your data twice directly and should wait a while between attempts.");
     setSuperAdminEditFormOpening(true)
     const { data: toEdit } = await supabase
       .from("super_admins")
       .select("*").eq('email', superAdmin.email).single();
-      setSuperAdmin(toEdit)
+    setSuperAdmin(toEdit)
   }
 
   return (
@@ -170,7 +174,7 @@ const AdminAdmins = () => {
           )}
         </div>
       )}
-      {superAdminEditFormOpen && <SuperAdminEditForm {...{ superAdmin,superAdminEditFormOpen,setSuperAdmin, setSuperAdminEditFormOpening }} />}
+      {superAdminEditFormOpen && <SuperAdminEditForm {...{ superAdmin, superAdminEditFormOpen, setSuperAdmin, setSuperAdminEditFormOpening }} />}
     </div>
   );
 };

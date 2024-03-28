@@ -76,7 +76,10 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
                     await supabase
                         .from('admins')
                         .update({ email: editedItem.email })
-                        .eq('id', superAdmin.id);
+                        .eq('email', superAdmin.email);
+
+
+
 
                     if (error) {
                         // Handle the error condition
@@ -87,7 +90,7 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
                         setEmailError("");
                         setPasswordError("");
                         handleCancel()
-                        setSuperAdmin({ email: '', password: '' })
+                       
                     }
                 } catch (error) {
                     // Handle any other errors
