@@ -5,7 +5,7 @@ import CustomerPageAddProducts from "@/components/CustomerPageAddProducts";
 import CustomerPageAddCourses from "@/components/CustomerPageAddCourses";
 import CustomerPageAddPrintServices from "@/components/CustomerPageAddPrintServices";
 import toast from "react-hot-toast";
-import { Printer } from "lucide-react";
+import { Printer, Trash } from "lucide-react";
 import Bill from "@/components/Bill";
 import { ProductType } from "../../../../type";
 import supabase from "@/supabase/config";
@@ -62,6 +62,7 @@ const CustomerPage = () => {
       label: "Print Service",
     },
   ];
+
   const printBill = async () => {
     setShowBill(true);
     const bill = {
@@ -96,6 +97,13 @@ const CustomerPage = () => {
 
     fetchCustomerData();
   }, [customerId]);
+
+
+  const setBill = () => {
+    const confirm = window.confirm('Sure To Reset Bill ?');
+    if (!confirm) return;
+    setBillData([])
+  }
 
   return (
     <div className="m-8">
@@ -142,7 +150,7 @@ const CustomerPage = () => {
           </div>
 
           <div className="mt-8">
-            <h2 className="text-3xl font-semibold mb-8">Transactions</h2>
+            <h2 className="text-3xl font-semibold mb-8">Bill Data</h2>
 
             <section className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
               <div className="flex-1 px-6 bg-slate-200 h-[400px] overflow-auto mb-4 lg:mr-8">
@@ -162,13 +170,23 @@ const CustomerPage = () => {
                     Sell {tab.label}
                   </button>
                 ))}
-                {billData.length ? <button
-                  onClick={() => printBill()}
-                  className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-blue-200 text-blue-700 hover:bg-blue-500 hover:text-white transition duration-300`}
-                >
-                  Add Bill
-                  <Printer className="" />
-                </button> : null}
+                {billData.length ? <>
+
+                  <button
+                    onClick={() => printBill()}
+                    className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-blue-200 text-blue-700 hover:bg-blue-500 hover:text-white transition duration-300`}
+                  >
+                    Add Bill
+                    <Printer className="" />
+                  </button>
+                  <button
+                    onClick={() => setBill()}
+                    className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-rose-200 text-rose-700 hover:bg-rose-500 hover:text-white transition duration-300`}
+                  >
+                    Set Bill
+                    <Trash className="" />
+                  </button>
+                </> : null}
 
               </div>
             </section>
