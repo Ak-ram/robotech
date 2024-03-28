@@ -157,7 +157,7 @@ const AdminAdmins = () => {
                         <>
 
                           <span className="text-sm font-bold text-green-500">
-                            You ✅
+                          ✅ Super Admin
                           </span>
                           <Edit
                             onClick={() => handleEditSuperAdmin(admin)}

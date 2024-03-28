@@ -25,8 +25,8 @@ const LoginComponent = () => {
       setIsSubmitDisabled(true);
     } else {
       setMessage(""); // Clear previous messages when input changes
+      setIsSubmitDisabled(false);
     }
-    setIsSubmitDisabled(false);
   };
 
   const handleSubmit = async () => {
@@ -39,7 +39,6 @@ const LoginComponent = () => {
     if (data && data.email && email === data.email) {
       const userInformation = { email };
       dispatch(addUser(userInformation));
-
       setMessage("You are authorized to login."); // Set authorized message
       setIsAuth(true);
       setRoute("/admin");
@@ -96,8 +95,10 @@ const LoginComponent = () => {
                 isAuth ? "hidden" : "block"
               } py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7`}
             >
+              
               <div className="relative">
                 <input
+                required
                   id="email"
                   name="email"
                   type="email"

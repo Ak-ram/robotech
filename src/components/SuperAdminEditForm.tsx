@@ -44,7 +44,7 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
     };
 
     const handleCheckCredentials = () => {
-        if (oldEmail === superAdmin.email && oldPassword === superAdmin.password) {
+        if (oldEmail === superAdmin.email && oldPassword === superAdmin.password ) {
             setCanEdit(true);
             setEmailError("");
             setPasswordError("");
