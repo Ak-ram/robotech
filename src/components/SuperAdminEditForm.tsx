@@ -3,8 +3,9 @@ import { Check, X } from "lucide-react";
 import { useState } from "react";
 
 const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdminEditFormOpening, superAdmin }) => {
-    const [editedItem, setEditedItem] = useState({ email: superAdmin.email, password: superAdmin.password });
+    const [editedItem, setEditedItem] = useState({ email: superAdmin.email, password: superAdmin.password, secret: superAdmin.secret });
     const [oldEmail, setOldEmail] = useState("");
+    const [oldSecret, setOldSecret] = useState("");
     const [oldPassword, setOldPassword] = useState("");
     const [canEdit, setCanEdit] = useState(false);
     const [emailError, setEmailError] = useState("");
@@ -18,7 +19,9 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
     const handleOldEmailChange = (e) => {
         setOldEmail(e.target.value);
     };
-
+    const handleOldSecretChange = (e) => {
+        setOldSecret(e.target.value);
+    };
     const handleOldPasswordChange = (e) => {
         setOldPassword(e.target.value);
     };
@@ -44,7 +47,7 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
     };
 
     const handleCheckCredentials = () => {
-        if (oldEmail === superAdmin.email && oldPassword === superAdmin.password ) {
+        if (oldEmail === superAdmin.email && oldPassword === superAdmin.password && oldSecret === superAdmin.secret) {
             setCanEdit(true);
             setEmailError("");
             setPasswordError("");
@@ -62,7 +65,8 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
         if (isEmailValid && isPasswordValid) {
             if (
                 editedItem.email === superAdmin.email &&
-                editedItem.password === superAdmin.password
+                editedItem.password === superAdmin.password &&
+                editedItem.secret === superAdmin.password
             ) {
                 // No changes were made
                 setEmailError("No changes were made to the email and password.");
@@ -99,9 +103,9 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
             setPasswordError(isPasswordValid ? "" : "Invalid password, less than 8 chars");
         }
     };
-   
+
     const handleCancel = () => {
-        setEditedItem({ email: superAdmin.email, password: superAdmin.password });
+        setEditedItem({ email: superAdmin.email, password: superAdmin.password, secret: superAdmin.secret });
         setSuperAdminEditFormOpening(false);
     };
 
@@ -139,9 +143,22 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
                                     onChange={handleOldPasswordChange}
                                 />
                             </div>
+                            <div className={`flex-col mb-2 lg:pr-4`}>
+                                <span className="font-bold text-sm mb-2 inline-block ml-1">
+                                    Tell Me a Secret
+                                </span>
+                                <input
+                                    type="text"
+                                    placeholder="Old Secret"
+                                    className={`border border-gray-300 rounded outline-none w-full p-2 `}
+                                    value={oldSecret}
+                                    onChange={handleOldSecretChange}
+                                />
+                            </div>
                             {canEdit && Object.entries({
                                 email: "New Email",
                                 password: "New Password",
+                                secret: "New Secret",
                             }).map(([key, placeholder], index) => (
                                 <div key={key} className={`flex-col mb-2 lg:pr-4`}>
                                     <span className="font-bold text-sm mb-2 inline-block ml-1">
@@ -149,7 +166,7 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
                                     </span>
 
                                     <input
-                                        type={key === "password" ? "password" : "email"}
+                                        type={key === "password" ? "password" : key === "email" ? 'email' : 'text'}
                                         placeholder={placeholder}
                                         className={`border border-gray-300 rounded outline-none w-full p-2 `}
                                         value={editedItem[key]}

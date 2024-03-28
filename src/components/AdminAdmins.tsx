@@ -3,7 +3,7 @@ import CustomerStatsInStocks from "./CustomerStatsInStocks";
 import CustomerStatsOutStocks from "./CustomerStatsOutStocks";
 import { getProducts } from "@/helpers/getProducts";
 import { ProductType, StateProps } from "../../type";
-import { Check, ChevronDown, Edit, Trash, X } from "lucide-react";
+import { Check, ChevronDown, Edit, ShieldPlus, Trash, X } from "lucide-react";
 import supabase from "@/supabase/config";
 import { useSelector } from "react-redux";
 import SuperAdminEditForm from "./SuperAdminEditForm";
@@ -14,7 +14,7 @@ const AdminAdmins = () => {
   const [admins, setAdmins] = useState<any>([]);
   const [show, setShow] = useState(false);
   const [superAdminEditFormOpen, setSuperAdminEditFormOpening] = useState(false)
-  const [superAdmin, setSuperAdmin] = useState({ email: '', password: '' })
+  const [superAdmin, setSuperAdmin] = useState({ email: '', password: '', secret: '' })
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -83,7 +83,7 @@ const AdminAdmins = () => {
   };
 
   const handleEditSuperAdmin = async (superAdmin) => {
-    if(!superAdmin) window.alert("Refresh the page and try again.");
+    if (!superAdmin) window.alert("Refresh the page and try again.");
     setSuperAdminEditFormOpening(true)
     const { data: toEdit } = await supabase
       .from("super_admins")
@@ -156,8 +156,8 @@ const AdminAdmins = () => {
                       ) : (
                         <>
 
-                          <span className="text-sm font-bold text-green-500">
-                          ✅ Super Admin
+                          <span title="Super Admin Badge" className="text-sm font-bold text-green-500">
+                            <ShieldPlus size={20} />
                           </span>
                           <Edit
                             onClick={() => handleEditSuperAdmin(admin)}
