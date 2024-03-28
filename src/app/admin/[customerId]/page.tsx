@@ -150,7 +150,7 @@ const CustomerPage = () => {
           </div>
 
           <div className="mt-8">
-            <h2 className="text-3xl font-semibold mb-8">Bill Data</h2>
+            <h2 className="text-3xl font-semibold mb-8">Create a Bill</h2>
 
             <section className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
               <div className="flex-1 px-6 bg-slate-200 h-[400px] overflow-auto mb-4 lg:mr-8">
@@ -176,7 +176,7 @@ const CustomerPage = () => {
                     onClick={() => printBill()}
                     className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-blue-200 text-blue-700 hover:bg-blue-500 hover:text-white transition duration-300`}
                   >
-                    Add Bill
+                    Submit Bill
                     <Printer className="" />
                   </button>
                   <button
