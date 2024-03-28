@@ -83,7 +83,7 @@ const AdminAdmins = () => {
   };
 
   const handleEditSuperAdmin = async (superAdmin) => {
-    if(!superAdmin) window.alert("Please wait a moment before trying again. You can't change your data twice directly and should wait a while between attempts.");
+    if(!superAdmin) window.alert("Refresh the page and try again.");
     setSuperAdminEditFormOpening(true)
     const { data: toEdit } = await supabase
       .from("super_admins")
