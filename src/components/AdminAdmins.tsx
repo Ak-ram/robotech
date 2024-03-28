@@ -15,7 +15,7 @@ const AdminAdmins = () => {
   const [admins, setAdmins] = useState<any>([]);
   const [show, setShow] = useState(false);
   const [superAdminEditFormOpen, setSuperAdminEditFormOpening] = useState(false)
-
+  const [superAdmin, setSuperAdmin] = useState({email:'',password:''})
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +84,7 @@ const AdminAdmins = () => {
     const { data: toEdit } = await supabase
       .from("super_admins")
       .select("*").eq('email', superAdmin.email).single();
-    console.log(toEdit)
+      setSuperAdmin(toEdit)
   }
 
   return (
@@ -170,7 +170,7 @@ const AdminAdmins = () => {
           )}
         </div>
       )}
-      {superAdminEditFormOpen && <SuperAdminEditForm {...{ superAdminEditFormOpen, setSuperAdminEditFormOpening }} />}
+      {superAdminEditFormOpen && <SuperAdminEditForm {...{ superAdmin,superAdminEditFormOpen, setSuperAdminEditFormOpening }} />}
     </div>
   );
 };
