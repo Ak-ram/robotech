@@ -2,7 +2,7 @@ import supabase from "@/supabase/config";
 import { Check, X } from "lucide-react";
 import { useState } from "react";
 
-const SuperAdminEditForm = ({ superAdminEditFormOpen, setSuperAdminEditFormOpening, superAdmin }) => {
+const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdminEditFormOpening, superAdmin }) => {
     const [editedItem, setEditedItem] = useState({ email: superAdmin.email, password: superAdmin.password });
     const [oldEmail, setOldEmail] = useState("");
     const [oldPassword, setOldPassword] = useState("");
@@ -53,12 +53,12 @@ const SuperAdminEditForm = ({ superAdminEditFormOpen, setSuperAdminEditFormOpeni
             setEmailError("Incorrect old email or password. Please try again.");
         }
     };
-    
-    
+
+
     const handleSave = async () => {
         const isEmailValid = validateEmail(editedItem.email);
         const isPasswordValid = validatePassword(editedItem.password);
-    
+
         if (isEmailValid && isPasswordValid) {
             if (
                 editedItem.email === superAdmin.email &&
@@ -73,7 +73,11 @@ const SuperAdminEditForm = ({ superAdminEditFormOpen, setSuperAdminEditFormOpeni
                         .from('super_admins')
                         .update(editedItem)
                         .eq('id', superAdmin.id);
-    
+                    await supabase
+                        .from('admins')
+                        .update({ email: editedItem.email })
+                        .eq('id', superAdmin.id);
+
                     if (error) {
                         // Handle the error condition
                         console.error("Error updating the Supabase table:", error);
@@ -82,6 +86,8 @@ const SuperAdminEditForm = ({ superAdminEditFormOpen, setSuperAdminEditFormOpeni
                         console.log("Supabase table updated successfully:", data);
                         setEmailError("");
                         setPasswordError("");
+                        handleCancel()
+                        setSuperAdmin({ email: '', password: '' })
                     }
                 } catch (error) {
                     // Handle any other errors
@@ -96,7 +102,7 @@ const SuperAdminEditForm = ({ superAdminEditFormOpen, setSuperAdminEditFormOpeni
     // const handleSave = () => {
     //     const isEmailValid = validateEmail(editedItem.email);
     //     const isPasswordValid = validatePassword(editedItem.password);
-    
+
     //     if (isEmailValid && isPasswordValid) {
     //         if (
     //             editedItem.email === superAdmin.email &&
@@ -200,8 +206,8 @@ const SuperAdminEditForm = ({ superAdminEditFormOpen, setSuperAdminEditFormOpeni
                                 </button>
                             )}
                             <button
-                                    className="flex my-1 items-center bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-4 rounded mr-2"
-                                    onClick={handleCancel}
+                                className="flex my-1 items-center bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-4 rounded mr-2"
+                                onClick={handleCancel}
                             >
                                 <X size={18} className="mr-1" />
                                 Cancel

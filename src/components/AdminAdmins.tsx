@@ -170,7 +170,7 @@ const AdminAdmins = () => {
           )}
         </div>
       )}
-      {superAdminEditFormOpen && <SuperAdminEditForm {...{ superAdmin,superAdminEditFormOpen, setSuperAdminEditFormOpening }} />}
+      {superAdminEditFormOpen && <SuperAdminEditForm {...{ superAdmin,superAdminEditFormOpen,setSuperAdmin, setSuperAdminEditFormOpening }} />}
     </div>
   );
 };
