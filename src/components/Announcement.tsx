@@ -3,7 +3,8 @@ import { ReactNode, useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, Feather, X } from "lucide-react";
 import Link from "next/link";
 import supabase from "../supabase/config";
-
+import Gift from '../assets/gift.gif'
+import Image from "next/image";
 interface AnnouncementT {
     body: string;
     link_text: string;
@@ -13,7 +14,7 @@ interface AnnouncementT {
 const Announcement = () => {
     const [data, setData] = useState<AnnouncementT[]>([]);
     const [isExpand, setExpand] = useState<Boolean>(false);
-    const [show, setShow] = useState<Boolean>(false);
+    const [show, setShow] = useState<Boolean>(true);
 
     useEffect(() => {
         const fetchAnnouncement = async () => {
@@ -62,10 +63,17 @@ const Announcement = () => {
         );
     }
 
-    return <>{show ? <div>{announcement}{<div className={`${isExpand ? 'h-44' : 'h-0'} transition-all bg-indigo-400`}>
-        <img src={'https:robotechspace.com/' + data[0]?.link_url} />
+    return <>{show ? <div>{announcement}{<div className={`${isExpand ? 'h-44' : 'h-0'} flex items-center overflow-hidden transition-all bg-white border-b`}>
+        <div className="overflow-hidden">
+            <Image style={{ transform: 'scale(2)' }} className="transform scale-200 py-1 px-2 h-full" src={Gift} alt="DetailedLogo" width={200} height={50} />
+        </div>
+        <div>
+            <h2 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-500">
+
+                {data.length > 0 && data[0].body}</h2>
+        </div>
     </div>}</div>
-        : null};</>
+        : null}</>
 };
 
 export default Announcement;
