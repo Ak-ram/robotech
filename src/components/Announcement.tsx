@@ -9,6 +9,9 @@ interface AnnouncementT {
     body: string;
     link_text: string;
     link_url: string;
+    image_details: string;
+    image: string;
+    price: number;
 }
 
 const Announcement = () => {
@@ -63,15 +66,35 @@ const Announcement = () => {
         );
     }
 
-    return <>{show ? <div>{announcement}{<div className={`${isExpand ? 'h-44' : 'h-0'} flex items-center overflow-hidden transition-all bg-white border-b`}>
-        <div className="overflow-hidden">
+    return <>{show ? <div>{announcement}{<div style={{
+        backgroundImage: `url('https://static.vecteezy.com/system/resources/previews/021/670/513/non_2x/abstract-science-template-technology-lines-and-dots-connection-background-wallpaper-or-banner-with-a-dna-molecules-illustration-vector.jpg')`
+        , backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+    }} className={`hidden lg:flex ${isExpand ? 'h-[280px] py-5 px-10' : 'h-0'}  justify-center gap-40 items-center overflow-hidden transition-all duration-500 bg-white border-b`}>
+        {/* <div className="overflow-hidden">
             <Image style={{ transform: 'scale(2)' }} className="transform scale-200 py-1 px-2 h-full" src={Gift} alt="DetailedLogo" width={200} height={50} />
-        </div>
+        </div> */}
         <div>
-            <h2 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-500">
+            <h2 className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-500">
 
-                {data.length > 0 && data[0].body}</h2>
+                COMMING SOON</h2>
+
+            <p>
+                {data.length > 0 && data[0].image_details.split("\n").map((line, i) => (
+                    <div
+                        className="w-full my-[3px]"
+                        key={i}
+                    >
+                        {i > 0 && <span className=""></span>}
+                        {line}
+                    </div>
+                ))}
+            </p>
+
         </div>
+        <div className="relative flex justify-center flex-col items-center gap-2">
+        <img style={{ transform: 'scale(1.2)' }}  className="py-1 px-2 h-full" src={data.length > 0 ? data[0].image : ''} alt="DetailedLogo" width={200} height={50} />
+            <span className="bg-black text-white p-1 rounded px-3  text-xl font-bold">{data.length > 0 && data[0].price}</span></div>
     </div>}</div>
         : null}</>
 };
