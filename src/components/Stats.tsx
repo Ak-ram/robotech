@@ -252,6 +252,7 @@ const Stats = () => {
                   <h3 className="font-bold text-center">Downloads Center</h3>
                   {[
                     "products",
+                    "customers",
                     "courses",
                     "services",
                     "ask_to_be_an_admin",

@@ -44,44 +44,42 @@ const Product = ({ prefix, categoryName }: Item) => {
 
 
   return (
-    <div className={`flex-1 min-h-screen pt-5 bg-white mt-2 rounded-lg`}>
-      {/* Your other JSX code */}
-
-      {/* Pagination controls */}
-      <div className="mx-2 px-3 sm:mx-4 flex relative flex-wrap items-center justify-end">
-        <ul className="flex items-center ml-auto -space-x-px h-8">
-          <li className="mr-2">
-            Page No: {currentPage}
-          </li>
-          <li>
-            <button
-              className={`flex items-center justify-center px-1 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700`}
-              onClick={handlePrev}
-            >
-              <ChevronLeft size={18} />
-              <span className="hidden sm:block ml-1">Previous</span>
-            </button>
-          </li>
-          <li>
-            <button
-              className={`flex items-center justify-center px-1 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700`}
-              onClick={handleNext}
-            >
-              <span className="hidden sm:block mr-1">Next</span>
-              <ChevronRight size={18} />
-            </button>
-          </li>
-        </ul>
-      </div>
+    <div className={`flex-1 min-h-screen  bg-white my-5 rounded-lg`}>
 
       {/* Render product cards */}
       <div className="m-auto p-5 md:mx-4 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2 gap-2 mt-2">
-        {products.map((item,i) => (
+        {products.map((item, i) => (
 
 
           <ProductCard key={`${item}_${i}`} item={item} prefix={prefix} />
 
         ))}
+      </div>
+      {/* Pagination controls */}
+      <div className="mx-2 px-3 sm:mx-4 flex relative flex-wrap items-center justify-center">
+        <ul className="flex items-center -space-x-px h-8">
+          <li className="mr-2">
+            Page No: {currentPage}
+          </li>
+          <li>
+            <button
+              className={`flex xs:w-28 items-center justify-center px-1 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700`}
+              onClick={handlePrev}
+            >
+              <ChevronLeft size={18} />
+              <span className="hidden xs:block ml-1">Previous</span>
+            </button>
+          </li>
+          <li>
+            <button
+              className={`flex xs:w-28 items-center justify-center px-1 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700`}
+              onClick={handleNext}
+            >
+              <span className="hidden xs:block mr-1">Next</span>
+              <ChevronRight size={18} />
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   );
