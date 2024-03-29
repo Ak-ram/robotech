@@ -5,9 +5,9 @@ import Link from "next/link";
 import supabase from "../supabase/config";
 import Gift from '../assets/gift.gif'
 import Image from "next/image";
+import FormattedPrice from "./FormattedPrice";
 interface AnnouncementT {
     body: string;
-    link_text: string;
     link_url: string;
     image_details: string;
     image: string;
@@ -56,7 +56,7 @@ const Announcement = () => {
 
                     </Link>
                 </div>
-                <span className="hover:text-white text-white/80 cursor-pointer" onClick={expandAd}>
+                <span className="hidden lg:block hover:text-white text-white/80 cursor-pointer" onClick={expandAd}>
                     {isExpand ? <ChevronUp className="" size={20} /> : <ChevronDown className="" size={20} />}
                 </span>
                 <span className="ml-2 hover:text-white text-white/80 cursor-pointer" onClick={() => setShow(false)}>
@@ -77,9 +77,9 @@ const Announcement = () => {
         <div>
             <h2 className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-500">
 
-                COMMING SOON</h2>
+                📢 COMMING SOON</h2>
 
-            <p>
+            <div>
                 {data.length > 0 && data[0].image_details.split("\n").map((line, i) => (
                     <div
                         className="w-full my-[3px]"
@@ -89,12 +89,14 @@ const Announcement = () => {
                         {line}
                     </div>
                 ))}
-            </p>
+            </div>
 
         </div>
         <div className="relative flex justify-center flex-col items-center gap-2">
-        <img style={{ transform: 'scale(1.2)' }}  className="py-1 px-2 h-full" src={data.length > 0 ? data[0].image : ''} alt="DetailedLogo" width={200} height={50} />
-            <span className="bg-black text-white p-1 rounded px-3  text-xl font-bold">{data.length > 0 && data[0].price}</span></div>
+            <img style={{ transform: 'scale(1.2)' }} className="py-1 px-2 h-full" src={data.length > 0 ? data[0].image : ''} alt="DetailedLogo" width={200} height={50} />
+            <span className="bg-black text-white p-1 rounded px-3  font-bold">
+                <FormattedPrice className="text-xl " amount={data.length > 0 ? data[0].price : 0} />
+            </span></div>
     </div>}</div>
         : null}</>
 };

@@ -10,8 +10,10 @@ const AdminAnnouncement = () => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState<any>({
     body: "",
-    link_text: "",
     link_url: "",
+    image_details: "",
+    image: "",
+    price: 0,
   });
 
   useEffect(() => {
@@ -35,9 +37,11 @@ const AdminAnnouncement = () => {
   const handleAddItemClick = () => {
     setEditIndex(-1); // Use -1 to indicate a new item
     setEditedItem({
-        body: "",
-        link_text: "",
-        link_url: "",
+      body: "",
+      link_url: "",
+      image_details: "",
+      image: "",
+      price: 0,
     });
     toast.error(null); // Reset error state
   };
@@ -48,7 +52,7 @@ const AdminAnnouncement = () => {
         .from('announcements')
         .delete()
         .eq('id', id);
-      
+
       setJsonArray(jsonArray.filter(item => item.id !== id));
       toast.success('Announcement removed successfully');
     } catch (error) {
@@ -66,7 +70,7 @@ const AdminAnnouncement = () => {
 
   const handleEditSubmit = async () => {
     try {
-      if (!editedItem.body || !editedItem.link_text || !editedItem.link_url) {
+      if (!editedItem.body || !editedItem.link_url) {
         toast.error("All fields are required");
         return;
       }
@@ -82,7 +86,7 @@ const AdminAnnouncement = () => {
           .from('announcements')
           .update(editedItem)
           .eq('id', editIndex);
-        
+
         setJsonArray(jsonArray.map(item => item.id === editIndex ? editedItem : item));
         toast.success('Announcement updated successfully');
       }
@@ -100,128 +104,149 @@ const AdminAnnouncement = () => {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     key: string
   ) => {
     setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
   };
-    return (
-        <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
-            {jsonArray && jsonArray.length === 0 && (
-                <h2 className="font-bold mb-4">Current Announcement data:</h2>
-            )}
-            {jsonArray && jsonArray.length === 0 && (
-                <div className="mb-5 flex items-center justify-end">
-                    <button
-                        className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                        onClick={handleAddItemClick}
-                    >
-                        <Plus size={18} className="mr-1" />
-                        Add Announcement
+  return (
+    <div className={`min-h-[400px] lg:p-3 w-full z-10 bottom-0 left-0 lg:relative overflow-hidden mt-5`}>
+      {jsonArray && jsonArray.length === 0 && (
+        <h2 className="font-bold mb-4">Current Announcement data:</h2>
+      )}
+      {jsonArray && jsonArray.length === 0 && (
+        <div className="mb-5 flex items-center justify-end">
+          <button
+            className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            onClick={handleAddItemClick}
+          >
+            <Plus size={18} className="mr-1" />
+            Add Announcement
+          </button>
+        </div>
+      )}
+      {jsonArray && jsonArray.length !== 0 ? (
+        <div className="overflow-x-auto">
+          <table className="min-w-full border border-gray-300 text-sm">
+            <thead>
+              <tr className="bg-zinc-800 text-white ">
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Body</th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">URL</th>
+                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-2 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {jsonArray.map((item, index) => (
+                <tr key={index} className="hover:bg-slate-100">
+                  <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.body}</td>
+                  <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
+                    <Link className="text-blue-400 hover:underline hover:text-blue-600" href={item.link_url}>Link</Link>
+                  </td>
+
+                  <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
+                    <button className="mr-1" onClick={() => handleEditClick(+item.id!)}>
+                      <Edit size={16} />
                     </button>
-                </div>
-            )}
-            {jsonArray && jsonArray.length !== 0 ? (
-                <div className="overflow-x-auto">
-                    <table className="min-w-full border border-gray-300 text-sm">
-                        <thead>
-                            <tr className="bg-zinc-800 text-white ">
-                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">Body</th>
-                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-4 py-2">URL</th>
-                                <th className="max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses  border px-2 py-2">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {jsonArray.map((item, index) => (
-                                <tr key={index} className="hover:bg-slate-100">
-                                    <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">{item.body}</td>
-                                    <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-4 py-2">
-                                        <Link href={item.link_url || ""}>
-                                            {item.link_text}
-                                        </Link>
-                                    </td>
-                                    <td className="text-center font-semibold max-w-[150px] whitespace-nowrap overflow-x-auto text-ellipses border px-2 py-2">
-                                        <button className="mr-1" onClick={() => handleEditClick(+item.id!)}>
-                                            <Edit size={16} />
-                                        </button>
-                                        <button className="mr-1" onClick={() => handleRemoveItem(+item.id!)}>
-                                            <Trash size={16} />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            ) : (
-                <NoContent />
-            )}
-            {editIndex !== null && (
-                <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
+                    <button className="mr-1" onClick={() => handleRemoveItem(+item.id!)}>
+                      <Trash size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <NoContent />
+      )}
+      {editIndex !== null && (
+        <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white max-h-[700px] overflow-auto min-w-[600px] p-8 rounded-lg shadow-md">
 
 
-                        <h2 className="font-bold mb-2 text-center text-lg">
-                            {editIndex === -1 ? "Add Announcement" : "Edit Announcement"}
-                        </h2>
-                        <div className="">
+            <h2 className="font-bold mb-2 text-center text-lg">
+              {editIndex === -1 ? "Add Announcement" : "Edit Announcement"}
+            </h2>
+            <div className="">
 
-                            <div className=" mb-2 lg:pr-4">
-                                <span className="text-sm font-bold my-2 -ml-2">Body</span>
+              <div className=" mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Body</span>
 
-                                <input
-                                    type="text"
-                                    placeholder="Body"
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                    value={editedItem.body}
-                                    onChange={(e) => handleInputChange(e, "body")}
-                                />
-                            </div>
+                <input
+                  type="text"
+                  placeholder="Body"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editedItem.body}
+                  onChange={(e) => handleInputChange(e, "body")}
+                />
+              </div>
 
-                            <div className="mb-2 lg:pr-4">
-                                <span className="text-sm font-bold my-2 -ml-2">Link Text</span>
 
-                                <input
-                                    type="text"
-                                    placeholder="Link Text"
-                                    className="p-2 w-full border border-gray-300 rounded"
-                                    value={editedItem.link_text}
-                                    onChange={(e) => handleInputChange(e, "link_text")}
-                                />
-                            </div>
-                            <div className=" mb-2 lg:pr-4">
-                                <span className="text-sm font-bold my-2 -ml-2">URL</span>
+              <div className=" mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">URL</span>
 
-                                <input
-                                    type="text"
-                                    placeholder="URL"
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                    value={editedItem.link_url}
-                                    onChange={(e) => handleInputChange(e, "link_url")}
-                                />
-                            </div>
-                        </div>
-                        <div className="flex">
-                            <button
-                                className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
-                                onClick={handleEditSubmit}
-                            >
-                                <Check size={18} className="mr-1" />
-                                Save
-                            </button>
-                            <button
-                                className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-                                onClick={handleEditCancel}
-                            >
-                                <X size={18} className="mr-1" />
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+                <input
+                  type="text"
+                  placeholder="URL"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editedItem.link_url}
+                  onChange={(e) => handleInputChange(e, "link_url")}
+                />
+              </div>
+              <div className=" mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Product Image</span>
 
-            {/* <div className="mt-5">
+                <input
+                  type="text"
+                  placeholder="Image To Display"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editedItem.image}
+                  onChange={(e) => handleInputChange(e, "image")}
+                />
+              </div>
+              <div className=" mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Product Description</span>
+
+                <textarea
+                  placeholder="Descript Your Product"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editedItem.image_details}
+                  onChange={(e) => handleInputChange(e, "image_details")}
+                />
+              </div>
+              <div className=" mb-2 lg:pr-4">
+                <span className="text-sm font-bold my-2 -ml-2">Product Price</span>
+
+                <input
+                  type="number"
+                  placeholder="Product Price"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editedItem.price}
+                  onChange={(e) => handleInputChange(e, "price")}
+                />
+              </div>
+            </div>
+            <div className="flex">
+              <button
+                className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+                onClick={handleEditSubmit}
+              >
+                <Check size={18} className="mr-1" />
+                Save
+              </button>
+              <button
+                className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                onClick={handleEditCancel}
+              >
+                <X size={18} className="mr-1" />
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* <div className="mt-5">
         <button
           className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
           onClick={handleAddItemClick}
@@ -230,17 +255,17 @@ const AdminAnnouncement = () => {
           Add Item
         </button>
       </div> */}
-            <Toaster
-                position="bottom-right"
-                toastOptions={{
-                    style: {
-                        background: "#000",
-                        color: "#fff",
-                    },
-                }}
-            />
-        </div>
-    );
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            background: "#000",
+            color: "#fff",
+          },
+        }}
+      />
+    </div>
+  );
 };
 
 export default AdminAnnouncement;
