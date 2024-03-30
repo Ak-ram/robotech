@@ -4,6 +4,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 import supabase from "@/supabase/config";
+import { calculatePeriod } from "@/lib/calculatePeriod";
+import { validatePhoneNumber } from "@/lib/validatePhoneNumber";
 const AdminCustomers = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +18,7 @@ const AdminCustomers = () => {
     phone: string;
     address: string;
     faculty: string;
-    age: number;
+    join_date: string;
     total_purchase_transactions: number;
     transactions: {};
   }
@@ -26,7 +28,7 @@ const AdminCustomers = () => {
     phone: "",
     address: "",
     faculty: "",
-    age: 0,
+    join_date: new Date().toString(),
     total_purchase_transactions: 0,
     transactions: {
       products: [],
@@ -53,7 +55,7 @@ const AdminCustomers = () => {
     setEditedItem({
       fullName: "",
       phone: "",
-      age: 0,
+      join_date: "",
       address: "",
       faculty: "",
       total_purchase_transactions: 0,
@@ -67,15 +69,14 @@ const AdminCustomers = () => {
     setSearchTerm("");
   };
 
-  const handleEditClick = (id: number) => {
-    // Find the index of the course with the specified ID
-    const index = jsonArray.findIndex((item) => item.id === id);
-    // Set the editIndex state to the found index
-    setEditIndex(index);
-    // Set the editedItem state to the corresponding course object
-    setEditedItem({ ...jsonArray[index] });
-  };
 
+  const handleEditClick = (id: number) => {
+    const index = jsonArray.findIndex((item) => item.id === id);
+    setEditIndex(index);
+    setEditedItem({ ...jsonArray[index] });
+    setEditedItemId(id); // Add this line
+  };
+  
   const handleRemoveItem = async (id: number) => {
     let confirmDel = window.confirm(
       "Deleting this customer will also remove associated data such as transactions, products, courses, and print services purchased, impacting the stats page."
@@ -103,8 +104,12 @@ const AdminCustomers = () => {
   const handleEditSubmit = async () => {
     try {
       // Check for empty fields
-      if (!editedItem.fullName || !editedItem.phone || !editedItem.age) {
-        toast.error("All fields are required");
+      if (!editedItem.fullName || !editedItem.phone || !editedItem.join_date) {
+        toast.error("Name,Phone,Join Date fields are required");
+        return;
+      }
+      if (!validatePhoneNumber(editedItem.phone)) {
+        toast.error("Invalid Phone Number");
         return;
       }
 
@@ -127,6 +132,7 @@ const AdminCustomers = () => {
             .from("customers")
             .update(editedItem)
             .eq("id", editedItemId);
+          console.log(editedItemId); // error here
           if (error) {
             throw error;
           }
@@ -155,6 +161,12 @@ const AdminCustomers = () => {
   ) => {
     setEditedItem((prev) => ({ ...prev, [key]: e.target.value }));
   };
+
+
+  useEffect(() => {
+    // console.log('new style', typeof calculatePeriod('1-4-2023'))
+  }, [editedItem])
+
 
   return (
     <div
@@ -211,16 +223,14 @@ const AdminCustomers = () => {
                   </span>
                   <span
                     className="block text-gray-600 mb-2 flex items-end gap-1"
-                    dir="rtl"
                   >
-                    <PhoneCall className="mb-[1px]" size={14} /> رقم التليفون:{" "}
+                    <PhoneCall className="mb-[1px]" size={14} /> Phone:{" "}
                     {item.phone}
                   </span>
                   <span
                     className="block text-gray-600 mb-2 flex items-center gap-1"
-                    dir="rtl"
                   >
-                    <User size={15} /> العمر: {item.age}
+                    <User size={15} /> Since: {calculatePeriod(item.join_date)}
                   </span>
                 </Link>
                 <div className="flex justify-end">
@@ -274,7 +284,8 @@ const AdminCustomers = () => {
                   <span className="font-bold mb-1">Phone No.</span>
 
                   <input
-                    type="text"
+                    type="tel"
+                    pattern="01[0-9]{9}"
                     placeholder="01XXXXXXXXX"
                     className="p-2 w-full border border-gray-300 rounded"
                     value={editedItem.phone}
@@ -282,14 +293,15 @@ const AdminCustomers = () => {
                   />
                 </div>
                 <div className=" mb-2 lg:pr-4">
-                  <span className="font-bold mb-1">Age</span>
+                  <span className="font-bold mb-1">Join Date</span>
 
                   <input
-                    type="number"
+                    type="date"
                     placeholder="20"
                     className="p-2 w-full border border-gray-300 rounded"
-                    value={editedItem.age}
-                    onChange={(e) => handleInputChange(e, "age")}
+                    value={editedItem.join_date}
+                    max={new Date().toISOString().split('T')[0]}
+                    onChange={(e) => handleInputChange(e, "join_date")}
                   />
                 </div>
                 <div className=" mb-2 lg:pr-4">

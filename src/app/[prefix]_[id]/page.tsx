@@ -17,6 +17,7 @@ import Loading from "@/components/Loading";
 import ProductDetails from "@/components/ProductDetails";
 import { detectLanguage } from "@/lib/utils";
 import supabase from "@/supabase/config";
+import NotFound from "@/components/NotFound";
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -66,7 +67,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   // if (!prefix) return <CoursePage searchParams={{}} />;
   return (
     <>
-      {product ? (
+      {product  ? (
         <section className="">
           <div className="py-6  mx-auto px-4">
             <nav className="flex">
@@ -277,7 +278,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
           />
         </section>
       ) : (
-        <Loading />
+        <Loading/>
       )}
     </>
   );
