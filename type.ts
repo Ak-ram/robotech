@@ -68,3 +68,15 @@ export interface SidebarItem {
   content: any;
   icon: any;
 }
+
+
+
+export interface CustomerType {
+  fullName: string;
+  phone: string;
+  address: string;
+  faculty: string;
+  join_date: string;
+  total_purchase_transactions: number;
+  transactions: {};
+}
