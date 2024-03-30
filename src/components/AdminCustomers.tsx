@@ -221,7 +221,8 @@ import { CustomerType } from "../../type";
 const AdminCustomers = () => {
   const [jsonArray, setJsonArray] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [showLoader, setShowLoader] = useState(false)
+  const [showLoader, setShowLoader] = useState(false);
+  const [showLoaderIndex, setShowLoaderIndex] = useState(0);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editedItemId, setEditedItemId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -311,6 +312,10 @@ const AdminCustomers = () => {
     // console.log('new style', typeof calculatePeriod('1-4-2023'))
   }, [editedItem])
 
+  const handleShowLoader = (index) => {
+    setShowLoaderIndex(index)
+     setShowLoader(true)
+  }
 
   return (
     <div
@@ -360,12 +365,12 @@ const AdminCustomers = () => {
                       id: item?.id || editedItemId,
                     },
                   }}
-                  onClick={() => setShowLoader(true)}
+                  onClick={() => handleShowLoader(index)}
                   className={`block`}
                 >
                   <span className="flex justify-between items-center font-bold mb-2 text-xl rtl" dir="rtl">
                     {item.fullName}
-                    {showLoader && <LoaderIcon className=" animate-spin" size={18} />}
+                    {showLoader && showLoaderIndex === index && <LoaderIcon className=" animate-spin" size={18} />}
                   </span>
                   <span
                     className="block text-gray-600 mb-2 flex items-end gap-1"
@@ -376,7 +381,7 @@ const AdminCustomers = () => {
                   <span
                     className="block text-gray-600 mb-2 flex items-center gap-1"
                   >
-                    <User size={15} /> Since: {calculatePeriod(item.join_date)}
+                    <User size={15} /> Since: {calculatePeriod(item.join_date) || "today"}
                   </span>
                 </Link>
                 <div className="flex justify-end">
