@@ -70,15 +70,13 @@ const Announcement = () => {
         backgroundImage: `url('https://static.vecteezy.com/system/resources/previews/021/670/513/non_2x/abstract-science-template-technology-lines-and-dots-connection-background-wallpaper-or-banner-with-a-dna-molecules-illustration-vector.jpg')`
         , backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
-    }} className={`hidden lg:flex ${isExpand ? 'h-[280px] px-10' : 'h-0'}  justify-center gap-40 items-center overflow-hidden transition-all duration-500 bg-white border-b`}>
+    }} className={`hidden lg:flex ${isExpand ? 'h-[280px] px-10' : 'h-0'}  absolute w-full shadow-xl border-b-designColor border-b-4 z-50 justify-center gap-40 items-center overflow-hidden transition-all duration-500 bg-white border-b`}>
         {/* <div className="overflow-hidden">
             <Image style={{ transform: 'scale(2)' }} className="transform scale-200 py-1 px-2 h-full" src={Gift} alt="DetailedLogo" width={200} height={50} />
         </div> */}
         <div>
-            <h2 className="text-2xl mb-3">
-
+            <h2 className="text-2xl -ml-10 mb-3">
                 📢 <span className="font-bold bg-clip-text text-transparent text-2xl bg-gradient-to-r from-blue-600 to-purple-500">COMMING SOON</span>
-
             </h2>
 
             <div>

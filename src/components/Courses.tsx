@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import Product from './Product';
 import CourseCard from './CourseCard';
 import supabase from '@/supabase/config';
+import Loading from './Loading';
+import { Loader } from 'lucide-react';
 
 function Courses() {
     const [courses, setCourses] = useState<any[]>([])
@@ -23,8 +25,12 @@ function Courses() {
     }, []);
 
 
-    return (
-        <CourseCard categoryName="courses" products={courses} />
+    return (<>
+        {
+            courses.length > 0 ?
+                <CourseCard categoryName="courses" products={courses} /> : null
+        }
+    </>
     )
 }
 

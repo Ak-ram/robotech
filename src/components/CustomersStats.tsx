@@ -35,7 +35,7 @@ const CustomersStats = () => {
   const [highestTotalPurchase, setHighestTotalPurchase] = useState<
     number | null
   >(null);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -165,16 +165,8 @@ const CustomersStats = () => {
                         {sortOrder === "asc" ? <ArrowDown01 /> : <ArrowUp01 />}
                       </span>
 
-                      {/* <span onClick={() => setIsShow(true)} className="text-slate-400 hover:text-white cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-gray-700 block">
-                                            <LineChart className="" />
-                                        </span> */}
-                      <span
-                        // onClick={() => downloadJSON(`${process.env.NEXT_PUBLIC_GITHUB_PROFILE}/api/robotech/pages/customers.json`, 'customers.json')}
-                        onClick={() => exportSupabaseTableToExcel("customers")}
-                        className="text-slate-400 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center hover:bg-slate-200 block"
-                      >
-                        <Download className="" />
-                      </span>
+                  
+                      
                     </div>
                   </div>
                   <div className="w-full max-h-[400px] overflow-auto">
