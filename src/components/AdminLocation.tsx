@@ -179,7 +179,7 @@ const AdminLocation = () => {
                                 <span className="text-sm font-bold my-2 -ml-2">URL</span>
 
                                 <input
-                                    type="text"
+                                    type="url"
                                     placeholder="URL"
                                     className="w-full p-2 border border-gray-300 rounded"
                                     value={editedItem.locationUrl}
