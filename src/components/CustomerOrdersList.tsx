@@ -50,25 +50,22 @@ const CustomerOrdersList = ({ showOrdersList, setShowOrdersList, customerId }) =
         >
             <X className="ml-auto cursor-pointer" onClick={() => setShowOrdersList(false)} />
             <section>
-                <h3 className="font-bold text-2xl text-indigo-600">Orders List</h3>
+                <h3 className="font-bold text-2xl text-slate-600">Orders List</h3>
                 <div className="flex items-center justify-evenly mt-5">
                     <button
-                        className={`bg-indigo-400 px-8 py-2 font-bold text-white rounded ${selected === "products" ? "bg-indigo-600" : ""
-                            }`}
+                        className={`bg-slate-200 hover:bg-slate-300 focus:bg-slate-300 flex-1 h-18 inline-block px-8 py-5 font-bold text-black`}
                         onClick={() => handleButtonClick("products")}
                     >
                         Products
                     </button>
                     <button
-                        className={`bg-indigo-400 px-8 py-2 font-bold text-white rounded ${selected === "courses" ? "bg-indigo-600" : ""
-                            }`}
+                        className={`bg-slate-200 hover:bg-slate-300 focus:bg-slate-300 flex-1 h-18 inline-block px-8 py-5 font-bold text-black `}
                         onClick={() => handleButtonClick("courses")}
                     >
                         Courses
                     </button>
                     <button
-                        className={`bg-indigo-400 px-8 py-2 font-bold text-white rounded ${selected === "services" ? "bg-indigo-600" : ""
-                            }`}
+                        className={`bg-slate-200 hover:bg-slate-300 focus:bg-slate-300 flex-1 h-18 inline-block px-8 py-5 font-bold text-black `}
                         onClick={() => handleButtonClick("services")}
                     >
                         Services
@@ -77,23 +74,27 @@ const CustomerOrdersList = ({ showOrdersList, setShowOrdersList, customerId }) =
 
                 <div className="mt-5">
                     <ul>
-                        {getSelectedData().map((item: Order, i) => (
-                            <li key={`${item.productName}_${i}`} className="border-b py-4">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <h4 className="font-bold">{item.productName}</h4>
-                                        <p className="text-gray-500">Date: {item.date}</p>
+                        {getSelectedData().length > 0 ? (
+                            getSelectedData().map((item: Order, i) => (
+                                <li key={`${item.productName}_${i}`} className="border-b py-4">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h4 className="font-bold">{item.productName}</h4>
+                                            <p className="text-gray-500">Date: {item.date}</p>
+                                        </div>
+
+                                        <ul className="flex gap-2 items-center bg-gray-200 p-3 rounded text-sm">
+                                            <li>Price: {item.piecePrice} EGP</li>
+                                            <li>Quantity: {item.quantity}</li>
+                                            <li>Discount: {item.discount}</li>
+                                            <li>Subtotal: {item.subtotal}</li>
+                                        </ul>
                                     </div>
-
-                                    <ul className="flex gap-2 items-center bg-gray-200 p-3 rounded text-sm">
-                                        <li>Price: {item.piecePrice} EGP</li>
-                                        | <li>Quantity: {item.quantity}</li>
-                                        | <li>Discount: {item.discount}</li>
-                                        | <li>Subtotal: {item.subtotal}</li>
-                                    </ul>
-
-                                </div>
-                            </li>))}
+                                </li>
+                            ))
+                        ) : (
+                            <li className="border-b py-4">No items</li>
+                        )}
                     </ul>
                 </div>
             </section>
