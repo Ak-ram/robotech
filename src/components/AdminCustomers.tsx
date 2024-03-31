@@ -376,7 +376,7 @@ const AdminCustomers = () => {
                   <span
                     className="block text-gray-600 mb-2 flex items-center gap-1"
                   >
-                    <User size={15} /> Since: {calculatePeriod(item.join_date)}
+                    <User size={15} /> Since: {calculatePeriod(item.join_date) || 'today'}
                   </span>
                 </Link>
                 <div className="flex justify-end">

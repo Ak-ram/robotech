@@ -5,10 +5,12 @@ import CustomerPageAddProducts from "@/components/CustomerPageAddProducts";
 import CustomerPageAddCourses from "@/components/CustomerPageAddCourses";
 import CustomerPageAddPrintServices from "@/components/CustomerPageAddPrintServices";
 import toast from "react-hot-toast";
-import { Printer, Trash } from "lucide-react";
+import { Printer, ScrollText, Trash } from "lucide-react";
 import Bill from "@/components/Bill";
 import { ProductType } from "../../../../type";
 import supabase from "@/supabase/config";
+import { calculatePeriod } from "@/lib/calculatePeriod";
+import CustomerOrdersList from "@/components/CustomerOrdersList";
 const CustomerPage = () => {
   const router = useRouter();
   const searchPar = useSearchParams();
@@ -22,6 +24,7 @@ const CustomerPage = () => {
   const [currentBillId, setCurrentBillId] = useState(0);
   const [billData, setBillData] = useState<any>([]);
   const [showBill, setShowBill] = useState(false);
+  const [showOrdersList, setShowOrdersList] = useState(false);
   const [currentBill, setCurrentBill] = useState<BillType>();
   interface BillType {
     data: ProductType[],
@@ -82,7 +85,7 @@ const CustomerPage = () => {
         const { data, error } = await supabase
           .from('customers')
           .select('*')
-          .eq('id', +customerId!)
+          .eq('id', customerId!)
           .single();
 
         if (error) {
@@ -105,11 +108,31 @@ const CustomerPage = () => {
     setBillData([])
   }
 
+
+  const handleCustomerOrders = () => {
+    setShowOrdersList(true)
+    return;
+  }
+
+
+
+
   return (
-    <div className="m-8">
+    <div className="m-8 relative">
       {customerData && (
-        <div className="bg-white p-8 rounded-lg shadow-md">
-          <h2 className="text-3xl font-semibold mb-8">Customer Information</h2>
+        <div className="bg-white  p-8 rounded-lg shadow-md">
+          <div className="flex justify-between items-center">
+            <h2 className="text-3xl font-semibold mb-8 ">
+              Customer Information
+            </h2>
+            <button
+              onClick={() => handleCustomerOrders()}
+              className={`py-3 px-5 flex gap-2 items-center justify-center rounded focus:outline-none bg-indigo-500 text-white transition duration-300`}
+            >
+              <ScrollText size={20} /> Orders
+            </button>
+
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
             <div>
@@ -117,9 +140,9 @@ const CustomerPage = () => {
               <p className="font-semibold">{customerData.fullName}</p>
             </div>
             <div>
-              <p className="text-gray-600 mb-2">Age:</p>
+              <p className="text-gray-600 mb-2">Join Date:</p>
               <p className="font-semibold">
-                {customerData.age ? `${customerData.age} Year(s)` : "No Age"}
+                {calculatePeriod(customerData.join_date) || 'today'} ago
               </p>
             </div>
             <div>
@@ -158,6 +181,7 @@ const CustomerPage = () => {
               </div>
 
               <div className="flex flex-col  space-y-4 lg:w-1/4">
+
                 {tabs.map((tab, index) => (
                   <button
                     key={index}
@@ -194,6 +218,7 @@ const CustomerPage = () => {
         </div>
       )}
       {showBill && <Bill id={currentBillId} setBillData={setBillData} setShowBill={setShowBill} transactionData={billData} />}
+      {showOrdersList && <CustomerOrdersList />}
     </div>
   );
 };
