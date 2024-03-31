@@ -2,6 +2,7 @@
 
 Welcome to the Robotech Space E-commerce Website! This is an electronic component store located in front of Alexandria Band in Beni-Suef, Egypt. This repository contains the source code for the website built with Next.js, CSS, and Chart.js. The website offers several features to enhance the user experience and streamline the shopping process. Below you will find an overview of the project and instructions on how to set it up.
 
+
 ## Features ✨
 
 1. Responsive UI Design 📱: The website is designed to adapt to different screen sizes, providing an optimal viewing experience on desktop, tablet, and mobile devices.
