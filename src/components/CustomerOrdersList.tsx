@@ -8,7 +8,7 @@ const CustomerOrdersList = ({ showOrdersList, setShowOrdersList, customerId }) =
     const [courses, setCourses] = useState([]);
     const [products, setProducts] = useState([]);
     const [services, setServices] = useState([]);
-    const [selected, setSelected] = useState("products");
+    const [selected, setSelected] = useState("courses");
     const btn = useRef<HTMLButtonElement>(null)
 
     useEffect(() => {
@@ -46,13 +46,13 @@ const CustomerOrdersList = ({ showOrdersList, setShowOrdersList, customerId }) =
     };
 
 
-    useEffect(()=>{
-        useEffect(() => {
-            if (btn && btn.current) {
-                btn.current.focus();
-            }
-        }, []);
-    })
+
+    useEffect(() => {
+        if (btn && btn.current) {
+            btn.current.focus();
+        }
+    }, []);
+
 
     return (
         <div
@@ -69,7 +69,7 @@ const CustomerOrdersList = ({ showOrdersList, setShowOrdersList, customerId }) =
                         Products
                     </button>
                     <button
-                    ref={btn}
+                        ref={btn}
                         className={`bg-slate-200 hover:bg-slate-300 focus:bg-slate-300 flex-1 h-18 inline-block px-8 py-5 font-bold text-black `}
                         onClick={() => handleButtonClick("courses")}
                     >
