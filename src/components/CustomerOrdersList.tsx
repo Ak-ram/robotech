@@ -1,6 +1,6 @@
 import { getCustomerOrdersList } from "@/helpers/getCustomerOrdersLists";
 import { X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { CourseType, Order, ProductType, transactionsType } from "../../type";
 import FormattedPrice from "./FormattedPrice";
 
@@ -8,8 +8,7 @@ const CustomerOrdersList = ({ showOrdersList, setShowOrdersList, customerId }) =
     const [courses, setCourses] = useState([]);
     const [products, setProducts] = useState([]);
     const [services, setServices] = useState([]);
-    const [selected, setSelected] = useState("courses");
-    const btn = useRef<HTMLButtonElement>(null)
+    const [selected, setSelected] = useState("products");
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -45,15 +44,6 @@ const CustomerOrdersList = ({ showOrdersList, setShowOrdersList, customerId }) =
         }
     };
 
-
-
-    useEffect(() => {
-        if (btn && btn.current) {
-            btn.current.focus();
-        }
-    }, []);
-
-
     return (
         <div
             className={`${showOrdersList ? "right-0" : "-right-full"} p-10 rounded-lg duration-500 transition-all absolute w-full bg-white h-full top-0`}
@@ -63,20 +53,25 @@ const CustomerOrdersList = ({ showOrdersList, setShowOrdersList, customerId }) =
                 <h3 className="font-bold text-2xl text-slate-600">Orders List</h3>
                 <div className="flex items-center justify-evenly mt-5">
                     <button
-                        className={`bg-slate-200 hover:bg-slate-300 focus:bg-slate-300 flex-1 h-18 inline-block px-8 py-5 font-bold text-black`}
+                        className={`bg-slate-200 hover:bg-slate-300  flex-1 h-18 inline-block px-8 py-5 font-bold text-black ${
+                            selected === "products" ? "bg-slate-300" : ""
+                        }`}
                         onClick={() => handleButtonClick("products")}
                     >
                         Products
                     </button>
                     <button
-                        ref={btn}
-                        className={`bg-slate-200 hover:bg-slate-300 focus:bg-slate-300 flex-1 h-18 inline-block px-8 py-5 font-bold text-black `}
+                        className={`bg-slate-200 hover:bg-slate-300  flex-1 h-18 inline-block px-8 py-5 font-bold text-black ${
+                            selected === "courses" ? "bg-slate-300" : ""
+                        }`}
                         onClick={() => handleButtonClick("courses")}
                     >
                         Courses
                     </button>
                     <button
-                        className={`bg-slate-200 hover:bg-slate-300 focus:bg-slate-300 flex-1 h-18 inline-block px-8 py-5 font-bold text-black `}
+                        className={`bg-slate-200 hover:bg-slate-300  flex-1 h-18 inline-block px-8 py-5 font-bold text-black ${
+                            selected === "services" ? "bg-slate-300" : ""
+                        }`}
                         onClick={() => handleButtonClick("services")}
                     >
                         Services
