@@ -80,3 +80,25 @@ export interface CustomerType {
   total_purchase_transactions: number;
   transactions: {};
 }
+
+export interface transactionsType {
+
+  courses: CourseType[],
+  products: ProductType[],
+  services: any[],
+
+
+}
+
+
+export interface Order {
+  date: string;
+  discount: number;
+  quantity: number;
+  subtotal: number;
+  piecePrice: number;
+  productName: string;
+
+
+
+}

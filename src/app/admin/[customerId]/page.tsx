@@ -118,7 +118,7 @@ const CustomerPage = () => {
 
 
   return (
-    <div className="m-8 relative">
+    <div className="m-8 relative overflow-hidden">
       {customerData && (
         <div className="bg-white  p-8 rounded-lg shadow-md">
           <div className="flex justify-between items-center">
@@ -218,7 +218,7 @@ const CustomerPage = () => {
         </div>
       )}
       {showBill && <Bill id={currentBillId} setBillData={setBillData} setShowBill={setShowBill} transactionData={billData} />}
-      {showOrdersList && <CustomerOrdersList />}
+      {<CustomerOrdersList {...{ showOrdersList, setShowOrdersList, customerId }} />}
     </div>
   );
 };
