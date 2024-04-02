@@ -18,7 +18,7 @@ import {
 import FormattedPrice from "./FormattedPrice";
 import Link from "next/link";
 import CustomerStatsChart from "./CustomerStatsChart";
-import TransactionAnalyzer from "./TransactionAnalyzer";
+import TransactionAnalyzer from "./update";
 import CustomerStatsTopSelling from "./CustomerStatsTopSelling";
 import Stocks from "./Stocks";
 import CustomerStatsServicesData from "./CustomerStatsServicesData";
@@ -62,7 +62,7 @@ const CustomersStats = () => {
   };
 
   const filteredCategoryStats = customers.filter((customer) =>
-    customer?.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+    customer?.fullName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
   const sortCustomers = (data: any[], order: "asc" | "desc") => {
     const sortedCustomers = [...data].sort((a, b) => {
@@ -164,9 +164,6 @@ const CustomersStats = () => {
                       >
                         {sortOrder === "asc" ? <ArrowDown01 /> : <ArrowUp01 />}
                       </span>
-
-                  
-                      
                     </div>
                   </div>
                   <div className="w-full max-h-[400px] overflow-auto">
@@ -269,7 +266,7 @@ const CustomersStats = () => {
 
         {/* Display additional statistics */}
         <div className="mt-4">
-          <TransactionAnalyzer customers={customers} />
+          <TransactionAnalyzer />
         </div>
         <SuperAdminBills />
       </section>
