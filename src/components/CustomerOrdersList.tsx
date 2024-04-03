@@ -71,9 +71,9 @@ const CustomerOrdersList = ({
               ? "عميل محتمل"
                 ? customerBills.length <= 3
                 ? "عميل عابر"
-                 
+
                   : "عميل متردد"
-              } 
+              }
           </span>*/}
           </div>
         </h3>
