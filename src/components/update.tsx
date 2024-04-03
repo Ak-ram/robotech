@@ -2,9 +2,12 @@ import supabase from "@/supabase/config";
 import { useEffect, useState } from "react";
 import { Bill } from "../../type";
 import { formatDate } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 
 const TransactionAnalyzer = () => {
   const [bills, setBills] = useState<Bill[]>([]);
+  const [show, setShow] = useState<boolean>(false);
+
   const [dailyStats, setDailyStats] = useState<
     { date: string; totalSells: number; totalProfit: number }[]
   >([]);
@@ -136,52 +139,75 @@ const TransactionAnalyzer = () => {
   }, [bills]);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Bills Analyzer</h1>
-      <div className="grid gap-4">
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Daily Profits</h2>
-          {dailyStats.map((dailyStat, index) => (
-            <div
-              key={index}
-              className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
-            >
-              <h3 className="text-lg font-semibold">Date: {dailyStat.date}</h3>
-              <p>Total Sells: {dailyStat.totalSells} L.E</p>
-              <p>Total Profit: {dailyStat.totalProfit} L.E</p>
-            </div>
-          ))}
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Monthly Profits</h2>
-          {monthlyStats.map((monthlyStat, index) => (
-            <div
-              key={index}
-              className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
-            >
-              <h3 className="text-lg font-semibold">
-                Month: {monthlyStat.month}
-              </h3>
-              <p>Total Sells: {monthlyStat.totalSells} L.E</p>
-              <p>Total Profit: {monthlyStat.totalProfit} L.E</p>
-            </div>
-          ))}
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Yearly Profits</h2>
-          {yearlyStats.map((yearlyStat, index) => (
-            <div
-              key={index}
-              className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
-            >
-              <h3 className="text-lg font-semibold">Year: {yearlyStat.year}</h3>
-              <p>Total Sells: {yearlyStat.totalSells} L.E</p>
-              <p>Total Profit: {yearlyStat.totalProfit} L.E</p>
-            </div>
-          ))}
-        </div>
+    <section
+      className={` ${
+        !show ? "border border-indigo-300 border-dashed" : ""
+      } bg-white rounded-lg p-5 mb-5`}
+    >
+      <div
+        className={`flex items-center justify-between cursor-pointer`}
+        onClick={() => setShow(!show)}
+      >
+        <h3 className="transform  transition-transform duration-500 font-semibold text-indigo-500">
+          {show ? "Click to Collapse" : "Expand Bill Analizer"}
+        </h3>
+        <ChevronDown
+          className={`text-blue-300 transform transition-transform duration-300 ${
+            show ? "rotate-180" : ""
+          }`}
+          size={25}
+        />
       </div>
-    </div>
+      {show && (
+        <div className="grid gap-4 mt-5">
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Daily Profits</h2>
+            {dailyStats.map((dailyStat, index) => (
+              <div
+                key={index}
+                className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
+              >
+                <h3 className="text-lg font-semibold">
+                  Date: {dailyStat.date}
+                </h3>
+                <p>Total Sells: {dailyStat.totalSells} L.E</p>
+                <p>Total Profit: {dailyStat.totalProfit} L.E</p>
+              </div>
+            ))}
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Monthly Profits</h2>
+            {monthlyStats.map((monthlyStat, index) => (
+              <div
+                key={index}
+                className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
+              >
+                <h3 className="text-lg font-semibold">
+                  Month: {monthlyStat.month}
+                </h3>
+                <p>Total Sells: {monthlyStat.totalSells} L.E</p>
+                <p>Total Profit: {monthlyStat.totalProfit} L.E</p>
+              </div>
+            ))}
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Yearly Profits</h2>
+            {yearlyStats.map((yearlyStat, index) => (
+              <div
+                key={index}
+                className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
+              >
+                <h3 className="text-lg font-semibold">
+                  Year: {yearlyStat.year}
+                </h3>
+                <p>Total Sells: {yearlyStat.totalSells} L.E</p>
+                <p>Total Profit: {yearlyStat.totalProfit} L.E</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
   );
 };
 
