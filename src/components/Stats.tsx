@@ -11,16 +11,18 @@ import {
   ChevronDown,
   DollarSign,
   Download,
-  LineChart,
-  Search,
   ShoppingCart,
   X,
   XCircle,
 } from "lucide-react";
-import CustomersStats from "./CustomersStats";
 import { exportSupabaseTableToExcel } from "@/lib/exportToExcel";
 import supabase from "@/supabase/config";
 import AdminAdmins from "./AdminAdmins";
+import TransactionAnalyzer from "./update";
+import SuperAdminBills from "./SuperAdminBills";
+import Stocks from "./Stocks";
+import CustomerStatsServicesData from "./CustomerStatsServicesData";
+import CustomerStatsTopSelling from "./CustomerStatsTopSelling";
 
 interface CategoryStats {
   categoryName: string;
@@ -74,7 +76,7 @@ const Stats = () => {
       (accumulator, currentProduct) => {
         return accumulator + currentProduct.price;
       },
-      0
+      0,
     );
     setInStockPrice(totalInStockPrice);
     setOutStockPrice(totalOutStockPrice);
@@ -85,7 +87,7 @@ const Stats = () => {
       <section
         className={` ${
           !show ? "border border-indigo-300 border-dashed" : ""
-        } bg-white rounded-lg p-5`}
+        } bg-white rounded-lg p-5 mb-5`}
       >
         <div
           className={`flex items-center justify-between cursor-pointer`}
@@ -116,63 +118,6 @@ const Stats = () => {
             </div>
             <div className="flex justify-start flex-wrap gap-2">
               <div className="flex flex-col md:flex-row gap-2  flex-1">
-                {/* <div className="-my-2 flex-1 overflow-x-auto ">
-                  <div className="py-2 px-3">
-                    <div className="shadow-xl border border-slate-300 overflow-hidden sm:rounded-lg">
-                      <div className="flex justify-between items-center gap-2 bg-white p-3 border-b  border-slate-300">
-                        <span className="relative">
-                          <Search className="w-5 h-5 text-gray-500 absolute top-2 right-3" />
-                          <input
-                            type="text"
-                            placeholder="Search by category"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="pl-2 pr-10 py-1 border border-slate-300 rounded bg-white text-black focus:outline-none focus:border-blue-500"
-                          />
-                        </span>
-                        <div className="flex gap-1">
-                          <span
-                            onClick={() => setIsShow(true)}
-                            className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center  hover:bg-slate-200 block"
-                          >
-                            <LineChart className="" />
-                          </span>
-                          <span
-                            onClick={() =>
-                              exportSupabaseTableToExcel("products")
-                            }
-                            className="text-slate-500 hover:text-black cursor-pointer py-1 rounded w-10 h-10 flex items-center justify-center hover:bg-slate-200 block"
-                          >
-                            <Download className="" />
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="w-full text-sm text-gray-600">
-                        <div className="bg-black text-white text-sm uppercase flex">
-                          <div className="w-2/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">
-                            Category
-                          </div>
-                          <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">
-                            Quantity
-                          </div>
-                          <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">
-                            In Stock
-                          </div>
-                          <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">
-                            IS Price
-                          </div>
-                          <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">
-                            Out Stock
-                          </div>
-                          <div className="w-1/6 p-3 text-xs whitespace-nowrap font-semibold text-left tracking-wider">
-                            OS Price
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
                 <section className="flex-1 w-full  rounded-lg w-[400px] border border-gray-300 p-5 bg-white">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex items-center justify-center p-6 rounded-lg bg-blue-50">
@@ -280,9 +225,12 @@ const Stats = () => {
           </div>
         )}
       </section>
-
-      <CustomersStats />
-      <AdminAdmins/>
+      <Stocks />
+      {/* <CustomerStatsTopSelling /> */}
+      <CustomerStatsServicesData />
+      <SuperAdminBills />
+      <TransactionAnalyzer />
+      <AdminAdmins />
     </div>
   );
 };

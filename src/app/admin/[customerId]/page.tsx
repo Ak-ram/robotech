@@ -27,8 +27,8 @@ const CustomerPage = () => {
   const [showOrdersList, setShowOrdersList] = useState(false);
   const [currentBill, setCurrentBill] = useState<BillType>();
   interface BillType {
-    data: ProductType[],
-    customerData: any
+    data: ProductType[];
+    customerData: any;
   }
   const tabs = [
     {
@@ -66,26 +66,30 @@ const CustomerPage = () => {
     },
   ];
 
+
   const printBill = async () => {
     setShowBill(true);
     const bill = {
       data: billData,
-      customerData: customerData
+      customerId: +customerId!,
+      customerData: customerData,
     };
     setCurrentBill(bill);
-    const { data, error } = await supabase.from('bills').insert([bill]).select();
-    setCurrentBillId(data![0].id)
+    const { data, error } = await supabase
+      .from("bills")
+      .insert([bill])
+      .select();
+    setCurrentBillId(data![0].id);
     toast.success("When you're ready, please click CTRL + P to print.");
   };
-
 
   useEffect(() => {
     async function fetchCustomerData() {
       try {
         const { data, error } = await supabase
-          .from('customers')
-          .select('*')
-          .eq('id', customerId!)
+          .from("customers")
+          .select("*")
+          .eq("id", customerId!)
           .single();
 
         if (error) {
@@ -94,28 +98,20 @@ const CustomerPage = () => {
 
         setCustomerData(data);
       } catch (error) {
-        console.error('Error fetching customer data:', (error as Error).message);
+        console.error(
+          "Error fetching customer data:",
+          (error as Error).message,
+        );
       }
     }
 
     fetchCustomerData();
   }, [customerId]);
 
-
-  const setBill = () => {
-    const confirm = window.confirm('Sure To Reset Bill ?');
-    if (!confirm) return;
-    setBillData([])
-  }
-
-
   const handleCustomerOrders = () => {
-    setShowOrdersList(true)
+    setShowOrdersList(true);
     return;
-  }
-
-
-
+  };
 
   return (
     <div className="m-8 relative overflow-hidden">
@@ -131,7 +127,6 @@ const CustomerPage = () => {
             >
               <ScrollText size={20} /> Orders
             </button>
-
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
@@ -142,7 +137,7 @@ const CustomerPage = () => {
             <div>
               <p className="text-gray-600 mb-2">Join Date:</p>
               <p className="font-semibold">
-                {calculatePeriod(customerData.join_date) || 'today'} ago
+                {calculatePeriod(customerData.join_date) || "today"} ago
               </p>
             </div>
             <div>
@@ -181,44 +176,48 @@ const CustomerPage = () => {
               </div>
 
               <div className="flex flex-col  space-y-4 lg:w-1/4">
-
                 {tabs.map((tab, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentTab(index)}
-                    className={`py-3 px-5 rounded focus:outline-none ${currentTab === index
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300"
-                      }`}
+                    className={`py-3 px-5 rounded focus:outline-none ${
+                      currentTab === index
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300"
+                    }`}
                   >
                     Sell {tab.label}
                   </button>
                 ))}
-                {billData.length ? <>
-
-                  <button
-                    onClick={() => printBill()}
-                    className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-blue-200 text-blue-700 hover:bg-blue-500 hover:text-white transition duration-300`}
-                  >
-                    Submit Bill
-                    <Printer className="" />
-                  </button>
-                  <button
-                    onClick={() => setBill()}
-                    className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-rose-200 text-rose-700 hover:bg-rose-500 hover:text-white transition duration-300`}
-                  >
-                    Set Bill
-                    <Trash className="" />
-                  </button>
-                </> : null}
-
+                {billData.length ? (
+                  <>
+                    <button
+                      onClick={() => printBill()}
+                      className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-blue-200 text-blue-700 hover:bg-blue-500 hover:text-white transition duration-300`}
+                    >
+                      Submit Bill
+                      <Printer className="" />
+                    </button>
+                  </>
+                ) : null}
               </div>
             </section>
           </div>
         </div>
       )}
-      {showBill && <Bill id={currentBillId} setBillData={setBillData} setShowBill={setShowBill} transactionData={billData} />}
-      {<CustomerOrdersList {...{ showOrdersList, setShowOrdersList, customerId }} />}
+      {showBill && (
+        <Bill
+          id={currentBillId}
+          setBillData={setBillData}
+          setShowBill={setShowBill}
+          transactionData={billData}
+        />
+      )}
+      {
+        <CustomerOrdersList
+          {...{ showOrdersList, setShowOrdersList, customerId }}
+        />
+      }
     </div>
   );
 };

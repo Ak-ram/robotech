@@ -19,8 +19,8 @@ const CustomSelect = ({
   useEffect(() => {
     setFilteredOptions(
       options.filter((option) =>
-        option.title.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+        option.title.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
     );
   }, [options, searchTerm]);
 
@@ -162,20 +162,23 @@ const OrderModel = ({
       toast.error("Quantity should be greater than zero");
       return;
     }
-    console.log(selectedItem);
+    if (newOrder.discount < 0) {
+      toast.error("Discount should be zero or more");
+      return;
+    }
     if ("count" in selectedItem!) {
       if (newOrder.quantity > selectedItem.count) {
         toast.error(`only ${selectedItem.count} piece(s) available in-stock`);
         return;
-      }else{
+      } else {
         const newStock = selectedItem.count - newOrder.quantity;
-        console.log('selected product stock',selectedItem.count)
-        console.log('new order quantity',newOrder.quantity)
-        console.log('new stock',newStock)
+        console.log("selected product stock", selectedItem.count);
+        console.log("new order quantity", newOrder.quantity);
+        console.log("new stock", newStock);
         await supabase
-            .from('products')
-            .update({ 'count': newStock })
-            .eq('id', selectedItem.id); 
+          .from("products")
+          .update({ count: newStock })
+          .eq("id", selectedItem.id);
       }
     }
 
