@@ -10,12 +10,12 @@ const FormattedPrice = ({ amount, className }: Props) => {
     style: "currency",
     currencyDisplay: "symbol",
     currency: "EGP",
-    maximumFractionDigits: 0,
+    maximumFractionDigits: 2,
     minimumFractionDigits: 0,
     useGrouping: true,
   });
   return (
-    <span className={cn("", className)} style={{direction:'ltr'}}>
+    <span className={cn("", className)} style={{ direction: "ltr" }}>
       {formattedAmount}
     </span>
   );
