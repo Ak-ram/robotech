@@ -25,8 +25,8 @@ const CustomerOrdersList = ({
     fetchOrders().then((data) => {
       console.log("customer list of bills", data!);
       let list = [];
-      data!.map((item: Bill) => {
-        list.push(item);
+      data!.map((item) => {
+        list.push(item as never);
       });
       setCustomerBills(list);
     });
