@@ -1,5 +1,5 @@
 import { getCustomerOrdersList } from "@/helpers/getCustomerOrdersLists";
-import { X } from "lucide-react";
+import { DotIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Bill, CourseType, ProductType, transactionsType } from "../../type";
 import FormattedPrice from "./FormattedPrice";
@@ -11,6 +11,7 @@ const CustomerOrdersList = ({
   customerId,
 }) => {
   const [customerBills, setCustomerBills] = useState<Bill[]>([]); // for fetching customer bills();
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -30,6 +31,20 @@ const CustomerOrdersList = ({
       setCustomerBills(list);
     });
   }, [customerId, showOrdersList]);
+  useEffect(() => {
+    // Calculate total price when customerBills change
+    const calculateTotalPrice = () => {
+      let totalPrice = 0;
+      customerBills.forEach((bill) => {
+        bill.data.forEach((transaction) => {
+          totalPrice += transaction.subtotal;
+        });
+      });
+      setTotalPrice(totalPrice);
+    };
+
+    calculateTotalPrice();
+  }, [customerBills]);
 
   return (
     <div
@@ -42,7 +57,26 @@ const CustomerOrdersList = ({
         />
       </div>
       <section className="flex-1 flex flex-col">
-        <h3 className="font-bold text-2xl text-slate-600">Orders List</h3>
+        <h3 className="text-slate-600 flex items-center">
+          <span className="font-bold text-2xl mr-3 "> Orders List</span>
+          <div className="flex items-center bg-green-100 p-2 px-3 rounded text-green-900">
+            <span className="mt-1 mr-2">
+              <DotIcon size={7} className="rounded-full bg-green-500" />
+            </span>
+            ( <FormattedPrice amount={totalPrice} />)
+            <span className="mx-2">for</span>
+            <span>({customerBills.length}) Bills</span>
+            {/* <span className="ml-3">
+             {customerBills.length === 0
+              ? "عميل محتمل"
+                ? customerBills.length <= 3
+                ? "عميل عابر"
+                 
+                  : "عميل متردد"
+              } 
+          </span>*/}
+          </div>
+        </h3>
 
         <div className="mt-5 flex-1">
           <ul>
