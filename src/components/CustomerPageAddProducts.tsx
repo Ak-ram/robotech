@@ -160,7 +160,9 @@ const CustomerPageAddProducts = ({
     }
   }, []);
   const handleRemoveItemFromBill = (item) => {
-    const confirm = window.confirm("Are you sure you want to remove this item?");
+    const confirm = window.confirm(
+      "Are you sure you want to remove this item?",
+    );
     if (!confirm) {
       return;
     }
@@ -182,9 +184,7 @@ const CustomerPageAddProducts = ({
             className={`bg-white flex items-center gap-3 p-6 rounded-lg shadow-md mb-4`}
           >
             <div className="flex-1 mr-2 flex justify-between items-center">
-              <p className="text-gray-600">
-                Product name: {product["productName"]}
-              </p>
+              <p className="text-gray-600">{product["productName"]}</p>
               <p className="text-gray-600">
                 <FormattedPrice amount={+product["subtotal"]!} />
               </p>
