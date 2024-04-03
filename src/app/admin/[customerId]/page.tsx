@@ -5,7 +5,7 @@ import CustomerPageAddProducts from "@/components/CustomerPageAddProducts";
 import CustomerPageAddCourses from "@/components/CustomerPageAddCourses";
 import CustomerPageAddPrintServices from "@/components/CustomerPageAddPrintServices";
 import toast from "react-hot-toast";
-import { Printer, ScrollText, Trash } from "lucide-react";
+import { MessageCircleIcon, Printer, ScrollText, Trash } from "lucide-react";
 import Bill from "@/components/Bill";
 import { ProductType } from "../../../../type";
 import supabase from "@/supabase/config";
@@ -66,7 +66,6 @@ const CustomerPage = () => {
     },
   ];
 
-
   const printBill = async () => {
     setShowBill(true);
     const bill = {
@@ -112,6 +111,14 @@ const CustomerPage = () => {
     setShowOrdersList(true);
     return;
   };
+  const handleMessageCustomer = () => {
+    if (typeof window !== "undefined") {
+      const phoneNumber = "2" + customerData.phone;
+      const message = `Hi ${customerData.fullName}, Your order is on the way.`;
+      const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappLink, "_blank");
+    }
+  };
 
   return (
     <div className="m-8 relative overflow-hidden">
@@ -121,12 +128,20 @@ const CustomerPage = () => {
             <h2 className="text-3xl font-semibold mb-8 ">
               Customer Information
             </h2>
-            <button
-              onClick={() => handleCustomerOrders()}
-              className={`py-3 px-5 flex gap-2 items-center justify-center rounded focus:outline-none bg-indigo-500 text-white transition duration-300`}
-            >
-              <ScrollText size={20} /> Orders
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handleMessageCustomer()}
+                className={`py-2 px-4 flex gap-2 items-center justify-center rounded focus:outline-none bg-slate-200  transition duration-300`}
+              >
+                <MessageCircleIcon size={20} /> Message
+              </button>
+              <button
+                onClick={() => handleCustomerOrders()}
+                className={`py-2 px-4 flex gap-2 items-center justify-center rounded focus:outline-none bg-indigo-500 text-white transition duration-300`}
+              >
+                <ScrollText size={20} /> Orders
+              </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
