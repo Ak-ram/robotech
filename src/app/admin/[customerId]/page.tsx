@@ -66,6 +66,7 @@ const CustomerPage = () => {
     },
   ];
 
+
   const printBill = async () => {
     setShowBill(true);
     const bill = {
@@ -106,12 +107,6 @@ const CustomerPage = () => {
 
     fetchCustomerData();
   }, [customerId]);
-
-  const setBill = () => {
-    const confirm = window.confirm("Sure To Reset Bill ?");
-    if (!confirm) return;
-    setBillData([]);
-  };
 
   const handleCustomerOrders = () => {
     setShowOrdersList(true);
@@ -202,13 +197,6 @@ const CustomerPage = () => {
                     >
                       Submit Bill
                       <Printer className="" />
-                    </button>
-                    <button
-                      onClick={() => setBill()}
-                      className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-rose-200 text-rose-700 hover:bg-rose-500 hover:text-white transition duration-300`}
-                    >
-                      Set Bill
-                      <Trash className="" />
                     </button>
                   </>
                 ) : null}

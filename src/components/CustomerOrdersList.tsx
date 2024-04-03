@@ -33,16 +33,18 @@ const CustomerOrdersList = ({
 
   return (
     <div
-      className={`${showOrdersList ? "right-0" : "-right-full"} p-10 rounded-lg duration-500 transition-all absolute w-full bg-white h-full top-0`}
+      className={`${showOrdersList ? "right-0" : "-right-full"} overflow-auto flex flex-col p-10 rounded-lg duration-500 transition-all absolute w-full bg-white h-full top-0`}
     >
-      <X
-        className="ml-auto cursor-pointer"
-        onClick={() => setShowOrdersList(false)}
-      />
-      <section>
+      <div className="">
+        <X
+          className="ml-auto cursor-pointer"
+          onClick={() => setShowOrdersList(false)}
+        />
+      </div>
+      <section className="flex-1 flex flex-col">
         <h3 className="font-bold text-2xl text-slate-600">Orders List</h3>
 
-        <div className="mt-5">
+        <div className="mt-5 flex-1">
           <ul>
             {customerBills.length > 0 ? (
               customerBills.map(({ created_at, data, id }: Bill, i) => (
@@ -54,7 +56,7 @@ const CustomerOrdersList = ({
                         Date: {formatDate(created_at)}
                       </p>
                     </div>
-                    <div className="flex    max-h-[200px] overflow-y-auto flex-col w-[90%] gap-2">
+                    <div className="flex  max-h-[200px] overflow-y-auto flex-col w-[90%] gap-2">
                       {data.map(
                         (
                           {
@@ -68,7 +70,7 @@ const CustomerOrdersList = ({
                         ) => (
                           <ul
                             key={`${id}_${j}_${piecePrice}`}
-                            className="flex ml-auto overflow-x-auto whitespace-nowrap w-[60%] gap-2 items-center bg-gray-200 p-3 rounded text-sm"
+                            className="flex ml-auto overflow-y-hidden overflow-x-auto whitespace-nowrap w-[60%] gap-2 items-center bg-gray-200 p-3 rounded text-sm"
                           >
                             <li>Title: {productName}</li>
                             <li>Price: {piecePrice} EGP</li>

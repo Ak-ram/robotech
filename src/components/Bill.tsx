@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DoorClosed, Eraser, Printer, X } from "lucide-react";
-import DetailedLogo from '@/assets/DetailedLogo.png';
+import DetailedLogo from "@/assets/DetailedLogo.png";
 import Image from "next/image";
 import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
@@ -22,26 +22,25 @@ interface BillProps {
 }
 
 const Bill: React.FC<BillProps> = ({
-  setBillData = () => { },
+  setBillData = () => {},
   transactionData,
   setShowBill,
-  id
+  id,
 }) => {
   // Add your company data
   const companyData = {
     name: "Robotech Space",
     address: "In front of Alex Bank, Beni Suef",
-    phone: "01102071544"
+    phone: "01102071544",
   };
-console.log(transactionData[0]?.date,'hiii')
   const [printMode, setPrintMode] = useState(false);
 
   // Calculate total amount
   const totalAmount = transactionData.reduce(
     (total, transaction) => total + transaction.subtotal,
-    0
+    0,
   );
-  const dating = transactionData[0]?.date
+  const dating = transactionData[0]?.date;
 
   const handlePrint = () => {
     setPrintMode(true);
@@ -52,11 +51,12 @@ console.log(transactionData[0]?.date,'hiii')
       setShowBill(false);
     }, 100);
   };
-
+  const setSubmitedBillData = () => {
+    setBillData([]);
+  };
   return (
     <>
-
-      <div  className="printContainer overflow-hidden fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div className="printContainer overflow-hidden fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         <div className="bg-white w-full max-w-screen-md mx-auto p-6 md:p-8 rounded-lg">
           {!printMode && (
             <div className="hide-when-printing flex items-center justify-between">
@@ -64,6 +64,7 @@ console.log(transactionData[0]?.date,'hiii')
                 className="cursor-pointer ml-auto text-gray-600"
                 size="24"
                 onClick={() => {
+                  setSubmitedBillData();
                   setShowBill(false);
                 }}
               />
@@ -84,9 +85,7 @@ console.log(transactionData[0]?.date,'hiii')
                 {/* <p>{companyData.address}</p> */}
                 {/* <p>{companyData.phone}</p> */}
               </div>
-              <div className="text-right">
-                ID: {id}
-              </div>
+              <div className="text-right">ID: {id}</div>
             </div>
 
             {/* Invoice Details */}
