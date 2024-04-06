@@ -66,6 +66,43 @@ const CustomerPage = () => {
     },
   ];
 
+  async function DecreaseStock(bill) {
+    const soldProducts = bill?.data?.map((product) => [
+      product.productId,
+      product.quantity,
+    ]);
+
+    if (soldProducts) {
+      soldProducts.map(async (item) => {
+        const { data: product, error } = await supabase
+          .from("products")
+          .select("count")
+          .eq("id", item[0])
+          .single();
+
+        if (error) {
+          console.error("Error fetching product:", error);
+          return;
+        }
+
+        const updatedCount = product!.count - item[1];
+
+        const { data: updatedProduct, error: updateError } = await supabase
+          .from("products")
+          .update({ count: updatedCount })
+          .eq("id", item[0])
+          .single();
+
+        if (updateError) {
+          console.error("Error updating product count:", updateError);
+          return;
+        }
+
+        console.log("Product count updated:", updatedProduct);
+      });
+    }
+  }
+
   const printBill = async () => {
     setShowBill(true);
     const bill = {
@@ -73,12 +110,13 @@ const CustomerPage = () => {
       customerId: +customerId!,
       customerData: customerData,
     };
+    DecreaseStock(bill);
     setCurrentBill(bill);
-    const { data, error } = await supabase
-      .from("bills")
-      .insert([bill])
-      .select();
-    setCurrentBillId(data![0].id);
+    // const { data, error } = await supabase
+    //   .from("bills")
+    //   .insert([bill])
+    //   .select();
+    // setCurrentBillId(data![0].id);
     toast.success("When you're ready, please click CTRL + P to print.");
   };
 
