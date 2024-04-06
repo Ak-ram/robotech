@@ -119,7 +119,6 @@ const CustomerPage = () => {
     setCurrentBillId(data![0].id);
     toast.success("When you're ready, please click CTRL + P to print.");
   };
-
   useEffect(() => {
     async function fetchCustomerData() {
       try {
