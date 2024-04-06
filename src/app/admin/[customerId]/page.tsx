@@ -112,14 +112,13 @@ const CustomerPage = () => {
     };
     DecreaseStock(bill);
     setCurrentBill(bill);
-    // const { data, error } = await supabase
-    //   .from("bills")
-    //   .insert([bill])
-    //   .select();
-    // setCurrentBillId(data![0].id);
+    const { data, error } = await supabase
+      .from("bills")
+      .insert([bill])
+      .select();
+    setCurrentBillId(data![0].id);
     toast.success("When you're ready, please click CTRL + P to print.");
   };
-
   useEffect(() => {
     async function fetchCustomerData() {
       try {
