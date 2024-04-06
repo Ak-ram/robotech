@@ -170,16 +170,17 @@ const OrderModel = ({
       if (newOrder.quantity > selectedItem.count) {
         toast.error(`only ${selectedItem.count} piece(s) available in-stock`);
         return;
-      } else {
-        const newStock = selectedItem.count - newOrder.quantity;
-        console.log("selected product stock", selectedItem.count);
-        console.log("new order quantity", newOrder.quantity);
-        console.log("new stock", newStock);
-        await supabase
-          .from("products")
-          .update({ count: newStock })
-          .eq("id", selectedItem.id);
       }
+      //  else {
+      //   const newStock = selectedItem.count - newOrder.quantity;
+      //   console.log("selected product stock", selectedItem.count);
+      //   console.log("new order quantity", newOrder.quantity);
+      //   console.log("new stock", newStock);
+      //   await supabase
+      //     .from("products")
+      //     .update({ count: newStock })
+      //     .eq("id", selectedItem.id);
+      // }
     }
 
     // if ("count" in selectedItem!) {

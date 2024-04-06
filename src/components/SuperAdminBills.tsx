@@ -29,7 +29,7 @@ const SuperAdminBills = () => {
   const filterItems = (
     items: any[],
     searchTerm: string,
-    searchType: string
+    searchType: string,
   ) => {
     return items.filter((item) => {
       const term = searchTerm.toLowerCase();
@@ -57,7 +57,46 @@ const SuperAdminBills = () => {
     setShowBill(true);
   };
 
+  async function refundProducts(id) {
+    const bill = billsList.find((item) => item.id === id)?.data;
+    const refunds = bill.map((product) => [
+      product.productId,
+      product.quantity,
+    ]);
+
+    if (refunds) {
+      refunds.map(async (item) => {
+        const { data: product, error } = await supabase
+          .from("products")
+          .select("count")
+          .eq("id", item[0])
+          .single();
+
+        if (error) {
+          console.error("Error fetching product:", error);
+          return;
+        }
+
+        const updatedCount = product!.count + item[1];
+
+        const { data: updatedProduct, error: updateError } = await supabase
+          .from("products")
+          .update({ count: updatedCount })
+          .eq("id", item[0])
+          .single();
+
+        if (updateError) {
+          console.error("Error updating product count:", updateError);
+          return;
+        }
+
+        console.log("Product count updated:", updatedProduct);
+      });
+    }
+  }
+
   const handleRemoveBill = async (id) => {
+    refundProducts(id);
     const confirm = window.confirm("Sure to Remove ?");
     if (confirm) {
       const index = billsList.findIndex((item) => item.id === id);
