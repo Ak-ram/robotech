@@ -174,7 +174,7 @@ const SuperAdminBills = () => {
               {billsList.map((item, index) => (
                 <div
                   key={index}
-                  className={`flex items-center justify-between border group hover:border-zinc-500 border-zinc-300 p-4 rounded-lg bg-white font-medium shadow-md transition-all duration-300 transform 
+                  className={`flex items-center justify-between border group hover:border-zinc-500 border-zinc-300 p-4 rounded-lg bg-white font-medium shadow-md transition-all duration-300 transform
                         `}
                 >
                   <div className="flex flex-col gap-1 text-zinc-600">
