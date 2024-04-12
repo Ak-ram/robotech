@@ -146,6 +146,10 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                                 ? product?.image2
                                 : product?.image3
                           }
+                          onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "https://makeplaceholder.com?text=Broken+Url&size=700x500&tcolor=333333"; // Set placeholder image on error
+                          }}
                         />
                       ) : (
                         <MagnifierComponent
@@ -155,6 +159,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                               : mainImg === 2
                                 ? product?.image2
                                 : product?.image3
+                            
                           }
                         />
                       )}
@@ -173,6 +178,10 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                             className="h-full w-full object-cover"
                             src={product?.image1}
                             alt=""
+                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = "https://makeplaceholder.com?text=Broken+Url&size=50x50&tcolor=333333"; // Set placeholder image on error
+                            }}
                           />
                         </button>
                       ) : null}
@@ -186,6 +195,10 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                             className="h-full w-full object-cover"
                             src={product?.image2}
                             alt=""
+                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = "https://makeplaceholder.com?text=Broken+Url&size=50x50&tcolor=333333"; // Set placeholder image on error
+                            }}
                           />
                         </button>
                       ) : null}
@@ -199,6 +212,10 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                             className="h-full w-full object-cover"
                             src={product?.image3}
                             alt=""
+                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = "https://makeplaceholder.com?text=Broken+Url&size=50x50&tcolor=333333"; // Set placeholder image on error
+                            }}
                           />
                         </button>
                       ) : null}

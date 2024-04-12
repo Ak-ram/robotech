@@ -69,7 +69,10 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
               width='100%'
               height='100%'
             /> </div>
-              : <img src={course?.poster} width={"100%"} height={"50%"} />
+              : <img src={course?.poster} width={"100%"} height={"50%"}  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "https://makeplaceholder.com?text=Broken+Url&size=400x200&tcolor=333333";
+              }}/>
             }
 
             {course?.description.split("\n").map((line, i) => (

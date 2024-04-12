@@ -40,6 +40,10 @@ const MagnifierComponent = ({ img }) => {
         }}
         src={img}
         alt="Magnified Image"
+        onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+          const target = e.target as HTMLImageElement;
+          target.src = "https://makeplaceholder.com?text=Broken+Url&size=700x500&tcolor=333333"; // Set placeholder image on error
+        }}
       />
     </div>
   );
