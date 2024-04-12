@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, SyntheticEvent } from "react";
 import Slider, { Settings } from "react-slick";
 import ProductSlider from "./ProductSlider";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import { Link2 } from "lucide-react";
 import supabase from "@/supabase/config";
 import ProductSliderSM from "./ProductSliderSM";
 import { getAllSlides } from "@/supabase/getAllSlides";
+import toast from "react-hot-toast";
 
 
 interface BannerProps { }
@@ -73,14 +74,14 @@ const Banner: React.FC<BannerProps> = () => {
         return []; // Return an empty array if there's an error
       }
     };
-  
+
     if (typeof window !== "undefined") {
       fetchProducts().then(data => {
         setSlides(data);
       });
     }
   }, []); // Removed slides from dependency array to prevent infinite loop
-  
+
 
   return (
     <div className="relative flex flex-col lg:flex-row gap-3 lg:mt-2 lg:p-5 bg-white">
@@ -95,9 +96,14 @@ const Banner: React.FC<BannerProps> = () => {
               <div className="w-full flex-col flex items-start justify-center h-full">
                 <img
                   src={slide?.image || "https://via.placeholder.com/800x400"}
+                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://makeplaceholder.com?text=Broken+Url&size=800x400&tcolor=333333"; // Set placeholder image on error
+                  }}
                   alt={`Slide ${index}`}
-                  className="object-contian w-full border border-designColor/40 overflow-hidden "
+                  className="object-contain w-full border border-designColor/40 overflow-hidden"
                 />
+
                 <Link href={slide?.link_url || '#'} className="my-2">
                   <button className="flex items-center gap-1 justify-center hover:underline font-bold py-1 px-2 ">
                     <Link2 size={17} /><span className="text-xs">more info... </span>

@@ -59,6 +59,10 @@ function AboutComponent() {
                   className="w-full h-full group-hover:scale-110 filter shadow-xl group-hover:grayscale transition duration-300 ease-in-out"
                   src={item?.image_url}
                   alt={item?.title}
+                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://makeplaceholder.com?text=Broken+Url&size=200x200&tcolor=333333"; // Set placeholder image on error
+                  }}
                 />
               </div>
               <div className="p-6">

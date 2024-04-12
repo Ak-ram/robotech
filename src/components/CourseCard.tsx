@@ -33,6 +33,10 @@ const CourseCard = ({ products, categoryName }: Item) => {
                     className="sm:object-cover h-full w-full"
                     src={item.poster}
                     alt={item.title}
+                    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://makeplaceholder.com?text=Broken+Url&size=200x200&tcolor=333333"; // Set placeholder image on error
+                    }}
                   />
                 </Link>
                 <div className="p-3 flex flex-1 flex-col justify-between ">

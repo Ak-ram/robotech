@@ -35,6 +35,10 @@ const ProductCard = ({item, prefix}) => {
                     className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full" // object-contain
                     src={item.image1}
                     alt="product image"
+                    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "https://makeplaceholder.com?text=Broken+Url&size=500x400&tcolor=333333"; // Set placeholder image on error
+                      }}
                 />
 
 
