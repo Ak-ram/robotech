@@ -62,9 +62,11 @@ const Footer = () => {
                 <Mail />
                 <a href="mailto:robotechspace8@gmail.com">robotechspace8@gmail.com</a>
               </li>
-              <li className="flex gap-2 w-fit hover:underline">
+              <li className="flex gap-2 w-fit">
                 <Phone />
-                <a className="select-text" href="tel:1102071544">+20 11 0207 1544</a>
+                <span>+20 11 0207 1544</span>
+                <span className="font-bold text-blue-400">OR</span>
+                <span>+20 10 6674 5733</span>
               </li>
               <li className="flex gap-2 w-fit hover:underline">
                 <MapPin />
