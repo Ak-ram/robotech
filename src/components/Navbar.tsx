@@ -109,7 +109,7 @@ const Navbar = () => {
                 <span >
                   01102071544
                 </span>
-                <span >
+                <span className="text-designColor font-semibold">
                   OR
                 </span>
                 <span>
