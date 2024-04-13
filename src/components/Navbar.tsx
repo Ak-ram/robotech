@@ -25,7 +25,7 @@ import SearchComponent from "./SearchComponent";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const { productData, favoriteData,compareData } = useSelector(
+  const { productData, favoriteData, compareData } = useSelector(
     (state: StateProps) => state.pro
   );
 
@@ -77,26 +77,23 @@ const Navbar = () => {
         <Logo />
         {/* Navigation */}
         <ul
-          className={`${
-            openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-          } bg-white flex px-2 -ml-6 absolute md:relative top-0 w-[250px] border-gray-400 border-r md:border-0 z-50 transition transform  md:bg-transparent md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}
+          className={`${openSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+            } bg-white flex px-2 -ml-6 absolute md:relative top-0 w-[250px] border-gray-400 border-r md:border-0 z-50 transition transform  md:bg-transparent md:px-0  flex-col justify-start order-last text-xs sm:text-sm flex-1  md:order-none md:justify-center h-screen md:h-fit md:w-fit md:flex-row py-2 items-center gap-5 text-sm uppercase`}
         >
           <X
             className="ml-auto cursor-pointer text-black m-2 md:hidden"
             onClick={() => setOpenSidebar(false)}
           />
           {navigation.map((item, index) => (
-            <Link href={item?.href} key={`${item.title}_${index}`} onClick={()=> setOpenSidebar(false)}>
+            <Link href={item?.href} key={`${item.title}_${index}`} onClick={() => setOpenSidebar(false)}>
               <li
-                className={`mt-2 hover:text-designColor cursor-pointer duration-200 relative overflow-hidden group ${
-                  item.href === pathname && "text-designColor font-bold"
-                }`}
+                className={`mt-2 hover:text-designColor cursor-pointer duration-200 relative overflow-hidden group ${item.href === pathname && "text-designColor font-bold"
+                  }`}
               >
                 {item?.title}
                 <span
-                  className={`hidden md:block absolute h-[2px] w-full bg-designColor left-0 bottom-0 -translate-x-[100%] z-10 translate-y-[1px] group-hover:translate-x-0 transition-transform duration-500 ${
-                    item.href === pathname && "translate-x-0 bg-designColor"
-                  }`}
+                  className={`hidden md:block absolute h-[2px] w-full bg-designColor left-0 bottom-0 -translate-x-[100%] z-10 translate-y-[1px] group-hover:translate-x-0 transition-transform duration-500 ${item.href === pathname && "translate-x-0 bg-designColor"
+                    }`}
                 />
               </li>
             </Link>
@@ -108,9 +105,18 @@ const Navbar = () => {
           <div className="border-l border-r px-3 hidden lg:flex items-center text-xs gap-2 text-gray/80">
             <PhoneCall className="text-gray/80 md:w-6 md:h-6" />
             <div className="flex flex-col gap-2">
-              <span>
-                <span className="font-bold ">Support </span>(+20) 11 0207 1544{" "}
-              </span>
+              <div className="text-xs flex gap-2">
+                <span >
+                  01102071544
+                </span>
+                <span >
+                  OR
+                </span>
+                <span>
+                  01066745733{" "}
+                </span>
+              </div>
+
               <span>robotechspace8@gmail.com</span>
             </div>
           </div>
@@ -141,9 +147,8 @@ const Navbar = () => {
 
           <Link
             href={"/cart"}
-            className={`${
-              flashAnimation ? "animate-pulse" : ""
-            } text-designColor cursor-pointer duration-200 relative group`}
+            className={`${flashAnimation ? "animate-pulse" : ""
+              } text-designColor cursor-pointer duration-200 relative group`}
           >
             {" "}
             <ShoppingBasket className="w-7 h-7 xs:w-8 xs:h-8" />
@@ -161,7 +166,7 @@ const Navbar = () => {
           </span>
         </div>
       </div>
-    
+
     </div>
   );
 };
