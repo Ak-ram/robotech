@@ -189,15 +189,15 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                     In this course
                   </h3>
                 </div>
-                <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
+                <div className="max-h-0 overflow-auto transition-all duration-500 peer-checked:max-h-96">
                   <ul className="space-y-1 font-semibold text-gray-600 mb-6">
                     {course?.index.split("\n").map((line, i) => (
                       <div
                         dir={detectLanguage(course?.index) === "ar" ? "rtl" : "ltr"}
-                        className="px-4 font-semibold text-gray-600 mb-6 w-full"
+                        className="px-4 font-semibold text-gray-600 mb-1 pb-2 w-full"
                         key={i}
                       >
-                        {i > 0 && <br />}
+                        {i > 0 &&  <span className="mb-2 block"></span>}
                         {line}
                       </div>
                     ))}
@@ -234,10 +234,10 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                     About the Instructor
                   </h3>
                 </div>
-                <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
+                <div className="max-h-0 overflow-auto transition-all duration-500 peer-checked:max-h-96">
                   <ul className="pl-5 space-y-1 font-semibold text-gray-600 mb-6">
                     <li>Name: {course?.instructor}</li>
-                    <li>Info: {course?.instructor}</li>
+                    <li>{course?.instructor_info}</li>
                   </ul>
                 </div>
               </label>
@@ -272,14 +272,14 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
                     More Details
                   </h3>
                 </div>
-                <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
+                <div className="max-h-0 overflow-auto transition-all duration-500 peer-checked:max-h-96">
                   {course?.more_details.split("\n").map((line, i) => (
                     <div
                       dir={detectLanguage(course?.more_details) === "ar" ? "rtl" : "ltr"}
-                      className="px-4 font-semibold text-gray-600 mb-6 w-full"
+                      className="px-4 font-semibold text-gray-600 mb-1 w-full  pb-2"
                       key={i}
                     >
-                      {i > 0 && <br />}
+                      {i > 0 && <span className="mb-2 block"></span>}
                       {line}
                     </div>
                   ))}
