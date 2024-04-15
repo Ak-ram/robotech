@@ -152,7 +152,7 @@ const AdminCustomers = () => {
               .map((item, index) => (
                 <div
                   key={index}
-                  className={`border flex  justify-between h-fit border-l-slate-200  border-b-slate-200 px-2 py-4 transition-all duration-300 transform 
+                  className={` border-b ${index % 2 === 1 ?"border-l":""} flex  justify-between h-fit border-l-slate-200  border-b-slate-200 px-2 py-4 transition-all duration-300 transform 
                             `}
                 >
                   <div className="flex justify-end">
