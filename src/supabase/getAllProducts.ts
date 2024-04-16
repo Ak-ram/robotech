@@ -22,7 +22,6 @@ const getAllProducts = async (categoryName?: string, limit: number = 10, offset:
       cache = {};
       isUserActive = true; // Reset flag for the next session
     }
-
     // Generate a cache key based on inputs
     const cacheKey = `${categoryName || 'all'}_${limit}_${offset}`;
 
