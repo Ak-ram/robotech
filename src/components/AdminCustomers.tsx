@@ -99,102 +99,109 @@ const AdminCustomers = () => {
 
   const handleShowLoader = (index) => {
     setLoaderIndex(index)
-    setShowLoader(true)
+    setShowLoader(true);
+
+    setTimeout(() => {
+      setShowLoader(false)
+    }, 2000);
   }
   return (
     <div
-      className={`min-h-[400px] lg:p-3 w-full bottom-0 left-0 lg:relative overflow-hidden mt-5`}
+      className={`min-h-[400px] w-full bottom-0 left-0 lg:relative overflow-hidden mt-5`}
     >
       {!jsonArray && <h2 className="font-bold mb-4">Current Customer data:</h2>}
 
       <div className="mb-5 flex flex-col lg:flex-row items-center justify-between">
+        <div className="w-full ">
         <input
           type="text"
-          placeholder="Search By Name, Phone"
+          placeholder="Search By Name, Phone ( 3 chars at least )"
           className="text-black mb-2 p-2 border border-gray-300 rounded w-full lg:w-[60%] focus:outline-none focus:border-blue-500"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <span className="mx-2">Result: {searchTerm.length >= 3 ? jsonArray
+          .filter((item) => {
+            const fullName = item.fullName.toLowerCase();
+            const phone = item.phone.toLowerCase();
+            const search = searchTerm.toLowerCase();
+            return fullName.includes(search) || phone.includes(search);
+          }).length: 0} </span> 
 
+          </div>
         <div className="flex items-end space-x-4 mb-2 lg:mb-0">
           <button
             className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all duration-300"
             onClick={handleAddItemClick}
           >
             <Plus size={18} className="mr-1" />
-            Add Customer
+            Add
           </button>
         </div>
       </div>
-      {searchTerm.length >= 3 && jsonArray.length !== 0 ? (
-        <div className={"grid h-[400px] overflow-auto bg-white p-5 rounded grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
-          {jsonArray
-            .filter((item) => {
-              const fullName = item.fullName.toLowerCase();
-              const phone = item.phone.toLowerCase();
-              const search = searchTerm.toLowerCase();
-              return fullName.includes(search) || phone.includes(search);
-            })
-            .map((item, index) => (
-              <div
-                key={index}
-                className={`border h-fit border-zinc-300 p-4 rounded-lg bg-white shadow-md transition-all duration-300 transform 
-                            `}
-              >
-                <Link
+      <div className="bg-white overflow-auto h-[400px] ">
+        {searchTerm.length >= 3 && jsonArray.length !== 0 ? (
+          <div className={"grid p-5 rounded grid-cols-1 md:grid-cols-2 "}>
+            {jsonArray
+              .filter((item) => {
+                const fullName = item.fullName.toLowerCase();
+                const phone = item.phone.toLowerCase();
+                const search = searchTerm.toLowerCase();
+                return fullName.includes(search) || phone.includes(search);
+              })
+              .map((item, index) => (
+                <div
                   key={index}
-                  href={{
-                    pathname: `admin/id_${item?.id || editedItemId}`,
-                    query: {
-                      id: item?.id || editedItemId,
-                    },
-                  }}
-                  onClick={() => handleShowLoader(index)}
-                  className={`block`}
+                  className={` border-b ${index % 2 === 1 ?"border-l":""} flex  justify-between h-fit border-l-slate-200  border-b-slate-200 px-2 py-4 transition-all duration-300 transform 
+                            `}
                 >
-                  <span className="flex justify-between items-center font-bold mb-2 text-xl rtl" dir="rtl">
-                    {item.fullName}
-                    {showLoader && loaderIndex === index && <LoaderIcon className=" animate-spin" size={18} />}
-                  </span>
-                  <span
-                    className="block text-gray-600 mb-2 flex items-end gap-1"
+                  <div className="flex justify-end">
+                    <button
+                      className="flex gap-1 items-center text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
+                      onClick={() => handleEditClick(+item.id)}
+                    >
+                      <Edit size={17} />
+                    </button>
+                    <button
+                      className="flex gap-1 items-center text-red-500 hover:text-red-600 transition-colors duration-300"
+                      onClick={() => handleRemoveItem(+item.id)}
+                    >
+                      <TrashIcon size={17} />
+                    </button>
+                  </div>
+                  <Link
+                    key={index}
+                    target="_blank"
+                    href={{
+                      pathname: `admin/id_${item?.id || editedItemId}`,
+                      query: {
+                        id: item?.id || editedItemId,
+                      },
+                    }}
+                    onClick={() => handleShowLoader(index)}
+                    className={` block`}
                   >
-                    <PhoneCall className="mb-[1px]" size={14} /> Phone:{" "}
-                    {item.phone}
-                  </span>
-                  <span
-                    className="block text-gray-600 mb-2 flex items-center gap-1"
-                  >
-                    <User size={15} /> Since: {calculatePeriod(item.join_date) || 'today'}
-                  </span>
-                </Link>
-                <div className="flex justify-end">
-                  <button
-                    className="flex gap-1 items-center  bg-blue-100 py-1 px-2 rounded text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
-                    onClick={() => handleEditClick(+item.id)}
-                  >
-                    <Edit size={17} /> Edit
-                  </button>
-                  <button
-                    className="flex gap-1 items-center bg-red-100 py-1 px-2 rounded text-red-500 hover:text-red-600 transition-colors duration-300"
-                    onClick={() => handleRemoveItem(+item.id)}
-                  >
-                    <TrashIcon size={17} /> Remove
-                  </button>
-                </div>
-              </div>
-            ))}
-        </div>
-      ) : (
-        <div className="bg-white h-[300px] flex items-center justify-center">
-          <div className="text-center">
-            <h2 className="text-xl font-semibold mb-4">
-              No Customers to display...
-            </h2>
-          </div>
-        </div>
-      )}
+                    <span className="whitespace-nowrap flex items-center gap-2 text-ellepsis overflow-hidden font-bold mb-2 text-end rtl" dir="rtl">
+                      {(index + 1).toLocaleString("ar-EG")}.{" "}
+                      {item.fullName}
+                      {showLoader && loaderIndex === index && <LoaderIcon className=" animate-spin" size={16} />}
+                    </span>
 
+                  </Link>
+
+                </div>
+              ))}
+          </div>
+        ) : (
+          <div className="bg-white h-full flex items-center justify-center">
+            <div className="text-center">
+              <h2 className="text-xl font-semibold mb-4">
+                No Customers to display...
+              </h2>
+            </div>
+          </div>
+        )}
+      </div>
       {editIndex !== null && (
         <AddAndEditCustomerModel {...{ setEditedItem, setEditIndex, editedItem, editIndex, editedItemId, setEditedItemId, jsonArray, setJsonArray }} />
       )}
