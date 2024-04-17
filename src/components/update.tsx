@@ -7,8 +7,7 @@ import { ChevronDown } from "lucide-react";
 const TransactionAnalyzer = () => {
   const [bills, setBills] = useState<Bill[]>([]);
   const [show, setShow] = useState<boolean>(false);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [filteredDailyStats, setFilteredDailyStats] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
   const [dailyStats, setDailyStats] = useState<
     { date: string; totalSells: number; totalProfit: number }[]
   >([]);
@@ -141,27 +140,8 @@ const TransactionAnalyzer = () => {
     calculateDailyStats();
     calculateMonthlyAndYearlyStats();
   }, [bills]);
-  // useEffect(() => {
-  //   console.log("compare",dailyStats[0]?.date , selectedDate)
-  //   const filteredStats = dailyStats.filter((stat) => stat.date === selectedDate);
-  //   setFilteredDailyStats(filteredStats);
-  // }, [selectedDate, dailyStats]);
 
 
-  useEffect(() => {
-
-    const filteredStats = dailyStats.filter((stat) => {
-      const dateString = stat.date;
-      const parts = dateString.split("/");
-      const formattedDate = parts[1] + "/" + parts[0] + "/" + parts[2];
-      const date = new Date(formattedDate).toISOString().split('T')[0];
-      return date === selectedDate
-    });
-    setFilteredDailyStats(filteredStats);
-  }, [selectedDate, dailyStats]);
-
-
- 
 
 
   return (
@@ -189,16 +169,17 @@ const TransactionAnalyzer = () => {
               <h2 className="text-xl font-semibold mb-2">Daily Profits</h2>
               <input
                 title="Search By Date"
-                className="overflow-hidden w-5 mb-2"
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-              />            </div>
+                className="mb-2 border rounded"
+                type="search"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+            </div>
             <div className="max-h-[300px] overflow-auto">
-              {dailyStats.map((dailyStat, index) => (
+              {dailyStats.filter((item) => item.date.includes(searchValue)).map((dailyStat, index) => (
                 <div
                   key={index}
-                  className={`${filteredDailyStats[0] === dailyStat ? "bg-blue-400" : 'bg-gray-100'}  p-4 rounded-lg mb-2 flex justify-between items-center`}
+                  className={`p-4 rounded-lg mb-2 flex justify-between items-center`}
                 >
                   <h3 className="text-lg font-semibold">
                     Date: {dailyStat.date}
@@ -253,3 +234,6 @@ const TransactionAnalyzer = () => {
 };
 
 export default TransactionAnalyzer;
+
+
+
