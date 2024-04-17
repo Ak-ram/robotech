@@ -166,10 +166,10 @@ const TransactionAnalyzer = () => {
         <div className="grid gap-4 mt-5">
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-semibold mb-2">Daily Profits</h2>
+              <h2 className="text-xl  font-semibold mb-2">Daily Profits</h2>
               <input
-                title="Search By Date"
-                className="mb-2 border rounded"
+                placeholder="Search By Date (ex; 14/4/2024)"
+                className="mb-2 border border-blue-400 px-2 py-1 w-[50%] rounded"
                 type="search"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
@@ -179,7 +179,7 @@ const TransactionAnalyzer = () => {
               {dailyStats.filter((item) => item.date.includes(searchValue)).map((dailyStat, index) => (
                 <div
                   key={index}
-                  className={`p-4 rounded-lg mb-2 flex justify-between items-center`}
+                  className={`p-4 bg-gray-100 rounded-lg mb-2 flex justify-between items-center`}
                 >
                   <h3 className="text-lg font-semibold">
                     Date: {dailyStat.date}
