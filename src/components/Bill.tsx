@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { DoorClosed, Eraser, Printer, X } from "lucide-react";
+import React, { useState } from "react";
+import { Printer, X } from "lucide-react";
 import DetailedLogo from "@/assets/DetailedLogo.png";
 import Image from "next/image";
 import FormattedPrice from "./FormattedPrice";
-import toast from "react-hot-toast";
 
 interface TransactionData {
   productName: string;
@@ -22,7 +21,7 @@ interface BillProps {
 }
 
 const Bill: React.FC<BillProps> = ({
-  setBillData = () => {},
+  setBillData = () => { },
   transactionData,
   setShowBill,
   id,
@@ -71,7 +70,6 @@ const Bill: React.FC<BillProps> = ({
             </div>
           )}
           <div className="">
-            {/* Logo and Company Information */}
             <div className="flex items-center justify-between mb-4">
               <div>
                 <Image
@@ -81,9 +79,7 @@ const Bill: React.FC<BillProps> = ({
                   width={70}
                   height={70}
                 />
-                {/* <span className="font-bold text-lg">{companyData.name}</span> */}
-                {/* <p>{companyData.address}</p> */}
-                {/* <p>{companyData.phone}</p> */}
+           
               </div>
               <div className="text-right">ID: {id}</div>
             </div>

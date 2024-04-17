@@ -7,7 +7,8 @@ import { ChevronDown } from "lucide-react";
 const TransactionAnalyzer = () => {
   const [bills, setBills] = useState<Bill[]>([]);
   const [show, setShow] = useState<boolean>(false);
-
+  const [selectedDate, setSelectedDate] = useState('');
+  const [filteredDailyStats, setFilteredDailyStats] = useState([]);
   const [dailyStats, setDailyStats] = useState<
     { date: string; totalSells: number; totalProfit: number }[]
   >([]);
@@ -39,9 +40,11 @@ const TransactionAnalyzer = () => {
         { totalSells: number; totalProfit: number }
       >();
 
+      // console.log('bbb',bills[0]?.data[0]?.date); // Sun, Apr 14, 2024, 03:34 PM
+      // console.log('dddd',bills[0]?.created_at); // 2024-04-14T13:41:41.99372+00:00
       bills.forEach((bill) => {
-        const date = formatDate(bill.created_at);
-
+        // const date = formatDate(bill.created_at);
+        const date = formatDate(bill?.data[0]?.date);
         if (!dailyStatsMap.has(date)) {
           dailyStatsMap.set(date, { totalSells: 0, totalProfit: 0 });
         }
@@ -80,7 +83,8 @@ const TransactionAnalyzer = () => {
       >();
 
       bills.forEach((bill) => {
-        const date = new Date(bill.created_at);
+        // const date = new Date(bill.created_at);
+        const date = new Date(bill?.data[0]?.date);
         const month = `${date.getMonth() + 1}-${date.getFullYear()}`;
         const year = `${date.getFullYear()}`;
 
@@ -137,12 +141,33 @@ const TransactionAnalyzer = () => {
     calculateDailyStats();
     calculateMonthlyAndYearlyStats();
   }, [bills]);
+  // useEffect(() => {
+  //   console.log("compare",dailyStats[0]?.date , selectedDate)
+  //   const filteredStats = dailyStats.filter((stat) => stat.date === selectedDate);
+  //   setFilteredDailyStats(filteredStats);
+  // }, [selectedDate, dailyStats]);
+
+
+  useEffect(() => {
+
+    const filteredStats = dailyStats.filter((stat) => {
+      const dateString = stat.date;
+      const parts = dateString.split("/");
+      const formattedDate = parts[1] + "/" + parts[0] + "/" + parts[2];
+      const date = new Date(formattedDate).toISOString().split('T')[0];
+      return date === selectedDate
+    });
+    setFilteredDailyStats(filteredStats);
+  }, [selectedDate, dailyStats]);
+
+
+ 
+
 
   return (
     <section
-      className={` ${
-        !show ? "border border-indigo-300 border-dashed" : ""
-      } bg-white rounded-lg p-5 mb-5`}
+      className={` ${!show ? "border border-indigo-300 border-dashed" : ""
+        } bg-white rounded-lg p-5 mb-5`}
     >
       <div
         className={`flex items-center justify-between cursor-pointer`}
@@ -152,58 +177,74 @@ const TransactionAnalyzer = () => {
           {show ? "Click to Collapse" : "Expand Bill Analizer"}
         </h3>
         <ChevronDown
-          className={`text-blue-300 transform transition-transform duration-300 ${
-            show ? "rotate-180" : ""
-          }`}
+          className={`text-blue-300 transform transition-transform duration-300 ${show ? "rotate-180" : ""
+            }`}
           size={25}
         />
       </div>
       {show && (
         <div className="grid gap-4 mt-5">
           <div>
-            <h2 className="text-xl font-semibold mb-2">Daily Profits</h2>
-            {dailyStats.map((dailyStat, index) => (
-              <div
-                key={index}
-                className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
-              >
-                <h3 className="text-lg font-semibold">
-                  Date: {dailyStat.date}
-                </h3>
-                <p>Total Sells: {dailyStat.totalSells} L.E</p>
-                <p>Total Profit: {dailyStat.totalProfit} L.E</p>
-              </div>
-            ))}
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-semibold mb-2">Daily Profits</h2>
+              <input
+                title="Search By Date"
+                className="overflow-hidden w-5 mb-2"
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+              />            </div>
+            <div className="max-h-[300px] overflow-auto">
+              {dailyStats.map((dailyStat, index) => (
+                <div
+                  key={index}
+                  className={`${filteredDailyStats[0] === dailyStat ? "bg-blue-400" : 'bg-gray-100'}  p-4 rounded-lg mb-2 flex justify-between items-center`}
+                >
+                  <h3 className="text-lg font-semibold">
+                    Date: {dailyStat.date}
+
+                  </h3>
+                  <p>Total Sells: {dailyStat.totalSells} L.E</p>
+                  <p>Total Profit: {dailyStat.totalProfit} L.E</p>
+                </div>
+              ))}
+            </div>
           </div>
           <div>
             <h2 className="text-xl font-semibold mb-2">Monthly Profits</h2>
-            {monthlyStats.map((monthlyStat, index) => (
-              <div
-                key={index}
-                className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
-              >
-                <h3 className="text-lg font-semibold">
-                  Month: {monthlyStat.month}
-                </h3>
-                <p>Total Sells: {monthlyStat.totalSells} L.E</p>
-                <p>Total Profit: {monthlyStat.totalProfit} L.E</p>
-              </div>
-            ))}
+            <div className="max-h-[300px] overflow-auto">
+
+              {monthlyStats.map((monthlyStat, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
+                >
+                  <h3 className="text-lg font-semibold">
+                    Month: {monthlyStat.month}
+                  </h3>
+                  <p>Total Sells: {monthlyStat.totalSells} L.E</p>
+                  <p>Total Profit: {monthlyStat.totalProfit} L.E</p>
+                </div>
+              ))}
+            </div>
           </div>
           <div>
             <h2 className="text-xl font-semibold mb-2">Yearly Profits</h2>
-            {yearlyStats.map((yearlyStat, index) => (
-              <div
-                key={index}
-                className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
-              >
-                <h3 className="text-lg font-semibold">
-                  Year: {yearlyStat.year}
-                </h3>
-                <p>Total Sells: {yearlyStat.totalSells} L.E</p>
-                <p>Total Profit: {yearlyStat.totalProfit} L.E</p>
-              </div>
-            ))}
+            <div className="max-h-[300px] overflow-auto">
+
+              {yearlyStats.map((yearlyStat, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center"
+                >
+                  <h3 className="text-lg font-semibold">
+                    Year: {yearlyStat.year}
+                  </h3>
+                  <p>Total Sells: {yearlyStat.totalSells} L.E</p>
+                  <p>Total Profit: {yearlyStat.totalProfit} L.E</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}

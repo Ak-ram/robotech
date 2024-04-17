@@ -44,9 +44,7 @@ const CustomerPageAddCourses = ({
 
     fetchData();
   }, [billData]);
-  useEffect(() => {
-    console.log("billData", billData);
-  }, [billData]);
+
   const handleAddOrder = async () => {
     try {
       setBillData([...billData, newOrder]);
