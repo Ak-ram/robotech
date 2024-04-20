@@ -20,6 +20,10 @@ const DateModel: React.FC<DateModelProps> = ({ DecreaseStock, setCurrentBillId, 
     const [selectedDate, setSelectedDate] = useState('')
 
     const printBill = async () => {
+        if (!selectedDate) {
+            toast.error('select date please')
+            return;
+        }
         const bill = {
             data: billData,
             customerId: +customerId!,

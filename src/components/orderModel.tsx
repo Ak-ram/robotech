@@ -12,7 +12,6 @@ const CustomSelect = ({
   newOrder,
   setNewOrder,
   setSelectedItem,
-  date,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredOptions, setFilteredOptions] = useState(options);
@@ -47,7 +46,6 @@ const CustomSelect = ({
     setIsOpen(false);
     setSearchTerm(option.title); // Set search term to selected option's title
     setSelectedItem(option || null);
-    const orderDate = new Date(date).toISOString()
 
     setNewOrder({
       ...newOrder,
@@ -59,23 +57,15 @@ const CustomSelect = ({
       wholesalePrice: +option.wholesalePrice || 0,
       isRefund: false,
       discount: +option.discount || 0, // Set discount to 0 as default value
-      // date: orderDate.toLocaleDateString("en-US", {
-      //   weekday: "short",
-      //   year: "numeric",
-      //   month: "short",
-      //   day: "2-digit",
-      //   hour: "2-digit",
-      //   minute: "2-digit",
-      // }),
-      date: orderDate
-      // date: new Date().toLocaleDateString("en-US", {
-      //   weekday: "short",
-      //   year: "numeric",
-      //   month: "short",
-      //   day: "2-digit",
-      //   hour: "2-digit",
-      //   minute: "2-digit",
-      // }),
+    
+      date: new Date().toLocaleDateString("en-US", {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     });
   };
 
@@ -117,7 +107,6 @@ const OrderModel = ({
     CourseType | ProductType | null
   >(null);
   const [products, setproducts] = useState<any>([]);
-  const [date, setDate] = useState<string>("");
 
   useEffect(() => {
     // Fetch categories data
@@ -142,12 +131,8 @@ const OrderModel = ({
   }, [selectedItem, newOrder.quantity, newOrder.discount, setNewOrder]);
 
 
-  const handleDate = () => {
-
-  }
 
   const handleSelect = (option) => {
-    const orderDate = new Date(date).toISOString()
     setSelectedItem(option);
     setNewOrder({
       ...newOrder,
@@ -158,24 +143,15 @@ const OrderModel = ({
       discount: +option.discount || 0,
       wholesalePrice: +option.wholesalePrice || 0,
       isRefund: false,
-      // date: orderDate.toLocaleDateString("en-US", {
-      //   weekday: "short",
-      //   year: "numeric",
-      //   month: "short",
-      //   day: "2-digit",
-      //   hour: "2-digit",
-      //   minute: "2-digit",
-      // }),
-
-      date: orderDate
-      // date: new Date().toLocaleDateString("en-US", {
-      //   weekday: "short",
-      //   year: "numeric",
-      //   month: "short",
-      //   day: "2-digit",
-      //   hour: "2-digit",
-      //   minute: "2-digit",
-      // }),
+     
+      date: new Date().toLocaleDateString("en-US", {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     });
   };
 
@@ -223,12 +199,7 @@ const OrderModel = ({
         <div className="bg-white min-w-[40rem] p-8 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">Add Order</h2>
           <form>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Date
-              </label>
-              <input type="date" onChange={(e) => setDate(e.target.value)} />
-            </div>
+          
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Product Name
@@ -239,7 +210,6 @@ const OrderModel = ({
                 newOrder={newOrder}
                 options={list}
                 onSelect={handleSelect}
-                date={date}
               />
             </div>
             <div className="mb-4">
