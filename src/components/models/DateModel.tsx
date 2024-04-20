@@ -13,8 +13,8 @@ interface DateModelProps {
     customerId: string,
     customerData: any[],
 
-
 }
+
 
 const DateModel: React.FC<DateModelProps> = ({ DecreaseStock, setCurrentBillId, setCurrentBill, setShowBill, setShowDateModel, billData, customerData, customerId }) => {
     const [selectedDate, setSelectedDate] = useState('')
