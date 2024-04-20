@@ -3,14 +3,14 @@ export interface ProductType {
   image2: string | undefined;
   image3: string | undefined;
   categoryName:
-    | string
-    | number
-    | boolean
-    | readonly string[]
-    | readonly number[]
-    | readonly boolean[]
-    | null
-    | undefined;
+  | string
+  | number
+  | boolean
+  | readonly string[]
+  | readonly number[]
+  | readonly boolean[]
+  | null
+  | undefined;
   count: number;
   id: string;
   title: string;
@@ -131,7 +131,13 @@ export interface CustomerData {
 
 export interface Bill {
   id: number;
+  billCreatedDate: string;
   created_at: string;
   data: Transaction[];
   customerData: CustomerData;
+}
+
+export interface BillType {
+  data: ProductType[];
+  customerData: any;
 }

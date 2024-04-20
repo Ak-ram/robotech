@@ -40,7 +40,15 @@ const TransactionAnalyzer = () => {
       >();
 
       bills.forEach((bill) => {
-        const date = formatDate(bill.created_at);
+        let date;
+        if(bill.billCreatedDate){
+          const d = new Date(bill.billCreatedDate).toISOString()
+           date = formatDate(d);
+        }else{
+          date = formatDate(bill.created_at)
+
+        }
+        
 
         if (!dailyStatsMap.has(date)) {
           dailyStatsMap.set(date, { totalSells: 0, totalProfit: 0 });
@@ -80,7 +88,15 @@ const TransactionAnalyzer = () => {
       >();
 
       bills.forEach((bill) => {
-        const date = new Date(bill.created_at);
+        // const date = new Date(bill.created_at);
+        let date;
+        if(bill.billCreatedDate){
+          const d = new Date(bill.billCreatedDate).toISOString()
+           date =  new Date(d);
+        }else{
+          date = new Date(bill.created_at);
+
+        }
         const month = `${date.getMonth() + 1}-${date.getFullYear()}`;
         const year = `${date.getFullYear()}`;
 

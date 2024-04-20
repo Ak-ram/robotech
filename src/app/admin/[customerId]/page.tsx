@@ -1,18 +1,17 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import CustomerPageAddProducts from "@/components/CustomerPageAddProducts";
 import CustomerPageAddCourses from "@/components/CustomerPageAddCourses";
 import CustomerPageAddPrintServices from "@/components/CustomerPageAddPrintServices";
-import toast from "react-hot-toast";
-import { MessageCircleIcon, Printer, ScrollText, Trash } from "lucide-react";
+import { MessageCircleIcon, Printer, ScrollText } from "lucide-react";
 import Bill from "@/components/Bill";
-import { ProductType } from "../../../../type";
+import { BillType, ProductType } from "../../../../type";
 import supabase from "@/supabase/config";
 import { calculatePeriod } from "@/lib/calculatePeriod";
 import CustomerOrdersList from "@/components/CustomerOrdersList";
+import DateModel from "@/components/models/DateModel";
 const CustomerPage = () => {
-  const router = useRouter();
   const searchPar = useSearchParams();
   const customerId = searchPar?.get("id");
   // const data = searchPar?.get("data");
@@ -24,12 +23,10 @@ const CustomerPage = () => {
   const [currentBillId, setCurrentBillId] = useState(0);
   const [billData, setBillData] = useState<any>([]);
   const [showBill, setShowBill] = useState(false);
+  const [showDateModel, setShowDateModel] = useState(false);
   const [showOrdersList, setShowOrdersList] = useState(false);
   const [currentBill, setCurrentBill] = useState<BillType>();
-  interface BillType {
-    data: ProductType[];
-    customerData: any;
-  }
+  
   const tabs = [
     {
       content: (
@@ -103,22 +100,22 @@ const CustomerPage = () => {
     }
   }
 
-  const printBill = async () => {
-    setShowBill(true);
-    const bill = {
-      data: billData,
-      customerId: +customerId!,
-      customerData: customerData,
-    };
-    DecreaseStock(bill);
-    setCurrentBill(bill);
-    const { data, error } = await supabase
-      .from("bills")
-      .insert([bill])
-      .select();
-    setCurrentBillId(data![0].id);
-    toast.success("When you're ready, please click CTRL + P to print.");
-  };
+  // const printBill = async () => {
+  //   setShowBill(true);
+  //   const bill = {
+  //     data: billData,
+  //     customerId: +customerId!,
+  //     customerData: customerData,
+  //   };
+  //   DecreaseStock(bill);
+  //   setCurrentBill(bill);
+  //   const { data, error } = await supabase
+  //     .from("bills")
+  //     .insert([bill])
+  //     .select();
+  //   setCurrentBillId(data![0].id);
+  //   toast.success("When you're ready, please click CTRL + P to print.");
+  // };
   useEffect(() => {
     async function fetchCustomerData() {
       try {
@@ -232,11 +229,10 @@ const CustomerPage = () => {
                   <button
                     key={index}
                     onClick={() => setCurrentTab(index)}
-                    className={`py-3 px-5 rounded focus:outline-none ${
-                      currentTab === index
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300"
-                    }`}
+                    className={`py-3 px-5 rounded focus:outline-none ${currentTab === index
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300"
+                      }`}
                   >
                     Sell {tab.label}
                   </button>
@@ -244,7 +240,7 @@ const CustomerPage = () => {
                 {billData.length ? (
                   <>
                     <button
-                      onClick={() => printBill()}
+                      onClick={() => setShowDateModel(true)}
                       className={`py-3 justify-center flex items-center gap-2 mt-auto px-5 rounded focus:outline-none bg-blue-200 text-blue-700 hover:bg-blue-500 hover:text-white transition duration-300`}
                     >
                       Submit Bill
@@ -256,6 +252,18 @@ const CustomerPage = () => {
             </section>
           </div>
         </div>
+      )}
+      {showDateModel && (
+        <DateModel
+          setShowDateModel={setShowDateModel}
+          customerData={customerData}
+          customerId={customerId!}
+          billData={billData}
+          setShowBill={setShowBill}
+          DecreaseStock={DecreaseStock}
+          setCurrentBill={setCurrentBill}
+          setCurrentBillId={setCurrentBillId}
+        />
       )}
       {showBill && (
         <Bill
