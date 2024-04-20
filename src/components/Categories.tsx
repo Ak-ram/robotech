@@ -47,7 +47,7 @@ const Categories = ({
   useEffect(() => {
     const getCategories = async () => {
       const { data, error } = await supabase.from("schema_table").select("*");
-      if (error) console.log(error);
+      if (error) console.error(error);
       const extractCategories = data!.map((cat) => cat.table_name);
       setCategories(extractCategories);
     };

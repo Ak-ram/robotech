@@ -19,11 +19,10 @@ const CustomerOrdersList = ({
         const bills = await getCustomerOrdersList(customerId);
         return bills;
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     fetchOrders().then((data) => {
-      console.log("customer list of bills", data!);
       let list = [];
       data!.map((item) => {
         list.push(item as never);

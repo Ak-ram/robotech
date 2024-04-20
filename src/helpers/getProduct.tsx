@@ -26,6 +26,6 @@ export async function getProduct(id: number, prefix: string) {
       }
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }

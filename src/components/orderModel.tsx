@@ -124,7 +124,6 @@ const OrderModel = ({
     const fetchData = async () => {
       try {
         const { data } = await supabase.from("products").select();
-        console.log("dara", data);
         setproducts(data);
       } catch (error) {
         toast.error(`${(error as Error).message}`);
@@ -217,9 +216,7 @@ const OrderModel = ({
 
     handleAddOrder(newOrder.productId);
   };
-  useEffect(() => {
-    console.log(newOrder)
-  }, [selectedItem])
+
   return (
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 z-100 flex items-center justify-center">

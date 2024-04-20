@@ -35,13 +35,11 @@ const TransactionAnalyzer = ({ customers }) => {
         // setBills(data!)
         return data!;
       } catch {
-        (err) => console.log(err);
+        (err) => console.error(err);
       }
     };
 
-    fetchData().then((data) => {
-      console.log("bills data", data);
-    });
+    
   }, []);
 
   const handleRefresh = () => {
@@ -67,7 +65,6 @@ const TransactionAnalyzer = ({ customers }) => {
         const transactions = customer.transactions;
         const customerName = customer.fullName; // Assuming fullName as the customer name field
         const customerId = customer.id; // Assuming fullName as the customer name field
-        console.log("transactions", transactions);
         transactions.products.forEach((transaction) => {
           const transactionDate = new Date(transaction.date);
           const dayKey = `${transactionDate.getFullYear()}-${transactionDate.getMonth() + 1}-${transactionDate.getDate()}`;

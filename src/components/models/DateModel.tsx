@@ -26,17 +26,16 @@ const DateModel: React.FC<DateModelProps> = ({ DecreaseStock, setCurrentBillId, 
             customerData: customerData,
             billCreatedDate: selectedDate
         };
-        console.log(bill)
         setShowBill(true);
         setShowDateModel(false)
-        // DecreaseStock(bill);
+        DecreaseStock(bill);
         setCurrentBill(bill);
         const { data: billTable, error } = await supabase
             .from("bills")
             .insert([bill])
             .select();
         if (error) {
-            console.log(error)
+            console.error(error)
             return;
         }
         setCurrentBillId(billTable![0].id);

@@ -87,7 +87,6 @@ const SuperAdminEditForm = ({ setSuperAdmin, superAdminEditFormOpen, setSuperAdm
                         console.error("Error updating the Supabase table:", error);
                     } else {
                         // Update successful
-                        console.log("Supabase table updated successfully:", data);
                         setEmailError("");
                         setPasswordError("");
                         handleCancel()

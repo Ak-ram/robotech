@@ -55,7 +55,6 @@ const Cart = () => {
     });
     setTotalAmt(amt);
     setRowPrice(rowAmt);
-    console.log(productData)
   }, [productData]);
 
   let thirdStep = async (token, id) => {

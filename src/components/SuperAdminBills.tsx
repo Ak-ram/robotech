@@ -16,10 +16,9 @@ const SuperAdminBills = () => {
     const fetchData = async () => {
       try {
         const { data } = await supabase.from("bills").select("");
-        console.log(data);
         setBillsList(data!);
       } catch (error) {
-        console.log((error as Error).message);
+        console.error((error as Error).message);
       }
     };
 
@@ -90,7 +89,6 @@ const SuperAdminBills = () => {
           return;
         }
 
-        console.log("Product count updated:", updatedProduct);
       });
     }
   }
@@ -110,7 +108,7 @@ const SuperAdminBills = () => {
 
         toast.success("Bill removed successfully");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };

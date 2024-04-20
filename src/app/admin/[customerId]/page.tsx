@@ -95,7 +95,6 @@ const CustomerPage = () => {
           return;
         }
 
-        console.log("Product count updated:", updatedProduct);
       });
     }
   }

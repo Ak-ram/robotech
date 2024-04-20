@@ -50,7 +50,6 @@ const CustomerStatsInStocks = ({ instock, setInstock }) => {
   }, []);
   const handleSave = async () => {
     if (editedProduct) {
-      console.log("edited", editedProduct);
       await supabase
         .from("products")
         .update([editedProduct])

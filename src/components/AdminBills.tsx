@@ -16,11 +16,10 @@ const AdminBills = () => {
     const fetchData = async () => {
       try {
         const { data } = await supabase.from("bills").select("");
-        console.log(data);
         setJsonArray(data!);
         setBillsList(data!);
       } catch (error) {
-        console.log((error as Error).message);
+        console.error((error as Error).message);
       }
     };
 

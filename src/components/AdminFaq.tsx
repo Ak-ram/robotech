@@ -81,7 +81,6 @@ const AdminFaq = () => {
         if (error) {
           throw error;
         }
-        console.log(data);
         const newItem: any = data![0];
         setJsonArray([...jsonArray, newItem]);
         toast.success("Question added successfully");

@@ -36,7 +36,6 @@ const AddAndEditCustomerModel = ({setEditIndex,setEditedItem,editIndex,editedIte
                 .from("customers")
                 .update(editedItem)
                 .eq("id", editedItemId);
-              console.log(editedItemId); // error here
               if (error) {
                 throw error;
               }
