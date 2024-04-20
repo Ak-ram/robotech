@@ -31,7 +31,6 @@ const DateModel: React.FC<DateModelProps> = ({ DecreaseStock, setCurrentBillId, 
             customerData: customerData,
             billCreatedDate: selectedDate
         };
-        setShowBill(true);
         setShowDateModel(false)
         DecreaseStock(bill);
         setCurrentBill(bill);
@@ -44,7 +43,10 @@ const DateModel: React.FC<DateModelProps> = ({ DecreaseStock, setCurrentBillId, 
             return;
         }
         setCurrentBillId(billTable![0].id);
-        toast.success("When you're ready, please click CTRL + P to print.");
+        const showModel = window.confirm('Bill Added Successfully, Display it?')
+        if (showModel) {
+            setShowBill(true);
+        }
     }
 
 
