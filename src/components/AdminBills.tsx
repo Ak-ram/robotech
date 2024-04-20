@@ -57,7 +57,7 @@ const AdminBills = () => {
     setShowBill(true);
   };
 
- 
+
   return (
     <div
       className={`lg:p-3 w-full bottom-0 left-0 lg:relative overflow-hidden mt-5`}
@@ -91,49 +91,54 @@ const AdminBills = () => {
       </div>
       <div className="h-[400px] overflow-auto">
 
-      {billsList.length !== 0 ? (
-        <div className={"flex flex-col gap-2"}>
-          {billsList.map((item, index) => (
-            <div
-              key={index}
-              className={`flex items-center justify-between border group hover:border-zinc-500 border-zinc-300 p-4 rounded-lg bg-white font-medium shadow-md transition-all duration-300 transform 
+        {billsList.length !== 0 ? (
+          <div className={"flex flex-col gap-2"}>
+            {billsList.map((item, index) => (
+              <div
+                key={index}
+                className={`flex items-center justify-between border group hover:border-zinc-500 border-zinc-300 p-4 rounded-lg bg-white font-medium shadow-md transition-all duration-300 transform 
                         `}
-            >
-              <div className="flex flex-col gap-1 text-zinc-600">
-                <span>
-                  Customer Name:{" "}
-                  <span className="text-black">
-                    {item?.customerData?.fullName}
+              >
+                <div className="flex flex-col gap-1 text-zinc-600">
+                  <span>
+                    Customer Name:{" "}
+                    <span className="text-black">
+                      {item?.customerData?.fullName}
+                    </span>
                   </span>
-                </span>
-                <span>
-                  Bill ID: <span className="text-blue-400">{item.id}</span>{" "}
-                </span>
+                  <div className="flex gap-5 items-center">
+                    <span>
+                      Bill ID: <span className="text-blue-400">{item.id}</span>{" "}
+                    </span>
+                    <span>
+                      Date: <span className="underline text-blue-400">{item.billCreatedDate || new Date(item.created_at).toISOString().split('T')[0]}</span>{" "}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <button
+                    className="flex gap-1 items-center  bg-blue-100 py-1 px-2 rounded text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
+                    onClick={() => openBill(item.id)}
+                  >
+                    <Eye size={17} /> View
+                  </button>
+
+                </div>
               </div>
-              <div className="flex justify-end">
-                <button
-                  className="flex gap-1 items-center  bg-blue-100 py-1 px-2 rounded text-blue-500 hover:text-blue-600 mr-2 transition-colors duration-300"
-                  onClick={() => openBill(item.id)}
-                >
-                  <Eye size={17} /> View
-                </button>
-              
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="bg-white h-[400px] flex items-center justify-center">
-          <div className="text-center -mt-5">
-            <div className="text-5xl mb-2">🥹</div>
-            <h2 className="text-xl font-semibold mb-4">
-              
-              No Bills...
-            </h2>
+            ))}
           </div>
-        </div>
-      )}
-</div>
+        ) : (
+          <div className="bg-white h-[400px] flex items-center justify-center">
+            <div className="text-center -mt-5">
+              <div className="text-5xl mb-2">🥹</div>
+              <h2 className="text-xl font-semibold mb-4">
+
+                No Bills...
+              </h2>
+            </div>
+          </div>
+        )}
+      </div>
       {showBill && (
         <Bill
           id={selectedBill.id}

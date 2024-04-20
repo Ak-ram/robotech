@@ -33,7 +33,7 @@ const Bill: React.FC<BillProps> = ({
     phone: "01102071544",
   };
   const [printMode, setPrintMode] = useState(false);
-
+console.log('bill',transactionData)
   // Calculate total amount
   const totalAmount = transactionData.reduce(
     (total, transaction) => total + transaction.subtotal,
