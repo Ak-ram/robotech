@@ -21,7 +21,7 @@ const DateModel: React.FC<DateModelProps> = ({ DecreaseStock, setCurrentBillId, 
 
     const printBill = async () => {
         if (!selectedDate) {
-            toast.error('select date please')
+            toast.error('Select Date 😤')
             return;
         }
         const bill = {
@@ -66,7 +66,7 @@ const DateModel: React.FC<DateModelProps> = ({ DecreaseStock, setCurrentBillId, 
                         onChange={handleDateChange}
                     />
                 </div>
-                <button onClick={printBill}>Submit</button>
+                <button className="bg-blue-500 px-3 py-2 text-white font-semibold mt-5 rounded w-28" onClick={printBill}>Submit</button>
             </div>
         </div>
     );

@@ -196,7 +196,7 @@ const AdminCustomers = () => {
           <div className="bg-white h-full flex items-center justify-center">
             <div className="text-center">
               <h2 className="text-xl font-semibold mb-4">
-                No Customers to display...
+                Type to Search...
               </h2>
             </div>
           </div>
