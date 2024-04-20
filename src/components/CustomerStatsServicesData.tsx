@@ -86,8 +86,6 @@ const CustomerStatsServicesData = () => {
             return service;
           }
         });
-        // No need to await, updating JSON file in the background
-        console.log(editedService);
         await supabase
           .from("services")
           .update(editedService)

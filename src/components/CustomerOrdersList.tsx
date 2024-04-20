@@ -19,11 +19,10 @@ const CustomerOrdersList = ({
         const bills = await getCustomerOrdersList(customerId);
         return bills;
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     fetchOrders().then((data) => {
-      console.log("customer list of bills", data!);
       let list = [];
       data!.map((item) => {
         list.push(item as never);
@@ -81,13 +80,13 @@ const CustomerOrdersList = ({
         <div className="mt-5 flex-1">
           <ul>
             {customerBills.length > 0 ? (
-              customerBills.map(({ created_at, data, id }: Bill, i) => (
+              customerBills.map(({ created_at,billCreatedDate, data, id }: Bill, i) => (
                 <li key={`${id}_${i}`} className="border-b py-4">
                   <div className="flex items-center justify-between ">
                     <div>
                       <h4 className="font-bold">Bill Id: #{id}</h4>
-                      <p className="text-gray-500">
-                        Date: {formatDate(created_at)}
+                      <p className="text-gray-500 whitespace-nowrap">
+                        Date: {billCreatedDate || formatDate(created_at)}
                       </p>
                     </div>
                     <div className="flex  max-h-[200px] overflow-y-auto flex-col w-[90%] gap-2">

@@ -16,10 +16,9 @@ const SuperAdminBills = () => {
     const fetchData = async () => {
       try {
         const { data } = await supabase.from("bills").select("");
-        console.log(data);
         setBillsList(data!);
       } catch (error) {
-        console.log((error as Error).message);
+        console.error((error as Error).message);
       }
     };
 
@@ -90,7 +89,6 @@ const SuperAdminBills = () => {
           return;
         }
 
-        console.log("Product count updated:", updatedProduct);
       });
     }
   }
@@ -110,7 +108,7 @@ const SuperAdminBills = () => {
 
         toast.success("Bill removed successfully");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
@@ -184,9 +182,14 @@ const SuperAdminBills = () => {
                         {item?.customerData?.fullName}
                       </span>
                     </span>
+                    <div className="flex gap-5 items-center">
                     <span>
                       Bill ID: <span className="text-blue-400">{item.id}</span>{" "}
                     </span>
+                    <span>
+                      Date: <span className="underline text-blue-400">{item.billCreatedDate || new Date(item.created_at).toISOString().split('T')[0]}</span>{" "}
+                    </span>
+                  </div>
                   </div>
                   <div className="flex justify-end">
                     <button

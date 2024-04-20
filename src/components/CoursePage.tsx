@@ -29,7 +29,6 @@ const CoursePage: React.FC<Props> = ({ searchParams }: Props) => {
           .select('*')
           .eq('id', +idString!)
           .single();
-        console.log(data);
         setCourse(data!);
       } catch (error) {
         console.error("Error fetching products:", error);

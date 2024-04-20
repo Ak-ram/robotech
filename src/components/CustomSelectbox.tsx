@@ -33,7 +33,6 @@ const CustomSelect = ({
       setcategoryList(updatedCategoryList)
       setSelectedCat(editedOption);
       setEditableOption("");
-      console.log(categoryProducts,temp);
       setCategoryProducts(temp)
       setInUpdateMode(false);
       await supabase

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import supabase from "@/supabase/config";
+import toast from "react-hot-toast";
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(""); // Combined message state
@@ -67,7 +68,7 @@ const LoginComponent = () => {
       try {
         await supabase.from("ask_to_be_an_admin").insert({ email: email });
         setMessage("Your request was sent to the super admin.");
-        console.log("Sent 🎉");
+        toast.success("Sent 🎉");
         // setUsername("");
         setEmail("");
         setIsAuth(false);

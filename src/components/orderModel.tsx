@@ -4,6 +4,7 @@ import FormattedPrice from "./FormattedPrice";
 import { CourseType, ProductType } from "../../type";
 import { fetchJsonData } from "@/helpers/getJSONData";
 import supabase from "@/supabase/config";
+import { handleAddItemClick } from "@/helpers/addJSONItem";
 
 const CustomSelect = ({
   options,
@@ -56,7 +57,7 @@ const CustomSelect = ({
       wholesalePrice: +option.wholesalePrice || 0,
       isRefund: false,
       discount: +option.discount || 0, // Set discount to 0 as default value
-
+    
       date: new Date().toLocaleDateString("en-US", {
         weekday: "short",
         year: "numeric",
@@ -112,7 +113,6 @@ const OrderModel = ({
     const fetchData = async () => {
       try {
         const { data } = await supabase.from("products").select();
-        console.log("dara", data);
         setproducts(data);
       } catch (error) {
         toast.error(`${(error as Error).message}`);
@@ -130,6 +130,8 @@ const OrderModel = ({
     }
   }, [selectedItem, newOrder.quantity, newOrder.discount, setNewOrder]);
 
+
+
   const handleSelect = (option) => {
     setSelectedItem(option);
     setNewOrder({
@@ -141,6 +143,7 @@ const OrderModel = ({
       discount: +option.discount || 0,
       wholesalePrice: +option.wholesalePrice || 0,
       isRefund: false,
+     
       date: new Date().toLocaleDateString("en-US", {
         weekday: "short",
         year: "numeric",
@@ -183,38 +186,10 @@ const OrderModel = ({
       // }
     }
 
-    // if ("count" in selectedItem!) {
-    //   // Access the count property only when the selectedItem is of type ProductType
-    //   const itemCount = +selectedItem.count;
-    //   if (newOrder.quantity > itemCount) {
-    //     toast.error(`only ${itemCount} piece(s) available in-stock`);
-    //     return;
-    //   } else {
-    //     let obj = categoriesList[0][selectedItem.category].find(
-    //       (product) => product.id === selectedItem.id
-    //     );
-    //     let updatedObject = {
-    //       ...obj,
-    //       count: `${+selectedItem?.count - +newOrder?.quantity}`,
-    //     };
-    //     const updatedProducts = categoriesList[0][selectedItem.category].map(
-    //       (product) => {
-    //         if (product.id === selectedItem.id) {
-    //           return updatedObject;
-    //         }
-    //         return product;
-    //       }
-    //     );
 
-    //     // Update the correct object within the categoriesList array
-    //     const updatedCategoriesList = [...categoriesList]; // Copy the original array
-    //     updatedCategoriesList[0][selectedItem.category] = updatedProducts; // Update the correct category array
 
-    //     setCategoriesList(updatedCategoriesList); // Update the state with the updated array
-    //   }
-    // }
 
-    // Proceed with adding order
+
     handleAddOrder(newOrder.productId);
   };
 
@@ -224,6 +199,7 @@ const OrderModel = ({
         <div className="bg-white min-w-[40rem] p-8 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">Add Order</h2>
           <form>
+          
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Product Name

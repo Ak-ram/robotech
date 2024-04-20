@@ -78,7 +78,6 @@ export const updateJsonFile = async (jsonFilePath: string, newData: any[]): Prom
       sha,
     });
 
-    console.log('JSON file updated successfully!');
   } catch (error) {
     handleError(error);
   }

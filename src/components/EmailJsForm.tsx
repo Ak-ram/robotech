@@ -153,7 +153,6 @@ const EmailJsForm = ({ totalAmt, productData }) => {
 
     const sendEmail = (e) => {
         e.preventDefault();
-        console.log(productData)
         if (!phone || !clientName || !address) {
             toast.error("Please provide both your name and phone number.")
             return;

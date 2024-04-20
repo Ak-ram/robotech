@@ -82,7 +82,6 @@ const AdminAbout = () => {
         if (error) {
           throw error;
         }
-        console.log(data);
         const newItem: any = data![0];
         setJsonArray([...jsonArray, newItem]);
         toast.success("News added successfully");

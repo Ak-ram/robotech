@@ -62,69 +62,6 @@ const CustomerPageAddProducts = ({
           .from("products")
           .update({ count: newStock })
           .eq("id", productToRefund.productId);
-
-        // // Fetch the customer data
-        // const { data, error } = await supabase
-        //   .from("customers")
-        //   .select("transactions")
-        //   .eq("id", customerData.id)
-        //   .single();
-
-        // if (error) {
-        //   throw "error";
-        // }
-
-        // // Extract existing transactions from the fetched data
-        // const existingTransactions = data?.transactions || { products: [] };
-        // let newV = existingTransactions.products.filter(
-        //   (product) =>
-        //     product.productId !== productToRefund.productId &&
-        //     product.date !== productToRefund.date,
-        // );
-        // existingTransactions.products = newV;
-        // await supabase
-        //   .from("customers")
-        //   .select("total_purchase_transactions")
-        //   .eq("id", customerData.id)
-        //   .single();
-        // const { printServices, courses, products } = existingTransactions;
-
-        // const newTotal =
-        //   printServices.reduce((total, item) => total + item.subtotal, 0) +
-        //   courses.reduce((total, item) => total + item.subtotal, 0) +
-        //   products.reduce((total, item) => total + item.subtotal, 0);
-
-        // await supabase
-        //   .from("customers")
-        //   .update({ total_purchase_transactions: newTotal })
-        //   .eq("id", customerData.id);
-        // // Update the transactions field with the modified data
-        // const { data: updatedData, error: updateError } = await supabase
-        //   .from("customers")
-        //   .update({ transactions: existingTransactions })
-        //   .eq("id", customerData.id);
-
-        // if (updateError) {
-        //   throw updateError;
-        // }
-        // // Fetch the updated customer data after adding the order
-        // const { data: updatedCustomer, error: customerError } = await supabase
-        //   .from("customers")
-        //   .select()
-        //   .eq("id", customerData.id)
-        //   .single();
-
-        // if (customerError) {
-        //   throw customerError;
-        // }
-
-        // Update the updatedCustomerData state variable with the new data
-        // setUpdatedCustomerData(updatedCustomer);
-        // Optionally update local state or perform other actions
-        // ...
-        // Show success message
-        // toast.success("Item Refunded successfully");
-        // toast.loading("Be patient, changes take a few moments to be reflected");
       } catch (error) {
         // Handle errors
         console.error("Error refunding order:", (error as Error).message);
@@ -200,13 +137,7 @@ const CustomerPageAddProducts = ({
                 />
               </div>
 
-              {/* <span
-                onClick={() => handleRefundOrder(product)}
-                className="flex gap-1 text-red-600  cursor-pointer items-center justify-center"
-              >
-                Refund
-                <Redo className="ml-auto mr-2" size={20} />
-              </span> */}
+              
             </div>
             {showBill && selectedProduct && (
               <Bill
