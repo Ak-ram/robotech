@@ -26,7 +26,7 @@ const CustomerPage = () => {
   const [showDateModel, setShowDateModel] = useState(false);
   const [showOrdersList, setShowOrdersList] = useState(false);
   const [currentBill, setCurrentBill] = useState<BillType>();
-  
+
   const tabs = [
     {
       content: (

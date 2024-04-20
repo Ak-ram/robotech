@@ -2,6 +2,7 @@ import supabase from "@/supabase/config";
 import React, { ChangeEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { BillType } from "../../../type";
+import { X } from "lucide-react";
 
 interface DateModelProps {
     setShowDateModel: (value: boolean) => void;
@@ -56,9 +57,11 @@ const DateModel: React.FC<DateModelProps> = ({ DecreaseStock, setCurrentBillId, 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white w-[500px] p-8 rounded-lg shadow-md">
-                <h2 className="font-bold mb-2 text-center text-lg">Add Date</h2>
+                <h2 className="flex items-center justify-center font-bold mb-2 text-center text-lg">
+                    <X className="ml-auto" onClick={() => setShowDateModel(false)} />
+                </h2>
                 <div className="mb-2 lg:pr-4">
-                    <span className="font-bold mb-1">Selected Date</span>
+                    <span className="font-bold mb-2 block">Selected Date</span>
                     <input
                         type="date"
                         className="w-full p-2 border border-gray-300 rounded"

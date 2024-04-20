@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Printer, X } from "lucide-react";
 import DetailedLogo from "@/assets/DetailedLogo.png";
 import Image from "next/image";
 import FormattedPrice from "./FormattedPrice";
+import supabase from "@/supabase/config";
 
 interface TransactionData {
   productName: string;
@@ -33,13 +34,13 @@ const Bill: React.FC<BillProps> = ({
     phone: "01102071544",
   };
   const [printMode, setPrintMode] = useState(false);
-console.log('bill',transactionData)
+  const [billDate, setBillDate] = useState("");
+  console.log('bill', transactionData)
   // Calculate total amount
   const totalAmount = transactionData.reduce(
     (total, transaction) => total + transaction.subtotal,
     0,
   );
-  const dating = transactionData[0]?.date;
 
   const handlePrint = () => {
     setPrintMode(true);
@@ -53,6 +54,17 @@ console.log('bill',transactionData)
   const setSubmitedBillData = () => {
     setBillData([]);
   };
+
+
+  useEffect(() => {
+    const getBillDate = async () => {
+
+      const { data: billDate, error } = await supabase.from('bills').select('*').eq("id", id).single();
+      return billDate.billCreatedDate || new Date(billDate.created_at).toISOString().split('T')[0];
+    }
+    getBillDate().then(date => setBillDate(date! as string))
+  }, [])
+
   return (
     <>
       <div className="printContainer overflow-hidden fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -79,7 +91,7 @@ console.log('bill',transactionData)
                   width={70}
                   height={70}
                 />
-           
+
               </div>
               <div className="text-right">ID: {id}</div>
             </div>
@@ -87,7 +99,7 @@ console.log('bill',transactionData)
             {/* Invoice Details */}
             <div className="mb-4">
               <h2 className="text-xl font-bold mb-2">Invoice</h2>
-              <span className="mb-2 block font-medium text-sm">{dating}</span>
+              <span className="mb-2 block font-medium text-sm">Date: {billDate || "wait..."}</span>
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="bg-gray-100">
