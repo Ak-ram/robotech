@@ -262,6 +262,7 @@ const CustomerPage = () => {
           DecreaseStock={DecreaseStock}
           setCurrentBill={setCurrentBill}
           setCurrentBillId={setCurrentBillId}
+          setBillData={setBillData}
         />
       )}
       {showBill && (
