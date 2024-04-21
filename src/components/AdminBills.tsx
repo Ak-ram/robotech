@@ -111,7 +111,12 @@ const AdminBills = () => {
                       Bill ID: <span className="text-blue-400">{item.id}</span>{" "}
                     </span>
                     <span>
-                      Date: <span className="underline text-blue-400">{item.billCreatedDate || new Date(item.created_at).toISOString().split('T')[0]}</span>{" "}
+                      Date: <span className="underline text-blue-400">{item.billCreatedDate || new Date(item.created_at).toLocaleDateString("en-US", {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                      }
+                      )}</span>{" "}
                     </span>
                   </div>
                 </div>

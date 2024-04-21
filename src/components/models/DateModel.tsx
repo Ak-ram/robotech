@@ -10,14 +10,14 @@ interface DateModelProps {
     setCurrentBill: (bill: BillType) => void;
     setCurrentBillId: (value: number) => void;
     DecreaseStock: (bill: BillType) => void
+    setBillData: (data: any[]) => void
     billData: any[],
     customerId: string,
     customerData: any[],
-
 }
 
 
-const DateModel: React.FC<DateModelProps> = ({ DecreaseStock, setCurrentBillId, setCurrentBill, setShowBill, setShowDateModel, billData, customerData, customerId }) => {
+const DateModel: React.FC<DateModelProps> = ({ setBillData,DecreaseStock, setCurrentBillId, setCurrentBill, setShowBill, setShowDateModel, billData, customerData, customerId }) => {
     const [selectedDate, setSelectedDate] = useState('')
 
     const printBill = async () => {
@@ -46,6 +46,9 @@ const DateModel: React.FC<DateModelProps> = ({ DecreaseStock, setCurrentBillId, 
         const showModel = window.confirm('Bill Added Successfully, Display it?')
         if (showModel) {
             setShowBill(true);
+        }else{
+            setBillData([]);
+            setShowBill(false);
         }
     }
 
