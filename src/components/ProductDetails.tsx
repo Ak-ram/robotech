@@ -163,7 +163,7 @@ fetchData()
 
             {products && products?.filter((item: ProductType) => item?.id !== product?.id).length !== 0 &&
                 <>
-                    <div className="mt-5 pb-5 border-b space-y-2">
+                    <div className="mt-5 max-h-[450px] overflow-auto pb-5 border-b space-y-2">
                         <h3 className="text-gray-600">You May also love:</h3>
                         {
                             products?.filter((item: ProductType) => item?.id !== product?.id).map((item =>
