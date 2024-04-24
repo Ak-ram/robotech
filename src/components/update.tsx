@@ -43,14 +43,14 @@ const TransactionAnalyzer = () => {
       // console.log('dddd',bills[0]?.created_at); // 2024-04-14T13:41:41.99372+00:00
       bills.forEach((bill) => {
         let date;
-        if(bill.billCreatedDate){
+        if (bill.billCreatedDate) {
           const d = new Date(bill.billCreatedDate).toISOString()
-           date = formatDate(d);
-        }else{
+          date = formatDate(d);
+        } else {
           date = formatDate(bill.created_at)
 
         }
-        
+
 
         if (!dailyStatsMap.has(date)) {
           dailyStatsMap.set(date, { totalSells: 0, totalProfit: 0 });
@@ -92,10 +92,10 @@ const TransactionAnalyzer = () => {
       bills.forEach((bill) => {
         // const date = new Date(bill.created_at);
         let date;
-        if(bill.billCreatedDate){
+        if (bill.billCreatedDate) {
           const d = new Date(bill.billCreatedDate).toISOString()
-           date =  new Date(d);
-        }else{
+          date = new Date(d);
+        } else {
           date = new Date(bill.created_at);
 
         }
@@ -157,7 +157,11 @@ const TransactionAnalyzer = () => {
   }, [bills]);
 
 
-
+  const sortedDailyStats = dailyStats.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateB - dateA;
+  })
 
   return (
     <section
@@ -191,19 +195,20 @@ const TransactionAnalyzer = () => {
               />
             </div>
             <div className="max-h-[300px] overflow-auto">
-              {dailyStats.filter((item) => item.date.includes(searchValue)).map((dailyStat, index) => (
-                <div
-                  key={index}
-                  className={`p-4 bg-gray-100 rounded-lg mb-2 flex justify-between items-center`}
-                >
-                  <h3 className="text-lg font-semibold">
-                    Date: {dailyStat.date}
+              {sortedDailyStats
+                .filter((item) => item.date.includes(searchValue)).map((dailyStat, index) => (
+                  <div
+                    key={index}
+                    className={`p-4 bg-gray-100 rounded-lg mb-2 flex justify-between items-center`}
+                  >
+                    <h3 className="text-lg font-semibold">
+                      Date: { new Date(dailyStat.date).toLocaleDateString('ar-eg')}
 
-                  </h3>
-                  <p>Total Sells: {dailyStat.totalSells} L.E</p>
-                  <p>Total Profit: {dailyStat.totalProfit} L.E</p>
-                </div>
-              ))}
+                    </h3>
+                    <p>Total Sells: {dailyStat.totalSells} L.E</p>
+                    <p>Total Profit: {dailyStat.totalProfit} L.E</p>
+                  </div>
+                ))}
             </div>
           </div>
           <div>
