@@ -38,19 +38,16 @@ const TransactionAnalyzer = () => {
         string,
         { totalSells: number; totalProfit: number }
       >();
-
-      // console.log('bbb',bills[0]?.data[0]?.date); // Sun, Apr 14, 2024, 03:34 PM
-      // console.log('dddd',bills[0]?.created_at); // 2024-04-14T13:41:41.99372+00:00
       bills.forEach((bill) => {
         let date;
-        if(bill.billCreatedDate){
-          const d = new Date(bill.billCreatedDate).toISOString()
-           date = formatDate(d);
-        }else{
-          date = formatDate(bill.created_at)
+        if (bill.billCreatedDate) {
+          // const d = new Date(bill.billCreatedDate).toISOString()
+          date = new Date(bill.billCreatedDate).toISOString().split("T")[0];
+        } else {
+          date = new Date(bill.created_at)
 
         }
-        
+
 
         if (!dailyStatsMap.has(date)) {
           dailyStatsMap.set(date, { totalSells: 0, totalProfit: 0 });
@@ -92,10 +89,10 @@ const TransactionAnalyzer = () => {
       bills.forEach((bill) => {
         // const date = new Date(bill.created_at);
         let date;
-        if(bill.billCreatedDate){
+        if (bill.billCreatedDate) {
           const d = new Date(bill.billCreatedDate).toISOString()
-           date =  new Date(d);
-        }else{
+          date = new Date(d);
+        } else {
           date = new Date(bill.created_at);
 
         }
@@ -157,7 +154,11 @@ const TransactionAnalyzer = () => {
   }, [bills]);
 
 
-
+  const sortedDailyStats = dailyStats.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateB.getTime() - dateA.getTime();
+  })
 
   return (
     <section
@@ -183,27 +184,30 @@ const TransactionAnalyzer = () => {
             <div className="flex items-center gap-2">
               <h2 className="text-xl  font-semibold mb-2">Daily Profits</h2>
               <input
-                placeholder="Search By Date (ex; 14/4/2024)"
+                placeholder="Search By Date (ex; 2023-12-26)"
                 className="mb-2 border border-blue-400 px-2 py-1 w-[50%] rounded"
                 type="search"
                 value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-              />
+                onChange={(e) => {
+                  console.log(e.target.value)
+                  setSearchValue(e.target.value)}}
+              /> 
             </div>
             <div className="max-h-[300px] overflow-auto">
-              {dailyStats.filter((item) => item.date.includes(searchValue)).map((dailyStat, index) => (
-                <div
-                  key={index}
-                  className={`p-4 bg-gray-100 rounded-lg mb-2 flex justify-between items-center`}
-                >
-                  <h3 className="text-lg font-semibold">
-                    Date: {dailyStat.date}
-
-                  </h3>
-                  <p>Total Sells: {dailyStat.totalSells} L.E</p>
-                  <p>Total Profit: {dailyStat.totalProfit} L.E</p>
-                </div>
-              ))}
+              {sortedDailyStats
+                .filter((item) => item.date.includes(searchValue)).map((dailyStat, index) => (
+                  <div
+                    key={index}
+                    className={`p-4 bg-gray-100 rounded-lg mb-2 flex justify-between items-center`}
+                  >
+                    <h3 className="text-lg lflex items-center font-semibold">
+                      {/* Date: { new Date(dailyStat.date).toLocaleDateString('ar-eg')} */}
+                      Date: {dailyStat.date}
+                    </h3>
+                    <p>Total Sells: {dailyStat.totalSells} L.E</p>
+                    <p>Total Profit: {dailyStat.totalProfit} L.E</p>
+                  </div>
+                ))}
             </div>
           </div>
           <div>

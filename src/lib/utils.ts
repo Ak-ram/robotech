@@ -82,7 +82,7 @@ export function searchItems(items, searchTerm, searchType) {
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-GB");
+  return date.toLocaleDateString("en-US");
 };
 
 // billUtils.ts

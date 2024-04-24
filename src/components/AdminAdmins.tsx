@@ -115,7 +115,7 @@ const AdminAdmins = () => {
             <div>Loading...</div>
           ) : (
             <div className="flex gap-2 pb-5">
-              <div className="flex-1 border p-3 rounded border-slate-300 ">
+              <div className="flex-1 h-48 overflow-auto border p-3 rounded border-slate-300 ">
                 <h3>Asked To Be An Admins</h3>
                 {askedToBeAnAdmin?.map((asked) => (
                   <div
@@ -138,11 +138,11 @@ const AdminAdmins = () => {
                   </div>
                 ))}
               </div>
-              <div className="flex-1 border p-3 rounded border-slate-300 ">
+              <div className="flex-1 h-48 overflow-auto  border p-3 rounded border-slate-300 ">
                 <h3>Admins</h3>
                 {admins?.map((admin) => (
                   <div
-                    className="bg-gray-200 p-2 flex items-center justify-between rounded my-2 "
+                    className="bg-gray-200  p-2 flex items-center justify-between rounded my-2 "
                     key={admin?.id}
                   >
                     <div>{admin?.email}</div>

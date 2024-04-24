@@ -32,7 +32,7 @@ const ProductCard = ({item, prefix}) => {
             >
 
                 <img
-                    className="peer group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full" // object-contain
+                    className="peer object-contain group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300 transition-timing-function ease-in-out shadow-lg absolute top-0 right-0 h-full w-full" // object-contain
                     src={item.image1}
                     alt="product image"
                     onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {

@@ -146,6 +146,7 @@ const AdminComponent = () => {
           <div className="mt-5">
             <span className="my-3 block flex items-center justify-end text-end text-sm">
               <div className="flex-1 flex items-center gap-2">
+               <div className={`${show ? "hidden":"flex"} items-center gap-2`}>
                 <CustomSelect
                   {...{
                     categoryProducts,
@@ -157,12 +158,6 @@ const AdminComponent = () => {
                   }}
                 />
                 <button
-                  onClick={handleDeleteCategory}
-                  className="text-xs rounded-md absolute top-5 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
-                >
-                  Delete Category
-                </button>
-                <button
                   className="mr-1"
                   onClick={() =>
                     handleRefresh()
@@ -170,6 +165,14 @@ const AdminComponent = () => {
                 >
                   <RefreshCcw className={`${refresh ? "animate-spin":""}`} size={16} />
                 </button>
+                </div>
+                <button
+                  onClick={handleDeleteCategory}
+                  className="text-xs rounded-md absolute top-5 right-4 ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
+                >
+                  Delete Category
+                </button>
+                
                 <div>
                   <span
                     className={`flex ${show ? "hidden" : "block"} items-center`}
