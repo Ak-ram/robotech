@@ -41,10 +41,10 @@ const TransactionAnalyzer = () => {
       bills.forEach((bill) => {
         let date;
         if (bill.billCreatedDate) {
-          const d = new Date(bill.billCreatedDate).toISOString()
-          date = formatDate(d);
+          // const d = new Date(bill.billCreatedDate).toISOString()
+          date = new Date(bill.billCreatedDate).toISOString().split("T")[0];
         } else {
-          date = formatDate(bill.created_at)
+          date = new Date(bill.created_at)
 
         }
 
@@ -183,15 +183,15 @@ const TransactionAnalyzer = () => {
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-xl  font-semibold mb-2">Daily Profits</h2>
-              {/* <input
-                placeholder="Search By Date (ex; 14/4/2024)"
+              <input
+                placeholder="Search By Date (ex; 2023-12-26)"
                 className="mb-2 border border-blue-400 px-2 py-1 w-[50%] rounded"
                 type="search"
                 value={searchValue}
                 onChange={(e) => {
                   console.log(e.target.value)
                   setSearchValue(e.target.value)}}
-              /> */}
+              /> 
             </div>
             <div className="max-h-[300px] overflow-auto">
               {sortedDailyStats
@@ -200,9 +200,9 @@ const TransactionAnalyzer = () => {
                     key={index}
                     className={`p-4 bg-gray-100 rounded-lg mb-2 flex justify-between items-center`}
                   >
-                    <h3 className="text-lg font-semibold">
-                      Date: { new Date(dailyStat.date).toLocaleDateString('ar-eg')}
-
+                    <h3 className="text-lg lflex items-center font-semibold">
+                      {/* Date: { new Date(dailyStat.date).toLocaleDateString('ar-eg')} */}
+                      Date: {dailyStat.date}
                     </h3>
                     <p>Total Sells: {dailyStat.totalSells} L.E</p>
                     <p>Total Profit: {dailyStat.totalProfit} L.E</p>
