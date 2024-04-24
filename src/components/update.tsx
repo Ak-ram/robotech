@@ -38,9 +38,6 @@ const TransactionAnalyzer = () => {
         string,
         { totalSells: number; totalProfit: number }
       >();
-
-      // console.log('bbb',bills[0]?.data[0]?.date); // Sun, Apr 14, 2024, 03:34 PM
-      // console.log('dddd',bills[0]?.created_at); // 2024-04-14T13:41:41.99372+00:00
       bills.forEach((bill) => {
         let date;
         if (bill.billCreatedDate) {
@@ -160,7 +157,7 @@ const TransactionAnalyzer = () => {
   const sortedDailyStats = dailyStats.sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
-    return dateB - dateA;
+    return dateB.getTime() - dateA.getTime();
   })
 
   return (
@@ -186,13 +183,15 @@ const TransactionAnalyzer = () => {
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-xl  font-semibold mb-2">Daily Profits</h2>
-              <input
+              {/* <input
                 placeholder="Search By Date (ex; 14/4/2024)"
                 className="mb-2 border border-blue-400 px-2 py-1 w-[50%] rounded"
                 type="search"
                 value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-              />
+                onChange={(e) => {
+                  console.log(e.target.value)
+                  setSearchValue(e.target.value)}}
+              /> */}
             </div>
             <div className="max-h-[300px] overflow-auto">
               {sortedDailyStats
