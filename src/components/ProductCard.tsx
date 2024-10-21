@@ -95,7 +95,6 @@ const ProductCard = ({item, prefix}) => {
                                 {/* <span className="text-sm xs:text-base xs:hidden">Buy</span> */}
                                 <span className="hidden whitespace-nowrap xs:inline text-sm xs:text-base inline">Order Now</span>
                                 <ShoppingBasketIcon
-
                                     className=" ustify-center rounded flex items-center gap-1 font-semibold text-designColor rounded  duration-300 bg-white text-blue-500 px-[3px] p-[1px] w-8 h-8 xs:w-7 xs:h-7 duration-200 "
                                 />
                             </span>

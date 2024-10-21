@@ -23,6 +23,7 @@ import SuperAdminBills from "./SuperAdminBills";
 import Stocks from "./Stocks";
 import CustomerStatsServicesData from "./CustomerStatsServicesData";
 import CustomerStatsTopSelling from "./CustomerStatsTopSelling";
+import SuperAdminAggregatedSales from "./SuperAdminAggregatedSales";
 
 interface CategoryStats {
   categoryName: string;
@@ -230,6 +231,7 @@ const Stats = () => {
       <CustomerStatsServicesData />
       <SuperAdminBills />
       <TransactionAnalyzer />
+      <SuperAdminAggregatedSales />
       <AdminAdmins />
     </div>
   );
