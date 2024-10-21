@@ -238,3 +238,19 @@
     transform: translateY(0px);
   }
 }
+
+@keyframes flash {
+  0% {
+    background-color: white; /* or the default background color */
+  }
+  50% {
+    background-color: rgb(246, 246, 246); /* flash color */
+  }
+  100% {
+    background-color: white; /* reset to original color */
+  }
+}
+
+.animate-flash {
+  animation: flash 0.3s ease-in-out; /* Adjust duration as needed */
+}
