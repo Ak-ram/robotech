@@ -2,6 +2,7 @@ import Container from "@/components/Container";
 import PrintServices from "@/components/PrintServices";
 import { LayoutList, PackageCheck, Printer } from "lucide-react";
 import React from "react";
+import { Toaster } from "react-hot-toast";
 const page = async () => {
 
   return (
@@ -17,6 +18,15 @@ const page = async () => {
       </div>
     </div>
       <PrintServices/>
+      <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: "#000",
+                color: "#fff",
+              },
+            }}
+          />
     </Container>
   );
 };

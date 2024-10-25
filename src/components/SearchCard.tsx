@@ -3,16 +3,30 @@ import Link from "next/link";
 import FormattedPrice from "./FormattedPrice";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToFavorite } from "@/redux/proSlice";
-import { AlertCircle, Ban, Heart, ShoppingBasketIcon } from "lucide-react";
+import { AlertCircle, Ban, Check, Heart, ShoppingBasketIcon } from "lucide-react";
 import { StateProps } from "../../type";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 const SearchCard = ({ item, prefix }) => {
     const dispatch = useDispatch();
     const { favoriteData, compareData } = useSelector((state: StateProps) => state.pro);
+    const [ buttonText, setButtonText ] = useState("Order Now")
 
     const isFavorite = (productId: any) => {
         return favoriteData.some((favoriteItem) => favoriteItem.id === productId);
     };
+    const handleOrderNowClick = () => {
+        dispatch(addToCart(item));
+        toast.success(`${item?.title} is added to Cart!`);
+    
+        // Change button text to "Added" and reset after 1 second
+        setButtonText("Item Added");
+        setTimeout(() => {
+          setButtonText("Order Now");
+        }, 1000);
+      };
+    
     return (
         <div
             title={item?.title}
@@ -74,16 +88,20 @@ const SearchCard = ({ item, prefix }) => {
 
                         {item?.count > 0 || prefix === 'print' ? (
 
-                            <span onClick={() => {
-                                dispatch(addToCart(item));
-                            }} className=" flex cursor-pointer gap-2 font-semibold items-center text-gray-600 xs:bg-designColor/30 xs:px-2 xs:py-1 rounded">
+                            <span onClick={handleOrderNowClick} 
+                            
+                            className={`${buttonText === "Order Now" ? "bg-designColor/30": "bg-white border border-1"} flex cursor-pointer gap-2 w-36 justify-between font-semibold items-center text-gray-600  px-2 py-1 rounded`}
+                            >
                                 {/* <span className="text-sm xs:text-base xs:hidden">Buy</span> */}
-                                <span className="hidden whitespace-nowrap xs:inline text-sm xs:text-base inline">Order Now</span>
-                                <ShoppingBasketIcon
+                                
 
-                                    className=" ustify-center rounded flex items-center gap-1 font-semibold text-designColor rounded  duration-300 bg-white text-blue-500 px-[3px] p-[1px] w-8 h-8 xs:w-7 xs:h-7 duration-200 "
-                                />
-                            </span>
+                                <span className="whitespace-nowrap text-sm xs:text-base">{buttonText}</span>
+                {
+                  buttonText === "Order Now"
+                  ? <ShoppingBasketIcon className="justify-center rounded flex items-center gap-1 font-semibold text-designColor rounded duration-300 bg-white text-blue-500 px-[3px] p-[1px] w-7 h-7 duration-200" />
+                  : <Check className="justify-center rounded flex items-center gap-1 font-semibold  rounded duration-300 bg-green-100 text-green-500 px-[3px] p-[1px] w-7 h-7 duration-200" />
+                }
+              </span>
 
 
 

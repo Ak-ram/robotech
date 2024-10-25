@@ -3,6 +3,7 @@ import PrintServices from "@/components/PrintServices";
 import SearchComponent from "@/components/SearchComponent";
 import { Printer, Search, SearchCheck, SearchX } from "lucide-react";
 import React from "react";
+import { Toaster } from "react-hot-toast";
 const page = async () => {
   return (
   <Container className="py-10">
@@ -20,6 +21,15 @@ const page = async () => {
           <SearchComponent />
         </div>
       </div>
+      <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: "#000",
+                color: "#fff",
+              },
+            }}
+          />
     </Container>
   );
 };
