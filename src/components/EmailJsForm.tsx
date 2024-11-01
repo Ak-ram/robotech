@@ -157,8 +157,11 @@ const EmailJsForm = ({ totalAmt, productData }) => {
             toast.error("Please provide both your name and phone number.")
             return;
         }
-
-        emailjs.sendForm(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, formElement.current!, process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!)
+        console.log('Service ID:', process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID);
+console.log('Template ID:', process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID);
+console.log('Public Key:', process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
+console.log('Form Element:', formElement.current);
+        emailjs.sendForm(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, formElement.current!, {'publicKey':process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!})
             .then((result) => {
                 toast.success('Order submitted. Expect a call from customer service soon. Thank you.')
                 setClientName('')
@@ -167,8 +170,8 @@ const EmailJsForm = ({ totalAmt, productData }) => {
                 setAddress('');
                 router.push('/success');
             }, (error) => {
-                toast.error("Order unsuccessful. An error occurred.")
-            });
+                toast.error("Order unsuccessful. Try again.")
+            })
 
     };
 
