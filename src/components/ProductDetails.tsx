@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon, Paintbrush, ShoppingBag, AlertCircle, Youtube } from "lucide-react";
+import { PhoneCall, Check, Gift, Wallet2, Link2, BookCopy, Link2Icon, Paintbrush, ShoppingBag, AlertCircle, Youtube, Ban } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
 import toast from "react-hot-toast";
 import { ProductType } from "../../type";
@@ -56,7 +56,8 @@ fetchData()
                             )}
                         </p>
                     </div>
-                    <button
+                    {product?.count > 0 || prefix === "print" 
+                    ?  <button
                         onClick={() => {
                             dispatch(addToCart(product));
                             toast.success(`${product?.title} successfully added to the basket`);
@@ -67,6 +68,19 @@ fetchData()
                         <ShoppingBag size={18} className="mr-2 text-bold" />
                         Add to cart
                     </button>
+                    :  <button
+                    
+                    type="button"
+                    className="cursor-not-allowed inline-flex items-center justify-center px-1 py-1 xs:px-3 xs:py-2 text-xs xs:text-sm font-bold text-white bg-gray-900 border border-transparent rounded xs:rounded-md shadow-sm"
+                >
+                    <Ban size={18} className="mr-2 text-bold text-rose-400 " />
+                    {/* <Ban className="justify-center rounded flex items-center gap-1 font-semibold text-rose-400 bg-white rounded-sm duration-300 text-zinc-500 px-[3px] p-[1px] w-7 h-7 duration-200" /> */}
+
+                    Out of stock
+                </button>
+
+                    }
+                    
                 </div>
 
                 <div className="mt-5 space-y-2">
