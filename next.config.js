@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     domains: ['*'],
@@ -12,6 +13,15 @@ const nextConfig = {
 
     // Return the updated config
     return config;
+  },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/courses',
+        permanent: true, // Use false if this might change in the future
+      },
+    ];
   },
 };
 
