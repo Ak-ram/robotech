@@ -4,11 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/proSlice";
 import { ProductType } from "../../../type";
-import {
-  CheckCircle,
-  Home,
-  Undo,
-} from "lucide-react";
+import { CheckCircle, Home, Undo } from "lucide-react";
 import CoursePage from "@/components/CoursePage";
 import MagnifierComponent from "@/components/Magnifier";
 import { getCategoryProducts } from "@/helpers/getCategoryProducts";
@@ -32,21 +28,18 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-
-
-
         const { data } =
           prefix === "print"
             ? await supabase
-              .from("services")
-              .select("*")
-              .eq("id", idString)
-              .single()
+                .from("services")
+                .select("*")
+                .eq("id", idString)
+                .single()
             : await supabase
-              .from('products')
-              .select("*")
-              .eq("id", idString)
-              .single();
+                .from("products")
+                .select("*")
+                .eq("id", idString)
+                .single();
 
         setProduct(data!);
         if (typeof window !== "undefined" && window.scrollTo) {
@@ -67,7 +60,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
   // if (!prefix) return <CoursePage searchParams={{}} />;
   return (
     <>
-      {product  ? (
+      {product ? (
         <section className="">
           <div className="py-6  mx-auto px-4">
             <nav className="flex">
@@ -136,19 +129,21 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                 <div className="lg:flex lg:items-center">
                   <div className="flex-1 lg:order-2 border-slate-300 rounded-md border-2">
                     <div className="max-w-xl mx-auto overflow-hidden rounded-lg">
-
                       {prefix === "print" ? (
                         <img
                           src={
                             mainImg === 1
                               ? product?.image1
                               : mainImg === 2
-                                ? product?.image2
-                                : product?.image3
+                              ? product?.image2
+                              : product?.image3
                           }
-                          onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                          onError={(
+                            e: React.SyntheticEvent<HTMLImageElement, Event>
+                          ) => {
                             const target = e.target as HTMLImageElement;
-                            target.src = "https://makeplaceholder.com?text=Broken+Url&size=700x500&tcolor=333333"; // Set placeholder image on error
+                            target.src =
+                              "https://makeplaceholder.com?text=Broken+Url&size=700x500&tcolor=333333"; // Set placeholder image on error
                           }}
                         />
                       ) : (
@@ -157,9 +152,8 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                             mainImg === 1
                               ? product?.image1
                               : mainImg === 2
-                                ? product?.image2
-                                : product?.image3
-                            
+                              ? product?.image2
+                              : product?.image3
                           }
                         />
                       )}
@@ -178,9 +172,12 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                             className="h-full w-full object-cover"
                             src={product?.image1}
                             alt=""
-                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                            onError={(
+                              e: React.SyntheticEvent<HTMLImageElement, Event>
+                            ) => {
                               const target = e.target as HTMLImageElement;
-                              target.src = "https://makeplaceholder.com?text=Broken+Url&size=50x50&tcolor=333333"; // Set placeholder image on error
+                              target.src =
+                                "https://makeplaceholder.com?text=Broken+Url&size=50x50&tcolor=333333"; // Set placeholder image on error
                             }}
                           />
                         </button>
@@ -195,9 +192,12 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                             className="h-full w-full object-cover"
                             src={product?.image2}
                             alt=""
-                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                            onError={(
+                              e: React.SyntheticEvent<HTMLImageElement, Event>
+                            ) => {
                               const target = e.target as HTMLImageElement;
-                              target.src = "https://makeplaceholder.com?text=Broken+Url&size=50x50&tcolor=333333"; // Set placeholder image on error
+                              target.src =
+                                "https://makeplaceholder.com?text=Broken+Url&size=50x50&tcolor=333333"; // Set placeholder image on error
                             }}
                           />
                         </button>
@@ -212,9 +212,12 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                             className="h-full w-full object-cover"
                             src={product?.image3}
                             alt=""
-                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                            onError={(
+                              e: React.SyntheticEvent<HTMLImageElement, Event>
+                            ) => {
                               const target = e.target as HTMLImageElement;
-                              target.src = "https://makeplaceholder.com?text=Broken+Url&size=50x50&tcolor=333333"; // Set placeholder image on error
+                              target.src =
+                                "https://makeplaceholder.com?text=Broken+Url&size=50x50&tcolor=333333"; // Set placeholder image on error
                             }}
                           />
                         </button>
@@ -251,25 +254,27 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   </h1>
 
                   <>
-                    {product?.description?.length
-                      && (
-                        <ul className="space-y-1 w-[90%] font-semibold mt-3 text-gray-600 mb-6">
-                          <li className="font-bold text-black">
-                            Product Attributes:
-                          </li>
-                          {product?.description.split("\n").map((line, i) => (
-                            <div
-                              dir={detectLanguage(product?.description) === "ar" ? "rtl" : "ltr"}
-                              className="w-full"
-                              key={i}
-                            >
-                              {i > 0 && <br />}
-                              {line}
-                            </div>
-                          ))}
-                        </ul>
-                      )}
-
+                    {product?.description?.length && (
+                      <ul className="space-y-1 w-[90%] font-semibold mt-3 text-gray-600 mb-6">
+                        <li className="font-bold text-black">
+                          Product Attributes:
+                        </li>
+                        {product?.description.split("\n").map((line, i) => (
+                          <div
+                            dir={
+                              detectLanguage(product?.description) === "ar"
+                                ? "rtl"
+                                : "ltr"
+                            }
+                            className="w-full"
+                            key={i}
+                          >
+                            {i > 0 && <br />}
+                            {line}
+                          </div>
+                        ))}
+                      </ul>
+                    )}
                   </>
 
                   <h1 className="mt-8 text-lg md:text-3xl  font-bold">
@@ -278,12 +283,11 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
                   <p className="mt-4 text-xs sm:text-base">
                     Contact Us in Whatsapp : 01102071544
                   </p>
-
                 </div>
               </div>
             </div>
           </div>
-          
+
           <Toaster
             position="bottom-right"
             toastOptions={{
@@ -295,7 +299,7 @@ const Page: React.FC<Props> = ({ searchParams }: Props) => {
           />
         </section>
       ) : (
-        <Loading/>
+        <Loading />
       )}
     </>
   );
