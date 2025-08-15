@@ -49,7 +49,7 @@ function AboutComponent() {
           </p>
         </div>
         <div className="grid gap-10 md:grid-cols-2">
-          {data.map((item) => (
+          {data && data.map((item) => (
             <div
               key={item.id}
               className="border overflow-hidden shadow-lg border-gray-500/50 group bg-white rounded-lg shadow-md"

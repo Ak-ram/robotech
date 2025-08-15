@@ -24,7 +24,7 @@ function PrintServices() {
   }, []);
 
   return <div className="bg-white p-3 flex flex-wrap items-start justify-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-  {services.map((item,i) => (
+  {services && services.map((item,i) => (
 
 
     <ServiceCard key={`${item}_${i}`} item={item} />

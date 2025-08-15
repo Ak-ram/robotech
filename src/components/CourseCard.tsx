@@ -15,10 +15,9 @@ const CourseCard = ({ products, categoryName }: Item) => {
   return (
     <section className="bg-white py-4 font-sans">
       <div className=" max-w-6xl m-auto gap-2 flex flex-wrap items-start justify-start">
-        {products?.map((item) => (
-          <>
+        {products && products?.map((item) => (
             <div
-              key={item?.id}
+              key={item?.id + item.title}
               className="w-full  lg:w-[49%]  flex flex-col mb-8 px-3"
             >
               <div className="overflow-hidden border flex flex-col xs:flex-row bg-white rounded-lg shadow hover:shadow-raised hover:translateY-2px transition">
@@ -63,7 +62,7 @@ const CourseCard = ({ products, categoryName }: Item) => {
                         strokeWidth="2"
                       >
                         <path
-                          stroke-linecap="round"
+                          strokeLinecap="round"
                           strokeLinejoin="round"
                           d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                         />
@@ -119,7 +118,6 @@ const CourseCard = ({ products, categoryName }: Item) => {
                 </div>
               </div>
             </div>
-          </>
         ))}
       </div>
     </section>

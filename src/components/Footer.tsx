@@ -70,7 +70,7 @@ const Footer = () => {
               </li>
               <li className="flex gap-2 w-fit hover:underline">
                 <MapPin />
-                <span className="ml-2 hover:underline">{data.length > 0 && data[0].locationText!}</span>
+                <span className="ml-2 hover:underline">{data?.length > 0 && data[0].locationText!}</span>
               </li>
             </ul>
           </div>
@@ -91,9 +91,9 @@ const Footer = () => {
           <div className="mt-3">
             <span className="font-bold text-orange-500">Our Location</span>
             <span className="ml-2">
-              {data.length > 0 && data[0].locationText!}            </span>
+              {data?.length > 0 && data[0].locationText!}            </span>
             {
-              data.length > 0 && data[0].locationUrl!.includes('maps') ? <iframe
+              data?.length > 0 && data[0].locationUrl!.includes('maps') ? <iframe
                 height="300"
                 className="w-full mt-3"
                 src={data[0].locationUrl!}
